@@ -1,7 +1,6 @@
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { Location } from "../hooks/location.jsx";
 import L from "leaflet";
-import './map.css'
 
 
 
