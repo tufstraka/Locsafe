@@ -1,5 +1,6 @@
 //import { useState } from 'react'
 import Map from './components/map.jsx'
+import MapComponent from './components/testmap.jsx'
 import LandingPage from './components/landingpage.jsx'
 
 import SignUpForm from './components/signup.jsx'
@@ -15,7 +16,8 @@ function App() {
       {/*<SignUpForm />*/}
       {/*<SignInForm />*/}
       {/*<Dashboard />*/}
-      <Map />
+      {/*<Map />*/}
+      <MapComponent />
     </>
   )
 }
