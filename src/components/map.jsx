@@ -5,6 +5,7 @@ import L from "leaflet";
 import 'leaflet-routing-machine';
 
 const Map = () => {
+
   const { position } = Location();
   const mapRef = useRef(null);
   const routeRef = useRef(null);
@@ -54,7 +55,7 @@ const svgIcon = L.icon({
         scrollWheelZoom={true}
         style={{
           minWidth: "300px",
-          minHeight: "500px",
+          minHeight: "100vh",
           width: "100%",
           padding: "15px",
         }}
@@ -82,5 +83,3 @@ const svgIcon = L.icon({
 };
 
 export default Map;
-
-

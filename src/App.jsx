@@ -5,7 +5,7 @@ import LandingPage from './components/landingpage.jsx'
 
 import SignUpForm from './components/signup.jsx'
 import SignInForm from './components/signin.jsx'
-//import Dashboard from './pages/dashboard.jsx'
+import Dashboard from './pages/dashboard.jsx'
 import './App.css'
 
 function App() {
@@ -15,9 +15,10 @@ function App() {
       
       {/*<SignUpForm />*/}
       {/*<SignInForm />*/}
-      {/*<Dashboard />*/}
+      {/*<LandingPage />*/}
+      <Dashboard />
       {/*<Map />*/}
-      <MapComponent />
+      {/*<MapComponent />*/}
     </>
   )
 }
