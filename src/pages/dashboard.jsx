@@ -9,10 +9,10 @@ const Dashboard = () => {
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
-      <div className="flex flex-col w-64 bg-white border-r dark:bg-gray-800 dark:border-gray-600">
+      <div className="flex flex-col w-64 h-auto bg-white border-r dark:bg-gray-800 dark:border-gray-600">
         <div className="flex items-center justify-center h-16 border-b dark:border-gray-600">
           <a
-            to="/"
+            href="/"
             className="text-xl font-bold text-gray-800 uppercase dark:text-white"
           >
             Fleet Tracker
@@ -28,14 +28,14 @@ const Dashboard = () => {
               <span className="text-sm font-medium">Map</span>
             </a>
             <a
-              to="/vehicles"
+              href="/vehicles"
               className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
             >
               <FiTruck className="w-5 h-5 mr-4" />
               <span className="text-sm font-medium">Vehicles</span>
             </a>
             <a
-              to="/drivers"
+              href="/drivers"
               className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
             >
               <HiOutlineUserGroup className="w-5 h-5 mr-4" />
@@ -67,7 +67,7 @@ const Dashboard = () => {
               <IoIosNotificationsOutline className="w-6 h-6" />
             </button>
           </div>
-          
+
           <div className="flex items-center">
             <p className="text-gray-500 text-sm mr-2">Welcome back, John Doe</p>
             <img

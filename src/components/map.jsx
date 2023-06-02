@@ -55,8 +55,8 @@ const svgIcon = L.icon({
         scrollWheelZoom={true}
         style={{
           minWidth: "300px",
-          minHeight: "100vh",
           width: "100%",
+          height: "500px",
           padding: "15px",
         }}
         ref={mapRef}
