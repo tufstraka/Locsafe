@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { collection, addDoc } from "firebase/firestore"; 
+import db from "../utils/firebaseInit";
 
 const DriverReg = () => {
   const [formData, setFormData] = useState({
@@ -16,9 +18,27 @@ const DriverReg = () => {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
+    // Add to firestore
+    try {
+      const docRef = await addDoc(collection(db , "drivers"), {formData});
+
+      console.log('Document written with ID: ', docRef.id);
+      
+      // Clear the form after successful submission
+      setFormData({
+        name: "",
+        contactNumber: "",
+        drivingLicenceNumber: "",
+        workSchedule: "",
+        drivingHistory: "",
+        certifications: "",
+        trainingRecords: "",
+      });
+    } catch (error) {
+      console.error('Error adding document: ', error);
+    }
     console.log(formData);
   };
 
@@ -103,7 +123,7 @@ const DriverReg = () => {
             htmlFor="drivingHistory"
             className="block text-sm font-medium text-gray-700"
           >
-            Driving History
+            Driving History (Previous Work Experience)
           </label>
           <textarea
             id="drivingHistory"
