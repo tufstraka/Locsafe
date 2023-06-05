@@ -7,12 +7,12 @@ import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: import.meta.env.FIREBASE_API_KEY,
-  authDomain: import.meta.env.FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.FIREBASE_APP_ID,
-  measurementId: import.meta.env.FIREBASE_MEASUREMENT_ID
+  authDomain: "locsafe-58643.firebaseapp.com",
+  projectId: "locsafe-58643",
+  storageBucket: "locsafe-58643.appspot.com",
+  messagingSenderId: "835879978368",
+  appId: "1:835879978368:web:b7dba7483383b1a9dd2d65",
+  measurementId: "G-LQW25CDWKT"
 };
 
 // Initialize Firebase
