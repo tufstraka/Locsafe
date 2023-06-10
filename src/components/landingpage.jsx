@@ -19,7 +19,7 @@ const LandingPage = () => {
                 <a href="#" className="hover:text-gray-800">Contact</a>
               </li>
               <li>
-                <a href="#" className="hover:text-gray-800 bg-indigo-500 p-4 rounded">Login</a>
+                <a href="/dashboard" className="hover:text-gray-800 bg-indigo-500 p-4 rounded">Login</a>
               </li> 
             </ul>
           </nav>
@@ -27,13 +27,13 @@ const LandingPage = () => {
       </header>
       <main className="container mx-auto my-16 flex flex-col md:flex-row">
         <div className="md:w-1/2">
-          <h2 className="text-4xl font-bold mb-8">Track your assets with ease</h2>
+          <h2 className="text-4xl font-bold mb-8">Track your vehicles with ease</h2>
           <p className="text-gray-700 text-xl mb-8">
-            Locsafe is a GPS asset tracking management system that helps you keep track of your assets in real-time.
+            Locsafe is a GPS fleet tracking management system that helps you keep track of your vehicles in real-time.
           </p>
           <div className="flex items-center space-x-4 text-gray-700 font-medium mb-8">
             <FaMapMarkerAlt className="text-2xl text-blue-500" />
-            <p>Track your assets anywhere in the world</p>
+            <p>Track your vehicles anywhere in the world</p>
           </div>
           <div className="flex items-center space-x-4 text-gray-700 font-medium mb-8">
             <FaCalendarAlt className="text-2xl text-blue-500" />
