@@ -24,9 +24,10 @@ const DriverList = () => {
       {drivers.length > 0 ? (
         <ul className="space-y-4">
           {drivers.map((driver) => (
-            <li key={driver.formData.id} className="flex items-center space-x-2 p-4 justify-between">
-              <span>Name - {driver.formData.name}</span>
-              <span>Contact - {driver.formData.contactNumber}</span>
+            <li key={driver.formData.id} className="flex items-center space-x-2 p-4 justify-between bg-blue-50 m-4">
+              <span> <span className='font-bold'>Name</span>: {driver.formData.name}</span>
+              <span> <span className='font-bold'>Contact</span>: {driver.formData.contactNumber}</span>
+              <span> <span className='font-bold'>License</span>: {driver.formData.drivingLicenceNumber}</span>
               <button className="flex items-center text-blue-500 hover:text-blue-600">
                 <AiOutlineEdit className="mr-1" />
                 Update
