@@ -36,7 +36,7 @@ const DriverList = () => {
           ))}
         </ul>
       ) : (
-        <p>No drivers found</p>
+        <p className='flex align-middle justify-center'>Loading</p>
       )}
       </div>
     </div>

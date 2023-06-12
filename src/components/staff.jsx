@@ -1,4 +1,5 @@
 import { FiUserPlus, FiEdit } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import Sidebar from "./sidebar";
 
 const Staff = () => {
@@ -20,11 +21,11 @@ const Staff = () => {
             Click here to register a new driver in the GPS fleet tracking
             system.
           </p>
-          <a href="/drivers/register">
+          <Link to="/drivers/register">
             <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
               Register
             </button>
-          </a>
+          </Link>
         </div>
 
         
@@ -39,11 +40,11 @@ const Staff = () => {
             Click here to update the details of an existing driver in the GPS
             fleet tracking system.
           </p>
-          <a href='/drivers/update'>
+          <Link to='/drivers/update'>
           <button className="mt-4 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">
             Update
           </button>
-          </a>
+          </Link>
         </div>
     
 
@@ -58,11 +59,11 @@ const Staff = () => {
             Click here to register a new dispatcher in the GPS fleet tracking
             system.
           </p>
-          <a href="/dispatchers/register">
+          <Link to="/dispatchers/register">
             <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
               Register
             </button>
-          </a>
+          </Link>
         </div>
 
         <div className="bg-white p-4 rounded-lg shadow mt-2">
@@ -76,11 +77,11 @@ const Staff = () => {
             Click here to update the details of an existing dispatcher in the GPS
             fleet tracking system.
           </p>
-          <a href='/dispatchers/update'>
+          <Link to='/dispatchers/update'>
           <button className="mt-4 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">
             Update
           </button>
-          </a>
+          </Link>
         </div>
 
         <div className="bg-white p-4 rounded-lg shadow mt-2">
@@ -94,11 +95,11 @@ const Staff = () => {
             Click here to register a new driver in the GPS fleet tracking
             system.
           </p>
-          <a href="/drivers/register">
+          <Link to="/drivers/register">
             <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
               Register
             </button>
-          </a>
+          </Link>
         </div>
 
         <div className="bg-white p-4 rounded-lg shadow mt-2">

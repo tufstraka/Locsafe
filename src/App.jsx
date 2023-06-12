@@ -7,7 +7,9 @@ import DriverReg from "./components/driverReg.jsx";
 import DispatcherReg from "./components/dispatcherReg.jsx";
 import SignUpForm from "./components/signup.jsx";
 import SignInForm from "./components/signin.jsx";
+import GeofenceMap from "./components/geofence.jsx";
 import Dashboard from "./pages/dashboard.jsx";
+import Vehicles from "./components/vehicles.jsx";
 import "./App.css";
 
 
@@ -23,6 +25,8 @@ const App = () =>  {
             <Route path="/drivers/update" element={<DriverList />} />
             <Route path="/sign" element={<SignInForm />} />
             <Route path="/dispatchers/register" element={<DispatcherReg />} />
+            <Route path="/geofence" element={<GeofenceMap />} />
+            <Route path="/vehicles" element={<Vehicles />} />
             <Route path="" element={<SignInForm />} />
             <Route path="" element={<SignInForm />} />
             <Route path="" element={<SignUpForm />} />
