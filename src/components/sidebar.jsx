@@ -1,6 +1,7 @@
 import { FiMap, FiTruck, FiAlertOctagon } from "react-icons/fi";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import { BsFillGeoFill } from "react-icons/bs";
 
 const Sidebar = () => {
   return (
@@ -16,7 +17,7 @@ const Sidebar = () => {
     <div className="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto">
       <nav className="flex-1 space-y-4">
         <a
-          to="/"
+          href="/dashboard"
           className="flex items-center pl-4 py-2 text-gray-600 bg-gray-200 rounded-md dark:text-gray-200 dark:bg-gray-700"
         >
           <FiMap className="w-5 h-5 mr-4" />
@@ -37,7 +38,7 @@ const Sidebar = () => {
           <span className="text-sm font-medium">Staff</span>
         </a>
         <a
-          to="/alerts"
+          href="/alerts"
           className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
         >
           <FiAlertOctagon className="w-5 h-5 mr-4" />
@@ -49,6 +50,13 @@ const Sidebar = () => {
         >
           <FaRegCalendarAlt className="w-5 h-5 mr-4" />
           <span className="text-sm font-medium">Calendar</span>
+        </a>
+        <a
+          to="/calendar"
+          className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+        >
+          <BsFillGeoFill className="w-5 h-5 mr-4" />
+          <span className="text-sm font-medium">Geofences</span>
         </a>
       </nav>
   
