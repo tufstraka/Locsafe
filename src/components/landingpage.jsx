@@ -29,7 +29,7 @@ const LandingPage = () => {
         <div className="md:w-1/2">
           <h2 className="text-4xl font-bold mb-8">Track your vehicles with ease</h2>
           <p className="text-gray-700 text-xl mb-8">
-            Locsafe is a GPS fleet tracking management system that helps you keep track of your vehicles in real-time.
+            Locsafe is a GPS fleet tracking and management system that helps you keep track of your vehicles in real-time.
           </p>
           <div className="flex items-center space-x-4 text-gray-700 font-medium mb-8">
             <FaMapMarkerAlt className="text-2xl text-blue-500" />
