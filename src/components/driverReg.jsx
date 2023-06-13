@@ -5,6 +5,7 @@ import db from "../utils/firebaseInit";
 const DriverReg = () => {
   const [formData, setFormData] = useState({
     name: "",
+    email: "",
     contactNumber: "",
     drivingLicenceNumber: "",
     workSchedule: "",
@@ -78,6 +79,25 @@ const DriverReg = () => {
             className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
             placeholder="Enter your contact number"
             value={formData.contactNumber}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label
+            htmlFor="contactNumber"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
+            placeholder="Enter your Email address"
+            value={formData.email}
             onChange={handleChange}
             required
           />
