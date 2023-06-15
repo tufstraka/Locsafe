@@ -1,30 +1,26 @@
-import { useEffect, useRef } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap, Polyline } from "react-leaflet";
+import { useEffect, useRef, useState } from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { getDocs, collection } from "firebase/firestore";
+import  db  from "../utils/firebaseInit.js"
 import { Location } from "../hooks/location.jsx";
 import L from "leaflet";
 import 'leaflet-routing-machine';
 
 const Map = () => {
-
+  const [locations, setLocations] = useState([]);
   const { position } = Location();
   const mapRef = useRef(null);
-  const routeRef = useRef(null);
+  //const routeRef = useRef(null);
 
   useEffect(() => {
-    if (mapRef.current) {
-      const map = mapRef.current.leafletElement;
+    const fetchLocations = async () => {
+      const locationsSnapshot = await getDocs(collection(db, 'locations'));
+      const locationData = locationsSnapshot.docs.map((doc) => doc.data());
+      setLocations(locationData);
+      console.log(locationData);
+    };
 
-      const routingControl = L.Routing.control({
-        waypoints: [
-          L.latLng(-1.241034, 36.890439), // Start point coordinates
-          L.latLng(-1.234495, 36.882605), // End point coordinates
-        ],
-        routeWhileDragging: true,
-      });
-
-      routeRef.current = routingControl.getPlan().getRoute();
-      routingControl.addTo(map);
-    }
+    fetchLocations();
   }, []);
 
   function MoveToLocation() {
@@ -67,14 +63,12 @@ const svgIcon = L.icon({
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {routeRef.current && (
-          <Polyline
-            positions={routeRef.current.coordinates}
-            color="blue"
-            weight={6}
-          />
-        )}
-        <Marker position={position} icon={svgIcon}>
+
+{locations.map((location, index) => (
+        <Marker key={index} position={[location.latitude, location.longitude]} icon={svgIcon}/>
+      ))}
+        
+        <Marker position={position} >
           <Popup>Car Type: Nissan</Popup>
         </Marker>
       </MapContainer>

@@ -1,12 +1,14 @@
 import { initializeApp } from "firebase/app";
 //import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
+//import { getAuth } from "firebase/auth";
+
 
 // TODO: Add SDKs for Firebase products that I want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 const firebaseConfig = {
-  apiKey: import.meta.env.FIREBASE_API_KEY,
+  apiKey: "AIzaSyAPyF44EBwhUsDx1n4pdgmBIjvWQK_fxMk",
   authDomain: "locsafe-58643.firebaseapp.com",
   projectId: "locsafe-58643",
   storageBucket: "locsafe-58643.appspot.com",
@@ -19,7 +21,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 //const analytics = getAnalytics(app);
 const db = getFirestore(app);
+//const auth = getAuth(app);
 
-//console.log(db)
 
 export default db;

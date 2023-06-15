@@ -3,6 +3,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { AiOutlineEdit } from "react-icons/ai";
 import db from "../utils/firebaseInit";
 import Sidebar from "./sidebar";
+import { Link } from "react-router-dom";
 
 const DriverList = () => {
   const [drivers, setDrivers] = useState([]);
@@ -40,6 +41,9 @@ const DriverList = () => {
     fetchData();
   }, []);
 
+  console.log(drivers);
+
+
   return (
     <div className="flex">
       <Sidebar />
@@ -60,23 +64,23 @@ const DriverList = () => {
             <ul className="space-y-4">
               {filteredDrivers.map((driver) => (
                 <li
-                  key={driver.formData.id}
+                  key={driver.id}
                   className="flex items-center space-x-2 p-4 justify-between bg-blue-50 m-4"
                 >
                   <span>
                     {" "}
                     <span className="font-bold">Name</span>:{" "}
-                    {driver.formData.name}
+                    {driver.name}
                   </span>
                   <span>
                     {" "}
                     <span className="font-bold">Contact</span>:{" "}
-                    {driver.formData.contactNumber}
+                    {driver.contactNumber}
                   </span>
                   <span>
                     {" "}
                     <span className="font-bold">License</span>:{" "}
-                    {driver.formData.drivingLicenceNumber}
+                    {driver.drivingLicenceNumber}
                   </span>
                   <button className="flex items-center text-blue-500 hover:text-blue-600">
                     <AiOutlineEdit className="mr-1" />
@@ -92,28 +96,30 @@ const DriverList = () => {
           <ul className="space-y-4">
             {drivers.map((driver) => (
               <li
-                key={driver.formData.id}
+                key={driver.id}
                 className="flex items-center space-x-2 p-4 justify-between bg-blue-50 m-4"
               >
                 <span>
                   {" "}
                   <span className="font-bold">Name</span>:{" "}
-                  {driver.formData.name}
+                  {driver.name}
                 </span>
                 <span>
                   {" "}
                   <span className="font-bold">Contact</span>:{" "}
-                  {driver.formData.contactNumber}
+                  {driver.contactNumber}
                 </span>
                 <span>
                   {" "}
                   <span className="font-bold">License</span>:{" "}
-                  {driver.formData.drivingLicenceNumber}
+                  {driver.drivingLicenceNumber}
                 </span>
+                <Link to={`/update/${driver.id}`}>
                 <button className="flex items-center text-blue-500 hover:text-blue-600">
                   <AiOutlineEdit className="mr-1" />
                   Update
                 </button>
+                </Link>
               </li>
             ))}
           </ul>

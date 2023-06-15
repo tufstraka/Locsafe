@@ -1,17 +1,21 @@
-import { useState } from "react";
-import { collection, addDoc } from "firebase/firestore"; 
+import { useEffect, useState } from "react";
+import { collection, addDoc, getDocs } from "firebase/firestore"; 
 import db from "../utils/firebaseInit";
 
 const DriverReg = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    contactNumber: "",
-    drivingLicenceNumber: "",
-    workSchedule: "",
-    drivingHistory: "",
-    certifications: "",
-    trainingRecords: "",
-  });
+  const [formData, setFormData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const querySnapshot = await getDocs(collection(db, "drivers"));
+      //const data = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      setFormData(
+        querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+    };
+    fetchData();
+    console.log(formData)
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

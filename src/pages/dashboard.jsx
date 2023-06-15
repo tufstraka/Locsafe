@@ -32,7 +32,7 @@ const Dashboard = () => {
           </div>
         
           <div className="flex items-center">
-            <p className="text-gray-500 text-sm mr-2">Welcome back, John Doe</p>
+            <p className="text-gray-500 text-sm mr-2">Welcome back</p>
             <img
               className="w-10 h-10 rounded-full"
               src="https://via.placeholder.com/150"

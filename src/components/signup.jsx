@@ -1,15 +1,24 @@
 import { useState } from "react";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
+//import { redirect } from "react-router-dom";
+import { doc } from "firebase/firestore"; 
+import db from "../utils/firebaseInit";
+import { useNavigate } from "react-router-dom";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import PropTypes from "prop-types";
 import './signup.css';
 
-const DriverSignUpForm = () => {
-  const [fullName, setFullName] = useState("");
+const DriverSignUpForm = ({ username, setUsername}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleFullNameChange = (event) => {
-    setFullName(event.target.value);
+  
+
+  const handleUserNameChange = (event) => {
+    setUsername(event.target.value);
   };
+
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -21,7 +30,24 @@ const DriverSignUpForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // send data to server or perform form validation
+
+    const userNameRef = doc(db, `drivers/${username}`);
+    //console.log(userNameRef.id);
+    //console.log(username);
+
+    const auth = getAuth();
+    if (username == userNameRef.id) {
+    createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+     
+      const user = userCredential.user;
+      console.log(user);
+      if (user) {
+         navigate("/driver/profile");
+      }
+    })
+    } else {
+      alert("You are not a registered driver");
+    }
   };
 
   return (
@@ -32,7 +58,7 @@ const DriverSignUpForm = () => {
           className="block mb-2 text-gray-700 font-bold text-lg"
           htmlFor="full-name"
         >
-          Full Name
+          Username
         </label>
         <div className="flex items-center border-b border-gray-500 py-2">
           <FaUser className="mr-3" />
@@ -41,8 +67,8 @@ const DriverSignUpForm = () => {
             id="full-name"
             type="text"
             placeholder="John Doe"
-            value={fullName}
-            onChange={handleFullNameChange}
+            value={username}
+            onChange={handleUserNameChange}
           />
         </div>
       </div>
@@ -95,6 +121,11 @@ const DriverSignUpForm = () => {
     </form>
     </div>
   );
+};
+
+DriverSignUpForm.propTypes = {
+  username: PropTypes.string.isRequired,
+  setUsername: PropTypes.func.isRequired,
 };
 
 export default DriverSignUpForm;

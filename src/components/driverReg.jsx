@@ -1,11 +1,15 @@
 import { useState } from "react";
-import { collection, addDoc } from "firebase/firestore"; 
+import { collection, doc, setDoc } from "firebase/firestore";
+//import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import db from "../utils/firebaseInit";
+//import auth from "../utils/firebaseInit";
 
 const DriverReg = () => {
   const [formData, setFormData] = useState({
     name: "",
+    username: "",
     email: "",
+    password: "",
     contactNumber: "",
     drivingLicenceNumber: "",
     workSchedule: "",
@@ -21,15 +25,27 @@ const DriverReg = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add to firestore
-    try {
-      const docRef = await addDoc(collection(db , "drivers"), {formData});
 
-      console.log('Document written with ID: ', docRef.id);
+    try {
+      const collectionRef = collection(db, "drivers");
+      const documentRef = doc(collectionRef, formData.username);
+
+      await setDoc(documentRef, formData).then(() => {
+        console.log("Document successfully written!");
+      });
+
+      //console.log('Document saved successfully', newdoc);
+      //const docRef = await addDoc(collection(db , "drivers"), {formData});
+
+      //console.log("Document written with ID: ", docRef.id);
+
       
+
       // Clear the form after successful submission
       setFormData({
         name: "",
+        username: "",
+        password: "",
         contactNumber: "",
         drivingLicenceNumber: "",
         workSchedule: "",
@@ -38,9 +54,9 @@ const DriverReg = () => {
         trainingRecords: "",
       });
     } catch (error) {
-      console.error('Error adding document: ', error);
+      console.error("Error adding document: ", error);
     }
-    console.log(formData);
+    //console.log(formData);
   };
 
   return (
@@ -65,6 +81,25 @@ const DriverReg = () => {
             required
           />
         </div>
+
+        <div className="mb-4">
+          <label
+            htmlFor="username"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Username
+          </label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
         <div className="mb-4">
           <label
             htmlFor="contactNumber"
@@ -86,7 +121,7 @@ const DriverReg = () => {
 
         <div className="mb-4">
           <label
-            htmlFor="contactNumber"
+            htmlFor="email"
             className="block text-sm font-medium text-gray-700"
           >
             Email
@@ -102,6 +137,26 @@ const DriverReg = () => {
             required
           />
         </div>
+
+        <div className="mb-4">
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
+            placeholder="Enter your Email address"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
         <div className="mb-4">
           <label
             htmlFor="drivingLicenceNumber"
@@ -201,3 +256,12 @@ const DriverReg = () => {
 };
 
 export default DriverReg;
+
+
+
+
+//const collectionRef = collection(db, "drivers");
+      //const documentRef = doc(collectionRef, formData.username);
+      //const newdoc =  await setDoc(documentRef, formData);
+
+      //console.log('Document written with ID: ', newdoc.id);*/
