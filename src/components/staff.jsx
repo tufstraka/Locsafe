@@ -21,7 +21,7 @@ const Staff = () => {
             Click here to register a new driver in the GPS fleet tracking
             system.
           </p>
-          <Link to="/drivers/register">
+          <Link to="/driver/register">
             <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
               Register
             </button>
