@@ -75,7 +75,6 @@ const DriverReg = () => {
             id="name"
             name="name"
             className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
-            placeholder="Enter your name"
             value={formData.name}
             onChange={handleChange}
             required
@@ -112,7 +111,6 @@ const DriverReg = () => {
             id="contactNumber"
             name="contactNumber"
             className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
-            placeholder="Enter your contact number"
             value={formData.contactNumber}
             onChange={handleChange}
             required
@@ -131,7 +129,6 @@ const DriverReg = () => {
             id="email"
             name="email"
             className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
-            placeholder="Enter your Email address"
             value={formData.email}
             onChange={handleChange}
             required
@@ -150,7 +147,6 @@ const DriverReg = () => {
             id="password"
             name="password"
             className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
-            placeholder="Enter your Email address"
             value={formData.password}
             onChange={handleChange}
             required
@@ -169,7 +165,6 @@ const DriverReg = () => {
             id="drivingLicenceNumber"
             name="drivingLicenceNumber"
             className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
-            placeholder="Enter your driving licence number"
             value={formData.drivingLicenceNumber}
             onChange={handleChange}
             required
@@ -187,7 +182,6 @@ const DriverReg = () => {
             id="workSchedule"
             name="workSchedule"
             className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
-            placeholder="Enter your work schedule"
             value={formData.workSchedule}
             onChange={handleChange}
             required
@@ -205,7 +199,6 @@ const DriverReg = () => {
             name="drivingHistory"
             rows="4"
             className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
-            placeholder="Enter your driving history"
             value={formData.drivingHistory}
             onChange={handleChange}
           />
@@ -222,7 +215,6 @@ const DriverReg = () => {
             id="certifications"
             name="certifications"
             className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
-            placeholder="Enter your certifications"
             value={formData.certifications}
             onChange={handleChange}
           />
@@ -239,7 +231,6 @@ const DriverReg = () => {
             id="trainingRecords"
             name="trainingRecords"
             className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
-            placeholder="Enter your training records"
             value={formData.trainingRecords}
             onChange={handleChange}
           />
