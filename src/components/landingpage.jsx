@@ -1,4 +1,5 @@
 import { FaMapMarkerAlt, FaCalendarAlt, FaCheck } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import Image from '../assets/3d-casual-life-trail-map.png';
 
 const LandingPage = () => {
@@ -19,7 +20,7 @@ const LandingPage = () => {
                 <a href="#" className="hover:text-gray-800">Contact</a>
               </li>
               <li>
-                <a href="/dashboard" className="hover:text-gray-800 bg-indigo-500 p-4 rounded">Login</a>
+                <Link to="/dashboard" className="hover:text-gray-800 bg-indigo-500 p-4 rounded">Login</Link>
               </li> 
             </ul>
           </nav>
