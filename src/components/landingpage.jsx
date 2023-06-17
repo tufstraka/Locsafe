@@ -20,7 +20,7 @@ const LandingPage = () => {
                 <a href="#" className="hover:text-gray-800">Contact</a>
               </li>
               <li>
-                <Link to="/dashboard" className="hover:text-gray-800 bg-indigo-500 p-4 rounded">Login</Link>
+                <Link to="/admin/dashboard" className="hover:text-gray-800 bg-indigo-500 p-4 rounded">Login</Link>
               </li> 
             </ul>
           </nav>
