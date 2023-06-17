@@ -23,11 +23,12 @@ const Map = () => {
   const { position } = Location();
 
   useEffect(() => {
+
     const fetchLocations = async () => {
       const locationsSnapshot = await getDocs(collection(db, "locations"));
-      const locationData = locationsSnapshot.docs.map((doc) => doc.data());
-      setLocations(locationData);
-      console.log(locationData);
+      const locationData = locationsSnapshot.docs.map((doc) => doc.data().recentLocations);
+      
+      setLocations(locationData[0]);
     };
 
     fetchLocations();

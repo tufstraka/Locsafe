@@ -3,7 +3,7 @@ import { getAuth } from "firebase/auth";
 import { Link } from "react-router-dom";
 //import { doc, getDoc } from "firebase/firestore";
 //import db from "../utils/firebaseInit";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc, getDoc, GeoPoint } from "firebase/firestore";
 import db from "../utils/firebaseInit";
 
 const DriverDashboard = ({ username }) => {
@@ -14,19 +14,31 @@ const DriverDashboard = ({ username }) => {
   const user = auth.currentUser;
   console.log(user);
 
+
   const getLocation = async () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
           setLocationData({ latitude, longitude });
+          const location = new GeoPoint(locationData.latitude, locationData.longitude);
+          console.log(location);
           const collectionRef = collection(db, "locations");
           const documentRef = doc(collectionRef, user.displayName);
+          
+          // Get the existing location data from Firestore
+          const documentSnapshot = await getDoc(documentRef);
+          const existingData = documentSnapshot.exists()
+            ? documentSnapshot.data().recentLocations
+            : [];
 
-          await setDoc(documentRef, locationData).then(() => {
-            console.log("location updated!");
-          });
-          console.log(locationData);
+          // Update the location data array with the new coordinates
+          const recentLocations = [...existingData, { location }];
+
+          // Update the document with the updated location data
+          await setDoc(documentRef, { recentLocations });
+          console.log("Location updated!", recentLocations);
+          //console.log(locationData);
         },
         (error) => {
           console.error("Error getting location:", error);
@@ -40,7 +52,7 @@ const DriverDashboard = ({ username }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       getLocation();
-    }, 20000);
+    }, 5000);
 
     return () => clearInterval(interval);
   });
