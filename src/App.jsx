@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { getDocs, collection} from 'firebase/firestore';
+import { useState } from 'react'
+//import { getDocs, collection} from 'firebase/firestore';
 import DriverDashboard from "./components/driverDashboard.jsx";
 import LandingPage from "./components/landingpage.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -30,7 +30,7 @@ const App = () =>  {
             <Route path="/staff" element={<Staff />} />
             <Route path="/driver/register" element={<DriverReg />} />
             <Route path="/drivers/update" element={<DriverList />} />
-            <Route path="/signin" element={<SignInForm />} />
+            <Route path="/driver/signin" element={<SignInForm />} />
             <Route path="/dispatchers/register" element={<DispatcherReg />} />
             <Route path="/geofence" element={<GeofenceMap />} />
             <Route path="/driver/profile" element={<UpdateProfilePage username={username} setUsername={setUsername} />} />
@@ -38,9 +38,9 @@ const App = () =>  {
             <Route path="/driver/dashboard" element={<DriverDashboard username={username} setUsername={setUsername} />} />
             <Route path="" element={<SignInForm />} />
             <Route path="" element={<SignInForm />} />
-            <Route path="/signup" element={<SignUpForm username={username} setUsername={setUsername}/>} />
+            <Route path="/driver/signup" element={<SignUpForm username={username} setUsername={setUsername}/>} />
             <Route path="" element={<SignInForm />} />
-            <Route path="/dashboard" element={<Dashboard/>}/>
+            <Route path="/admin/dashboard" element={<Dashboard/>}/>
           
         </Routes>
       </Router>
