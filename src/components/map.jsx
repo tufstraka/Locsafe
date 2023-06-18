@@ -21,7 +21,7 @@ L.Marker.prototype.options.icon = DefaultIcon;
 const Map = () => {
   const [locations, setLocations] = useState([]);
   const { position } = Location();
-  const unsubscribeRef = useRef(null); // Create a ref to store the unsubscribe function
+  //const unsubscribeRef = useRef(null); // Create a ref to store the unsubscribe function
 
 
   useEffect(() => {
@@ -57,8 +57,8 @@ const Map = () => {
         console.log(q);
         setLocations(lastLocation);
       });
-      unsubscribeRef.current = unsubscribe; // Store the unsubscribe function in the ref
-
+      //unsubscribeRef.current = unsubscribe; // Store the unsubscribe function in the ref
+        return unsubscribe;
     };
 
 
