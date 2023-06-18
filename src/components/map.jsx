@@ -27,11 +27,15 @@ const Map = () => {
     const fetchLocations = async () => {
       const locationsSnapshot = await getDocs(collection(db, "locations"));
       const locationData = locationsSnapshot.docs.map((doc) => doc.data());
-      const location = locationData.location;
       //const latitude = location.latitude;
       //const longitude = location.longitude;
-      console.log(location)
-      setLocations(location);
+      const lastLocations = locationData.map((doc) => doc.recentLocations.pop()); 
+      //const location = lastLocation.location;
+      const lastLocation = lastLocations.map((locationObject) => locationObject.location );
+
+      console.log(lastLocation);
+      //console.log(locationData)
+      setLocations(lastLocation);
     };
 
     fetchLocations();
