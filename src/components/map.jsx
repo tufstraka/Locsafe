@@ -40,7 +40,13 @@ const Map = () => {
       setLocations(lastLocation);
     };
 
-    const listenforLocations = () => {  
+    
+    fetchLocations();
+
+   
+  }, []);
+
+    const ListenForLocations = () => {  
       const locationsRef = collection(db, "locations");
       const q = query(locationsRef, orderBy("timestamp", "desc"), limit(1));
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -48,17 +54,12 @@ const Map = () => {
         const lastLocations = locationData.map((doc) => doc.recentLocations.pop());
         const lastLocation = lastLocations.map((locationObject) => locationObject.location );
         console.log(lastLocation);
+        console.log(q);
         setLocations(lastLocation);
       });
       unsubscribeRef.current = unsubscribe; // Store the unsubscribe function in the ref
 
     };
-
-    listenforLocations();
-    fetchLocations();
-
-   
-  }, []);
 
 
 
@@ -97,7 +98,8 @@ const Map = () => {
           padding: "15px",
         }}
       >
-        <MoveToLocation />
+        <MoveToLocation/>  
+        <ListenForLocations/>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
