@@ -46,7 +46,7 @@ const Map = () => {
    
   }, []);
 
-    const ListenForLocations = () => {  
+    /*const ListenForLocations = () => {  
       const locationsRef = collection(db, "locations");
       const q = query(locationsRef, orderBy("timestamp", "desc"), limit(1));
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -59,7 +59,7 @@ const Map = () => {
       });
       //unsubscribeRef.current = unsubscribe; // Store the unsubscribe function in the ref
         return unsubscribe;
-    };
+    };*/
 
 
 
@@ -99,7 +99,7 @@ const Map = () => {
         }}
       >
         <MoveToLocation/>  
-        <ListenForLocations/>
+          {/*<ListenForLocations/>*/}
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
