@@ -11,13 +11,13 @@ const LandingPage = () => {
           <nav>
             <ul className="flex items-center space-x-8 text-gray-600 font-medium">
               <li>
-                <a href="#" className="hover:text-gray-800">Features</a>
+                <Link to="#" className="hover:text-gray-800">Features</Link>
               </li>
               <li>
-                <a href="#" className="hover:text-gray-800">Pricing</a>
+                <Link to="#" className="hover:text-gray-800">Pricing</Link>
               </li>
               <li>
-                <a href="#" className="hover:text-gray-800">Contact</a>
+                <Link to="#" className="hover:text-gray-800">Contact</Link>
               </li>
               <li>
                 <Link to="/admin/dashboard" className="hover:text-gray-800 bg-indigo-500 p-4 rounded">Login</Link>
