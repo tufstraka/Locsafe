@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 //import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
+import { getPerformance } from "firebase/performance";
 //import { getAuth } from "firebase/auth";
 
 
@@ -19,6 +20,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+// Initialize Performance monitoring
+const perf = getPerformance(app);
 //const analytics = getAnalytics(app);
 const db = getFirestore(app);
 //const auth = getAuth(app);
