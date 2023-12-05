@@ -13,6 +13,7 @@ import GeofenceMap from "./components/geofence.jsx";
 import Dashboard from "./pages/dashboard.jsx";
 import Vehicles from "./components/vehicles.jsx";
 import UpdateProfilePage from './components/driverProfile.jsx';
+import PageNotFound from './components/PageNotFound.jsx'
 import "./App.css";
 
 
@@ -41,6 +42,7 @@ const App = () =>  {
             <Route path="/driver/signup" element={<SignUpForm username={username} setUsername={setUsername}/>} />
             <Route path="" element={<SignInForm />} />
             <Route path="/admin/dashboard" element={<Dashboard/>}/>
+            <Route path="*" element={<PageNotFound/></Route>
           
         </Routes>
       </Router>
