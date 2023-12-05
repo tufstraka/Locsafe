@@ -42,7 +42,7 @@ const App = () =>  {
             <Route path="/driver/signup" element={<SignUpForm username={username} setUsername={setUsername}/>} />
             <Route path="" element={<SignInForm />} />
             <Route path="/admin/dashboard" element={<Dashboard/>}/>
-            <Route path="*" element={<PageNotFound/>/>
+            <Route path="*" element={<PageNotFound/>} />
           
         </Routes>
       </Router>
