@@ -21,7 +21,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 // Initialize Performance monitoring
-const perf = getPerformance(app);
+export const perf = getPerformance(app);
 //const analytics = getAnalytics(app);
 const db = getFirestore(app);
 //const auth = getAuth(app);
