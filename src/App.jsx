@@ -14,6 +14,8 @@ import Dashboard from "./pages/dashboard.jsx";
 import Vehicles from "./components/vehicles.jsx";
 import UpdateProfilePage from './components/driverProfile.jsx';
 import PageNotFound from './components/PageNotFound.jsx'
+import FeaturesPage from './components/features'
+import PricingPage from './components/pricing'
 import "./App.css";
 
 
@@ -29,6 +31,8 @@ const App = () =>  {
           <Route exact path="/" element={<LandingPage />} />
           
             <Route path="/staff" element={<Staff />} />
+            <Route path="/features" element={<FeaturesPage />} />
+            <Route path="/pricing" element={<PricingPage />} />
             <Route path="/driver/register" element={<DriverReg />} />
             <Route path="/drivers/update" element={<DriverList />} />
             <Route path="/driver/signin" element={<SignInForm />} />

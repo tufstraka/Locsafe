@@ -4,31 +4,31 @@ import Image from '../assets/3d-casual-life-trail-map.png';
 
 const LandingPage = () => {
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="flex flex-col min-h-screen bg-gray-100">
       <header className="py-6 bg-white shadow-lg">
-        <div className="container mx-auto flex items-center justify-between px-4">
+      <div className="container mx-auto flex items-center justify-between px-4">
           <h1 className="text-3xl font-bold text-gray-800">Locsafe™</h1>
           <nav>
             <ul className="flex items-center space-x-8 text-gray-600 font-medium">
               <li>
-                <Link to="#" className="hover:text-gray-800">Features</Link>
+                <Link to="/features" className="hover:text-gray-800">Features</Link>
               </li>
               <li>
-                <Link to="#" className="hover:text-gray-800">Pricing</Link>
+                <Link to="/pricing" className="hover:text-gray-800">Pricing</Link>
               </li>
               <li>
                 <Link to="#" className="hover:text-gray-800">Contact</Link>
               </li>
                <li>
-                {/*<li>
+                <li>
                 <Link to="/admin/dashboard" className="hover:text-gray-800 bg-indigo-500 p-4 rounded">Login</Link>
-              </li>*/}
+              </li>
               </li> 
             </ul>
           </nav>
         </div>
       </header>
-      <main className="container mx-auto my-16 flex flex-col md:flex-row px-4">
+      <main className="container mx-auto flex-1 my-16 flex flex-col md:flex-row px-4">
         <div className="md:w-1/2">
           <h2 className="text-4xl font-bold mb-8">Track your vehicles with ease</h2>
           <p className="text-gray-700 text-xl mb-8">
@@ -52,10 +52,10 @@ const LandingPage = () => {
         </div>
       </main>
       <footer className="py-6 bg-white shadow-lg">
-        <div className="container mx-auto flex items-center justify-between px-4">
-          <p className="text-gray-600">© 2024 Locsafe. All rights reserved.</p>
+      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-4">
+      <p className="text-gray-600 text-sm md:text-base text-center md:text-left mb-4 md:mb-0">© 2024 Locsafe. All rights reserved.</p>
           <nav>
-            <ul className="flex items-center space-x-8 text-gray-600 font-medium">
+          <ul className="flex items-center space-x-4 md:space-x-8 text-gray-600 font-medium justify-center">
               <li>
                 <a href="#" className="hover:text-gray-800">Terms</a>
               </li>
