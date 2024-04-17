@@ -1,191 +1,162 @@
-import { useEffect, useState } from "react";
-import {
-  collection,
-  getDocs,
-  updateDoc,
-  doc,
-  deleteDoc,
-} from "firebase/firestore";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { AiOutlineEdit } from "react-icons/ai";
-import db from "../utils/firebaseInit";
-import Sidebar from "./sidebar";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { collection, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firestore';
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import { AiOutlineEdit } from 'react-icons/ai';
+import db from '../utils/firebaseInit';
+import ConfirmationModal from './confirmation';
+import Sidebar from './sidebar';
+import { Link } from 'react-router-dom';
 
 const DriverList = () => {
   const [drivers, setDrivers] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [filteredDrivers, setFilteredDrivers] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedDriverId, setSelectedDriverId] = useState(null);
 
-  const handleSearch = (query) => {
-    setSearchQuery(query);
 
-    const filtered = drivers.filter((driver) => {
-      const name = driver.name.toLowerCase();
-      const contactNumber = driver.contactNumber.toLowerCase();
-      const drivingLicenceNumber = driver.drivingLicenceNumber.toLowerCase();
-      const lowerQuery = query.toLowerCase();
-
-      return (
-        name.includes(lowerQuery) ||
-        contactNumber.includes(lowerQuery) ||
-        drivingLicenceNumber.includes(lowerQuery)
-      );
-    });
-
-    setFilteredDrivers(filtered);
-  };
-
-  const fetchDrivers = async () => {
-    const driversCollection = collection(db, "drivers");
-    const driversSnapshot = await getDocs(driversCollection);
-    const driversData = driversSnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    setDrivers(driversData);
-  };
 
   useEffect(() => {
+    const fetchDrivers = async () => {
+      const driversCollection = collection(db, 'drivers');
+      const driversSnapshot = await getDocs(driversCollection);
+      const driversList = driversSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setDrivers(driversList);
+      setFilteredDrivers(driversList);
+    };
+
     fetchDrivers();
   }, []);
 
-  console.log(drivers);
-
-  const updateDriver = async (driverId, updatedData) => {
-    const driverRef = doc(db, "drivers", driverId);
-    await updateDoc(driverRef, updatedData);
+ const openModal = (driverId) => {
+    setSelectedDriverId(driverId);
+    setIsModalOpen(true);
   };
 
-  const handleUpdateName = async (driverId, newName) => {
-    await updateDriver(driverId, { name: newName });
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const confirmDelete = async () => {
+    if (selectedDriverId) {
+      await handleDeleteDriver(selectedDriverId);
+      closeModal();
+    }
+  };
+
+  const handleSearch = (event) => {
+    const query = event.target.value.toLowerCase();
+    setSearchQuery(query);
+    if (query) {
+      const filtered = drivers.filter((driver) =>
+        Object.values(driver).some((value) =>
+          String(value).toLowerCase().includes(query)
+        )
+      );
+      setFilteredDrivers(filtered);
+    } else {
+      setFilteredDrivers(drivers);
+    }
+  };
+
+  {/*const handleUpdateDriver = async (driverId, field, value) => {
+    const driverRef = doc(db, 'drivers', driverId);
+    await updateDoc(driverRef, { [field]: value });
     fetchDrivers(); // Refresh the drivers list after the update
-  };
-
-  const handleUpdateContact = async (driverId, newNumber) => {
-    await updateDriver(driverId, { contactNumber: newNumber });
-    fetchDrivers(); // Refresh the drivers list after the update
-  };
-
-  const handleUpdateLicense = async (driverId, newLicence) => {
-    await updateDriver(driverId, { drivingLicenceNumber: newLicence });
-    fetchDrivers(); // Refresh the drivers list after the update
-  };
+  };*/}
 
   const handleDeleteDriver = async (driverId) => {
-    await deleteDoc(doc(db, "drivers", driverId));
-    fetchDrivers(); // Refresh the drivers list after deletion
+    await deleteDoc(doc(db, 'drivers', driverId));
+    fetchDrivers(); 
   };
 
   return (
     <div className="flex">
       <Sidebar />
-      <div className="flex flex-col flex-grow ">
-        <h2 className="text-2xl font-semibold justify-center m-3 text-center">
-          Drivers
-        </h2>
-        <hr className="border-2 border-gray-300" />
-        <input
-          //className="border border-gray-300 rounded-md p-2 m-4 text-center"
-          className="py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-200 text-center m-4"
-          type="text"
-          placeholder="Search drivers"
-          value={searchQuery}
-          onChange={(e) => handleSearch(e.target.value)}
-        />
-
-        {searchQuery ? (
-          filteredDrivers.length > 0 ? (
-            <ul className="space-y-4">
-              {filteredDrivers.map((driver) => (
-                <li
-                  key={driver.id}
-                  className="flex items-center space-x-2 p-4 justify-between bg-blue-50 m-4"
-                >
-                  <span>
-                    {" "}
-                    <span className="font-bold">Name</span>: {driver.name}
-                  </span>
-                  <span>
-                    {" "}
-                    <span className="font-bold">Contact</span>:{" "}
-                    {driver.contactNumber}
-                  </span>
-                  <span>
-                    {" "}
-                    <span className="font-bold">License</span>:{" "}
-                    {driver.drivingLicenceNumber}
-                  </span>
-                  <button className="flex items-center text-blue-500 hover:text-blue-600">
-                    <AiOutlineEdit className="mr-1" />
-                    Update
-                  </button>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="flex align-middle justify-center">
-              No drivers found.
-            </p>
-          )
-        ) : drivers.length > 0 ? (
-          <ul className="space-y-4">
-            {drivers.map((driver) => (
-              <li
-                key={driver.id}
-                className="flex items-center space-x-2 p-4 justify-between bg-blue-50 m-4"
-              >
-                <span>
-                  {" "}
-                  <span className="font-bold">Name</span>:
-                  <input
-                    type="text"
-                    value={driver.name}
-                    className="w-full px-4 py-2 rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    onChange={(e) =>
-                      handleUpdateName(driver.id, e.target.value)
-                    }
-                  />
-                </span>
-                <span>
-                  {" "}
-                  <span className="font-bold">Contact</span>:{" "}
-                  <input
-                    type="text"
-                    value={driver.contactNumber}
-                    className="w-full px-4 py-2 rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    onChange={(e) =>
-                      handleUpdateContact(driver.id, e.target.value)
-                    }
-                  />
-                </span>
-                <span>
-                  {" "}
-                  <span className="font-bold">License</span>:{" "}
-                  <input
-                    type="text"
-                    value={driver.drivingLicenceNumber}
-                    className="w-full px-4 py-2 rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    onChange={(e) =>
-                      handleUpdateLicense(driver.id, e.target.value)
-                    }
-                  />
-                </span>
-                <button
-                  onClick={() => handleDeleteDriver(driver.id)}
-                  className="flex items-center text-red-500 hover:text-red-600"
-                >
-                  <RiDeleteBin6Line />
-                </button>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="flex align-middle justify-center">Loading</p>
-        )}
+      <div className="flex-grow">
+        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+          <div className="px-4 py-6 sm:px-0">
+            <h2 className="text-2xl font-semibold text-center mb-4">Driver Management</h2>
+            <div className="flex justify-center mb-4">
+              <input
+                className="form-input px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:border-indigo-300"
+                type="text"
+                placeholder="Search drivers"
+                value={searchQuery}
+                onChange={handleSearch}
+              />
+            </div>
+            <div className="flex flex-col">
+              <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                  <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                    <table className="min-w-full divide-y divide-gray-200">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Name
+                          </th>
+                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Contact Number
+                          </th>
+                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            License Number
+                          </th>
+                          <th scope="col" className="relative px-6 py-3">
+                            <span className="sr-only">Edit</span>
+                          </th>
+                          <th scope="col" className="relative px-6 py-3">
+                            <span className="sr-only">Delete</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="bg-white divide-y divide-gray-200">
+                        {filteredDrivers.map((driver) => (
+                          <tr key={driver.id}>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-gray-900">{driver.name}</div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-gray-900">{driver.contactNumber}</div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-gray-900">{driver.drivingLicenceNumber}</div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <Link to={`/drivers/${driver.id}/edit`} className="text-indigo-600 hover:text-indigo-900">
+                                <AiOutlineEdit />
+                              </Link>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <button onClick={() => openModal(driver.id)} className="text-red-600 hover:text-red-900">
+                                <RiDeleteBin6Line />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    {filteredDrivers.length === 0 && (
+                      <div className="text-center py-4">
+                        <p className="text-sm text-gray-500">No drivers found.</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <ConfirmationModal isOpen={isModalOpen} onClose={closeModal} onConfirm={confirmDelete}>
+        Are you sure you want to delete this driver?
+      </ConfirmationModal>
     </div>
   );
 };
 
 export default DriverList;
+

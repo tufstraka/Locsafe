@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { collection, doc, setDoc } from "firebase/firestore";
 //import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import Sidebar from './sidebar'
 import db from "../utils/firebaseInit";
 //import auth from "../utils/firebaseInit";
 
@@ -60,7 +61,10 @@ const DriverReg = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="flex">
+    <Sidebar/>  
+    <div className="flex-grow p-4">
+    <div className="max-w-3xl mx-auto bg-white shadow rounded-lg p-6">
       <h2 className="text-2xl font-semibold mb-4">Driver Registration</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -74,7 +78,7 @@ const DriverReg = () => {
             type="text"
             id="name"
             name="name"
-            className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
+            className="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             value={formData.name}
             onChange={handleChange}
             required
@@ -92,7 +96,7 @@ const DriverReg = () => {
             type="text"
             id="username"
             name="username"
-            className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
+            className="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             value={formData.username}
             onChange={handleChange}
             required
@@ -110,7 +114,7 @@ const DriverReg = () => {
             type="tel"
             id="contactNumber"
             name="contactNumber"
-            className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
+            className="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             value={formData.contactNumber}
             onChange={handleChange}
             required
@@ -128,7 +132,7 @@ const DriverReg = () => {
             type="email"
             id="email"
             name="email"
-            className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
+            className="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             value={formData.email}
             onChange={handleChange}
             required
@@ -146,7 +150,7 @@ const DriverReg = () => {
             type="password"
             id="password"
             name="password"
-            className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
+            className="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             value={formData.password}
             onChange={handleChange}
             required
@@ -164,7 +168,7 @@ const DriverReg = () => {
             type="text"
             id="drivingLicenceNumber"
             name="drivingLicenceNumber"
-            className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
+            className="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             value={formData.drivingLicenceNumber}
             onChange={handleChange}
             required
@@ -181,7 +185,7 @@ const DriverReg = () => {
             type="text"
             id="workSchedule"
             name="workSchedule"
-            className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
+            className="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             value={formData.workSchedule}
             onChange={handleChange}
             required
@@ -198,7 +202,7 @@ const DriverReg = () => {
             id="drivingHistory"
             name="drivingHistory"
             rows="4"
-            className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
+            className="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             value={formData.drivingHistory}
             onChange={handleChange}
           />
@@ -214,7 +218,7 @@ const DriverReg = () => {
             type="text"
             id="certifications"
             name="certifications"
-            className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
+            className="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             value={formData.certifications}
             onChange={handleChange}
           />
@@ -230,19 +234,22 @@ const DriverReg = () => {
             type="text"
             id="trainingRecords"
             name="trainingRecords"
-            className="border border-gray-300 rounded px-3 py-2 mt-1 w-full"
+            className="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             value={formData.trainingRecords}
             onChange={handleChange}
           />
         </div>
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-        >
+          className="inline-flex items-center px-6 py-3 bg-blue-600 border border-transparent rounded-md font-semibold text-white tracking-widest hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus:bg-blue-700 transition ease-in-out duration-150"
+          disabled={formData.username === "" || formData.password === ""}
+          >
           Register
         </button>
       </form>
+      </div>
     </div>
+  </div>
   );
 };
 

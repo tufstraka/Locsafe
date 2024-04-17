@@ -118,7 +118,7 @@ const Map = () => {
 
         <Marker position={position} />
       </MapContainer>
-      <button onClick={handleUnsubscribe}>Stop Tracking</button>
+      {/*<button onClick={handleUnsubscribe}>Stop Tracking</button>*/}
     </>
   );
 };

@@ -19,13 +19,10 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-col lg:flex-row bg-gray-100 min-h-screen">
-      {/* Sidebar for lg screens and above */}
-      <div className="hidden lg:flex">
         <Sidebar />
-      </div>
 
       {/* Content area */}
-      <div className="flex flex-col flex-grow">
+      <div className="flex flex-col flex-grow overflow-y-auto">
         {/* Top bar */}
         <div className="flex items-center justify-between px-4 py-3 border-b bg-white">
           <button className="text-gray-600 hover:text-gray-800 transition-colors duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500">
@@ -43,13 +40,9 @@ const Dashboard = () => {
 
         {/* Map and stats */}
         <div className="flex-grow p-4">
-          <div className="mb-4">
-            <Map />
-          </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md">
-            <div className="p-5 border-b border-gray-200">
-              <h1 className="text-xl font-semibold text-gray-800">Dashboard</h1>
-            </div>
+          <Map />
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md mt-4">
+
             <div className="p-5">
               <h2 className="mb-4 text-lg font-medium text-gray-800">Overview</h2>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -74,14 +67,10 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-
-      {/* Sidebar for mobile and small screens */}
-      <div className="flex lg:hidden">
-        <Sidebar />
-      </div>
     </div>
   );
 };
 
 export default Dashboard;
+
 

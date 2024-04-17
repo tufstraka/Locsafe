@@ -16,6 +16,7 @@ import UpdateProfilePage from './components/driverProfile.jsx';
 import PageNotFound from './components/PageNotFound.jsx'
 import FeaturesPage from './components/features'
 import PricingPage from './components/pricing'
+import DriverEdit from './components/driveredit'
 import "./App.css";
 
 
@@ -33,6 +34,7 @@ const App = () =>  {
             <Route path="/staff" element={<Staff />} />
             <Route path="/features" element={<FeaturesPage />} />
             <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/drivers/:driverId/edit" element={<DriverEdit />} />
             <Route path="/driver/register" element={<DriverReg />} />
             <Route path="/drivers/update" element={<DriverList />} />
             <Route path="/driver/signin" element={<SignInForm />} />

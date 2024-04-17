@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <div className="flex h-screen flex-col w-64 bg-white border-r dark:bg-gray-800 dark:border-gray-600">
+    <div className="flex flex-col w-64 bg-white border-r dark:bg-gray-800 dark:border-gray-600">
     <div className="flex items-center justify-center h-16 border-b dark:border-gray-600">
       <Link
         to="/"
@@ -51,6 +51,55 @@ const Sidebar = () => {
         >
           <FaRegCalendarAlt className="w-5 h-5 mr-4" />
           <span className="text-sm font-medium">Calendar</span>
+        </Link>
+        <Link
+          to="/geofence"
+          className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+        >
+          <BsFillGeoFill className="w-5 h-5 mr-4" />
+          <span className="text-sm font-medium">Geofences</span>
+        </Link>
+        <Link
+          to="/geofence"
+          className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+        >
+          <BsFillGeoFill className="w-5 h-5 mr-4" />
+          <span className="text-sm font-medium">Geofences</span>
+        </Link>
+        <Link
+          to="/geofence"
+          className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+        >
+          <BsFillGeoFill className="w-5 h-5 mr-4" />
+          <span className="text-sm font-medium">Geofences</span>
+        </Link>
+        <Link
+          to="/geofence"
+          className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+        >
+          <BsFillGeoFill className="w-5 h-5 mr-4" />
+          <span className="text-sm font-medium">Geofences</span>
+        </Link>
+        <Link
+          to="/geofence"
+          className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+        >
+          <BsFillGeoFill className="w-5 h-5 mr-4" />
+          <span className="text-sm font-medium">Geofences</span>
+        </Link>
+        <Link
+          to="/geofence"
+          className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+        >
+          <BsFillGeoFill className="w-5 h-5 mr-4" />
+          <span className="text-sm font-medium">Geofences</span>
+        </Link>
+        <Link
+          to="/geofence"
+          className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+        >
+          <BsFillGeoFill className="w-5 h-5 mr-4" />
+          <span className="text-sm font-medium">Geofences</span>
         </Link>
         <Link
           to="/geofence"
