@@ -20,7 +20,7 @@ import DriverEdit from './components/driveredit'
 import SignIn from './components/signin.jsx';
 import ContactUs from './pages/contact.jsx';
 import "./App.css";
-
+import MyCalendar from './components/calendar.jsx';
 
 const App = () =>  {
   const [username, setUsername] = useState("");
@@ -36,6 +36,7 @@ const App = () =>  {
             <Route path="/staff" element={<Staff />} />
             <Route path="/features" element={<FeaturesPage />} />
             <Route path='/login' element={<SignIn/>}/>
+            <Route path='/calendar' element={<MyCalendar/>}/>
             <Route path='/contact' element={<ContactUs/>} />
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/drivers/:driverId/edit" element={<DriverEdit />} />
