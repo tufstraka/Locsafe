@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { collection, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firestore';
+import { collection, getDocs, deleteDoc } from 'firebase/firestore';
 import { RiDeleteBin6Line } from 'react-icons/ri';
-import { AiOutlineEdit } from 'react-icons/ai';
+import { AiOutlineEdit, AiOutlineArrowUp, AiOutlineArrowDown } from 'react-icons/ai'; // Import relevant icons for sorting
 import db from '../utils/firebaseInit';
 import ConfirmationModal from './confirmation';
 import Sidebar from './sidebar';
 import { Link } from 'react-router-dom';
+import SkeletonLoading from './skeletonloading';
 
 const DriverList = () => {
   const [drivers, setDrivers] = useState([]);
@@ -13,8 +14,8 @@ const DriverList = () => {
   const [filteredDrivers, setFilteredDrivers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDriverId, setSelectedDriverId] = useState(null);
-
-
+  const [sortOrder, setSortOrder] = useState(null); 
+  const [isLoading, setIsLoading] = useState(true); 
 
   useEffect(() => {
     const fetchDrivers = async () => {
@@ -26,12 +27,13 @@ const DriverList = () => {
       }));
       setDrivers(driversList);
       setFilteredDrivers(driversList);
+      setIsLoading(false); 
     };
 
     fetchDrivers();
   }, []);
 
- const openModal = (driverId) => {
+  const openModal = (driverId) => {
     setSelectedDriverId(driverId);
     setIsModalOpen(true);
   };
@@ -62,11 +64,15 @@ const DriverList = () => {
     }
   };
 
-  {/*const handleUpdateDriver = async (driverId, field, value) => {
-    const driverRef = doc(db, 'drivers', driverId);
-    await updateDoc(driverRef, { [field]: value });
-    fetchDrivers(); // Refresh the drivers list after the update
-  };*/}
+  const handleSort = (field) => {
+    const sortedDrivers = [...filteredDrivers].sort((a, b) => {
+      if (a[field] < b[field]) return sortOrder === 'asc' ? -1 : 1; // Adjust sorting based on sortOrder
+      if (a[field] > b[field]) return sortOrder === 'asc' ? 1 : -1; // Adjust sorting based on sortOrder
+      return 0;
+    });
+    setFilteredDrivers(sortedDrivers);
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc'); // Toggle sortOrder after sorting
+  };
 
   const handleDeleteDriver = async (driverId) => {
     await deleteDoc(doc(db, 'drivers', driverId));
@@ -79,7 +85,7 @@ const DriverList = () => {
       <div className="flex-grow">
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
-            <h2 className="text-2xl font-semibold text-center mb-4">Driver Management</h2>
+            <h2 className="text-2xl font-semibold text-center mb-4">User Management</h2>
             <div className="flex justify-center mb-4">
               <input
                 className="form-input px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:border-indigo-300"
@@ -89,6 +95,10 @@ const DriverList = () => {
                 onChange={handleSearch}
               />
             </div>
+            {isLoading ? (
+              // Display skeleton loading while data is being fetched
+              <SkeletonLoading />
+            ) : (
             <div className="flex flex-col">
               <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -96,14 +106,20 @@ const DriverList = () => {
                     <table className="min-w-full divide-y divide-gray-200">
                       <thead className="bg-gray-50">
                         <tr>
-                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Name
+                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" onClick={() => handleSort('name')}>
+                            Name <span className="ml-1 transition-colors duration-300 inline-block transform" style={{ color: sortOrder ? '#4f46e5' : '#6b7280' }}>
+                              {sortOrder === 'asc' ? <AiOutlineArrowUp /> : sortOrder === 'desc' ? <AiOutlineArrowDown /> : null}
+                            </span>
                           </th>
-                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Contact Number
+                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" onClick={() => handleSort('contactNumber')}>
+                            Contact Number <span className="ml-1 transition-colors duration-300 inline-block transform" style={{ color: sortOrder ? '#4f46e5' : '#6b7280' }}>
+                              {sortOrder === 'asc' ? <AiOutlineArrowUp /> : sortOrder === 'desc' ? <AiOutlineArrowDown /> : null}
+                            </span>
                           </th>
-                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            License Number
+                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" onClick={() => handleSort('drivingLicenceNumber')}>
+                            License Number <span className="ml-1 transition-colors duration-300 inline-block transform" style={{ color: sortOrder ? '#4f46e5' : '#6b7280' }}>
+                              {sortOrder === 'asc' ? <AiOutlineArrowUp /> : sortOrder === 'desc' ? <AiOutlineArrowDown /> : null}
+                            </span>
                           </th>
                           <th scope="col" className="relative px-6 py-3">
                             <span className="sr-only">Edit</span>
@@ -148,6 +164,7 @@ const DriverList = () => {
                 </div>
               </div>
             </div>
+          )}
           </div>
         </div>
       </div>
@@ -159,4 +176,7 @@ const DriverList = () => {
 };
 
 export default DriverList;
+
+
+
 
