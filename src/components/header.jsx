@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const Header = () => (
   <header className="py-6 bg-white shadow-lg">
     <div className="container mx-auto flex items-center justify-between px-4">
-      <h1 className="text-3xl font-bold text-gray-800">Locsafe™</h1>
+    <Link to="/" className="hover:text-gray-800"><h1 className="text-3xl font-bold text-gray-800">Locsafe™</h1></Link>
       <nav>
         <ul className="flex items-center space-x-8 text-gray-600 font-medium">
           <li>

@@ -9,13 +9,13 @@ const LandingPage = () => {
       <Header/>
       <main className="container mx-auto flex-1 my-16 flex flex-col md:flex-row px-4">
         <div className="md:w-1/2">
-          <h2 className="text-4xl font-bold mb-8">Track your vehicles with ease</h2>
+          <h2 className="text-4xl font-bold mb-8">Track your assets with ease</h2>
           <p className="text-gray-700 text-xl mb-8">
-            Locsafe is a GPS fleet tracking and management system that helps you keep track of your vehicles in real-time.
+            Locsafe is an asset tracking and management system that helps you keep track of your assets in real-time.
           </p>
           <div className="flex items-center space-x-4 text-gray-700 font-medium mb-8">
             <FaMapMarkerAlt className="text-2xl text-blue-500" />
-            <p>Track your vehicles anywhere in the world</p>
+            <p>Track your assets anywhere in the world</p>
           </div>
           <div className="flex items-center space-x-4 text-gray-700 font-medium mb-8">
             <FaCalendarAlt className="text-2xl text-blue-500" />
@@ -27,7 +27,7 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="md:w-1/2">
-          <img className="h-full w-full object-cover rounded-lg" src={Image} alt="3D casual life trail map" />
+          <img className="h-full w-full object-contain rounded-lg" src={Image} alt="3D casual life trail map" />
         </div>
       </main>
       <Footer/>

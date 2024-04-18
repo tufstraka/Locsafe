@@ -4,6 +4,8 @@ import { collection, doc, setDoc } from "firebase/firestore";
 import Sidebar from './sidebar'
 import db from "../utils/firebaseInit";
 //import auth from "../utils/firebaseInit";
+import successIcon from "../assets/check.png"; // Replace with your success icon
+
 
 const DriverReg = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +20,8 @@ const DriverReg = () => {
     certifications: "",
     trainingRecords: "",
   });
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,6 +30,7 @@ const DriverReg = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSaving(true);
 
     try {
       const collectionRef = collection(db, "drivers");
@@ -42,20 +47,26 @@ const DriverReg = () => {
 
       
 
-      // Clear the form after successful submission
-      setFormData({
-        name: "",
-        username: "",
-        password: "",
-        contactNumber: "",
-        drivingLicenceNumber: "",
-        workSchedule: "",
-        drivingHistory: "",
-        certifications: "",
-        trainingRecords: "",
-      });
+      setTimeout(() => {
+        setIsSuccess(true);
+        setIsSaving(false);
+        // Clear the form after successful submission
+        setFormData({
+          name: "",
+          username: "",
+          email: "",
+          password: "",
+          contactNumber: "",
+          drivingLicenceNumber: "",
+          workSchedule: "",
+          drivingHistory: "",
+          certifications: "",
+          trainingRecords: "",
+        });
+      }, 3000); // Reset success message after 3 seconds
     } catch (error) {
       console.error("Error adding document: ", error);
+      setIsSaving(false);
     }
     //console.log(formData);
   };
@@ -242,11 +253,18 @@ const DriverReg = () => {
         <button
           type="submit"
           className="inline-flex items-center px-6 py-3 bg-blue-600 border border-transparent rounded-md font-semibold text-white tracking-widest hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus:bg-blue-700 transition ease-in-out duration-150"
-          disabled={formData.username === "" || formData.password === ""}
+          disabled={isSaving || formData.username === "" || formData.password === ""}
           >
-          Register
+        {isSaving ? "Saving..." : "Register"}        
         </button>
       </form>
+
+      {isSuccess && (
+            <div className="flex items-center mt-4">
+              <img src={successIcon} alt="Success" className="w-6 h-6 mr-2" />
+              <p className="text-green-600">Driver added successfully!</p>
+            </div>
+          )}
       </div>
     </div>
   </div>

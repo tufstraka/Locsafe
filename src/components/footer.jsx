@@ -5,13 +5,13 @@ const Footer = () => (
         <nav>
           <ul className="flex items-center space-x-4 md:space-x-8 text-gray-600 font-medium justify-center">
             <li>
-              <a href="#" className="hover:text-gray-800">Terms</a>
+              <a href="/Terms-and-Conditions" className="hover:text-gray-800">Terms</a>
             </li>
             <li>
-              <a href="#" className="hover:text-gray-800">Privacy</a>
+              <a href="/Privacy-Policy" className="hover:text-gray-800">Privacy</a>
             </li>
             <li>
-              <a href="#" className="hover:text-gray-800">Support</a>
+              <a href="/Support" className="hover:text-gray-800">Support</a>
             </li>
           </ul>
         </nav>

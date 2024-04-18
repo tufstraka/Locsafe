@@ -14,10 +14,11 @@ import Dashboard from "./pages/dashboard.jsx";
 import Vehicles from "./components/vehicles.jsx";
 import UpdateProfilePage from './components/driverProfile.jsx';
 import PageNotFound from './components/PageNotFound.jsx'
-import FeaturesPage from './components/features'
+import FeaturesPage from './pages/features.jsx'
 import PricingPage from './pages/pricing.jsx'
 import DriverEdit from './components/driveredit'
 import SignIn from './components/signin.jsx';
+import ContactUs from './pages/contact.jsx';
 import "./App.css";
 
 
@@ -35,6 +36,7 @@ const App = () =>  {
             <Route path="/staff" element={<Staff />} />
             <Route path="/features" element={<FeaturesPage />} />
             <Route path='/login' element={<SignIn/>}/>
+            <Route path='/contact' element={<ContactUs/>} />
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/drivers/:driverId/edit" element={<DriverEdit />} />
             <Route path="/driver/register" element={<DriverReg />} />
