@@ -1,7 +1,7 @@
 import { useState } from 'react'
 //import { getDocs, collection} from 'firebase/firestore';
 import DriverDashboard from "./components/driverDashboard.jsx";
-import LandingPage from "./components/landingpage.jsx";
+import LandingPage from "./pages/landingpage.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Staff from "./components/staff.jsx";
 import DriverList from "./components/driverList.jsx";
@@ -15,8 +15,9 @@ import Vehicles from "./components/vehicles.jsx";
 import UpdateProfilePage from './components/driverProfile.jsx';
 import PageNotFound from './components/PageNotFound.jsx'
 import FeaturesPage from './components/features'
-import PricingPage from './components/pricing'
+import PricingPage from './pages/pricing.jsx'
 import DriverEdit from './components/driveredit'
+import SignIn from './components/signin.jsx';
 import "./App.css";
 
 
@@ -33,6 +34,7 @@ const App = () =>  {
           
             <Route path="/staff" element={<Staff />} />
             <Route path="/features" element={<FeaturesPage />} />
+            <Route path='/login' element={<SignIn/>}/>
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/drivers/:driverId/edit" element={<DriverEdit />} />
             <Route path="/driver/register" element={<DriverReg />} />
