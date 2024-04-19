@@ -8,3 +8,18 @@
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-optical-sizing: auto;
 }
+
+*::-webkit-scrollbar{
+    width: 1.26rem;
+}
+*::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+  }
+
+*::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  
+
