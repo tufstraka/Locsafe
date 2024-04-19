@@ -19,6 +19,7 @@ const ContactUs = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // To Do: add form submission logic
+    // test
     console.log(formData);
   };
 
