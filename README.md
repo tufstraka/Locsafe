@@ -17,7 +17,7 @@ Welcome to our Asset Tracking and Management System! This system provides a comp
 
 To get started with our Asset Tracking and Management System, follow these steps:
 
-1. **Sign Up**: Create an account on our platform by visiting [Sign Up Page](https://diagon-burrow.vercel.com/signup).
+1. **Sign Up**: Create an account on our platform by visiting [Sign Up Page](https://diagon-burrow.vercel.app/signup).
 2. **Login**: Once you have signed up, login to your account using your credentials.
 3. **Add Assets**: Start by adding your assets to the system, providing relevant information such as asset type, serial number, and location.
 4. **Track Assets**: Monitor the location and status of your assets in real-time using our intuitive dashboard.
@@ -26,7 +26,7 @@ To get started with our Asset Tracking and Management System, follow these steps
 
 ## Documentation
 
-For detailed documentation on using our Asset Tracking and Management System, refer to the [User Manual](https://diagon-burrow.vercel.com/docs).
+For detailed documentation on using our Asset Tracking and Management System, refer to the [User Manual](https://diagon-burrow.vercel.app/docs).
 
 ## Support
 
@@ -38,7 +38,7 @@ We welcome contributions from the community to improve our Asset Tracking and Ma
 
 ## License
 
-This project is licensed under the [Apache 2 License](LICENSE).
+This project is licensed under the [Apache-2.0 License](LICENSE).
 
 
 Thank you for choosing our Asset Tracking and Management System! We hope it helps you streamline your asset management processes and improve efficiency in your organization.
