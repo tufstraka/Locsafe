@@ -1,6 +1,6 @@
 # Locsafe
 
-Welcome to our Asset Tracking and Management System! This system provides a comprehensive solution for tracking, managing, and optimizing your organization's assets efficiently. Whether you need to monitor equipment, vehicles, inventory, or any other valuable resources, our system has you covered.
+Welcome to our Locsafe! This system provides a comprehensive solution for tracking, managing, and optimizing your organization's assets efficiently. Whether you need to monitor equipment, vehicles, inventory, or any other valuable resources, our system has you covered.
 
 ## Features
 
@@ -26,7 +26,7 @@ To get started with our Asset Tracking and Management System, follow these steps
 
 ## Documentation
 
-For detailed documentation on using our Asset Tracking and Management System, refer to the [User Manual](https://diagon-burrow.vercel.app/docs).
+For detailed documentation on using Locsafe, refer to the [User Manual](https://diagon-burrow.vercel.app/docs).
 
 ## Support
 
@@ -41,6 +41,6 @@ We welcome contributions from the community to improve our Asset Tracking and Ma
 This project is licensed under the [Apache-2.0 License](LICENSE).
 
 
-Thank you for choosing our Asset Tracking and Management System! We hope it helps you streamline your asset management processes and improve efficiency in your organization.
+Thank you for choosing Locsafe! We hope it helps you streamline your asset management processes and improve efficiency in your organization.
 
 
