@@ -6,6 +6,7 @@ const EventEditForm = ({ startDate, endDate, onClose, onRegister }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Validate input and register event
+    // test
     onRegister({ title, startDate, endDate });
     onClose();
   };
