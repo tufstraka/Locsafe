@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Header from '../components/header';
 import Footer from '../components/footer';
+import { Helmet } from 'react-helmet';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -25,6 +26,13 @@ const ContactUs = () => {
 
   return (
     <div>
+       <Helmet>
+        <title>Contact Us - Locsafe™</title>
+        <meta
+          name="description"
+          content="Get in touch with Locsafe™ to learn more about our asset tracking and management system. Fill out the contact form and we'll get back to you as soon as possible."
+        />
+      </Helmet>
       <Header/>  
 
     <div className="container mx-auto px-4 py-8">

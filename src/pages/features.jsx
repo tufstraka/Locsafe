@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet';
 import { FaCloud, FaMobileAlt, FaChartLine, FaShieldAlt } from 'react-icons/fa';
 import Footer from '../components/footer';
 import Header from '../components/header';
@@ -5,6 +6,13 @@ import Header from '../components/header';
 const FeaturesPage = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
+      <Helmet>
+        <title>Powerful Features - Locsafe™</title>
+        <meta
+          name="description"
+          content="Discover powerful features designed to simplify asset tracking and management for your business with Locsafe™."
+        />
+      </Helmet>
       <Header/>
       <main className="flex-grow container mx-auto my-16 px-4">
         <section className="text-center mb-20">
