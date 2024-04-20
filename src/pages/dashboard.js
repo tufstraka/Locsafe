@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { IoIosNotificationsOutline } from 'react-icons/io';
 import { getDocs, collection } from 'firebase/firestore';
-import db from '../utils/firebaseInit';
+import db from '../utils/firebaseInit.js';
 import Map from '../components/map.jsx';
 import Sidebar from '../components/sidebar.jsx';
 

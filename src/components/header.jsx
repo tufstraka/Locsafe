@@ -43,6 +43,9 @@ const Header = () => {
               <li>
                 <Link to="/contact" className="hover:text-gray-200">Contact</Link>
               </li>
+              <li>
+                <Link to="/admin/dashboard" className="hover:text-gray-200">Dashboard</Link>
+              </li>
             </ul>
           </nav>
         )}
@@ -60,6 +63,9 @@ const Header = () => {
               </li>
               <li>
                 <Link to="/contact" className="block py-2 px-4 hover:text-gray-200">Contact</Link>
+              </li>
+              <li>
+                <Link to="/admin/dashboard" className="hover:text-gray-200">Dashboard</Link>
               </li>
             </ul>
           </div>

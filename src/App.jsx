@@ -1,7 +1,7 @@
 import { useState } from 'react'
 //import { getDocs, collection} from 'firebase/firestore';
 import DriverDashboard from "./components/driverDashboard.jsx";
-import LandingPage from "./pages/landingpage.jsx";
+import LandingPage from "./pages/landingpage.js";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Staff from "./components/staff.jsx";
 import DriverList from "./components/driverList.jsx";
@@ -10,15 +10,15 @@ import DispatcherReg from "./components/dispatcherReg.jsx";
 import SignUpForm from "./components/signup.jsx";
 import SignInForm from "./components/signin.jsx";
 import GeofenceMap from "./components/geofence.jsx";
-import Dashboard from "./pages/dashboard.jsx";
+import Dashboard from "./pages/dashboard.js";
 import Vehicles from "./components/vehicles.jsx";
 import UpdateProfilePage from './components/driverProfile.jsx';
 import PageNotFound from './components/PageNotFound.jsx'
-import FeaturesPage from './pages/features.jsx'
-import PricingPage from './pages/pricing.jsx'
+import FeaturesPage from './pages/features.js'
+import PricingPage from './pages/pricing.js'
 import DriverEdit from './components/driveredit'
 import SignIn from './components/signin.jsx';
-import ContactUs from './pages/contact.jsx';
+import ContactUs from './pages/contact.js';
 import "./App.css";
 import MyCalendar from './components/calendar.jsx';
 

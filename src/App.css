@@ -16,7 +16,7 @@
 *::-webkit-scrollbar-thumb {
   background-color: #4a5568; /* Dark gray similar to header background */
   border-radius: 20px;
-  border: 6px solid transparent;
+  border: 5px solid transparent;
   background-clip: content-box;
 }
 

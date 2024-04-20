@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import Header from '../components/header';
 import Footer from '../components/footer';
@@ -38,6 +39,13 @@ const PricingPage = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
+      <Helmet>
+        <title>Pricing Plans - Locsafe™</title>
+        <meta
+          name="description"
+          content="Choose a plan that fits your business needs. All plans are billed annually and in Kenyan Shillings. Locsafe™ offers Starter, Business, and Enterprise plans with various features to help you manage your assets effectively."
+        />
+      </Helmet>
       <Header/>
       <main className="flex-grow container mx-auto py-16 px-4">
         <section className="text-center mb-16">
@@ -70,7 +78,7 @@ const PricingPage = () => {
       </main>
 
       <Footer/>
-      </div>
+    </div>
   );
 };
 
