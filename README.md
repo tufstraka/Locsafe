@@ -17,7 +17,7 @@ Welcome to Locsafe! This system provides a comprehensive solution for tracking, 
 
 To get started with our Asset Tracking and Management System, follow these steps:
 
-1. **Sign Up**: Create an account on our platform by visiting [Sign Up Page](https://diagon-burrow.vercel.app/signup).
+1. **Sign Up**: Create an account on our platform by visiting [Sign Up Page](https://www.loc-safe.com/signup).
 2. **Login**: Once you have signed up, login to your account using your credentials.
 3. **Add Assets**: Start by adding your assets to the system, providing relevant information such as asset type, serial number, and location.
 4. **Track Assets**: Monitor the location and status of your assets in real-time using our intuitive dashboard.
@@ -26,7 +26,7 @@ To get started with our Asset Tracking and Management System, follow these steps
 
 ## Documentation
 
-For detailed documentation on using Locsafe, refer to the [User Manual](https://diagon-burrow.vercel.app/docs).
+For detailed documentation on using Locsafe, refer to the [User Manual](https://www.loc-safe.com/docs).
 
 ## Support
 
