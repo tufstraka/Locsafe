@@ -49,7 +49,7 @@ const ContactUs = () => {
           <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
           <textarea id="message" name="message" value={formData.message} onChange={handleChange} rows="5" placeholder="Your Message" className="w-full mt-2 px-4 py-2 rounded-md bg-gray-100 focus:outline-none focus:bg-white" required></textarea>
         </div>
-        <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors duration-300">Send Message</button>
+        <button type="submit" className="w-full bg-gray-900 text-white py-2 rounded-md hover:bg-blue-600 transition-colors duration-300">Send Message</button>
       </form>
     </div>
           <Footer/>
