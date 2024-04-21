@@ -19,6 +19,7 @@ import PricingPage from './pages/pricing.jsx'
 import DriverEdit from './components/driveredit'
 import SignIn from './components/signin.jsx';
 import ContactUs from './pages/contact.jsx';
+import Register from './components/register.jsx';
 import "./App.css";
 import MyCalendar from './components/calendar.jsx';
 
@@ -36,6 +37,7 @@ const App = () =>  {
             <Route path="/staff" element={<Staff />} />
             <Route path="/features" element={<FeaturesPage />} />
             <Route path='/login' element={<SignIn/>}/>
+            <Route path='/register' element={<Register/>}/>
             <Route path='/calendar' element={<MyCalendar/>}/>
             <Route path='/contact' element={<ContactUs/>} />
             <Route path="/pricing" element={<PricingPage />} />
