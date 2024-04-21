@@ -17,9 +17,10 @@ Welcome to Locsafe! This system provides a comprehensive solution for tracking, 
 
 To get started with our Asset Tracking and Management System, follow these steps:
 
-1. **Sign Up**: Create an account on our platform by visiting [Sign Up Page](https://www.loc-safe.com/signup).
+1. **Sign Up**: Create an account on our platform by visiting [Sign Up Page](https://www.loc-safe.com/register).
 2. **Login**: Once you have signed up, login to your account using your credentials.
-3. **Add Assets**: Start by adding your assets to the system, providing relevant information such as asset type, serial number, and location.
+3. **Add Assets**: Start by adding your assets to the system, providing relevant information such as asset type, serial number etc.
+4. **Tag Assets**: Tag assets using our GPS tagging products.
 4. **Track Assets**: Monitor the location and status of your assets in real-time using our intuitive dashboard.
 5. **Set Alerts**: Customize alerts to receive notifications for important events related to your assets.
 6. **Generate Reports**: Use the reporting and analytics tools to generate insights and optimize asset management processes.
