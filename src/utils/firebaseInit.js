@@ -4,10 +4,6 @@ import { getFirestore } from "firebase/firestore";
 import { getPerformance } from "firebase/performance";
 //import { getAuth } from "firebase/auth";
 
-
-// TODO: Add SDKs for Firebase products that I want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
 const firebaseConfig = {
   apiKey: "AIzaSyAPyF44EBwhUsDx1n4pdgmBIjvWQK_fxMk",
   authDomain: "locsafe-58643.firebaseapp.com",
