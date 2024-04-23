@@ -2,6 +2,18 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from './header';
 import Footer from './footer';
+import {
+  getAuth,
+  setPersistence,
+  signInWithEmailAndPassword,
+  browserSessionPersistence,
+  signInWithPopup,
+  GoogleAuthProvider,
+  OAuthProvider
+} from "firebase/auth";
+
+const auth = getAuth();
+setPersistence(auth, browserSessionPersistence);
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -27,6 +39,45 @@ const Register = () => {
     fetchCountries();
   }, []);
 
+  const handleEmailSignUp = async () => {
+    try {
+      const { email, password } = formData;
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log('User signed up with email and password successfully!');
+    } catch (error) {
+      console.error('Error signing up with email and password:', error);
+    }
+  };
+
+  const handleGoogleSignUp = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+      console.log('User signed up with Google successfully!');
+    } catch (error) {
+      console.error('Error signing up with Google:', error);
+    }
+  };
+
+  const handleMicrosoftSignUp = async () => {
+    try {
+      const provider = new OAuthProvider('microsoft.com');
+      await signInWithPopup(auth, provider);
+      console.log('User signed up with Microsoft successfully!');
+    } catch (error) {
+      console.error('Error signing up with Microsoft:', error);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission logic here
+    console.log(formData);
+    // Call appropriate sign-up function based on the selected provider
+    // For example, if you want to sign up with email and password:
+    handleEmailSignUp();
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -35,11 +86,6 @@ const Register = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic here
-    console.log(formData);
-  };
 
   return (
     <div>
@@ -130,14 +176,14 @@ const Register = () => {
               Sign Up
             </button>
             <div className="flex justify-center items-center">
-              <div className="bg-white rounded-lg shadow-lg p-2 mr-4 cursor-pointer">
+              <div className="bg-white rounded-lg shadow-lg p-2 mr-4 cursor-pointer" onClick={handleGoogleSignUp}>
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
                   alt="Google Logo"
                   className="h-8 w-8"
                 />
               </div>
-              <div className="bg-white rounded-lg shadow-lg p-2 cursor-pointer">
+              <div className="bg-white rounded-lg shadow-lg p-2 cursor-pointer" onClick={handleMicrosoftSignUp}>
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/500px-Microsoft_logo.svg.png"
                   alt="Microsoft Logo"
