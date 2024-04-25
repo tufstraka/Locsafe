@@ -49,7 +49,7 @@ const PricingPage = () => {
       </Helmet>
       <Header/>
       <main className="flex-grow container mx-auto py-16 px-4">
-        <section className="text-center mb-16">
+        <section className="text-center mb-10 mt-10">
           <h2 className="text-4xl font-bold text-gray-800 mb-4">Pricing Plans</h2>
           <p className="text-xl text-gray-700 max-w-2xl mx-auto">
             Choose a plan that fits your business needs. All plans are billed annually and in Kenyan Shillings.

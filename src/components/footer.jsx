@@ -7,13 +7,13 @@ const Footer = () => (
       <nav>
         <ul className="flex items-center space-x-4 md:space-x-8 text-white font-medium justify-center">
           <li>
-            <a href="/Terms-and-Conditions" className="hover:text-gray-200">Terms</a>
+            <a href="/Terms-and-Conditions" className="hover:text-teal-400 transition-colors duration-300">Terms</a>
           </li>
           <li>
-            <a href="/Privacy-Policy" className="hover:text-gray-200">Privacy</a>
+            <a href="/Privacy-Policy" className="hover:text-teal-400 transition-colors duration-300">Privacy</a>
           </li>
           <li>
-            <a href="/Support" className="hover:text-gray-200">Support</a>
+            <a href="/Support" className="hover:text-teal-400 transition-colors duration-300">Support</a>
           </li>
         </ul>
       </nav>

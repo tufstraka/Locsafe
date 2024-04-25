@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 *{
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: 'Barlow Semi Condensed';
     font-optical-sizing: auto;
 }
 
@@ -28,5 +28,74 @@
   background-color: #d6dee1; /* Light gray similar to header text color on hover */
 }
 
+@keyframes pulse {
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 4s infinite;
+}
+
+/* Hamburger menu styles */
+.hamburger {
+  width: 30px;
+  height: 25px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.hamburger span {
+  display: block;
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background: #fff;
+  border-radius: 9px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: all 0.3s ease-in-out;
+}
+
+.hamburger span:nth-child(1) {
+  top: 0px;
+}
+
+.hamburger span:nth-child(2) {
+  top: 11px;
+}
+
+.hamburger span:nth-child(3) {
+  top: 22px;
+}
+
+.hamburger.open span:nth-child(1) {
+  top: 11px;
+  transform: rotate(135deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+  left: -60px;
+}
+
+.hamburger.open span:nth-child(3) {
+  top: 11px;
+  transform: rotate(-135deg);
+}
+
+.logo{
+  font-family: 'Signika Negative';
+  font-weight: 700;
+}
   
 

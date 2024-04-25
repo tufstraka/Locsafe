@@ -15,7 +15,7 @@ const FeaturesPage = () => {
       </Helmet>
       <Header/>
       <main className="flex-grow container mx-auto my-16 px-4">
-        <section className="text-center mb-20">
+        <section className="text-center mb-10 mt-10">
           <h2 className="text-4xl font-bold text-gray-800 mb-4">Powerful Features</h2>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
             Explore the range of cutting-edge features designed to simplify asset tracking and management for your business.
