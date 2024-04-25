@@ -1,7 +1,7 @@
 # Locsafe
 
 <p align="center">
-  <img src="logo" width="20%" height="auto" />
+  <img src="./src/assets/logo.png" width="20%" height="auto" />
 </p>
 
 ## About
