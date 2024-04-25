@@ -1,6 +1,11 @@
 # Locsafe
 
-Welcome to Locsafe! This system provides a comprehensive solution for tracking, managing, and optimizing your organization's assets efficiently. Whether you need to monitor equipment, vehicles, inventory, or any other valuable resources, our system has you covered.
+<p align="center">
+  <img src="logo" width="20%" height="auto" />
+</p>
+
+## About
+This system provides a comprehensive solution for tracking, managing, and optimizing your organization's assets efficiently. Whether you need to monitor equipment, vehicles, inventory, or any other valuable resources, our system has you covered.
 
 ## Features
 
