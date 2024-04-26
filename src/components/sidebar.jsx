@@ -1,19 +1,27 @@
+import { useContext } from "react";
 import { FiMap, FiTruck, FiAlertOctagon } from "react-icons/fi";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { BsFillGeoFill } from "react-icons/bs";
+import { IoClose } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import { AppContext } from "../App";
 
 const Sidebar = () => {
+  const { toggleNav } = useContext(AppContext);
+
   return (
-    <div className="flex flex-col w-64 bg-white border-r dark:bg-gray-800 dark:border-gray-600">
-    <div className="flex items-center justify-center h-16 border-b dark:border-gray-600">
+    <div className="flex flex-col w-64 bg-white border-r dark:bg-gray-800 dark:border-gray-600 max-sm:absolute max-sm:z-10 max-sm:h-[100%]">
+    <div className="flex items-center justify-between px-4 h-16 border-b dark:border-gray-600">
       <Link
         to="/"
         className="text-xl font-bold text-gray-800 uppercase dark:text-white"
       >
         Locsafe ™
       </Link>
+      <span>
+        <IoClose size={20}  color="white" className="cursor-pointer" onClick={toggleNav}/>
+      </span>
     </div>
     <div className="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto">
       <nav className="flex-1 space-y-4">
