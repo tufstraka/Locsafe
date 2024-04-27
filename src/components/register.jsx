@@ -21,7 +21,7 @@ const Register = () => {
     email: '',
     phoneNumber: '',
     countryCode: '',
-    country: 'Kenya',
+    country: '',
   });
 
   const [countries, setCountries] = useState([]);
@@ -87,6 +87,7 @@ const Register = () => {
       [name]: value,
     }));
     filterCountries(value);
+    setShowSelect(true);
   };
 
   const filterCountries = (search) => {
@@ -94,7 +95,14 @@ const Register = () => {
       country.toLowerCase().includes(search.toLowerCase())
     );
     setFilteredCountries(filtered);
-    setShowSelect(filtered.length > 0);
+  };
+
+  const handleSelectCountry = (selectedCountry) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      country: selectedCountry,
+    }));
+    setShowSelect(false);
   };
 
   return (
@@ -173,22 +181,22 @@ const Register = () => {
                   value={formData.country}
                   onChange={handleChange}
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  placeholder="Start typing or select from the list"
+                  placeholder="Start typing"
                 />
                 {showSelect && (
-                  <select
-                    id="countrySelect"
-                    className="absolute inset-0 w-full px-4 py-2 mt-1 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    style={{ top: '100%' }}
-                    value={formData.country}
-                    onChange={handleChange}
-                  >
-                    {filteredCountries.map((country) => (
-                      <option key={country} value={country}>
-                        {country}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="absolute z-10 inset-x-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-300">
+                    <ul className="py-1 overflow-auto max-h-40">
+                      {filteredCountries.map((country) => (
+                        <li
+                          key={country}
+                          className="px-4 py-2 cursor-pointer hover:bg-gray-200"
+                          onClick={() => handleSelectCountry(country)}
+                        >
+                          {country}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
               </div>
             </div>
