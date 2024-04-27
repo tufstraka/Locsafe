@@ -172,24 +172,26 @@ const Register = () => {
                 className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 placeholder="Start typing or select from the list"
               />
-              <select
-                id="countrySelect"
-                className="hidden"
-                value={formData.country}
-                onChange={handleChange}
-              >
-                {filteredCountries.map((country) => (
-                  <option key={country} value={country}>
-                    {country}
-                  </option>
-                ))}
-              </select>
+              {filteredCountries.length > 0 && (
+                <select
+                  id="countrySelect"
+                  className="w-full px-4 py-2 mt-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  value={formData.country}
+                  onChange={handleChange}
+                >
+                  {filteredCountries.map((country) => (
+                    <option key={country} value={country}>
+                      {country}
+                    </option>
+                  ))}
+                </select>
+              )}
             </div>
             <button
               type="submit"
               className="w-full py-2 px-4 bg-gray-800 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 rounded-lg text-xl font-semibold"
             >
-              Register
+              Sign Up
             </button>
             <div className="flex justify-center items-center">
               <div className="bg-white rounded-lg shadow-lg p-2 mr-4 cursor-pointer" onClick={handleGoogleSignUp}>
