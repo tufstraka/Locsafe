@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from './header';
 import Footer from './footer';
@@ -25,6 +25,7 @@ const Register = () => {
   });
 
   const [countries, setCountries] = useState([]);
+  const [filteredCountries, setFilteredCountries] = useState([]);
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -84,8 +85,15 @@ const Register = () => {
       ...prevState,
       [name]: value,
     }));
+    filterCountries(value);
   };
 
+  const filterCountries = (search) => {
+    const filtered = countries.filter(country =>
+      country.toLowerCase().includes(search.toLowerCase())
+    );
+    setFilteredCountries(filtered);
+  };
 
   return (
     <div>
@@ -155,14 +163,22 @@ const Register = () => {
               <label htmlFor="country" className="block font-semibold mb-2 text-white">
                 Country
               </label>
-              <select
+              <input
+                type="text"
                 id="country"
                 name="country"
                 value={formData.country}
                 onChange={handleChange}
                 className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                placeholder="Start typing or select from the list"
+              />
+              <select
+                id="countrySelect"
+                className="hidden"
+                value={formData.country}
+                onChange={handleChange}
               >
-                {countries.map((country) => (
+                {filteredCountries.map((country) => (
                   <option key={country} value={country}>
                     {country}
                   </option>
@@ -173,7 +189,7 @@ const Register = () => {
               type="submit"
               className="w-full py-2 px-4 bg-gray-800 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 rounded-lg text-xl font-semibold"
             >
-              Sign Up
+              Register
             </button>
             <div className="flex justify-center items-center">
               <div className="bg-white rounded-lg shadow-lg p-2 mr-4 cursor-pointer" onClick={handleGoogleSignUp}>
@@ -200,3 +216,4 @@ const Register = () => {
 };
 
 export default Register;
+
