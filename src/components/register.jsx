@@ -26,6 +26,7 @@ const Register = () => {
 
   const [countries, setCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
+  const [showSelect, setShowSelect] = useState(false);
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -93,6 +94,7 @@ const Register = () => {
       country.toLowerCase().includes(search.toLowerCase())
     );
     setFilteredCountries(filtered);
+    setShowSelect(filtered.length > 0);
   };
 
   return (
@@ -163,29 +165,32 @@ const Register = () => {
               <label htmlFor="country" className="block font-semibold mb-2 text-white">
                 Country
               </label>
-              <input
-                type="text"
-                id="country"
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                placeholder="Start typing or select from the list"
-              />
-              {filteredCountries.length > 0 && (
-                <select
-                  id="countrySelect"
-                  className="w-full px-4 py-2 mt-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              <div className="relative">
+                <input
+                  type="text"
+                  id="country"
+                  name="country"
                   value={formData.country}
                   onChange={handleChange}
-                >
-                  {filteredCountries.map((country) => (
-                    <option key={country} value={country}>
-                      {country}
-                    </option>
-                  ))}
-                </select>
-              )}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  placeholder="Start typing or select from the list"
+                />
+                {showSelect && (
+                  <select
+                    id="countrySelect"
+                    className="absolute inset-0 w-full px-4 py-2 mt-1 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    style={{ top: '100%' }}
+                    value={formData.country}
+                    onChange={handleChange}
+                  >
+                    {filteredCountries.map((country) => (
+                      <option key={country} value={country}>
+                        {country}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              </div>
             </div>
             <button
               type="submit"
@@ -218,4 +223,5 @@ const Register = () => {
 };
 
 export default Register;
+
 
