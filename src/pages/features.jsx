@@ -36,7 +36,7 @@ const FeaturesPage = () => {
           <FeatureCard
             icon={<FaChartLine className="text-4xl text-indigo-500" />}
             title="Advanced Analytics"
-            description="Make informed decisions with our comprehensive analytics tools and customizable reports."
+            description="Harness the power of Artificial Intelligence to drive informed decision-making with our extensive analytics tools and tailored reports."
           />
           <FeatureCard
             icon={<FaShieldAlt className="text-4xl text-indigo-500" />}
