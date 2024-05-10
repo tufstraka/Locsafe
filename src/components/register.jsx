@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import Header from './header';
 import Footer from './footer';
@@ -104,6 +105,13 @@ const Register = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Locsafe™ - Registration</title>
+        <meta
+          name="description"
+          content="Register your business with us."
+        />
+      </Helmet>
       <Header />
       <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
         <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 sm:max-w-xl lg:max-w-2xl mt-40 mb-20">
