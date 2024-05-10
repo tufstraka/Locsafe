@@ -73,10 +73,7 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
     console.log(formData);
-    // Call appropriate sign-up function based on the selected provider
-    // For example, if you want to sign up with email and password:
     handleEmailSignUp();
   };
 
