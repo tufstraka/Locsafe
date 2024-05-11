@@ -86,7 +86,7 @@ const Map = () => {
   });
 
   return (
-    <>
+    <div className="relative z-0">
       <MapContainer
         center={position}
         zoom={18}
@@ -119,7 +119,7 @@ const Map = () => {
         <Marker position={position} />
       </MapContainer>
       {/*<button onClick={handleUnsubscribe}>Stop Tracking</button>*/}
-    </>
+    </div>
   );
 };
 

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, createContext } from 'react'
 //import { getDocs, collection} from 'firebase/firestore';
 //import userDashboard from "./components/userDashboard.jsx";
 import LandingPage from "./pages/landingpage.jsx";
@@ -23,42 +23,53 @@ import Register from './components/register.jsx';
 import "./App.css";
 import MyCalendar from './components/calendar.jsx';
 
+export const AppContext = createContext();
+
 const App = () =>  {
   const [username, setUsername] = useState("");
-  
+  const [showNav, setShowNav] = useState(true);
   console.log(username)
 
+  const toggleNav = ()=>{
+    setShowNav(prev => !prev);
+  }
+
+  const configValue = {showNav, toggleNav}
+  
   return (
     <>
-      <Router>
-        <Routes>
-          <Route exact path="/" element={<LandingPage />} />
-          
-            <Route path="/staff" element={<Staff />} />
-            <Route path="/features" element={<FeaturesPage />} />
-            <Route path='/login' element={<SignIn/>}/>
-            <Route path='/register' element={<Register/>}/>
-            <Route path='/calendar' element={<MyCalendar/>}/>
-            <Route path='/contact' element={<ContactUs/>} />
-            <Route path="/pricing" element={<PricingPage />} />
-            <Route path="/users/:userId/edit" element={<UserEdit />} />
-            <Route path="/user/register" element={<UserReg />} />
-            <Route path="/users/update" element={<UserList />} />
-            <Route path="/user/signin" element={<SignInForm />} />
-            <Route path="/dispatchers/register" element={<DispatcherReg />} />
-            <Route path="/geofence" element={<GeofenceMap />} />
-            <Route path="/user/profile" element={<UpdateProfilePage username={username} setUsername={setUsername} />} />
-            <Route path="/vehicles" element={<Vehicles />} />
-            <Route path="/user/dashboard" element={<userDashboard username={username} setUsername={setUsername} />} />
-            <Route path="" element={<SignInForm />} />
-            <Route path="" element={<SignInForm />} />
-            <Route path="/user/signup" element={<SignUpForm username={username} setUsername={setUsername}/>} />
-            <Route path="" element={<SignInForm />} />
-            <Route path="/admin/dashboard" element={<Dashboard/>}/>
-            <Route path="*" element={<PageNotFound/>} />
-          
-        </Routes>
-      </Router>
+      <AppContext.Provider value={configValue}>
+        <Router>
+          <Routes>
+            <Route exact path="/" element={<LandingPage />} />
+            
+              <Route path="/staff" element={<Staff />} />
+              <Route path="/features" element={<FeaturesPage />} />
+              <Route path='/login' element={<SignIn/>}/>
+              <Route path='/register' element={<Register/>}/>
+              <Route path='/calendar' element={<MyCalendar/>}/>
+              <Route path='/contact' element={<ContactUs/>} />
+              <Route path="/pricing" element={<PricingPage />} />
+              <Route path="/users/:userId/edit" element={<UserEdit />} />
+              <Route path="/user/register" element={<UserReg />} />
+              <Route path="/users/update" element={<UserList />} />
+              <Route path="/user/signin" element={<SignInForm />} />
+              <Route path="/dispatchers/register" element={<DispatcherReg />} />
+              <Route path="/geofence" element={<GeofenceMap />} />
+              <Route path="/user/profile" element={<UpdateProfilePage username={username} setUsername={setUsername} />} />
+              <Route path="/vehicles" element={<Vehicles />} />
+              <Route path="/user/dashboard" element={<userDashboard username={username} setUsername={setUsername} />} />
+              <Route path="" element={<SignInForm />} />
+              <Route path="" element={<SignInForm />} />
+              <Route path="/user/signup" element={<SignUpForm username={username} setUsername={setUsername}/>} />
+              <Route path="" element={<SignInForm />} />
+              <Route path="/admin/dashboard" element={<Dashboard/>}/>
+              <Route path="*" element={<PageNotFound/>} />
+            
+          </Routes>
+        </Router>
+      </AppContext.Provider>
+
     </>
   );
 }
