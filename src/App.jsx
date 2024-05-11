@@ -27,7 +27,7 @@ export const AppContext = createContext();
 
 const App = () =>  {
   const [username, setUsername] = useState("");
-  const [showNav, setShowNav] = useState(true);
+  const [showNav, setShowNav] = useState(false);
   console.log(username)
 
   const toggleNav = ()=>{

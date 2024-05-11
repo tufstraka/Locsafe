@@ -8,7 +8,7 @@ import Sidebar from '../components/sidebar.jsx';
 import { AppContext } from '../App.jsx';
 
 const Dashboard = () => {
-  const [users, setusers] = useState(0);
+  const [users, setUsers] = useState(0);
 
   const { showNav, toggleNav } = useContext(AppContext);
 
@@ -16,31 +16,27 @@ const Dashboard = () => {
     const fetchData = async () => {
       const querySnapshot = await getDocs(collection(db, 'drivers'));
       console.log(querySnapshot);
-      setusers(querySnapshot.docs.length);
+      setUsers(querySnapshot.docs.length);
     };
     fetchData();
   }, []);
 
   return (
     <div className="flex flex-col lg:flex-row bg-gray-100 min-h-screen">
-        { showNav ? <Sidebar /> : null}
+      {showNav ? <Sidebar /> : null}
 
       {/* Content area */}
       <div className="flex flex-col flex-grow overflow-y-auto">
         {/* Top bar */}
         <div className="flex items-center justify-between px-4 py-3 border-b bg-white">
-          {
-            showNav ? null : (
-              <div className='space-x-3'>
-                <button onClick={toggleNav}>
-                  <IoMenu size={25} />
-                </button>
-                <button className="text-gray-600 hover:text-gray-800 transition-colors duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500">
-                  <IoIosNotificationsOutline className="w-6 h-6" />
-                </button>
-              </div>
-            )
-          }
+          <div className='space-x-3'>
+            <button onClick={toggleNav}>
+              <IoMenu size={25} />
+            </button>
+            <button className="text-gray-600 hover:text-gray-800 transition-colors duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500">
+              <IoIosNotificationsOutline className="w-6 h-6" />
+            </button>
+          </div>
           <div className="flex items-center">
             <p className="text-gray-600 text-sm mr-2">Welcome back</p>
             <img
@@ -85,5 +81,6 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
 
 
