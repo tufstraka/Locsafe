@@ -14,7 +14,7 @@ const UpdateProfilePage = ({ username, setUsername }) => {
   const auth = getAuth();
   console.log(auth.currentUser);
 
-  /*const userNameRef = doc(db, `drivers/${username}`);
+  /*const userNameRef = doc(db, `users/${username}`);
 
     try {
         const docSnap = getDoc(userNameRef);
@@ -49,12 +49,12 @@ const UpdateProfilePage = ({ username, setUsername }) => {
         console.log(error);
       });
 
-    navigate("/driver/dashboard");
+    navigate("/user/dashboard");
   };
 
   const handleClick = async (event) => {
     event.preventDefault();
-    navigate("/driver/dashboard");
+    navigate("/user/dashboard");
   };
 
   return (

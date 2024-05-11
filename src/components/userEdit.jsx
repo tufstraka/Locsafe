@@ -4,48 +4,48 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import Sidebar from './sidebar'
 import db from '../utils/firebaseInit';
 
-const DriverEdit = () => {
-  const { driverId } = useParams();
+const UserEdit = () => {
+  const { userId } = useParams();
   const navigate = useNavigate();
-  const [driver, setDriver] = useState({ name: '', contactNumber: '', drivingLicenceNumber: '' });
+  const [user, setuser] = useState({ name: '', contactNumber: '', drivingLicenceNumber: '' });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchDriver = async () => {
+    const fetchuser = async () => {
       setLoading(true);
-      const driverRef = doc(db, 'drivers', driverId);
-      const driverSnap = await getDoc(driverRef);
-      if (driverSnap.exists()) {
-        setDriver(driverSnap.data());
+      const userRef = doc(db, 'drivers', userId);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        setuser(userSnap.data());
       } else {
-        alert('Driver not found!');
-        navigate('/drivers');
+        alert('user not found!');
+        navigate('/users');
       }
       setLoading(false);
     };
 
-    fetchDriver();
-  }, [driverId, navigate]);
+    fetchuser();
+  }, [userId, navigate]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setDriver((prevDriver) => ({ ...prevDriver, [name]: value }));
+    setuser((prevuser) => ({ ...prevuser, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const driverRef = doc(db, 'drivers', driverId);
-    await updateDoc(driverRef, driver);
+    const userRef = doc(db, 'drivers', userId);
+    await updateDoc(userRef, user);
     setLoading(false);
-    navigate('/drivers/update');
+    navigate('/users/update');
   };
 
   return (
     <div className=" flex">
       <Sidebar/>
       <div className="flex-grow p-4">
-        <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Edit Driver</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Edit user</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
@@ -53,7 +53,7 @@ const DriverEdit = () => {
               type="text"
               id="name"
               name="name"
-              value={driver.name}
+              value={user.name}
               onChange={handleInputChange}
               className="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               required
@@ -65,7 +65,7 @@ const DriverEdit = () => {
               type="text"
               id="contactNumber"
               name="contactNumber"
-              value={driver.contactNumber}
+              value={user.contactNumber}
               onChange={handleInputChange}
               className="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               required
@@ -77,7 +77,7 @@ const DriverEdit = () => {
               type="text"
               id="drivingLicenceNumber"
               name="drivingLicenceNumber"
-              value={driver.drivingLicenceNumber}
+              value={user.drivingLicenceNumber}
               onChange={handleInputChange}
               className="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               required
@@ -98,5 +98,5 @@ const DriverEdit = () => {
   );
 };
 
-export default DriverEdit;
+export default UserEdit;
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const EventEditForm = ({ startDate, endDate, onClose, onRegister }) => {
   const [title, setTitle] = useState('');
@@ -48,6 +48,9 @@ const EventEditForm = ({ startDate, endDate, onClose, onRegister }) => {
     </div>
   );
 };
+
+// TO DO: Add Props Validation
+
 
 export default EventEditForm;
 
