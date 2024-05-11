@@ -8,31 +8,31 @@ const PricingPage = () => {
   const pricingPlans = [
     {
       name: 'Starter',
-      price: '5,000',
+      price: '5,000 / month',
       features: [
         'Real-time tracking',
         'Basic reporting',
-        'Up to 10 vehicles',
+        'Up to 100 assets',
         'Email support',
       ],
     },
     {
       name: 'Business',
-      price: '15,000',
+      price: '15,000 / month',
       features: [
         'Advanced analytics',
         'Custom reports',
-        'Up to 50 vehicles',
+        'Up to 500 assets',
         'Priority email support',
       ],
     },
     {
       name: 'Enterprise',
-      price: '30,000',
+      price: '30,000 / month',
       features: [
         'All Business features',
         'Fleet management',
-        'Unlimited vehicles',
+        'Unlimited assets',
         '24/7 support',
       ],
     },

@@ -5,7 +5,7 @@ import { getPerformance } from "firebase/performance";
 //import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAPyF44EBwhUsDx1n4pdgmBIjvWQK_fxMk",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "locsafe-58643.firebaseapp.com",
   projectId: "locsafe-58643",
   storageBucket: "locsafe-58643.appspot.com",
@@ -14,13 +14,10 @@ const firebaseConfig = {
   measurementId: "G-LQW25CDWKT"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-// Initialize Performance monitoring
-export const perf = getPerformance(app);
-//const analytics = getAnalytics(app);
-const db = getFirestore(app);
-//const auth = getAuth(app);
 
+export const perf = getPerformance(app);
+
+const db = getFirestore(app);
 
 export default db;

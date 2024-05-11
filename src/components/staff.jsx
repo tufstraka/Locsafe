@@ -15,13 +15,13 @@ const Staff = () => {
             <span className="text-2xl text-blue-500 mr-2">
               <FiUserPlus />
             </span>
-            <h2 className="text-xl font-bold">Register a new Driver</h2>
+            <h2 className="text-xl font-bold">Register a new user</h2>
           </div>
           <p className="text-gray-600">
-            Click here to register a new driver in the GPS fleet tracking
+            Click here to register a new user in the GPS fleet tracking
             system.
           </p>
-          <Link to="/driver/register">
+          <Link to="/user/register">
             <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
               Register
             </button>
@@ -34,13 +34,13 @@ const Staff = () => {
             <span className="text-2xl text-green-500 mr-2">
               <FiEdit />
             </span>
-            <h2 className="text-xl font-bold">Update Driver Details</h2>
+            <h2 className="text-xl font-bold">Update user Details</h2>
           </div>
           <p className="text-gray-600">
-            Click here to update the details of an existing driver in the GPS
+            Click here to update the details of an existing user in the GPS
             fleet tracking system.
           </p>
-          <Link to='/drivers/update'>
+          <Link to='/users/update'>
           <button className="mt-4 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">
             Update
           </button>
@@ -89,13 +89,13 @@ const Staff = () => {
             <span className="text-2xl text-blue-500 mr-2">
               <FiUserPlus />
             </span>
-            <h2 className="text-xl font-bold">Register a new Driver</h2>
+            <h2 className="text-xl font-bold">Register a new user</h2>
           </div>
           <p className="text-gray-600">
-            Click here to register a new driver in the GPS fleet tracking
+            Click here to register a new user in the GPS fleet tracking
             system.
           </p>
-          <Link to="/drivers/register">
+          <Link to="/users/register">
             <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
               Register
             </button>
@@ -107,10 +107,10 @@ const Staff = () => {
             <span className="text-2xl text-green-500 mr-2">
               <FiEdit />
             </span>
-            <h2 className="text-xl font-bold">Update Driver Details</h2>
+            <h2 className="text-xl font-bold">Update user Details</h2>
           </div>
           <p className="text-gray-600">
-            Click here to update the details of an existing driver in the GPS
+            Click here to update the details of an existing user in the GPS
             fleet tracking system.
           </p>
           <button className="mt-4 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">

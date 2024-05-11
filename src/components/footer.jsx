@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Footer = () => (
   <footer className="py-6 bg-gray-900 shadow-lg">
     <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-4">

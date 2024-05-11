@@ -7,7 +7,7 @@ import db from "../utils/firebaseInit";
 import successIcon from "../assets/check.png"; // Replace with your success icon
 
 
-const DriverReg = () => {
+const UserReg = () => {
   const [formData, setFormData] = useState({
     name: "",
     username: "",
@@ -41,7 +41,7 @@ const DriverReg = () => {
       });
 
       //console.log('Document saved successfully', newdoc);
-      //const docRef = await addDoc(collection(db , "drivers"), {formData});
+      //const docRef = await addDoc(collection(db , "users"), {formData});
 
       //console.log("Document written with ID: ", docRef.id);
 
@@ -76,7 +76,7 @@ const DriverReg = () => {
     <Sidebar/>  
     <div className="flex-grow p-4">
     <div className="max-w-3xl mx-auto bg-white shadow rounded-lg p-6">
-      <h2 className="text-2xl font-semibold mb-4">Driver Registration</h2>
+      <h2 className="text-2xl font-semibold mb-4">user Registration</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label
@@ -262,7 +262,7 @@ const DriverReg = () => {
       {isSuccess && (
             <div className="flex items-center mt-4">
               <img src={successIcon} alt="Success" className="w-6 h-6 mr-2" />
-              <p className="text-green-600">Driver added successfully!</p>
+              <p className="text-green-600">user added successfully!</p>
             </div>
           )}
       </div>
@@ -271,12 +271,12 @@ const DriverReg = () => {
   );
 };
 
-export default DriverReg;
+export default UserReg;
 
 
 
 
-//const collectionRef = collection(db, "drivers");
+//const collectionRef = collection(db, "users");
       //const documentRef = doc(collectionRef, formData.username);
       //const newdoc =  await setDoc(documentRef, formData);
 

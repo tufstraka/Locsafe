@@ -8,7 +8,7 @@ import Sidebar from '../components/sidebar.jsx';
 import { AppContext } from '../App.jsx';
 
 const Dashboard = () => {
-  const [drivers, setDrivers] = useState(0);
+  const [users, setusers] = useState(0);
 
   const { showNav, toggleNav } = useContext(AppContext);
 
@@ -16,7 +16,7 @@ const Dashboard = () => {
     const fetchData = async () => {
       const querySnapshot = await getDocs(collection(db, 'drivers'));
       console.log(querySnapshot);
-      setDrivers(querySnapshot.docs.length);
+      setusers(querySnapshot.docs.length);
     };
     fetchData();
   }, []);
@@ -62,7 +62,7 @@ const Dashboard = () => {
                 {/* Cards */}
                 {[
                   { title: 'Total Vehicles', value: '0' },
-                  { title: 'Total Drivers', value: drivers },
+                  { title: 'Total users', value: users },
                   { title: 'Total Alerts', value: '0' },
                   { title: 'Total Trips', value: '0' },
                 ].map((card, index) => (

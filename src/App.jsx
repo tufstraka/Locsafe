@@ -1,22 +1,22 @@
 import { useState, createContext } from 'react'
 //import { getDocs, collection} from 'firebase/firestore';
-import DriverDashboard from "./components/driverDashboard.jsx";
+//import userDashboard from "./components/userDashboard.jsx";
 import LandingPage from "./pages/landingpage.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Staff from "./components/staff.jsx";
-import DriverList from "./components/driverList.jsx";
-import DriverReg from "./components/driverReg.jsx";
+import UserList from "./components/userList.jsx";
+import UserReg from "./components/userReg.jsx";
 import DispatcherReg from "./components/dispatcherReg.jsx";
 import SignUpForm from "./components/signup.jsx";
 import SignInForm from "./components/signin.jsx";
 import GeofenceMap from "./components/geofence.jsx";
 import Dashboard from "./pages/dashboard.jsx";
 import Vehicles from "./components/vehicles.jsx";
-import UpdateProfilePage from './components/driverProfile.jsx';
+import UpdateProfilePage from './components/userProfile.jsx';
 import PageNotFound from './components/PageNotFound.jsx'
 import FeaturesPage from './pages/features.jsx'
 import PricingPage from './pages/pricing.jsx'
-import DriverEdit from './components/driveredit'
+import UserEdit from './components/userEdit.jsx'
 import SignIn from './components/signin.jsx';
 import ContactUs from './pages/contact.jsx';
 import Register from './components/register.jsx';
@@ -50,18 +50,18 @@ const App = () =>  {
               <Route path='/calendar' element={<MyCalendar/>}/>
               <Route path='/contact' element={<ContactUs/>} />
               <Route path="/pricing" element={<PricingPage />} />
-              <Route path="/drivers/:driverId/edit" element={<DriverEdit />} />
-              <Route path="/driver/register" element={<DriverReg />} />
-              <Route path="/drivers/update" element={<DriverList />} />
-              <Route path="/driver/signin" element={<SignInForm />} />
+              <Route path="/users/:userId/edit" element={<UserEdit />} />
+              <Route path="/user/register" element={<UserReg />} />
+              <Route path="/users/update" element={<UserList />} />
+              <Route path="/user/signin" element={<SignInForm />} />
               <Route path="/dispatchers/register" element={<DispatcherReg />} />
               <Route path="/geofence" element={<GeofenceMap />} />
-              <Route path="/driver/profile" element={<UpdateProfilePage username={username} setUsername={setUsername} />} />
+              <Route path="/user/profile" element={<UpdateProfilePage username={username} setUsername={setUsername} />} />
               <Route path="/vehicles" element={<Vehicles />} />
-              <Route path="/driver/dashboard" element={<DriverDashboard username={username} setUsername={setUsername} />} />
+              <Route path="/user/dashboard" element={<userDashboard username={username} setUsername={setUsername} />} />
               <Route path="" element={<SignInForm />} />
               <Route path="" element={<SignInForm />} />
-              <Route path="/driver/signup" element={<SignUpForm username={username} setUsername={setUsername}/>} />
+              <Route path="/user/signup" element={<SignUpForm username={username} setUsername={setUsername}/>} />
               <Route path="" element={<SignInForm />} />
               <Route path="/admin/dashboard" element={<Dashboard/>}/>
               <Route path="*" element={<PageNotFound/>} />

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.png';
 
 const Header = () => {
   const [mobile, setMobile] = useState(false);
@@ -48,14 +48,21 @@ const Header = () => {
                   Features
                 </Link>
               </li>
-              <li>
+              {/*<li>
                 <Link to="/pricing" className="hover:text-teal-400 transition-colors duration-300">
                   Pricing
                 </Link>
-              </li>
+        </li>*/}
               <li>
                 <Link to="/contact" className="hover:text-teal-400 transition-colors duration-300">
                   Contact
+                </Link>
+              </li>
+              <li>
+                <Link to="/register">
+                  <button className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded transition-colors duration-300">
+                    Request Access
+                  </button>
                 </Link>
               </li>
             </ul>
@@ -73,14 +80,21 @@ const Header = () => {
                   Features
                 </Link>
               </li>
-              <li>
+              {/*<li>
                 <Link to="/pricing" className="block py-2 px-4 hover:text-teal-400 transition-colors duration-300">
                   Pricing
                 </Link>
-              </li>
+      </li>*/}
               <li>
                 <Link to="/contact" className="block py-2 px-4 hover:text-teal-400 transition-colors duration-300">
                   Contact
+                </Link>
+              </li>
+              <li>
+                <Link to="/register">
+                  <button className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded transition-colors duration-300 mb-5">
+                    Request Access
+                  </button>
                 </Link>
               </li>
             </ul>
@@ -92,6 +106,10 @@ const Header = () => {
 };
 
 export default Header;
+
+
+
+
 
 
 

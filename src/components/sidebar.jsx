@@ -65,7 +65,7 @@ const Sidebar = () => {
           className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
         >
           <BsFillGeoFill className="w-5 h-5 mr-4" />
-          <span className="text-sm font-medium">Geofences</span>
+          <span className="text-sm font-medium">Insights</span>
         </Link>
         <Link
           to="/geofence"

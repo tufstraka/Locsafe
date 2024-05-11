@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 import { collection, doc, setDoc, getDoc, GeoPoint } from "firebase/firestore";
 import db from "../utils/firebaseInit";
 
-const DriverDashboard = ({ username }) => {
+const UserDashboard = ({ username }) => {
   const [locationData, setLocationData] = useState(null);
 
-  //const userNameRef = doc(db, `drivers/${username}`);
+  //const userNameRef = doc(db, `users/${username}`);
   const auth = getAuth();
   const user = auth.currentUser;
   console.log(user);
@@ -60,12 +60,12 @@ const DriverDashboard = ({ username }) => {
   return (
     <div className="bg-gray-100 min-h-screen p-4">
       <div className="max-w-md mx-auto bg-white rounded shadow p-6">
-        <h1 className="text-2xl font-bold mb-6">Driver Dashboard</h1>
+        <h1 className="text-2xl font-bold mb-6">user Dashboard</h1>
         <p className="mb-6">Welcome {user.displayName}</p>
         {/* className="mb-6">Your current location is: {locationData.latitude}</p> */}
 
         <Link
-          to="/driver/profile"
+          to="/user/profile"
           className="text-blue-500 hover:text-blue-600"
         >
           <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 m-3 rounded shadow mb-6">
@@ -81,4 +81,4 @@ const DriverDashboard = ({ username }) => {
   );
 };
 
-export default DriverDashboard;
+export default UserDashboard;

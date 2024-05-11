@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import Header from './header';
 import Footer from './footer';
@@ -21,10 +22,12 @@ const Register = () => {
     email: '',
     phoneNumber: '',
     countryCode: '',
-    country: 'Kenya',
+    country: '',
   });
 
   const [countries, setCountries] = useState([]);
+  const [filteredCountries, setFilteredCountries] = useState([]);
+  const [showSelect, setShowSelect] = useState(false);
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -71,10 +74,7 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
     console.log(formData);
-    // Call appropriate sign-up function based on the selected provider
-    // For example, if you want to sign up with email and password:
     handleEmailSignUp();
   };
 
@@ -84,14 +84,37 @@ const Register = () => {
       ...prevState,
       [name]: value,
     }));
+    filterCountries(value);
+    setShowSelect(true);
   };
 
+  const filterCountries = (search) => {
+    const filtered = countries.filter(country =>
+      country.toLowerCase().includes(search.toLowerCase())
+    );
+    setFilteredCountries(filtered);
+  };
+
+  const handleSelectCountry = (selectedCountry) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      country: selectedCountry,
+    }));
+    setShowSelect(false);
+  };
 
   return (
     <div>
+      <Helmet>
+        <title>Locsafe™ - Registration</title>
+        <meta
+          name="description"
+          content="Register your business with us."
+        />
+      </Helmet>
       <Header />
       <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
-        <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 sm:max-w-xl lg:max-w-2xl">
+        <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 sm:max-w-xl lg:max-w-2xl mt-40 mb-20">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="name" className="block font-semibold mb-2 text-white">
@@ -155,19 +178,32 @@ const Register = () => {
               <label htmlFor="country" className="block font-semibold mb-2 text-white">
                 Country
               </label>
-              <select
-                id="country"
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              >
-                {countries.map((country) => (
-                  <option key={country} value={country}>
-                    {country}
-                  </option>
-                ))}
-              </select>
+              <div className="relative">
+                <input
+                  type="text"
+                  id="country"
+                  name="country"
+                  value={formData.country}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  placeholder="Start typing"
+                />
+                {showSelect && (
+                  <div className="absolute z-10 inset-x-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-300">
+                    <ul className="py-1 overflow-auto max-h-40">
+                      {filteredCountries.map((country) => (
+                        <li
+                          key={country}
+                          className="px-4 py-2 cursor-pointer hover:bg-gray-200"
+                          onClick={() => handleSelectCountry(country)}
+                        >
+                          {country}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
             </div>
             <button
               type="submit"
@@ -200,3 +236,5 @@ const Register = () => {
 };
 
 export default Register;
+
+

@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { collection, addDoc, getDocs } from "firebase/firestore"; 
 import db from "../utils/firebaseInit";
 
-const DriverReg = () => {
+const UserReg = () => {
   const [formData, setFormData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const querySnapshot = await getDocs(collection(db, "drivers"));
+      const querySnapshot = await getDocs(collection(db, "users"));
       //const data = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       setFormData(
         querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -26,7 +26,7 @@ const DriverReg = () => {
     e.preventDefault();
     // Add to firestore
     try {
-      const docRef = await addDoc(collection(db , "drivers"), {formData});
+      const docRef = await addDoc(collection(db , "users"), {formData});
 
       console.log('Document written with ID: ', docRef.id);
       
@@ -48,7 +48,7 @@ const DriverReg = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-semibold mb-4">Driver Registration</h2>
+      <h2 className="text-2xl font-semibold mb-4">user Registration</h2>
       <form onSubmit={handleUpdate}>
         <div className="mb-4">
           <label
@@ -184,4 +184,4 @@ const DriverReg = () => {
   );
 };
 
-export default DriverReg;
+export default UserReg;

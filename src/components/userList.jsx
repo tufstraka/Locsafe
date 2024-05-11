@@ -8,33 +8,33 @@ import Sidebar from './sidebar';
 import { Link } from 'react-router-dom';
 import SkeletonLoading from './skeletonloading';
 
-const DriverList = () => {
-  const [drivers, setDrivers] = useState([]);
+const UserList = () => {
+  const [users, setusers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [filteredDrivers, setFilteredDrivers] = useState([]);
+  const [filteredusers, setFilteredusers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedDriverId, setSelectedDriverId] = useState(null);
+  const [selecteduserId, setSelecteduserId] = useState(null);
   const [sortOrder, setSortOrder] = useState(null); 
   const [isLoading, setIsLoading] = useState(true); 
 
   useEffect(() => {
-    const fetchDrivers = async () => {
-      const driversCollection = collection(db, 'drivers');
-      const driversSnapshot = await getDocs(driversCollection);
-      const driversList = driversSnapshot.docs.map((doc) => ({
+    const fetchusers = async () => {
+      const usersCollection = collection(db, 'drivers');
+      const usersSnapshot = await getDocs(usersCollection);
+      const usersList = usersSnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      setDrivers(driversList);
-      setFilteredDrivers(driversList);
+      setusers(usersList);
+      setFilteredusers(usersList);
       setIsLoading(false); 
     };
 
-    fetchDrivers();
+    fetchusers();
   }, []);
 
-  const openModal = (driverId) => {
-    setSelectedDriverId(driverId);
+  const openModal = (userId) => {
+    setSelecteduserId(userId);
     setIsModalOpen(true);
   };
 
@@ -43,8 +43,8 @@ const DriverList = () => {
   };
 
   const confirmDelete = async () => {
-    if (selectedDriverId) {
-      await handleDeleteDriver(selectedDriverId);
+    if (selecteduserId) {
+      await handleDeleteuser(selecteduserId);
       closeModal();
     }
   };
@@ -53,30 +53,30 @@ const DriverList = () => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
     if (query) {
-      const filtered = drivers.filter((driver) =>
-        Object.values(driver).some((value) =>
+      const filtered = users.filter((user) =>
+        Object.values(user).some((value) =>
           String(value).toLowerCase().includes(query)
         )
       );
-      setFilteredDrivers(filtered);
+      setFilteredusers(filtered);
     } else {
-      setFilteredDrivers(drivers);
+      setFilteredusers(users);
     }
   };
 
   const handleSort = (field) => {
-    const sortedDrivers = [...filteredDrivers].sort((a, b) => {
+    const sortedusers = [...filteredusers].sort((a, b) => {
       if (a[field] < b[field]) return sortOrder === 'asc' ? -1 : 1; // Adjust sorting based on sortOrder
       if (a[field] > b[field]) return sortOrder === 'asc' ? 1 : -1; // Adjust sorting based on sortOrder
       return 0;
     });
-    setFilteredDrivers(sortedDrivers);
+    setFilteredusers(sortedusers);
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc'); // Toggle sortOrder after sorting
   };
 
-  const handleDeleteDriver = async (driverId) => {
-    await deleteDoc(doc(db, 'drivers', driverId));
-    fetchDrivers(); 
+  const handleDeleteuser = async (userId) => {
+    await deleteDoc(doc(db, 'drivers', userId));
+    fetchusers(); 
   };
 
   return (
@@ -90,7 +90,7 @@ const DriverList = () => {
               <input
                 className="form-input px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:border-indigo-300"
                 type="text"
-                placeholder="Search drivers"
+                placeholder="Search users"
                 value={searchQuery}
                 onChange={handleSearch}
               />
@@ -130,24 +130,24 @@ const DriverList = () => {
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
-                        {filteredDrivers.map((driver) => (
-                          <tr key={driver.id}>
+                        {filteredusers.map((user) => (
+                          <tr key={user.id}>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-900">{driver.name}</div>
+                              <div className="text-sm text-gray-900">{user.name}</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-900">{driver.contactNumber}</div>
+                              <div className="text-sm text-gray-900">{user.contactNumber}</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-900">{driver.drivingLicenceNumber}</div>
+                              <div className="text-sm text-gray-900">{user.drivingLicenceNumber}</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <Link to={`/drivers/${driver.id}/edit`} className="text-indigo-600 hover:text-indigo-900">
+                              <Link to={`/users/${user.id}/edit`} className="text-indigo-600 hover:text-indigo-900">
                                 <AiOutlineEdit />
                               </Link>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <button onClick={() => openModal(driver.id)} className="text-red-600 hover:text-red-900">
+                              <button onClick={() => openModal(user.id)} className="text-red-600 hover:text-red-900">
                                 <RiDeleteBin6Line />
                               </button>
                             </td>
@@ -155,9 +155,9 @@ const DriverList = () => {
                         ))}
                       </tbody>
                     </table>
-                    {filteredDrivers.length === 0 && (
+                    {filteredusers.length === 0 && (
                       <div className="text-center py-4">
-                        <p className="text-sm text-gray-500">No drivers found.</p>
+                        <p className="text-sm text-gray-500">No users found.</p>
                       </div>
                     )}
                   </div>
@@ -169,13 +169,13 @@ const DriverList = () => {
         </div>
       </div>
       <ConfirmationModal isOpen={isModalOpen} onClose={closeModal} onConfirm={confirmDelete}>
-        Are you sure you want to delete this driver?
+        Are you sure you want to delete this user?
       </ConfirmationModal>
     </div>
   );
 };
 
-export default DriverList;
+export default UserList;
 
 
 
