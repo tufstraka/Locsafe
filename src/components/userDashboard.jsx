@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 //import { doc, getDoc } from "firebase/firestore";
 //import db from "../utils/firebaseInit";
 import { collection, doc, setDoc, getDoc, GeoPoint } from "firebase/firestore";
-import db from "../utils/firebaseInit";
+import { db } from "../utils/firebaseInit";
 
 const UserDashboard = ({ username }) => {
   const [locationData, setLocationData] = useState(null);

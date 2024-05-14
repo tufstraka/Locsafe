@@ -2,7 +2,7 @@ import { useState } from "react";
 import { collection, doc, setDoc } from "firebase/firestore";
 //import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import Sidebar from './sidebar'
-import db from "../utils/firebaseInit";
+import { db } from "../utils/firebaseInit";
 //import auth from "../utils/firebaseInit";
 import successIcon from "../assets/check.png"; // Replace with your success icon
 

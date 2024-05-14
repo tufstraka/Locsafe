@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { collection, getDocs, deleteDoc } from 'firebase/firestore';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { AiOutlineEdit, AiOutlineArrowUp, AiOutlineArrowDown } from 'react-icons/ai'; // Import relevant icons for sorting
-import db from '../utils/firebaseInit';
+import { db } from '../utils/firebaseInit';
 import ConfirmationModal from './confirmation';
 import Sidebar from './sidebar';
 import { Link } from 'react-router-dom';

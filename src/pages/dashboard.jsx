@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { IoIosNotificationsOutline } from 'react-icons/io';
 import { IoMenu } from "react-icons/io5";
 import { getDocs, collection } from 'firebase/firestore';
-import db from '../utils/firebaseInit';
+import { db } from '../utils/firebaseInit';
 import Map from '../components/map.jsx';
 import Sidebar from '../components/sidebar.jsx';
 import { AppContext } from '../App.jsx';

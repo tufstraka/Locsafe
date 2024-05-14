@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import Sidebar from './sidebar'
-import db from '../utils/firebaseInit';
+import { db }from '../utils/firebaseInit';
 
 const UserEdit = () => {
   const { userId } = useParams();

@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { getDocs, collection, onSnapshot, query, orderBy, limit } from "firebase/firestore";
-import db from "../utils/firebaseInit.js";
+import { db } from "../utils/firebaseInit.js";
 import { Location } from "../hooks/location.jsx";
 import L from "leaflet";
 

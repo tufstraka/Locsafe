@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 //import { redirect } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
-import db from "../utils/firebaseInit";
+import { db } from "../utils/firebaseInit";
 import { useNavigate } from "react-router-dom";
 import {
   getAuth,

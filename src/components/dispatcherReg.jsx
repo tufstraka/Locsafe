@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { collection, addDoc } from "firebase/firestore"; 
-import db from "../utils/firebaseInit";
+import { db } from "../utils/firebaseInit";
 
 const DispatcherReg = () => {
   const [formData, setFormData] = useState({

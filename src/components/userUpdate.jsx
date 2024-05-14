@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { collection, addDoc, getDocs } from "firebase/firestore"; 
-import db from "../utils/firebaseInit";
+import { db } from "../utils/firebaseInit";
 
 const UserReg = () => {
   const [formData, setFormData] = useState([]);
