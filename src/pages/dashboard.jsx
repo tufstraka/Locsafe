@@ -5,12 +5,29 @@ import { getDocs, collection } from 'firebase/firestore';
 import { db } from '../utils/firebaseInit';
 import Map from '../components/map.jsx';
 import Sidebar from '../components/sidebar.jsx';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+
 import { AppContext } from '../App.jsx';
 
 const Dashboard = () => {
+  const [user, setUser] = useState(null);
   const [users, setUsers] = useState(0);
 
   const { showNav, toggleNav } = useContext(AppContext);
+
+  useEffect(() => {
+    // Listen for changes in authentication state
+    const unsubscribe = firebase.auth().onAuthStateChanged((currentUser) => {
+      setUser(currentUser); 
+      console.log(user);// Update user state when authentication state changes
+    });
+
+    return () => {
+      // Clean up subscription
+      unsubscribe();
+    };
+  }, [user]);
 
   useEffect(() => {
     const fetchData = async () => {

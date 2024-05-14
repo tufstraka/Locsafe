@@ -20,6 +20,7 @@ import UserEdit from './components/userEdit.jsx'
 import SignIn from './components/signin.jsx';
 import ContactUs from './pages/contact.jsx';
 import Register from './components/register.jsx';
+import Paywall from './components/paywall.jsx';
 import "./App.css";
 import MyCalendar from './components/calendar.jsx';
 
@@ -46,6 +47,7 @@ const App = () =>  {
               <Route path="/staff" element={<Staff />} />
               <Route path="/features" element={<FeaturesPage />} />
               <Route path='/login' element={<SignIn/>}/>
+              <Route path='/pay' element={<Paywall/>}/>
               <Route path='/register' element={<Register/>}/>
               <Route path='/calendar' element={<MyCalendar/>}/>
               <Route path='/contact' element={<ContactUs/>} />

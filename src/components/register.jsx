@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; 
 import Header from "./header";
 import Footer from "./footer";
 import {
@@ -31,6 +32,8 @@ const Register = () => {
   const [filteredCountries, setFilteredCountries] = useState([]);
   const [showSelect, setShowSelect] = useState(false);
   const [registered, setRegistered] = useState(false);
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchCountries = async () => {
       try {
@@ -67,6 +70,9 @@ const Register = () => {
       });
       console.log("Document written");
       setRegistered(true);
+
+      navigate('/pay');
+
     } catch (e) {
       console.error("Error adding document: ", e);
     }
