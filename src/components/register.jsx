@@ -30,7 +30,7 @@ const Register = () => {
   const [countries, setCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
   const [showSelect, setShowSelect] = useState(false);
-
+  const [registered, setRegistered] = useState(false);
   useEffect(() => {
     const fetchCountries = async () => {
       try {
@@ -66,6 +66,7 @@ const Register = () => {
         country: country,
       });
       console.log("Document written");
+      setRegistered(true);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -133,6 +134,13 @@ const Register = () => {
         <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 sm:max-w-xl lg:max-w-2xl mt-40 mb-20">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
+              {registered && (
+                <div>
+                  <p className="block font-semibold mb-2 text-white">
+                    {formData.name} signed up succesfully
+                  </p>
+                </div>
+              )}
               <label
                 htmlFor="name"
                 className="block font-semibold mb-2 text-white"
