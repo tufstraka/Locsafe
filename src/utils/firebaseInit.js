@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 //import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
-import { getPerformance } from "firebase/performance";
+//import { getPerformance } from "firebase/performance";
 //import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
@@ -16,6 +16,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-export const perf = getPerformance(app);
+//export const perf = getPerformance(app);
 
 export const db = getFirestore(app);
