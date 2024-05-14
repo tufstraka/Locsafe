@@ -1,28 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-import axios from 'axios';
-import Header from './header';
-import Footer from './footer';
+import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
+import axios from "axios";
+import Header from "./header";
+import Footer from "./footer";
 import {
   getAuth,
   setPersistence,
-  signInWithEmailAndPassword,
+  //signInWithEmailAndPassword,
   browserSessionPersistence,
   signInWithPopup,
   GoogleAuthProvider,
-  OAuthProvider
+  OAuthProvider,
 } from "firebase/auth";
+import { collection, doc, setDoc } from "firebase/firestore";
+import { db } from "../utils/firebaseInit";
 
 const auth = getAuth();
 setPersistence(auth, browserSessionPersistence);
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phoneNumber: '',
-    countryCode: '',
-    country: '',
+    name: "",
+    email: "",
+    phoneNumber: "",
+    countryCode: "",
+    country: "",
   });
 
   const [countries, setCountries] = useState([]);
@@ -32,10 +34,10 @@ const Register = () => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await axios.get('https://restcountries.com/v3.1/all');
+        const response = await axios.get("https://restcountries.com/v3.1/all");
         setCountries(response.data.map((country) => country.name.common));
       } catch (error) {
-        console.error('Error fetching countries:', error);
+        console.error("Error fetching countries:", error);
       }
     };
 
@@ -43,12 +45,29 @@ const Register = () => {
   }, []);
 
   const handleEmailSignUp = async () => {
-    try {
+    /*try {
       const { email, password } = formData;
       await signInWithEmailAndPassword(auth, email, password);
       console.log('User signed up with email and password successfully!');
     } catch (error) {
       console.error('Error signing up with email and password:', error);
+    }*/
+    const { name, email, countryCode, phoneNumber, country } = formData;
+
+    const usersCollection = collection(db, "users");
+    const userDoc = doc(usersCollection, email);
+
+    try {
+      await setDoc(userDoc, {
+        name: name,
+        email: email,
+        countryCode: countryCode,
+        phoneNumber: phoneNumber,
+        country: country,
+      });
+      console.log("Document written");
+    } catch (e) {
+      console.error("Error adding document: ", e);
     }
   };
 
@@ -56,19 +75,19 @@ const Register = () => {
     try {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
-      console.log('User signed up with Google successfully!');
+      console.log("User signed up with Google successfully!");
     } catch (error) {
-      console.error('Error signing up with Google:', error);
+      console.error("Error signing up with Google:", error);
     }
   };
 
   const handleMicrosoftSignUp = async () => {
     try {
-      const provider = new OAuthProvider('microsoft.com');
+      const provider = new OAuthProvider("microsoft.com");
       await signInWithPopup(auth, provider);
-      console.log('User signed up with Microsoft successfully!');
+      console.log("User signed up with Microsoft successfully!");
     } catch (error) {
-      console.error('Error signing up with Microsoft:', error);
+      console.error("Error signing up with Microsoft:", error);
     }
   };
 
@@ -89,7 +108,7 @@ const Register = () => {
   };
 
   const filterCountries = (search) => {
-    const filtered = countries.filter(country =>
+    const filtered = countries.filter((country) =>
       country.toLowerCase().includes(search.toLowerCase())
     );
     setFilteredCountries(filtered);
@@ -107,17 +126,17 @@ const Register = () => {
     <div>
       <Helmet>
         <title>Locsafe™ - Registration</title>
-        <meta
-          name="description"
-          content="Register your business with us."
-        />
+        <meta name="description" content="Register your business with us." />
       </Helmet>
       <Header />
       <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
         <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 sm:max-w-xl lg:max-w-2xl mt-40 mb-20">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="name" className="block font-semibold mb-2 text-white">
+              <label
+                htmlFor="name"
+                className="block font-semibold mb-2 text-white"
+              >
                 Name
               </label>
               <input
@@ -131,7 +150,10 @@ const Register = () => {
               />
             </div>
             <div>
-              <label htmlFor="email" className="block font-semibold mb-2 text-white">
+              <label
+                htmlFor="email"
+                className="block font-semibold mb-2 text-white"
+              >
                 Email
               </label>
               <input
@@ -146,7 +168,10 @@ const Register = () => {
             </div>
             <div className="flex flex-col sm:flex-row sm:space-x-4">
               <div className="mb-4 sm:mb-0">
-                <label htmlFor="countryCode" className="block font-semibold mb-2 text-white">
+                <label
+                  htmlFor="countryCode"
+                  className="block font-semibold mb-2 text-white"
+                >
                   Country Code
                 </label>
                 <input
@@ -160,7 +185,10 @@ const Register = () => {
                 />
               </div>
               <div className="flex-1">
-                <label htmlFor="phoneNumber" className="block font-semibold mb-2 text-white">
+                <label
+                  htmlFor="phoneNumber"
+                  className="block font-semibold mb-2 text-white"
+                >
                   Phone Number
                 </label>
                 <input
@@ -175,7 +203,10 @@ const Register = () => {
               </div>
             </div>
             <div>
-              <label htmlFor="country" className="block font-semibold mb-2 text-white">
+              <label
+                htmlFor="country"
+                className="block font-semibold mb-2 text-white"
+              >
                 Country
               </label>
               <div className="relative">
@@ -212,14 +243,20 @@ const Register = () => {
               Sign Up
             </button>
             <div className="flex justify-center items-center">
-              <div className="bg-white rounded-lg shadow-lg p-2 mr-4 cursor-pointer" onClick={handleGoogleSignUp}>
+              <div
+                className="bg-white rounded-lg shadow-lg p-2 mr-4 cursor-pointer"
+                onClick={handleGoogleSignUp}
+              >
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
                   alt="Google Logo"
                   className="h-8 w-8"
                 />
               </div>
-              <div className="bg-white rounded-lg shadow-lg p-2 cursor-pointer" onClick={handleMicrosoftSignUp}>
+              <div
+                className="bg-white rounded-lg shadow-lg p-2 cursor-pointer"
+                onClick={handleMicrosoftSignUp}
+              >
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/500px-Microsoft_logo.svg.png"
                   alt="Microsoft Logo"
@@ -236,5 +273,3 @@ const Register = () => {
 };
 
 export default Register;
-
-

@@ -18,6 +18,4 @@ const app = initializeApp(firebaseConfig);
 
 export const perf = getPerformance(app);
 
-const db = getFirestore(app);
-
-export default db;
+export const db = getFirestore(app);
