@@ -61,7 +61,7 @@ const Header = () => {
               <li>
                 <Link to="/register">
                   <button className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded transition-colors duration-300">
-                    Request Access
+                    Get Started
                   </button>
                 </Link>
               </li>
@@ -93,7 +93,7 @@ const Header = () => {
               <li>
                 <Link to="/register">
                   <button className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded transition-colors duration-300 mb-5">
-                    Request Access
+                    Get Started
                   </button>
                 </Link>
               </li>

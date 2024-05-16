@@ -10,8 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "^1.6.0",
+    "axios": "^1.6.8",
     "firebase": "^9.22.1",
+    "js-base64": "^3.7.7",
     "leaflet": "^1.9.3",
     "leaflet-draw": "^1.0.4",
     "leaflet-routing-machine": "^3.2.12",

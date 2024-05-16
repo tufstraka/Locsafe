@@ -24,7 +24,6 @@ const Register = () => {
     name: "",
     email: "",
     phoneNumber: "",
-    countryCode: "",
     country: "",
   });
 
@@ -55,7 +54,7 @@ const Register = () => {
     } catch (error) {
       console.error('Error signing up with email and password:', error);
     }*/
-    const { name, email, countryCode, phoneNumber, country } = formData;
+    const { name, email, phoneNumber, country } = formData;
 
     const usersCollection = collection(db, "users");
     const userDoc = doc(usersCollection, email);
@@ -64,7 +63,6 @@ const Register = () => {
       await setDoc(userDoc, {
         name: name,
         email: email,
-        countryCode: countryCode,
         phoneNumber: phoneNumber,
         country: country,
       });
@@ -181,23 +179,6 @@ const Register = () => {
               />
             </div>
             <div className="flex flex-col sm:flex-row sm:space-x-4">
-              <div className="mb-4 sm:mb-0">
-                <label
-                  htmlFor="countryCode"
-                  className="block font-semibold mb-2 text-white"
-                >
-                  Country Code
-                </label>
-                <input
-                  type="text"
-                  id="countryCode"
-                  name="countryCode"
-                  value={formData.countryCode}
-                  onChange={handleChange}
-                  className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  placeholder="e.g., +254"
-                />
-              </div>
               <div className="flex-1">
                 <label
                   htmlFor="phoneNumber"
@@ -252,9 +233,9 @@ const Register = () => {
             </div>
             <button
               type="submit"
-              className="w-full py-2 px-4 bg-gray-800 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 rounded-lg text-xl font-semibold"
+              className="w-full py-2 px-4 bg-teal-500 hover:bg-gray-900 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 rounded-lg text-xl font-semibold"
             >
-              Sign Up
+              Sign up
             </button>
             <div className="flex justify-center items-center">
               <div
