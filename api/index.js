@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.json());
 
-app.post('/stkpush', async (req, res) => {
+app.get('/stkpush', async (req, res) => {
   try {
     const response = await axios.post('https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest', {
       BusinessShortCode: 174379,
