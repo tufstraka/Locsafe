@@ -3,26 +3,41 @@ import axios from 'axios';
 
 const app = express();
 
+// Middleware to parse JSON bodies
 app.use(express.json());
 
-app.get('/stkpush', async (req, res) => {
+app.post('/stkpush', async (req, res) => {
+  const {
+    BusinessShortCode,
+    Password,
+    Timestamp,
+    TransactionType,
+    Amount,
+    PartyA,
+    PartyB,
+    PhoneNumber,
+    CallBackURL,
+    AccountReference,
+    TransactionDesc
+  } = req.body;
+
   try {
     const response = await axios.post('https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest', {
-      BusinessShortCode: 174379,
-      Password: "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjQwNTE3MjAwMjU5",
-      Timestamp: "20240517200259",
-      TransactionType: "CustomerPayBillOnline",
-      Amount: 1,
-      PartyA: 254721823822,
-      PartyB: 174379,
-      PhoneNumber: 254721823822,
-      CallBackURL: "https://mydomain.com/path",
-      AccountReference: "LocsafeLTD",
-      TransactionDesc: "Payment of X"
+      BusinessShortCode,
+      Password,
+      Timestamp,
+      TransactionType,
+      Amount,
+      PartyA,
+      PartyB,
+      PhoneNumber,
+      CallBackURL,
+      AccountReference,
+      TransactionDesc
     }, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 05Lt1mjozRx2G26z159MRTlo98u5'
+        'Authorization': 'Basic TmxJYVBzS1RiaEtIS3BDYWtvZXBIWnozYkowYzQ1V09yR29PVjg2aHRrOFdkZk85OlB1NmFQQm1oeFo2T0lSWkt4cGN3QlRhSjNpV0NUZkhvUlNCNm41aEtyenBPbWc3UDA5aUpabkNZblc1dmlDMUo=',
       }
     });
 

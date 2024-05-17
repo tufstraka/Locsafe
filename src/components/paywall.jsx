@@ -36,7 +36,7 @@ const Paywall = () => {
         }
 
         axios
-          .post('https://75uox1kdig.execute-api.us-east-1.amazonaws.com/pay', requestData)
+          .post('https://www.loc-safe.com/api/stkpush', requestData)
           .then(response => {
             console.log('Payment response:', response.data)
             setLoading(false)
