@@ -1,5 +1,5 @@
-const express = require('express');
-const axios = require('axios');
+import express from 'express';
+import axios from 'axios';
 
 const app = express();
 
@@ -13,16 +13,16 @@ app.post('/stkpush', async (req, res) => {
       Timestamp: "20240517200259",
       TransactionType: "CustomerPayBillOnline",
       Amount: 1,
-      PartyA: 254701746774,
+      PartyA: 254721823822,
       PartyB: 174379,
-      PhoneNumber: 254701746774,
-      CallBackURL: "https://loc-safe.com/api/pay-callback",
+      PhoneNumber: 254721823822,
+      CallBackURL: "https://mydomain.com/path",
       AccountReference: "LocsafeLTD",
       TransactionDesc: "Payment of X"
     }, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Basic TmxJYVBzS1RiaEtIS3BDYWtvZXBIWnozYkowYzQ1V09yR29PVjg2aHRrOFdkZk85OlB1NmFQQm1oeFo2T0lSWkt4cGN3QlRhSjNpV0NUZkhvUlNCNm41aEtyenBPbWc3UDA5aUpabkNZblc1dmlDMUo=',
+        'Authorization': 'Bearer 05Lt1mjozRx2G26z159MRTlo98u5'
       }
     });
 
@@ -32,4 +32,4 @@ app.post('/stkpush', async (req, res) => {
   }
 });
 
-module.exports = app;
+export default app;
