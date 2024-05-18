@@ -1,27 +1,12 @@
 import express from 'express';
+import axios from 'axios';
 
 const app = express();
 const port = 3000;
 
-app.get('/api/hello', (req, res) => {
-  res.send('Hello World!');
-});
-
-app.listen(port, () => {
-  console.log(`app listening at ${port}`);
-});
-
-export default app;
-
-/*import express from 'express';
-import axios from 'axios';
-
-const app = express();
-
-// Middleware to parse JSON bodies
 app.use(express.json());
 
-app.post('/stkpush', async (req, res) => {
+app.post('/api/stkpush', async (req, res) => {
   const {
     BusinessShortCode,
     Password,
@@ -62,4 +47,8 @@ app.post('/stkpush', async (req, res) => {
   }
 });
 
-export default app;*/
+app.listen(port, () => {
+  console.log(`server listening at port ${port}`);
+});
+
+export default app;
