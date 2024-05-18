@@ -17,11 +17,8 @@
 
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/index.js" },
-    { "src": "/(.*)", "dest": "/dist/$1" }
-  ],
-
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
-
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
 }
 
 
