@@ -1,58 +1,34 @@
-import express from 'express';
 import axios from 'axios';
 
-const app = express();
-const port = 3000;
+export default async function handler(request, response) {
+  if (request.method === 'POST') {
+    const { BusinessShortCode, Password, Timestamp, TransactionType, Amount, PartyA, PartyB, PhoneNumber, CallBackURL, AccountReference, TransactionDesc, token } = request.body;
 
-app.use(express.json());
+    try {
+      const res = await axios.post('https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest', {
+        BusinessShortCode,
+        Password,
+        Timestamp,
+        TransactionType,
+        Amount,
+        PartyA,
+        PartyB,
+        PhoneNumber,
+        CallBackURL,
+        AccountReference,
+        TransactionDesc
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        }
+      });
 
-app.post('/stkpush', async (req, res) => {
-  const {
-    BusinessShortCode,
-    Password,
-    Timestamp,
-    TransactionType,
-    Amount,
-    PartyA,
-    PartyB,
-    PhoneNumber,
-    CallBackURL,
-    AccountReference,
-    TransactionDesc,
-    token
-  } = req.body;
-
-  try {
-    const response = await axios.post('https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest', {
-      BusinessShortCode,
-      Password,
-      Timestamp,
-      TransactionType,
-      Amount,
-      PartyA,
-      PartyB,
-      PhoneNumber,
-      CallBackURL,
-      AccountReference,
-      TransactionDesc
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      }
-    });
-
-    res.json(response.data);
-
-  } catch (error) {
-
-    res.status(500).json({ error: error.message });
-    
+      response.status(200).json(res.data);
+    } catch (error) {
+      response.status(500).json({ error: error.message });
+    }
+  } else {
+    response.status(405).json({ error: 'Method Not Allowed' });
   }
-});
-
-app.listen(port, () => {
-  console.log(`server listening at port ${port}`);
-});
-
-export default app;
+}
