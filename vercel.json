@@ -1,4 +1,5 @@
 {
+
   "version": 2,
   "builds": [
     {
@@ -13,10 +14,13 @@
       }
     }
   ],
+
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/index.js" },
-    { "src": "/(.*)", "dest": "/dist/$1" }
-  ]
+    { "src": "/api/(.*)", "dest": "/api/index.js" }
+  ],
+
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+
 }
 
 
