@@ -40,12 +40,11 @@ const Paywall = () => {
           .then(response => {
             console.log('Payment response:', response.data)
             setLoading(false)
-            // Handle payment response here if needed
+            // payment response here if needed
           })
           .catch(error => {
             console.error('Payment error:', error)
             setLoading(false)
-            // Handle payment error here
           })
       })
       .catch(error => {

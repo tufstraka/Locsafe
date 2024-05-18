@@ -18,7 +18,8 @@ app.post('/api/stkpush', async (req, res) => {
     PhoneNumber,
     CallBackURL,
     AccountReference,
-    TransactionDesc
+    TransactionDesc,
+    token
   } = req.body;
 
   try {
@@ -37,13 +38,16 @@ app.post('/api/stkpush', async (req, res) => {
     }, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Basic TmxJYVBzS1RiaEtIS3BDYWtvZXBIWnozYkowYzQ1V09yR29PVjg2aHRrOFdkZk85OlB1NmFQQm1oeFo2T0lSWkt4cGN3QlRhSjNpV0NUZkhvUlNCNm41aEtyenBPbWc3UDA5aUpabkNZblc1dmlDMUo=',
+        'Authorization': `Bearer ${token}`,
       }
     });
 
     res.json(response.data);
+
   } catch (error) {
+
     res.status(500).json({ error: error.message });
+    
   }
 });
 
