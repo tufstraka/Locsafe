@@ -1,12 +1,22 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" },
+  "version": 2,
+  "builds": [
     {
-      "source": "/api/stkpush",
-      "destination": "/api/index"
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
     }
   ],
-
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/index.js" },
+    { "src": "/(.*)", "dest": "/dist/$1" }
+  ],
   "functions": {
     "api/index.js": {
       "maxDuration": 40
