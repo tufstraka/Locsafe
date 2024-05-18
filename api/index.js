@@ -6,7 +6,7 @@ const port = 3000;
 
 app.use(express.json());
 
-app.post('/api/stkpush', async (req, res) => {
+app.post('/stkpush', async (req, res) => {
   const {
     BusinessShortCode,
     Password,
