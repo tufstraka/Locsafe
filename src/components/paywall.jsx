@@ -12,7 +12,18 @@ const Paywall = () => {
 
     const businessShortCode = 174379
     const passKey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
-    const timestamp = new Date().toISOString().replace(/[^0-9]/g, '')
+    
+    const now = new Date()
+    const year = now.getFullYear()
+    const month = String(now.getMonth() + 1).padStart(2, '0')
+    const date = String(now.getDate()).padStart(2, '0')
+    const hour = String(now.getHours()).padStart(2, '0')
+    const minute = String(now.getMinutes()).padStart(2, '0')
+    const second = String(now.getSeconds()).padStart(2, '0')
+
+    const timestamp = `${year}${month}${date}${hour}${minute}${second}`
+    console.log(timestamp);
+    
     const password = Base64.encode(`${businessShortCode}${passKey}${timestamp}`)
 
     console.log('Initiating STK push...')
@@ -86,4 +97,5 @@ const Paywall = () => {
 }
 
 export default Paywall
+
 
