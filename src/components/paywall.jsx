@@ -21,9 +21,7 @@ const Paywall = () => {
     const minute = String(now.getMinutes()).padStart(2, '0')
     const second = String(now.getSeconds()).padStart(2, '0')
 
-    const timestamp = `${year}${month}${date}${hour}${minute}${second}`
-    console.log(timestamp);
-    
+    const timestamp = `${year}${month}${date}${hour}${minute}${second}`    
     const password = Base64.encode(`${businessShortCode}${passKey}${timestamp}`)
 
     console.log('Initiating STK push...')
@@ -47,7 +45,7 @@ const Paywall = () => {
         }
 
         axios
-          .post('https://zxs-klzo.onrender.com/api/stkpush', requestData)
+          .post('https://https://8sf9u8pccc.execute-api.us-east-1.amazonaws.com/locdapa/api/stkpush', requestData)
           .then(response => {
             console.log('Payment response:', response.data)
             setLoading(false)
