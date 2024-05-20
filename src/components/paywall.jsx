@@ -50,7 +50,7 @@ const Paywall = () => {
           .then(response => {
             console.log('Payment response:', response.data)
             setLoading(false);
-            setReponse(response.data.CustomerMessage);
+            setResponse(response.data.CustomerMessage);
             console.log(requestData);
             // payment response here if needed
           })
