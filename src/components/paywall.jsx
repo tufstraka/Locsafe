@@ -6,6 +6,7 @@ import axios from 'axios'
 
 const Paywall = () => {
   const [loading, setLoading] = useState(false)
+  const [response, setResponse] = useState('')
 
   const handlePayment = () => {
     setLoading(true)
@@ -48,7 +49,8 @@ const Paywall = () => {
           .post('https://zxs-klzo.onrender.com/api/stkpush', requestData)
           .then(response => {
             console.log('Payment response:', response.data)
-            setLoading(false)
+            setLoading(false);
+            setReponse(response.data.CustomerMessage);
             console.log(requestData);
             // payment response here if needed
           })
@@ -67,6 +69,7 @@ const Paywall = () => {
 
   return (
     <div className='bg-gray-100 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8'>
+      
       <div className='max-w-md w-full space-y-8'>
         <div>
           <HiOutlineCurrencyDollar className='mx-auto h-12 w-auto text-indigo-600' />
@@ -78,6 +81,7 @@ const Paywall = () => {
             Covers up to 200 assets.
           </p>
         </div>
+        
         <div className='mt-8'>
           <div className='rounded-md shadow'>
             <button
@@ -90,6 +94,12 @@ const Paywall = () => {
               {loading ? 'Processing...' : 'Pay using M-pesa'}
             </button>
           </div>
+        </div>
+
+        <div>
+        <p className='mt-2 text-center text-sm text-gray-600'>
+                {response}
+       </p>
         </div>
       </div>
     </div>
