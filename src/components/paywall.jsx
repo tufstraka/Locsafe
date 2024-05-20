@@ -45,7 +45,7 @@ const Paywall = () => {
         }
 
         axios
-          .post('https://https://8sf9u8pccc.execute-api.us-east-1.amazonaws.com/locdapa/api/stkpush', requestData)
+          .post('https://https://8sf9u8pccc.execute-api.us-east-1.amazonaws.com/api/stkpush', requestData)
           .then(response => {
             console.log('Payment response:', response.data)
             setLoading(false)
@@ -53,7 +53,7 @@ const Paywall = () => {
             // payment response here if needed
           })
           .catch(error => {
-            console.error('Payment error:', error)
+            console.log('Payment error:', error)
             setLoading(false)
             console.log(requestData);
           })
