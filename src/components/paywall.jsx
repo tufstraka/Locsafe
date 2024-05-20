@@ -44,18 +44,18 @@ const Paywall = () => {
           token: token
         }
 
-        console.log(requestData);
-
         axios
           .post('https://https://8sf9u8pccc.execute-api.us-east-1.amazonaws.com/locdapa/api/stkpush', requestData)
           .then(response => {
             console.log('Payment response:', response.data)
             setLoading(false)
+            console.log(requestData);
             // payment response here if needed
           })
           .catch(error => {
             console.error('Payment error:', error)
             setLoading(false)
+            console.log(requestData);
           })
       })
       .catch(error => {
