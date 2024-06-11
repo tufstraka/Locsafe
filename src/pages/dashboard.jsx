@@ -6,7 +6,7 @@ import { db } from '../utils/firebaseInit';
 import Map from '../components/map.jsx';
 import Sidebar from '../components/sidebar.jsx';
 import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
+//import 'firebase/compat/auth';
 
 import { AppContext } from '../App.jsx';
 
