@@ -29,7 +29,7 @@ const Header = () => {
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
         <Link to="/" className="text-2xl font-bold text-white flex items-center logo">
           <img src={logo} alt="Locsafe Logo" className="h-12 mr-3 " />
-          <span className='text-teal-300'>Loc</span>safe
+          {/*<p className='text-teal-300'>Locsafe</p>*/}
         </Link>
 
         {mobile ? (
@@ -43,12 +43,12 @@ const Header = () => {
         ) : (
           <nav>
             <ul className="flex items-center space-x-8 text-white font-medium">
-              <li>
+              {/*<li>
                 <Link to="/features" className="hover:text-teal-400 transition-colors duration-300">
                   Features
                 </Link>
               </li>
-              {/*<li>
+              <li>
                 <Link to="/pricing" className="hover:text-teal-400 transition-colors duration-300">
                   Pricing
                 </Link>
@@ -75,12 +75,12 @@ const Header = () => {
         <nav className={`lg:hidden fixed inset-x-0 top-16 transition-opacity duration-500 ${mobileNav ? 'opacity-100' : 'opacity-0'}`}>
           <div className="bg-gray-900 h-full w-full flex flex-col justify-center items-center">
             <ul className="text-white font-medium">
-              <li>
+               {/*<li>
                 <Link to="/features" className="block py-2 px-4 hover:text-teal-400 transition-colors duration-300">
                   Features
                 </Link>
               </li>
-              {/*<li>
+             <li>
                 <Link to="/pricing" className="block py-2 px-4 hover:text-teal-400 transition-colors duration-300">
                   Pricing
                 </Link>
