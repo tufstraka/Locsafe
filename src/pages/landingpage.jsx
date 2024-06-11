@@ -19,7 +19,7 @@ const LandingPage = () => {
         />
       </Helmet>
       <Header />
-      <main className="container mx-auto flex-1 my-16 flex flex-col md:flex-row px-4 pt-24 relative mb-20">
+      <main className="container mx-auto flex-1 my-16 flex flex-col md:flex-row px-4 pt-10 relative mb-20">
         <div className="md:w-1/2 z-10 flex flex-col justify-center mt-10 md:mt-0">
           <h2 className="text-4xl font-bold mb-8">Track your <span className='text-teal-400'>assets with ease</span></h2>
           <p className="text-gray-300 text-xl mb-8">
