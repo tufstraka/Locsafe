@@ -53,6 +53,11 @@ const Header = () => {
                   Pricing
                 </Link>
         </li>*/}
+        <li>
+                        <Link to="/blog" className="block py-2 px-4 hover:text-teal-400 transition-colors duration-300">
+                  Blog
+                </Link>
+      </li>
               <li>
                 <Link to="/contact" className="hover:text-teal-400 transition-colors duration-300">
                   Contact
@@ -85,6 +90,11 @@ const Header = () => {
                   Pricing
                 </Link>
       </li>*/}
+                   <li>
+                <Link to="/blog" className="block py-2 px-4 hover:text-teal-400 transition-colors duration-300">
+                  Blog
+                </Link>
+      </li>
               <li>
                 <Link to="/contact" className="block py-2 px-4 hover:text-teal-400 transition-colors duration-300">
                   Contact

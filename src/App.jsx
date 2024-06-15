@@ -15,6 +15,7 @@ import SignInForm from './components/signin.jsx'
 import GeofenceMap from './components/geofence.jsx'
 import Dashboard from './pages/dashboard.jsx'
 import Assets from './components/assets.jsx'
+import BlogArticle from './components/blog.jsx'
 //import UpdateProfilePage from './components/userProfile.jsx';
 import PageNotFound from './components/PageNotFound.jsx'
 import FeaturesPage from './pages/features.jsx'
@@ -38,6 +39,7 @@ const App = () => {
               <Route exact path='/' element={<LandingPage />} />
 
               <Route path='/staff' element={<Staff />} />
+              <Route path='/blog' element={<BlogArticle />} />
               <Route path='/features' element={<FeaturesPage />} />
               <Route path='/login' element={<Login />} />
               <Route path='/pay' element={<Paywall />} />
