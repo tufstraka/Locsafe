@@ -73,8 +73,8 @@ const Dashboard = () => {
                   <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4'>
                     {/* Cards */}
                     {[
-                      { title: 'Total Vehicles', value: '0' },
-                      { title: 'Total users', value: users },
+                      { title: 'Total Assets', value: '0' },
+                      { title: 'Total Users', value: users },
                       { title: 'Total Alerts', value: '0' },
                       { title: 'Total Trips', value: '0' },
                     ].map((card, index) => (
