@@ -26,8 +26,12 @@ import ContactUs from './pages/contact.jsx'
 import Register from './components/register.jsx'
 import Paywall from './components/paywall.jsx'
 import Login from './pages/login.jsx'
+import Alerts from './pages/alerts.jsx'
 import './App.css'
 import MyCalendar from './components/calendar.jsx'
+import Settings from './pages/settings.jsx'
+import Reports from './pages/reports.jsx'
+import Insights from './pages/insights.jsx'
 
 const App = () => {
   return (
@@ -39,6 +43,10 @@ const App = () => {
               <Route exact path='/' element={<LandingPage />} />
 
               <Route path='/staff' element={<Staff />} />
+              <Route path='/alerts' element={<Alerts />} />
+              <Route path='/insights' element={<Insights />} />
+              <Route path='/reports' element={<Reports />} />
+              <Route path='/settings' element={<Settings />} />
               <Route path='/blog' element={<BlogArticle />} />
               <Route path='/features' element={<FeaturesPage />} />
               <Route path='/login' element={<Login />} />
