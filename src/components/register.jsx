@@ -158,7 +158,7 @@ const Register = () => {
             <button
               onClick={handleRegister}
               disabled={loading.register}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-md transition-all duration-300 flex justify-center items-center"
+              className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-md transition-all duration-300 flex justify-center items-center"
             >
               {!loading.register ? 'Sign Up' : <span className="spinner"></span>}
             </button>
