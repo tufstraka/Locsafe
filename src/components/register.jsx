@@ -86,90 +86,97 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-50">
       <Header />
-      <div className="container mx-auto px-4 py-8 flex justify-center items-center">
-        <form className="w-full max-w-lg bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-16" onSubmit={(e) => e.preventDefault()}>
-          <h2 className="text-center text-2xl font-semibold mb-8">Join the waitlist</h2>
-          <div className="mb-4 flex items-center">
-            <FaUser className="icon mr-2" />
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="text"
-              name="firstName"
-              placeholder="First Name"
-              value={formData.firstName}
-              onChange={handleChange}
-            />
+      <div className="container mx-auto px-4 py-12 flex justify-center items-center">
+        <form className="w-full max-w-lg bg-white shadow-lg rounded-lg p-8 mt-16 " onSubmit={(e) => e.preventDefault()}>
+          <h2 className="text-center text-3xl font-semibold mb-8 text-gray-800 ">Join the Waitlist</h2>
+          <div className="space-y-4">
+            <div className="flex items-center border border-gray-300 rounded-md p-2">
+              <FaUser className="text-gray-400 mr-3" />
+              <input
+                className="w-full bg-transparent focus:outline-none text-gray-700"
+                type="text"
+                name="firstName"
+                placeholder="First Name"
+                value={formData.firstName}
+                onChange={handleChange}
+                aria-label="First Name"
+              />
+            </div>
+            <div className="flex items-center border border-gray-300 rounded-md p-2">
+              <FaUser className="text-gray-400 mr-3" />
+              <input
+                className="w-full bg-transparent focus:outline-none text-gray-700"
+                type="text"
+                name="lastName"
+                placeholder="Last Name"
+                value={formData.lastName}
+                onChange={handleChange}
+                aria-label="Last Name"
+              />
+            </div>
+            <div className="flex items-center border border-gray-300 rounded-md p-2">
+              <FaUser className="text-gray-400 mr-3" />
+              <input
+                className="w-full bg-transparent focus:outline-none text-gray-700"
+                type="text"
+                name="userName"
+                placeholder="Username"
+                value={formData.userName}
+                onChange={handleChange}
+                aria-label="Username"
+              />
+            </div>
+            <div className="flex items-center border border-gray-300 rounded-md p-2">
+              <FaEnvelope className="text-gray-400 mr-3" />
+              <input
+                className="w-full bg-transparent focus:outline-none text-gray-700"
+                type="email"
+                name="email"
+                placeholder="E-mail"
+                value={formData.email}
+                onChange={handleChange}
+                aria-label="Email"
+              />
+            </div>
+            <div className="flex items-center border border-gray-300 rounded-md p-2">
+              <FaLock className="text-gray-400 mr-3" />
+              <input
+                className="w-full bg-transparent focus:outline-none text-gray-700"
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                aria-label="Password"
+              />
+            </div>
           </div>
-          <div className="mb-4 flex items-center">
-            <FaUser className="icon mr-2" />
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="text"
-              name="lastName"
-              placeholder="Last Name"
-              value={formData.lastName}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-4 flex items-center">
-            <FaUser className="icon mr-2" />
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="text"
-              name="userName"
-              placeholder="Username"
-              value={formData.userName}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-4 flex items-center">
-            <FaEnvelope className="icon mr-2" />
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="email"
-              name="email"
-              placeholder="E-mail"
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-4 flex items-center">
-            <FaLock className="icon mr-2" />
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-            />
-          </div>
-          {error && <div className="text-red-500 mb-4">{error}</div>}
-          <div className="flex justify-center">
+          {error && <div className="text-red-500 text-sm mt-4">{error}</div>}
+          <div className="mt-6 flex justify-center">
             <button
               onClick={handleRegister}
               disabled={loading.register}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-md transition-all duration-300 flex justify-center items-center"
             >
               {!loading.register ? 'Sign Up' : <span className="spinner"></span>}
             </button>
           </div>
-          <div className="mt-4 flex justify-center">
+          <div className="mt-6 flex justify-center space-x-4">
             <button
               onClick={handleGoogleSignIn}
               disabled={loading.google}
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow mr-4"
+              className="w-1/2 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-3 border border-gray-300 rounded-md transition-all duration-300 flex justify-center items-center"
             >
-              {!loading.google ? <RiGoogleFill className="logo" /> : <span className="spinner"></span>}
+              {!loading.google ? <RiGoogleFill className="text-xl" /> : <span className="spinner"></span>}
             </button>
             <button
               onClick={handleMicrosoftSignIn}
               disabled={loading.microsoft}
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+              className="w-1/2 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-3 border border-gray-300 rounded-md transition-all duration-300 flex justify-center items-center"
             >
-              {!loading.microsoft ? <RiMicrosoftFill className="logomi" /> : <span className="spinner"></span>}
+              {!loading.microsoft ? <RiMicrosoftFill className="text-xl" /> : <span className="spinner"></span>}
             </button>
           </div>
         </form>
@@ -180,3 +187,4 @@ const Register = () => {
 };
 
 export default Register;
+
