@@ -32,6 +32,7 @@ import MyCalendar from './components/calendar.jsx'
 import Settings from './pages/settings.jsx'
 import Reports from './pages/reports.jsx'
 import Insights from './pages/insights.jsx'
+import UserConsent from './components/user-consent.jsx'
 
 const App = () => {
   return (
@@ -39,6 +40,7 @@ const App = () => {
       <AuthProvider>
         <NavigationProvider>
           <Router>
+          <UserConsent/>
             <Routes>
               <Route exact path='/' element={<LandingPage />} />
 
