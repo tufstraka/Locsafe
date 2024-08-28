@@ -139,7 +139,6 @@ const LandingPage = () => {
           </Link>
         </div>
       </section>
-      <UserConsent/>
       <Footer />
     </div>
   );
