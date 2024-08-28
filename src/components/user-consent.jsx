@@ -12,7 +12,7 @@ const UserConsent = () => {
   }, []);
 
   const handleAccept = () => {
-    Cookies.set('cookieConsent', 'true', { expires: 365, path: '/' });
+    Cookies.set('cookieConsent', 'true', { expires: 365 });
     setIsVisible(false);
   };
 
@@ -31,7 +31,7 @@ const UserConsent = () => {
         <div className="flex space-x-2">
           <button
             onClick={handleAccept}
-            className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors"
+            className="bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors"
           >
             Accept
           </button>
