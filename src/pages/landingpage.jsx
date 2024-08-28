@@ -7,6 +7,7 @@ import Microsoft from '../assets/microsoft.svg';
 import AWSLogo from '../assets/awws.svg';
 import Header from '../components/header.jsx';
 import Footer from '../components/footer.jsx';
+import UserConsent from '../components/user-consent.jsx';
 
 const LandingPage = () => {
   return (
@@ -138,7 +139,7 @@ const LandingPage = () => {
           </Link>
         </div>
       </section>
-      
+      <UserConsent/>
       <Footer />
     </div>
   );
