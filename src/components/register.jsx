@@ -15,7 +15,7 @@ const Register = () => {
     userName: '',
     email: '',
     password: '',
-    phoneNumber: '' // Add phoneNumber to formData
+    phoneNumber: '' 
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState({
@@ -40,7 +40,7 @@ const Register = () => {
       try {
         const result = await createUserWithEmailAndPassword(auth, email, password);
         await setDoc(doc(db, 'users', result.user.uid), { firstName, lastName, userName, email, phoneNumber });
-        navigate('/pay');
+        navigate(`/pay?phoneNumber=${phoneNumber}`);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -159,7 +159,7 @@ const Register = () => {
                 className="w-full bg-transparent focus:outline-none text-gray-700"
                 type="text"
                 name="phoneNumber"
-                placeholder="Phone Number"
+                placeholder="Phone Number eg +254.."
                 value={formData.phoneNumber}
                 onChange={handleChange}
                 aria-label="Phone Number"

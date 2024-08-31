@@ -3,8 +3,13 @@ import { HiOutlineCurrencyDollar } from 'react-icons/hi'
 import getOAuthToken from '../utils/darajaAuth'
 import { Base64 } from 'js-base64'
 import axios from 'axios'
+import { useLocation } from 'react-router-dom';
+
 
 const Paywall = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const phoneNumber = searchParams.get('phoneNumber');
   const [loading, setLoading] = useState(false)
   const [response, setResponse] = useState('')
 
@@ -36,9 +41,9 @@ const Paywall = () => {
           Timestamp: timestamp,
           TransactionType: 'CustomerPayBillOnline',
           Amount: 4500,
-          PartyA: 254701746774,
+          PartyA: phoneNumber,
           PartyB: businessShortCode,
-          PhoneNumber: 254701746774,
+          PhoneNumber: phoneNumber,
           CallBackURL: 'https://loc-safe.com/payment-callback',
           AccountReference: 'Locsafe',
           TransactionDesc: 'Basic Package',
@@ -52,7 +57,6 @@ const Paywall = () => {
             setLoading(false);
             setResponse(response.data.CustomerMessage);
             console.log(requestData);
-            // payment response here if needed
           })
           .catch(error => {
             console.log('Payment error:', error)
@@ -63,7 +67,6 @@ const Paywall = () => {
       .catch(error => {
         console.error('Error:', error)
         setLoading(false)
-        // Handle OAuth token error here
       })
   }
 
