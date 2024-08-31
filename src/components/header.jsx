@@ -59,17 +59,22 @@ const Header = () => {
           <nav className="flex items-center space-x-8 text-white font-medium">
             <ul className="flex items-center space-x-8">
               <li>
-              <button
-              onClick={toggleDarkMode}
-              className="text-l p-2 rounded transition-colors duration-300"
-              aria-label="Toggle Dark Mode"
-            >
-              {isDarkMode ? <FaSun className="text-yellow-500" /> : <FaMoon className="text-gray-300" />}
-            </button>
+                <button
+                  onClick={toggleDarkMode}
+                  className="text-l p-2 rounded transition-colors duration-300"
+                  aria-label="Toggle Dark Mode"
+                >
+                  {isDarkMode ? <FaSun className="text-yellow-500" /> : <FaMoon className="text-gray-300" />}
+                </button>
               </li>
               <li>
-                <Link to="/blog" className="hover:text-teal-400 transition-colors duration-300">
+                <Link to="#" className={`hover:text-gray-400 transition-colors duration-300 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                   Blog
+                </Link>
+              </li>
+              <li>
+                <Link to="#" className={`hover:text-gray-400 transition-colors duration-300 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                  Pricing
                 </Link>
               </li>
               <li>
@@ -85,7 +90,6 @@ const Header = () => {
                 </Link>
               </li>
             </ul>
-
           </nav>
         )}
       </div>
@@ -95,16 +99,16 @@ const Header = () => {
           <div className="bg-gray-900 dark:bg-gray-800 h-full w-full flex flex-col justify-center items-center">
             <ul className="text-white font-medium">
               <li>
-              <button
-              onClick={toggleDarkMode}
-              className="text-2xl p-2 rounded transition-colors duration-300 mt-4"
-              aria-label="Toggle Dark Mode"
-            >
-              {isDarkMode ? <FaSun className="text-yellow-500" /> : <FaMoon className="text-gray-300" />}
-            </button>
+                <button
+                  onClick={toggleDarkMode}
+                  className="text-2xl p-2 rounded transition-colors duration-300 mt-4"
+                  aria-label="Toggle Dark Mode"
+                >
+                  {isDarkMode ? <FaSun className="text-yellow-500" /> : <FaMoon className="text-gray-300" />}
+                </button>
               </li>
               <li>
-                <Link to="/blog" className="block py-2 px-4 hover:text-teal-400 transition-colors duration-300">
+                <Link to="/blog" className={`block py-2 px-4 hover:text-teal-400 transition-colors duration-300 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                   Blog
                 </Link>
               </li>
@@ -121,7 +125,6 @@ const Header = () => {
                 </Link>
               </li>
             </ul>
-
           </div>
         </nav>
       )}
@@ -130,6 +133,7 @@ const Header = () => {
 };
 
 export default Header;
+
 
 
 
