@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaLock, FaPhone } from 'react-icons/fa'; // Add FaPhone import
 import { RiGoogleFill, RiMicrosoftFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, OAuthProvider } from 'firebase/auth';
@@ -14,7 +14,8 @@ const Register = () => {
     lastName: '',
     userName: '',
     email: '',
-    password: ''
+    password: '',
+    phoneNumber: '' // Add phoneNumber to formData
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState({
@@ -32,13 +33,13 @@ const Register = () => {
   };
 
   const handleRegister = async () => {
-    const { firstName, lastName, userName, email, password } = formData;
-    if (firstName && lastName && userName && email && password) {
+    const { firstName, lastName, userName, email, password, phoneNumber } = formData;
+    if (firstName && lastName && userName && email && password && phoneNumber) {
       setError('');
       setLoading((prev) => ({ ...prev, register: true }));
       try {
         const result = await createUserWithEmailAndPassword(auth, email, password);
-        await setDoc(doc(db, 'users', result.user.uid), { firstName, lastName, userName, email });
+        await setDoc(doc(db, 'users', result.user.uid), { firstName, lastName, userName, email, phoneNumber });
         navigate('/pay');
       } catch (error) {
         setError(error.message);
@@ -89,8 +90,8 @@ const Register = () => {
     <div className="min-h-screen bg-gray-50">
       <Header />
       <div className="container mx-auto px-4 py-12 flex justify-center items-center">
-        <form className="w-full max-w-lg bg-white shadow-lg rounded-lg p-8 mt-16 " onSubmit={(e) => e.preventDefault()}>
-          <h2 className="text-center text-3xl font-semibold mb-8 text-gray-800 ">Join the Waitlist</h2>
+        <form className="w-full max-w-lg bg-white shadow-lg rounded-lg p-8 mt-16" onSubmit={(e) => e.preventDefault()}>
+          <h2 className="text-center text-3xl font-semibold mb-8 text-gray-800">Join the Waitlist</h2>
           <div className="space-y-4">
             <div className="flex items-center border border-gray-300 rounded-md p-2">
               <FaUser className="text-gray-400 mr-3" />
@@ -152,6 +153,18 @@ const Register = () => {
                 aria-label="Password"
               />
             </div>
+            <div className="flex items-center border border-gray-300 rounded-md p-2">
+              <FaPhone className="text-gray-400 mr-3" />
+              <input
+                className="w-full bg-transparent focus:outline-none text-gray-700"
+                type="text"
+                name="phoneNumber"
+                placeholder="Phone Number"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                aria-label="Phone Number"
+              />
+            </div>
           </div>
           {error && <div className="text-red-500 text-sm mt-4">{error}</div>}
           <div className="mt-6 flex justify-center">
@@ -187,4 +200,5 @@ const Register = () => {
 };
 
 export default Register;
+
 
