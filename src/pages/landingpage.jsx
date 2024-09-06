@@ -1,9 +1,9 @@
-import { FaMapMarkerAlt, FaCalendarAlt, FaCheck, FaMobileAlt, FaBell, FaChartLine } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaCalendarAlt, FaLock, FaNetworkWired, FaBell, FaChartLine } from 'react-icons/fa';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import Image from '../assets/3d-casual-life-trail-map.png';
 import Microsoft from '../assets/microsoft.svg';
-import AWSLogo from '../assets/awws.svg';
+import AWSLogo from '../assets/aws.svg';
 import Header from '../components/header.jsx';
 import Footer from '../components/footer.jsx';
 
@@ -11,30 +11,30 @@ const LandingPage = () => {
   return (
     <div className="flex flex-col min-h-screen bg-lightBg dark:bg-darkBg text-lightText dark:text-darkText font-sans">
       <Helmet>
-        <title>Locsafe - Asset Tracking and Management System</title>
+        <title>Locsafe - Supply Chain Transparency</title>
         <meta
           name="description"
-          content="Locsafe™ is an asset tracking and management system that helps you keep track of your assets in real-time. Track your assets anywhere in the world, set up custom alerts and notifications, and enjoy an easy-to-use interface with an intuitive dashboard."
+          content="Locsafe™ is a blockchain-based supply chain tracking system that ensures transparency, traceability, and security for your assets in real-time. Monitor your supply chain from production to delivery with ease."
         />
       </Helmet>
       <Header />
       <main className="container mx-auto flex-1 my-16 flex flex-col md:flex-row px-4 pt-10 relative mb-20">
         <div className="md:w-1/2 z-10 flex flex-col justify-center mt-10 md:mt-0">
-          <h2 className="text-4xl font-bold mb-8">Track your <span className='text-accent'>assets with ease</span></h2>
+          <h2 className="text-4xl font-bold mb-8">Bring <span className='text-accent'>transparency</span> to your supply chain</h2>
           <p className="text-xl mb-8">
-            Locsafe is an asset tracking and management system that helps you keep track of your assets in real-time.
+            Locsafe leverages blockchain to ensure you can trace your products and assets in real-time, from the origin to the final destination, reducing fraud and increasing accountability.
           </p>
           <div className="flex items-center space-x-4 font-medium mb-8">
-            <FaMapMarkerAlt className="text-2xl text-accent" />
-            <p>Track your assets anywhere in the world</p>
+            <FaNetworkWired className="text-2xl text-accent" />
+            <p>Blockchain-powered tracking for end-to-end transparency</p>
           </div>
           <div className="flex items-center space-x-4 font-medium mb-8">
-            <FaCalendarAlt className="text-2xl text-accent" />
-            <p>Set up custom alerts and notifications</p>
+            <FaLock className="text-2xl text-accent" />
+            <p>Enhanced security and data immutability</p>
           </div>
           <div className="flex items-center space-x-4 font-medium mb-8">
-            <FaCheck className="text-2xl text-accent" />
-            <p>Easy-to-use interface and intuitive dashboard</p>
+            <FaBell className="text-2xl text-accent" />
+            <p>Real-time alerts for any discrepancies or updates</p>
           </div>
           <div className="mt-8">
             <Link
@@ -46,7 +46,7 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="md:w-1/2 z-10 flex items-center justify-center mt-10 md:mt-0">
-          <img className="h-full w-full object-contain rounded-lg md:max-w-md" src={Image} alt="3D casual life trail map" />
+          <img className="h-full w-full object-contain rounded-lg md:max-w-md" src={Image} alt="Blockchain supply chain tracking" />
         </div>
       </main>
 
@@ -66,33 +66,33 @@ const LandingPage = () => {
           <div className="grid md:grid-cols-3 gap-8 text-center">
             <FeatureCard
               icon={<FaMapMarkerAlt className="text-4xl text-accent mb-4" />}
-              title="Global Tracking"
-              description="Monitor your assets from anywhere in the world with real-time updates."
+              title="Global Traceability"
+              description="Track your products and assets at every stage, from production to delivery."
             />
             <FeatureCard
-              icon={<FaCalendarAlt className="text-4xl text-accent mb-4" />}
-              title="Custom Alerts"
-              description="Set up personalized alerts and notifications for critical asset statuses."
-            />
-            <FeatureCard
-              icon={<FaCheck className="text-4xl text-accent mb-4" />}
-              title="Intuitive Interface"
-              description="Experience a user-friendly interface with an intuitive dashboard."
-            />
-            <FeatureCard
-              icon={<FaMobileAlt className="text-4xl text-accent mb-4" />}
-              title="Mobile Access"
-              description="Access and manage your assets on the go with our mobile-friendly app."
+              icon={<FaLock className="text-4xl text-accent mb-4" />}
+              title="Data Security"
+              description="Immutable records that enhance security and reduce risks of fraud."
             />
             <FeatureCard
               icon={<FaBell className="text-4xl text-accent mb-4" />}
-              title="Real-time Notifications"
-              description="Receive real-time notifications for any changes or updates to your assets."
+              title="Real-time Alerts"
+              description="Receive instant alerts for any discrepancies or status updates in your supply chain."
+            />
+            <FeatureCard
+              icon={<FaNetworkWired className="text-4xl text-accent mb-4" />}
+              title="Decentralized Transparency"
+              description="Maintain transparency across global supply chains without the need for a central authority."
             />
             <FeatureCard
               icon={<FaChartLine className="text-4xl text-accent mb-4" />}
-              title="Detailed Analytics"
-              description="Get comprehensive analytics and reports to make informed decisions."
+              title="Comprehensive Analytics"
+              description="Gain insights into your supply chain operations with detailed analytics."
+            />
+            <FeatureCard
+              icon={<FaCalendarAlt className="text-4xl text-accent mb-4" />}
+              title="Customized Notifications"
+              description="Set up personalized notifications based on your specific supply chain needs."
             />
           </div>
         </div>
@@ -101,23 +101,23 @@ const LandingPage = () => {
       <section className="py-16">
         <div className="container mx-auto px-4 text-center">
           <h3 className="text-3xl font-bold mb-8">Why Choose Locsafe</h3>
-          <p className="text-xl mb-8">Locsafe offers unmatched reliability and ease of use for managing your valuable assets. Here’s why our customers love us:</p>
+          <p className="text-xl mb-8">Locsafe offers unparalleled transparency and security in managing supply chains. Here's why businesses trust us:</p>
           <div className="grid md:grid-cols-2 gap-8 text-left">
             <div className="bg-gray-300 dark:bg-gray-700 p-6 rounded-lg shadow-md">
               <h4 className="text-xl font-semibold mb-4">Security</h4>
-              <p>We prioritize the security of your data with industry-leading encryption and safety protocols.</p>
+              <p>Our blockchain-based platform ensures that data remains secure and tamper-proof.</p>
             </div>
             <div className="bg-gray-300 dark:bg-gray-700 p-6 rounded-lg shadow-md">
-              <h4 className="text-xl font-semibold mb-4">Support</h4>
-              <p>Our dedicated support team is available 24/7 to assist you with any queries or issues.</p>
+              <h4 className="text-xl font-semibold mb-4">Efficiency</h4>
+              <p>Streamline your supply chain operations with real-time tracking and automation.</p>
             </div>
             <div className="bg-gray-300 dark:bg-gray-700 p-6 rounded-lg shadow-md">
-              <h4 className="text-xl font-semibold mb-4">Customization</h4>
-              <p>Tailor the system to your specific needs with our flexible customization options.</p>
+              <h4 className="text-xl font-semibold mb-4">Transparency</h4>
+              <p>Increase accountability and trust by making the supply chain fully transparent.</p>
             </div>
             <div className="bg-gray-300 dark:bg-gray-700 p-6 rounded-lg shadow-md">
-              <h4 className="text-xl font-semibold mb-4">Integration</h4>
-              <p>Seamlessly integrate Locsafe with your existing tools and systems for a smooth workflow.</p>
+              <h4 className="text-xl font-semibold mb-4">Flexibility</h4>
+              <p>Customize our platform to suit the unique requirements of your supply chain.</p>
             </div>
           </div>
         </div>
@@ -126,7 +126,7 @@ const LandingPage = () => {
       <section className="py-16">
         <div className="container mx-auto px-4 text-center">
           <h3 className="text-3xl font-bold mb-8">Get Started with Locsafe</h3>
-          <p className="text-xl mb-8">Join thousands of satisfied users who trust Locsafe™ for their asset management needs.</p>
+          <p className="text-xl mb-8">Experience the future of supply chain management with blockchain-powered solutions. Join today!</p>
           <Link
             to="/register"
             className="inline-block px-8 py-4 bg-accent text-white font-semibold rounded-lg shadow-md hover:bg-teal-600 transition duration-300"
@@ -151,4 +151,3 @@ const FeatureCard = ({ icon, title, description }) => {
 };
 
 export default LandingPage;
-
