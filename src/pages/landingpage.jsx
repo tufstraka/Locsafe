@@ -22,7 +22,7 @@ const LandingPage = () => {
         <div className="md:w-1/2 z-10 flex flex-col justify-center mt-10 md:mt-0">
           <h2 className="text-4xl font-bold mb-8">Bring <span className='text-accent'>transparency</span> to your supply chain</h2>
           <p className="text-xl mb-8">
-            Locsafe leverages blockchain to ensure you can trace your products and assets in real-time, from the origin to the final destination, reducing fraud and increasing accountability.
+            Locsafe leverages blockchain technology to ensure you can trace your products and assets in real-time, from the origin to the final destination, reducing fraud and increasing accountability.
           </p>
           <div className="flex items-center space-x-4 font-medium mb-8">
             <FaNetworkWired className="text-2xl text-accent" />
