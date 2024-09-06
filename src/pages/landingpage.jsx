@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import Image from '../assets/3d-casual-life-trail-map.png';
 import Microsoft from '../assets/microsoft.svg';
-import AWSLogo from '../assets/aws.svg';
+import AWSLogo from '../assets/awws.svg';
 import Header from '../components/header.jsx';
 import Footer from '../components/footer.jsx';
 
