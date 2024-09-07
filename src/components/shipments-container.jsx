@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import LineChart from "./line-chart";
-import { DataContext } from '../utilities/DataContext';
+import { DataContext } from '../utilities/datacontext';
 import ShipmentsMenuList from './shipments-menu-list';
 
 const ShipmentsContainer = () => {
