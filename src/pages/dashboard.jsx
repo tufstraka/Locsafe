@@ -10,6 +10,8 @@ import Card from "../components/card";
 import Map from '../components/map.jsx';
 import Sidebar from '../components/sidebar.jsx';
 import { useNavigation } from '../contexts/navigationContext';
+import ShipmentsContainer from "../components/shipments-container";
+
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -98,6 +100,7 @@ const Dashboard = () => {
       </section>
 
         <div className='flex-grow overflow-y-auto'>
+          <ShipmentsContainer/>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4 p-4'>
             {/* Map and stats */}
             <div className='bg-white rounded-lg shadow-md p-4'>
