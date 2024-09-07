@@ -4,6 +4,9 @@ import { IoMenu } from 'react-icons/io5';
 import { getDocs, collection } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { db } from '../utils/firebaseInit';
+import { BsPersonFill, BsPeopleFill } from 'react-icons/bs';
+import {GiCargoShip} from 'react-icons/gi';
+import Card from "../components/card";
 import Map from '../components/map.jsx';
 import Sidebar from '../components/sidebar.jsx';
 import { useNavigation } from '../contexts/navigationContext';
@@ -61,6 +64,38 @@ const Dashboard = () => {
             />
           </div>
         </div>
+
+        <section className="flex justify-between flex-wrap mt-2">
+        <Card 
+          bgHover='hover:bg-blue-600 dark:hover:bg-blue-800'
+          textHover='hover:text-white'
+          heading='Registered customers'
+          number='380.2k'
+          joined='3467 Joined'
+          iconbg='bg-blue-600 dark:bg-blue-800'
+          icon={<BsPersonFill/>} 
+        />
+
+        <Card 
+          bgHover='hover:bg-teal-500 dark:hover:bg-teal-700'
+          textHover='hover:text-white'
+          heading='Registered transporters'
+          number='15.6m'
+          joined='3467 Onboarded'
+          iconbg='bg-teal-500 dark:bg-teal-700'
+          icon={<BsPeopleFill/>}
+        />
+
+        <Card 
+          bgHover='hover:bg-pink-500 dark:hover:bg-pink-700'
+          textHover='hover:text-white'
+          heading='Total shipments'
+          number='348.9k'
+          joined='3467 Shipped'
+          iconbg='bg-pink-500 dark:bg-pink-700'
+          icon={<GiCargoShip/>}
+        />
+      </section>
 
         <div className='flex-grow overflow-y-auto'>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4 p-4'>
