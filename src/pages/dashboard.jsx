@@ -11,6 +11,7 @@ import Map from '../components/map.jsx';
 import Sidebar from '../components/sidebar.jsx';
 import { useNavigation } from '../contexts/navigationContext';
 import ShipmentsContainer from '../components/shipments-container';
+import BlockchainLedgerSummary from '../components/blockchainledger.jsx';
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -102,6 +103,10 @@ const Dashboard = () => {
           </section>
 
           <ShipmentsContainer />
+
+          <div className="mt-6">
+          <BlockchainLedgerSummary />
+        </div>
 
           <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mt-6'>
             {/* Map and Stats */}

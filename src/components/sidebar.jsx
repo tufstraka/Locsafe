@@ -1,6 +1,8 @@
 // components/Sidebar.jsx
-import { FiMap, FiTruck, FiAlertOctagon, FiBarChart2, FiSettings, FiUsers } from "react-icons/fi";
-import { HiOutlineUserGroup } from "react-icons/hi";
+import {
+  FiMap, FiTruck, FiAlertOctagon, FiBarChart2, FiSettings, FiUsers,
+} from "react-icons/fi";
+//import { HiOutlineUserGroup } from "react-icons/hi";
 import { FaRegCalendarAlt, FaTools, FaRegBell } from "react-icons/fa";
 import { BsFillGeoFill, BsFileEarmarkText } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
@@ -25,6 +27,7 @@ const Sidebar = () => {
       </div>
       <div className="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto">
         <nav className="flex-1 space-y-4">
+          {/* Dashboard Overview */}
           <Link
             to="/admin/dashboard"
             className="flex items-center pl-4 py-2 text-gray-600 bg-gray-200 rounded-md dark:text-gray-200 dark:bg-gray-700"
@@ -32,6 +35,8 @@ const Sidebar = () => {
             <FiMap className="w-5 h-5 mr-4" />
             <span className="text-sm font-medium">Dashboard</span>
           </Link>
+
+          {/* Asset Management */}
           <Link
             to="/assets"
             className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -39,34 +44,17 @@ const Sidebar = () => {
             <FiTruck className="w-5 h-5 mr-4" />
             <span className="text-sm font-medium">Assets</span>
           </Link>
+
+          {/* Blockchain Explorer */}
           <Link
-            to="/staff"
+            to="/blockchain-explorer"
             className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
           >
-            <HiOutlineUserGroup className="w-5 h-5 mr-4" />
-            <span className="text-sm font-medium">Staff</span>
+            <BsFileEarmarkText className="w-5 h-5 mr-4" />
+            <span className="text-sm font-medium">Blockchain Explorer</span>
           </Link>
-          <Link
-            to="/alerts"
-            className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
-          >
-            <FiAlertOctagon className="w-5 h-5 mr-4" />
-            <span className="text-sm font-medium">Alerts</span>
-          </Link>
-          <Link
-            to="/calendar"
-            className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
-          >
-            <FaRegCalendarAlt className="w-5 h-5 mr-4" />
-            <span className="text-sm font-medium">Calendar</span>
-          </Link>
-          <Link
-            to="/geofence"
-            className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
-          >
-            <BsFillGeoFill className="w-5 h-5 mr-4" />
-            <span className="text-sm font-medium">Geofences</span>
-          </Link>
+
+          {/* Insights and Analytics */}
           <Link
             to="/insights"
             className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -74,6 +62,35 @@ const Sidebar = () => {
             <FiBarChart2 className="w-5 h-5 mr-4" />
             <span className="text-sm font-medium">Insights</span>
           </Link>
+
+          {/* Alerts */}
+          <Link
+            to="/alerts"
+            className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+          >
+            <FiAlertOctagon className="w-5 h-5 mr-4" />
+            <span className="text-sm font-medium">Alerts</span>
+          </Link>
+
+          {/* Calendar */}
+          <Link
+            to="/calendar"
+            className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+          >
+            <FaRegCalendarAlt className="w-5 h-5 mr-4" />
+            <span className="text-sm font-medium">Calendar</span>
+          </Link>
+
+          {/* Geofences */}
+          <Link
+            to="/geofence"
+            className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+          >
+            <BsFillGeoFill className="w-5 h-5 mr-4" />
+            <span className="text-sm font-medium">Geofences</span>
+          </Link>
+
+          {/* Maintenance */}
           <Link
             to="/maintenance"
             className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -81,6 +98,8 @@ const Sidebar = () => {
             <FaTools className="w-5 h-5 mr-4" />
             <span className="text-sm font-medium">Maintenance</span>
           </Link>
+
+          {/* Reports */}
           <Link
             to="/reports"
             className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -88,6 +107,8 @@ const Sidebar = () => {
             <BsFileEarmarkText className="w-5 h-5 mr-4" />
             <span className="text-sm font-medium">Reports</span>
           </Link>
+
+          {/* Notifications */}
           <Link
             to="/notifications"
             className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -95,6 +116,8 @@ const Sidebar = () => {
             <FaRegBell className="w-5 h-5 mr-4" />
             <span className="text-sm font-medium">Notifications</span>
           </Link>
+
+          {/* Settings */}
           <Link
             to="/settings"
             className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -102,6 +125,8 @@ const Sidebar = () => {
             <FiSettings className="w-5 h-5 mr-4" />
             <span className="text-sm font-medium">Settings</span>
           </Link>
+
+          {/* User Management */}
           <Link
             to="/users"
             className="flex items-center pl-4 py-2 text-gray-600 rounded-md dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -116,3 +141,4 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+

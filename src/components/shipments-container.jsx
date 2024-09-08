@@ -191,7 +191,7 @@ const ShipmentsContainer = () => {
           },
 
           {
-            label: "Vehicles",
+            label: "Assets",
             data: dailyShipments.map((data) => data.vehicles),
             borderColor: "#8b5cf6",
             borderWidth: 2,
@@ -210,7 +210,7 @@ const ShipmentsContainer = () => {
           },
 
           {
-            label: "Vehicles",
+            label: "Assets",
             data: monthlyShipments.map((data) => data.vehicles),
             borderColor: "#8b5cf6",
             borderWidth: 2,
