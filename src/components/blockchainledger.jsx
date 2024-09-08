@@ -13,14 +13,16 @@ const BlockchainLedgerSummary = () => {
     const generateRandomAssetTransfers = () => {
       const transfers = [];
       const statuses = ['Pending', 'Confirmed', 'Failed'];
-      const involvedParties = ['Warehouse A', 'Retailer B', 'Distributor X', 'Manufacturer Y'];
+      const retailers = ['Naivas Supermarket', 'Quickmart', 'Tuskys', 'Chandarana Foodplus', 'Eastmatt'];
+      const distributors = ['Bidco Africa', 'Kenafric Industries', 'Coca-Cola Beverages Africa', 'Bata Kenya'];
+      const manufacturers = ['Brookside Dairy', 'Kenya Breweries Ltd', 'Mumias Sugar Company', 'Kapa Oil Refineries'];
 
       for (let i = 0; i < 5; i++) {
         transfers.push({
           id: `0x${Math.random().toString(16).slice(2, 10)}`,
           asset: `Product #${Math.floor(Math.random() * 1000)}`,
-          from: involvedParties[Math.floor(Math.random() * involvedParties.length)],
-          to: involvedParties[Math.floor(Math.random() * involvedParties.length)],
+          from: Math.random() > 0.5 ? retailers[Math.floor(Math.random() * retailers.length)] : distributors[Math.floor(Math.random() * distributors.length)],
+          to: manufacturers[Math.floor(Math.random() * manufacturers.length)],
           amount: `${Math.floor(Math.random() * 100)} units`,
           timestamp: new Date().toLocaleString(),
           status: statuses[Math.floor(Math.random() * statuses.length)],
@@ -129,4 +131,5 @@ const BlockchainLedgerSummary = () => {
 };
 
 export default BlockchainLedgerSummary;
+
 
