@@ -8,7 +8,7 @@ const Header = () => {
   const [mobileNav, setMobileNav] = useState(false);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    return localStorage.getItem('theme') === 'light';
+    return localStorage.getItem('theme') === 'dark';
   });
 
   const checkScreen = () => {
