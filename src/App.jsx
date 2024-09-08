@@ -33,6 +33,8 @@ import Settings from './pages/settings.jsx'
 import Reports from './pages/reports.jsx'
 import Insights from './pages/insights.jsx'
 import UserConsent from './components/user-consent.jsx'
+import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
+
 
 const App = () => {
   return (
@@ -82,6 +84,12 @@ const App = () => {
               <Route path='*' element={<PageNotFound />} />
             </Routes>
           </Router>
+          <TawkMessengerReact
+                propertyId="66dd702eea492f34bc0f5f58"
+                widgetId="1i78fsdo2"
+                onLoad={() => console.log('Tawk Messenger loaded')}
+          onChatMinimized={() => console.log('Chat minimized')}
+          onChatMaximized={() => console.log('Chat maximized')}/>
         </NavigationProvider>
       </AuthProvider>
     </>

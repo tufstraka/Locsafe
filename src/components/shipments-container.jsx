@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import LineChart from "./line-chart";
+import LineChart from "./line-chart.jsx";
 import ShipmentsMenuList from './shipments-menu-list';
 
 const ShipmentsContainer = () => {
