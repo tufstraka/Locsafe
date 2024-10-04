@@ -83,8 +83,9 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link to="https://chat.whatsapp.com/FHo517DQ4RSEZHjBq48LYO" className="hover:text-teal-400 transition-colors duration-300">
-                  Join our community
+                <Link to="https://chat.whatsapp.com/FHo517DQ4RSEZHjBq48LYO" 
+className="hover:text-teal-400 transition-colors duration-300">
+      Join our community
                 </Link>
               </li>
               <li>
@@ -120,6 +121,12 @@ const Header = () => {
               <li>
                 <Link to="/contact" className="block py-2 px-4 hover:text-teal-400 transition-colors duration-300">
                   Contact
+                </Link>
+              </li>
+              <li>
+                <Link to="https://chat.whatsapp.com/FHo517DQ4RSEZHjBq48LYO" 
+className="hover:text-teal-400 transition-colors duration-300">
+      Join our community
                 </Link>
               </li>
               <li>
