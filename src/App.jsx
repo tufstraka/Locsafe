@@ -1,5 +1,5 @@
 //import { getDocs, collection} from 'firebase/firestore';
-//import userDashboard from "./components/userDashboard.jsx";
+import UserDashboard from "./components/userDashboard.jsx";
 import LandingPage from './pages/landingpage.jsx'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { NavigationProvider } from './contexts/navigationContext.jsx'
@@ -68,7 +68,7 @@ const App = () => {
               <Route path='/geofence' element={<GeofenceMap />} />
               {/*<Route path="/user/profile" element={<UpdateProfilePage username={username} setUsername={setUsername} />} />*/}
               <Route path='/assets' element={<Assets />} />
-              {/*<Route path="/user/dashboard" element={<userDashboard username={username} setUsername={setUsername} />} />*/}
+              <Route path="/user/dashboard" element={<UserDashboard/>} />
               <Route path='' element={<SignInForm />} />
               <Route path='' element={<SignInForm />} />
               {/*<Route path="/user/signup" element={<SignUpForm username={username} setUsername={setUsername}/>} />*/}
