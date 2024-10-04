@@ -9,11 +9,10 @@ const UserDashboard = () => {
   const [locationData, setLocationData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [recentLocations, setRecentLocations] = useState([]); // Added state for recent locations
   
   const auth = getAuth();
   const user = auth.currentUser;
-  
-
 
   useEffect(() => {
     const getLocation = async () => {
@@ -26,18 +25,19 @@ const UserDashboard = () => {
             const location = new GeoPoint(latitude, longitude);
             const collectionRef = collection(db, "locations");
             const documentRef = doc(collectionRef, user.displayName);
-  
+
             // Get the existing location data from Firestore
             const documentSnapshot = await getDoc(documentRef);
-           const existingData = documentSnapshot.exists()
-              ? documentSnapshot.data().recentLocations
+            const existingData = documentSnapshot.exists()
+              ? documentSnapshot.data().recentLocations || [] // Safeguard to avoid undefined
               : [];
-  
+
             // Update the location data array with the new coordinates
-            const recentLocations = [...existingData, { location }];
-            await setDoc(documentRef, { recentLocations });
+            const updatedRecentLocations = [...existingData, { location }];
+            await setDoc(documentRef, { recentLocations: updatedRecentLocations });
             
-            console.log("Location updated!", recentLocations);
+            console.log("Location updated!", updatedRecentLocations);
+            setRecentLocations(updatedRecentLocations); // Update recent locations state
             setLoading(false);
           },
           (error) => {
@@ -50,13 +50,15 @@ const UserDashboard = () => {
         setLoading(false);
       }
     };
-    getLocation();
+
+    getLocation(); // Get initial location
+
     const interval = setInterval(() => {
-      getLocation();
+      getLocation(); // Fetch location every 5 seconds
     }, 5000);
 
-    return () => clearInterval(interval);
-  });
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, []); // Empty dependency array to run once on mount
 
   return (
     <div className="bg-gray-50 min-h-screen flex items-center justify-center p-4">
@@ -67,7 +69,9 @@ const UserDashboard = () => {
         ) : error ? (
           <p className="text-red-500">{error}</p>
         ) : (
-          <p className="text-gray-600 mb-6">Your current location: {locationData.latitude.toFixed(4)}, {locationData.longitude.toFixed(4)}</p>
+          <p className="text-gray-600 mb-6">
+            Your current location: {locationData.latitude.toFixed(4)}, {locationData.longitude.toFixed(4)}
+          </p>
         )}
         
         <p className="text-lg text-gray-700 mb-4">Welcome back, {user.displayName}!</p>
@@ -84,8 +88,15 @@ const UserDashboard = () => {
 
         <h2 className="text-lg font-semibold text-gray-800 mb-2">Recent Locations:</h2>
         <div className="border rounded-lg p-4 bg-gray-100">
-          {/* map through recentLocations and display them here */}
-          <p>No recent locations available.</p>
+          {recentLocations.length > 0 ? (
+            recentLocations.map((loc, index) => (
+              <p key={index}>
+                Latitude: {loc.location.latitude}, Longitude: {loc.location.longitude}
+              </p>
+            ))
+          ) : (
+            <p>No recent locations available.</p>
+          )}
         </div>
       </div>
     </div>
@@ -93,3 +104,4 @@ const UserDashboard = () => {
 };
 
 export default UserDashboard;
+
