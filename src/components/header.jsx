@@ -48,11 +48,14 @@ const Header = () => {
         </Link>
 
         {mobile ? (
-          <button onClick={toggleMobileNav} className="block lg:hidden focus:outline-none">
+          <button 
+            onClick={toggleMobileNav} 
+            className="block lg:hidden focus:outline-none transition-transform duration-300"
+          >
             <div className={`hamburger ${isNavOpen ? 'open' : ''}`}>
-              <span></span>
-              <span></span>
-              <span></span>
+              <span className={`block h-0.5 w-6 bg-white mb-1 transition-transform duration-100 ${isNavOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
+              <span className={`block h-0.5 w-6 bg-white mb-1 transition-opacity duration-100 ${isNavOpen ? 'opacity-100' : 'opacity-100'}`}></span>
+              <span className={`block h-0.5 w-6 bg-white transition-transform duration-100 ${isNavOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
             </div>
           </button>
         ) : (
@@ -61,10 +64,10 @@ const Header = () => {
               <li>
                 <button
                   onClick={toggleDarkMode}
-                  className="text-l p-2 rounded transition-colors duration-300"
+                  className="text-l p-2 rounded transition-colors duration-300 flex items-center"
                   aria-label="Toggle Dark Mode"
                 >
-                  {isDarkMode ? <FaSun className="text-yellow-500" /> : <FaMoon className="text-gray-300" />}
+                  {isDarkMode ? <FaSun className="text-yellow-500 transition-transform duration-300" /> : <FaMoon className="text-gray-300 transition-transform duration-300" />}
                 </button>
               </li>
               <li>
@@ -83,9 +86,8 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link to="https://chat.whatsapp.com/FHo517DQ4RSEZHjBq48LYO" 
-className="hover:text-teal-400 transition-colors duration-300">
-      Join our community
+                <Link to="https://chat.whatsapp.com/FHo517DQ4RSEZHjBq48LYO" className="hover:text-teal-400 transition-colors duration-300">
+                  Join our community
                 </Link>
               </li>
               <li>
@@ -107,10 +109,10 @@ className="hover:text-teal-400 transition-colors duration-300">
               <li>
                 <button
                   onClick={toggleDarkMode}
-                  className="text-2xl p-2 rounded transition-colors duration-300 mt-4"
+                  className="text-2xl p-2 rounded transition-colors duration-300 mt-4 flex items-center"
                   aria-label="Toggle Dark Mode"
                 >
-                  {isDarkMode ? <FaSun className="text-yellow-500" /> : <FaMoon className="text-gray-300" />}
+                  {isDarkMode ? <FaSun className="text-yellow-500 transition-transform duration-300" /> : <FaMoon className="text-gray-300 transition-transform duration-300" />}
                 </button>
               </li>
               <li>
@@ -124,14 +126,13 @@ className="hover:text-teal-400 transition-colors duration-300">
                 </Link>
               </li>
               <li>
-                <Link to="https://chat.whatsapp.com/FHo517DQ4RSEZHjBq48LYO" 
-className="hover:text-teal-400 transition-colors duration-300">
-      Join our community
+                <Link to="https://chat.whatsapp.com/FHo517DQ4RSEZHjBq48LYO" className="block py-2 px-4 hover:text-teal-400 transition-colors duration-300">
+                  Join our community
                 </Link>
               </li>
               <li>
                 <Link to="/register">
-                  <button className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded transition-colors duration-300 mb-5">
+                  <button className="block bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-12 rounded transition-colors duration-300 mb-5">
                     Get Started
                   </button>
                 </Link>
@@ -145,6 +146,7 @@ className="hover:text-teal-400 transition-colors duration-300">
 };
 
 export default Header;
+
 
 
 
