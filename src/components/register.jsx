@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaUser, FaEnvelope, FaLock, FaPhone } from 'react-icons/fa'; // Add FaPhone import
+import { FaUser, FaEnvelope, FaLock, FaPhone, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { RiGoogleFill, RiMicrosoftFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, OAuthProvider } from 'firebase/auth';
@@ -7,6 +7,8 @@ import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../utils/firebaseInit';
 import Header from '../components/header.jsx';
 import Footer from '../components/footer.jsx';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -15,14 +17,16 @@ const Register = () => {
     userName: '',
     email: '',
     password: '',
-    phoneNumber: '' 
+    phoneNumber: ''
   });
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState({
     register: false,
     google: false,
     microsoft: false
   });
+
+  // State to manage password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
   const auth = getAuth();
@@ -32,62 +36,47 @@ const Register = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+
+  // Function to validate email domain
+  const validateEmailDomain = (email) => {
+    const invalidDomains = ["gmail.com", "outlook.com", "hotmail.com", "yahoo.com"];
+    const emailDomain = email.split('@')[1];
+    return !invalidDomains.includes(emailDomain); // Return true if domain is not in invalid domains
+  };
+
+  // Handle user registration
   const handleRegister = async () => {
     const { firstName, lastName, userName, email, password, phoneNumber } = formData;
+
+    if (!validateEmailDomain(email)) {
+      toast.error("Please use a work email address. Gmail, Outlook, Yahoo, and other public domains are not allowed.");
+      return;
+    }
+
     if (firstName && lastName && userName && email && password && phoneNumber) {
-      setError('');
       setLoading((prev) => ({ ...prev, register: true }));
       try {
         const result = await createUserWithEmailAndPassword(auth, email, password);
         await setDoc(doc(db, 'users', result.user.uid), { firstName, lastName, userName, email, phoneNumber });
+        toast.success('Registered successfully!');
         navigate(`/pay?phoneNumber=${phoneNumber}`);
       } catch (error) {
-        setError(error.message);
+        toast.error(error.message);
       } finally {
         setLoading((prev) => ({ ...prev, register: false }));
       }
     } else {
-      setError('Please fill out all the fields');
-    }
-  };
-
-  const handleGoogleSignIn = async () => {
-    setLoading((prev) => ({ ...prev, google: true }));
-    setError('');
-    try {
-      const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      await setDoc(doc(db, 'users', user.uid), {
-        firstName: user.displayName.split(' ')[0],
-        lastName: user.displayName.split(' ')[1],
-        userName: user.displayName,
-        email: user.email
-      });
-      navigate('/pay');
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading((prev) => ({ ...prev, google: false }));
-    }
-  };
-
-  const handleMicrosoftSignIn = async () => {
-    setLoading((prev) => ({ ...prev, microsoft: true }));
-    setError('');
-    try {
-      const provider = new OAuthProvider('microsoft.com');
-      await signInWithPopup(auth, provider);
-      navigate('/pay');
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading((prev) => ({ ...prev, microsoft: false }));
+      toast.error('Please fill out all the fields');
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <ToastContainer />
       <Header />
       <div className="container mx-auto px-4 py-12 flex justify-center items-center">
         <form className="w-full max-w-lg bg-white shadow-lg rounded-lg p-8 mt-16" onSubmit={(e) => e.preventDefault()}>
@@ -141,17 +130,24 @@ const Register = () => {
                 aria-label="Email"
               />
             </div>
-            <div className="flex items-center border border-gray-300 rounded-md p-2">
+            <div className="flex items-center border border-gray-300 rounded-md p-2 relative">
               <FaLock className="text-gray-400 mr-3" />
               <input
                 className="w-full bg-transparent focus:outline-none text-gray-700"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 name="password"
                 placeholder="Password"
                 value={formData.password}
                 onChange={handleChange}
                 aria-label="Password"
               />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute right-3 text-gray-500 hover:text-gray-700"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
             </div>
             <div className="flex items-center border border-gray-300 rounded-md p-2">
               <FaPhone className="text-gray-400 mr-3" />
@@ -166,30 +162,17 @@ const Register = () => {
               />
             </div>
           </div>
-          {error && <div className="text-red-500 text-sm mt-4">{error}</div>}
           <div className="mt-6 flex justify-center">
             <button
               onClick={handleRegister}
               disabled={loading.register}
               className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-md transition-all duration-300 flex justify-center items-center"
             >
-              {!loading.register ? 'Sign Up' : <span className="spinner"></span>}
-            </button>
-          </div>
-          <div className="mt-6 flex justify-center space-x-4">
-            <button
-              onClick={handleGoogleSignIn}
-              disabled={loading.google}
-              className="w-1/2 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-3 border border-gray-300 rounded-md transition-all duration-300 flex justify-center items-center"
-            >
-              {!loading.google ? <RiGoogleFill className="text-xl" /> : <span className="spinner"></span>}
-            </button>
-            <button
-              onClick={handleMicrosoftSignIn}
-              disabled={loading.microsoft}
-              className="w-1/2 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-3 border border-gray-300 rounded-md transition-all duration-300 flex justify-center items-center"
-            >
-              {!loading.microsoft ? <RiMicrosoftFill className="text-xl" /> : <span className="spinner"></span>}
+              {!loading.register ? (
+                'Sign Up'
+              ) : (
+                <div className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full border-white border-t-transparent"></div>
+              )}
             </button>
           </div>
         </form>
@@ -200,5 +183,3 @@ const Register = () => {
 };
 
 export default Register;
-
-
