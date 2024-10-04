@@ -18,10 +18,18 @@ const Header = () => {
   useEffect(() => {
     checkScreen();
     window.addEventListener('resize', checkScreen);
+
+    // Set the initial dark mode based on localStorage
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
     return () => {
       window.removeEventListener('resize', checkScreen);
     };
-  }, []);
+  }, [isDarkMode]); // Add isDarkMode to the dependency array
 
   const toggleMobileNav = () => {
     setIsNavOpen(!isNavOpen);
