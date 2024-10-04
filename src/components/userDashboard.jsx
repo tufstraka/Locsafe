@@ -9,19 +9,21 @@ const UserDashboard = () => {
   const [locationData, setLocationData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [recentLocations, setRecentLocations] = useState([]); // Added state for recent locations
-  
+  const [recentLocations, setRecentLocations] = useState([]);
+  const [isUpdating, setIsUpdating] = useState(true); // State to track if location updates are active
   const auth = getAuth();
   const user = auth.currentUser;
 
   useEffect(() => {
+    let interval;
+
     const getLocation = async () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           async (position) => {
             const { latitude, longitude } = position.coords;
             setLocationData({ latitude, longitude });
-            
+
             const location = new GeoPoint(latitude, longitude);
             const collectionRef = collection(db, "locations");
             const documentRef = doc(collectionRef, user.displayName);
@@ -29,15 +31,15 @@ const UserDashboard = () => {
             // Get the existing location data from Firestore
             const documentSnapshot = await getDoc(documentRef);
             const existingData = documentSnapshot.exists()
-              ? documentSnapshot.data().recentLocations || [] // Safeguard to avoid undefined
+              ? documentSnapshot.data().recentLocations || []
               : [];
 
             // Update the location data array with the new coordinates
             const updatedRecentLocations = [...existingData, { location }];
             await setDoc(documentRef, { recentLocations: updatedRecentLocations });
-            
+
             console.log("Location updated!", updatedRecentLocations);
-            setRecentLocations(updatedRecentLocations); // Update recent locations state
+            setRecentLocations(updatedRecentLocations);
             setLoading(false);
           },
           (error) => {
@@ -51,14 +53,21 @@ const UserDashboard = () => {
       }
     };
 
-    getLocation(); // Get initial location
+    if (isUpdating) {
+      getLocation(); // Get initial location
 
-    const interval = setInterval(() => {
-      getLocation(); // Fetch location every 5 seconds
-    }, 5000);
+      interval = setInterval(() => {
+        getLocation(); // Fetch location every 5 seconds
+      }, 5000);
+    }
 
     return () => clearInterval(interval); // Cleanup interval on unmount
-  }, []); // Empty dependency array to run once on mount
+  }, [isUpdating]); // Dependency on isUpdating to control fetching
+
+  // Function to toggle location updates
+  const toggleLocationUpdates = () => {
+    setIsUpdating((prev) => !prev);
+  };
 
   return (
     <div className="bg-gray-50 min-h-screen flex items-center justify-center p-4">
@@ -82,8 +91,13 @@ const UserDashboard = () => {
           </button>
         </Link>
 
-        <button className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow mb-4">
-          Send Location Data
+        <button
+          className={`w-full ${
+            isUpdating ? "bg-red-600 hover:bg-red-700" : "bg-green-600 hover:bg-green-700"
+          } text-white font-semibold py-2 px-4 rounded-lg shadow mb-4`}
+          onClick={toggleLocationUpdates}
+        >
+          {isUpdating ? "Stop Sending Location Data" : "Start Sending Location Data"}
         </button>
 
         <h2 className="text-lg font-semibold text-gray-800 mb-2">Recent Locations:</h2>
@@ -104,4 +118,5 @@ const UserDashboard = () => {
 };
 
 export default UserDashboard;
+
 
