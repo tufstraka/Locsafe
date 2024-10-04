@@ -83,6 +83,11 @@ const Header = () => {
                 </Link>
               </li>
               <li>
+                <Link to="https://chat.whatsapp.com/FHo517DQ4RSEZHjBq48LYO" className="hover:text-teal-400 transition-colors duration-300">
+                  Join our community
+                </Link>
+              </li>
+              <li>
                 <Link to="/register">
                   <button className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded transition-colors duration-300">
                     Get Started
