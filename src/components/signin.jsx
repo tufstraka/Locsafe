@@ -21,7 +21,7 @@ const SignIn = () => {
     try {
       await setPersistence(auth, browserSessionPersistence);
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/driver/dashboard");
+      navigate("/user/dashboard");
     } catch (error) {
       console.error("Sign-in error:", error.message);
     }

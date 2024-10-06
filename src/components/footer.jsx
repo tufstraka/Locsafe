@@ -1,5 +1,5 @@
 const Footer = () => (
-  <footer className="py-6 bg-gray-900 shadow-lg">
+  <footer className="py-6 bg-gray-900 shadow-lg z-50">
     <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-4">
       <p className="text-white text-sm md:text-base text-center md:text-left mb-4 md:mb-0">© 2024 Locsafe. All rights reserved.</p>
       <nav>

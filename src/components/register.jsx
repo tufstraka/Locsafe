@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { FaUser, FaEnvelope, FaLock, FaPhone, FaEye, FaEyeSlash } from 'react-icons/fa';
-import { RiGoogleFill, RiMicrosoftFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
-import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, OAuthProvider } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../utils/firebaseInit';
 import Header from '../components/header.jsx';
@@ -75,12 +74,14 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+
       <ToastContainer />
       <Header />
+
       <div className="container mx-auto px-4 py-12 flex justify-center items-center">
-        <form className="w-full max-w-lg bg-white shadow-lg rounded-lg p-8 mt-16" onSubmit={(e) => e.preventDefault()}>
-          <h2 className="text-center text-3xl font-semibold mb-8 text-gray-800">Join the Waitlist</h2>
+        <form className="w-full max-w-lg bg-white dark:bg-gray-700 shadow-lg rounded-lg p-8 mt-16" onSubmit={(e) => e.preventDefault()}>
+          <h2 className="text-center text-3xl font-semibold mb-8 text-gray-800 dark:text-white">Join the Waitlist</h2>
           <div className="space-y-4">
             <div className="flex items-center border border-gray-300 rounded-md p-2">
               <FaUser className="text-gray-400 mr-3" />
@@ -177,6 +178,7 @@ const Register = () => {
           </div>
         </form>
       </div>
+
       <Footer />
     </div>
   );

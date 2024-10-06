@@ -12,6 +12,7 @@ const UpdateProfilePage = ({ username, setUsername }) => {
   const navigate = useNavigate();
 
   const auth = getAuth();
+
   console.log(auth.currentUser);
 
   /*const userNameRef = doc(db, `users/${username}`);
