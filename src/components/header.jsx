@@ -77,6 +77,15 @@ const Header = () => {
 
       {isMobile && isNavOpen && (
         <nav className={`fixed inset-x-0 top-16 bg-gray-900 dark:bg-gray-800 h-auto flex flex-col items-center transition-opacity duration-500`}>
+                      
+              <button
+                onClick={toggleDarkMode}
+                className="text-2xl p-2 rounded transition-colors duration-300 mt-4 flex items-center"
+                aria-label="Toggle Dark Mode"
+              >
+                {isDarkMode ? <FaSun className="text-yellow-500 transition-transform duration-300" /> : <FaMoon className="text-gray-300 transition-transform duration-300" />}
+              </button>
+            
           <ul className="text-white font-medium list-none">
             {navLinks.map(({ to, label, external, button }) => (
               <li key={label}>
@@ -93,15 +102,7 @@ const Header = () => {
                 )}
               </li>
             ))}
-            <li>
-              <button
-                onClick={toggleDarkMode}
-                className="text-2xl p-2 rounded transition-colors duration-300 mt-4 flex items-center"
-                aria-label="Toggle Dark Mode"
-              >
-                {isDarkMode ? <FaSun className="text-yellow-500 transition-transform duration-300" /> : <FaMoon className="text-gray-300 transition-transform duration-300" />}
-              </button>
-            </li>
+
           </ul>
         </nav>
       )}

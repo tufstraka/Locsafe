@@ -1,12 +1,15 @@
 import { FaMapMarkerAlt, FaCalendarAlt, FaLock, FaNetworkWired, FaBell, FaChartLine } from 'react-icons/fa';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import BackgroundImage from '../assets/bgsup.webp'; 
+import BackgroundImage from '../assets/background.svg'; 
 import Image from '../assets/3d-casual-life-trail-map.png';
 import Microsoft from '../assets/microsoft.svg';
 import AWSLogo from '../assets/awws.svg';
 import Header from '../components/header.jsx';
 import Footer from '../components/footer.jsx';
+//import socialproof from '../assets/socialproof.svg'
+import avatar from '../assets/avgroup.svg'
+import reviews from '../assets/reviews.svg'
 
 const LandingPage = () => {
   return (
@@ -19,43 +22,45 @@ const LandingPage = () => {
         />
       </Helmet>
 
-      <div
-        className="absolute inset-0 bg-repeat bg-center opacity-5 z-0"
-        style={{
-          backgroundImage: `url(${BackgroundImage})`,
-        }}
-      ></div>
+      <img
+        className="absolute inset-0 bg-center dark:opacity-5 z-0"
+        src={BackgroundImage}
+      />
 
       {/* Main content */}
       <div className="relative z-10">
         <Header />
         <main className="container mx-auto flex-1 my-16 flex flex-col md:flex-row px-4 pt-10 relative mb-20">
-          <div className="md:w-1/2 z-10 flex flex-col justify-center mt-10 md:mt-0">
-            <h2 className="text-4xl font-bold mb-8">
+          <div className="md:w-1/2 z-10 flex flex-col justify-center mt-10 md:mt-0 m-2">
+            <h2 className="text-4xl font-bold mb-4 lg:mt-10 ">
               Bring <span className="text-accent">transparency</span> to your supply chain
             </h2>
-            <p className="text-xl mb-8">
+            <p className="text-xl mb-4">
               Locsafe leverages blockchain technology to ensure you can trace your products and assets in real-time, from the origin to the final destination, reducing fraud and increasing accountability.
             </p>
-            <div className="flex items-center space-x-4 font-medium mb-8">
+            <div className="flex items-center space-x-4 font-medium mb-4">
               <FaNetworkWired className="text-2xl text-accent" />
               <p>Blockchain-powered tracking for end-to-end transparency</p>
             </div>
-            <div className="flex items-center space-x-4 font-medium mb-8">
+            <div className="flex items-center space-x-4 font-medium mb-4">
               <FaLock className="text-2xl text-accent" />
               <p>Enhanced security and data immutability</p>
             </div>
-            <div className="flex items-center space-x-4 font-medium mb-8">
+            <div className="flex items-center space-x-4 font-medium mb-4">
               <FaBell className="text-2xl text-accent" />
               <p>Real-time alerts for any discrepancies or updates</p>
             </div>
-            <div className="mt-8">
+            <div className="mt-4">
               <Link
                 to="/features"
                 className="inline-block px-6 py-3 bg-accent text-white font-semibold rounded-lg shadow-md hover:bg-teal-600 transition duration-300"
               >
                 Learn More
               </Link>
+            </div>
+            <div className='flex mt-6 justify-between w-[320px]  m-1'>
+              <img src={avatar} alt='user reviews' />
+              <img src={reviews} alt="ratings" />
             </div>
           </div>
           <div className="md:w-1/2 z-10 flex items-center justify-center mt-10 md:mt-0">
