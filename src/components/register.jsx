@@ -86,7 +86,7 @@ const Register = () => {
             <div className="flex items-center border border-gray-300 rounded-md p-2">
               <FaUser className="text-gray-400 mr-3" />
               <input
-                className="w-full bg-transparent focus:outline-none text-gray-700"
+                className="w-full bg-transparent focus:outline-none text-gray-700 dark:text-white"
                 type="text"
                 name="firstName"
                 placeholder="First Name"
@@ -98,7 +98,7 @@ const Register = () => {
             <div className="flex items-center border border-gray-300 rounded-md p-2">
               <FaUser className="text-gray-400 mr-3" />
               <input
-                className="w-full bg-transparent focus:outline-none text-gray-700"
+                className="w-full bg-transparent focus:outline-none text-gray-700 dark:text-white"
                 type="text"
                 name="lastName"
                 placeholder="Last Name"
@@ -110,7 +110,7 @@ const Register = () => {
             <div className="flex items-center border border-gray-300 rounded-md p-2">
               <FaUser className="text-gray-400 mr-3" />
               <input
-                className="w-full bg-transparent focus:outline-none text-gray-700"
+                className="w-full bg-transparent focus:outline-none text-gray-700 dark:text-white"
                 type="text"
                 name="userName"
                 placeholder="Username"
@@ -122,7 +122,7 @@ const Register = () => {
             <div className="flex items-center border border-gray-300 rounded-md p-2">
               <FaEnvelope className="text-gray-400 mr-3" />
               <input
-                className="w-full bg-transparent focus:outline-none text-gray-700"
+                className="w-full bg-transparent focus:outline-none text-gray-700 dark:text-white"
                 type="email"
                 name="email"
                 placeholder="E-mail"
@@ -134,7 +134,7 @@ const Register = () => {
             <div className="flex items-center border border-gray-300 rounded-md p-2 relative">
               <FaLock className="text-gray-400 mr-3" />
               <input
-                className="w-full bg-transparent focus:outline-none text-gray-700"
+                className="w-full bg-transparent focus:outline-none text-gray-700 dark:text-white"
                 type={showPassword ? 'text' : 'password'}
                 name="password"
                 placeholder="Password"
@@ -145,7 +145,7 @@ const Register = () => {
               <button
                 type="button"
                 onClick={togglePasswordVisibility}
-                className="absolute right-3 text-gray-500 hover:text-gray-700"
+                className="absolute right-3 text-gray-500 hover:text-gray-700 dark:text-white"
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
@@ -153,10 +153,10 @@ const Register = () => {
             <div className="flex items-center border border-gray-300 rounded-md p-2">
               <FaPhone className="text-gray-400 mr-3" />
               <input
-                className="w-full bg-transparent focus:outline-none text-gray-700"
+                className="w-full bg-transparent focus:outline-none text-gray-700 dark:text-white"
                 type="text"
                 name="phoneNumber"
-                placeholder="Phone Number eg +254.."
+                placeholder="Phone Number eg 254.."
                 value={formData.phoneNumber}
                 onChange={handleChange}
                 aria-label="Phone Number"
