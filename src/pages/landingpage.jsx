@@ -10,6 +10,7 @@ import Footer from '../components/footer.jsx';
 //import socialproof from '../assets/socialproof.svg'
 import avatar from '../assets/avgroup.svg'
 import reviews from '../assets/reviews.svg'
+import bot from '../assets/bot.svg'
 
 const LandingPage = () => {
   return (
@@ -50,13 +51,16 @@ const LandingPage = () => {
               <FaBell className="text-2xl text-accent" />
               <p>Real-time alerts for any discrepancies or updates</p>
             </div>
-            <div className="mt-4">
+            <div className="flex items-center space-x-4 font-medium mt-4">
               <Link
                 to="/features"
                 className="inline-block px-6 py-3 bg-accent text-white font-semibold rounded-lg shadow-md hover:bg-teal-600 transition duration-300"
               >
                 Learn More
               </Link>
+              <div className='m-1'>
+              <img src={bot} alt='Discover AI integration' />
+            </div>
             </div>
             <div className='flex mt-6 justify-between w-[320px]  m-1'>
               <img src={avatar} alt='user reviews' />
