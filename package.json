@@ -12,7 +12,7 @@
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@tawk.to/tawk-messenger-react": "^2.0.2",
-    "axios": "^1.7.4",
+    "axios": "^1.8.2",
     "express": "^4.21.2",
     "firebase": "^10.12.2",
     "js-base64": "^3.7.7",
