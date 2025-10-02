@@ -15,6 +15,7 @@
     "axios": "^1.7.4",
     "express": "^4.21.2",
     "firebase": "^10.12.2",
+    "framer-motion": "^12.23.22",
     "js-base64": "^3.7.7",
     "js-cookie": "^3.0.5",
     "leaflet": "^1.9.3",

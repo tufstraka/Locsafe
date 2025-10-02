@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import  { useState, useEffect, useRef } from 'react';
 import { FaRegSmile, FaRegMeh, FaRegFrown, FaHeart, FaTimes, FaPaperPlane } from 'react-icons/fa';
 import { BsEmojiSmileFill } from 'react-icons/bs';
 import { toast } from 'react-toastify';
