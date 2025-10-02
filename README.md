@@ -17,7 +17,7 @@ This system provides a comprehensive solution for tracking, managing, and optimi
 
 To get started with our Asset Tracking and Management System, follow these steps:
 
-1. **Sign Up**: Create an account on our platform by visiting [Sign Up Page](https://www.loc-safe.com/register).
+1. **Sign Up**: Create an account on our platform by visiting [Sign Up Page](https://www.locsafe.org/register).
 2. **Login**: Once you have signed up, login to your account using your credentials.
 3. **Add Assets**: Start by adding your assets to the system, providing relevant information such as asset type, serial number etc.
 4. **Tag Assets**: Tag assets using our GPS tagging products.
@@ -27,11 +27,11 @@ To get started with our Asset Tracking and Management System, follow these steps
 
 ## Documentation
 
-For detailed documentation on using Locsafe, refer to the [User Manual](https://www.loc-safe.com/docs).
+For detailed documentation on using Locsafe, refer to the [User Manual](https://www.locsafe.org/docs).
 
 ## Support
 
-If you encounter any issues or have any questions, please don't hesitate to contact our support team at [support@loc-safe.com](mailto:kadimak@loc-safe.com).
+If you encounter any issues or have any questions, please don't hesitate to contact our support team at [support@loc-safe.com](mailto:kadimak@locsafe.org).
 
 ## Contributing
 
@@ -43,5 +43,6 @@ This project is licensed under the [Apache-2.0 License](LICENSE).
 
 
 Thank you for choosing Locsafe! We hope it helps you streamline your asset management processes and improve efficiency in your organization.
+
 
 
