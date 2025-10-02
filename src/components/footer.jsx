@@ -18,8 +18,8 @@ const Footer = () => {
       { label: 'Afgex', link: '#' }
     ],
     legal: [
-      { label: 'Terms & Conditions', link: '/Terms-and-Conditions' },
-      { label: 'Privacy Policy', link: '/Privacy-Policy' },
+      { label: 'Terms & Conditions', link: '/terms' },
+      { label: 'Privacy Policy', link: '/privacy' },
       { label: 'Cookie Policy', link: '/cookie-policy' },
       /*{ label: 'Support', link: '/Support' }*/
     ],

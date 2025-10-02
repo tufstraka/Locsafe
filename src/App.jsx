@@ -20,6 +20,8 @@ import BlogArticle from './components/blog.jsx'
 import PageNotFound from './components/PageNotFound.jsx'
 import FeaturesPage from './pages/features.jsx'
 import PricingPage from './pages/pricing.jsx'
+import TermsOfService from './pages/terms.jsx'
+import PrivacyPolicy from './pages/privacy.jsx'
 import UserEdit from './components/userEdit.jsx'
 //import SignIn from './components/signin.jsx';
 import ContactUs from './pages/contact.jsx'
@@ -59,6 +61,8 @@ const App = () => {
               <Route path='/calendar' element={<MyCalendar />} />
               <Route path='/contact' element={<ContactUs />} />
               <Route path='/pricing' element={<PricingPage />} />
+              <Route path='/terms' element={<TermsOfService />} />
+              <Route path='/privacy' element={<PrivacyPolicy />} />
               <Route path='/users/:userId/edit' element={<UserEdit />} />
               <Route path='/add/asset' element={<AssetForm/>} />
               <Route path='/user/register' element={<UserReg />} />
