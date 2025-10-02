@@ -13,7 +13,9 @@ const Footer = () => {
       { label: 'Blog', link: '/blog' }
     ],
     product: [
-      { label: 'Time-locked wallet', link: 'https://tlw-phi.vercel.app/timelock' }
+      { label: 'Avalot', link: '#' },
+      { label: 'Bitchanga', link: '#' },
+      { label: 'Afgex', link: '#' }
     ],
     legal: [
       { label: 'Terms & Conditions', link: '/Terms-and-Conditions' },
@@ -23,7 +25,7 @@ const Footer = () => {
     ],
     contact: {
       address: 'P.0 Box 1102 - 3202, Nairobi, Kenya',
-      email: 'support@loc-safe.com',
+      email: 'support@locsafe.org',
       phone: '+254701746774'
     },
     social: [

@@ -5,18 +5,18 @@ import {
   FaMoon, 
   FaBars, 
   FaTimes, 
-  FaRocket, 
-  FaShieldAlt, 
+ // FaRocket, 
+  //FaShieldAlt, 
   FaLock 
 } from 'react-icons/fa';
 import logoabs from '../assets/logoabs.png';
 
 const products = [
   {
-    title: "Time-locked wallet",
-    description: "Secure your funds with  our time-locked wallet",
+    title: "Chill",
+    description: "We cooking something awesome.",
     icon: <FaLock className="text-teal-500" />,
-    href: "https://tlw-phi.vercel.app/timelock"
+    href: "#"
   }
 ];
 

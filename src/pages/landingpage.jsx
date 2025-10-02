@@ -1,11 +1,11 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
-import { FaMapMarkerAlt, FaCalendarAlt, FaLock, FaNetworkWired, FaBell, FaChartLine, FaArrowRight, FaQuoteLeft, FaStar, FaPlay, FaUsers, FaShieldAlt, FaTruck, FaGlobe, FaRocket, FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import { HiLightningBolt, HiSparkles, HiCube, HiChip } from 'react-icons/hi';
+import { FaMapMarkerAlt, FaCalendarAlt, FaLock, FaNetworkWired, FaBell, FaChartLine, FaArrowRight, FaQuoteLeft, FaStar, FaPlay, FaUsers, FaShieldAlt, FaTruck, FaGlobe, FaRocket, FaChevronDown, FaChevronUp, FaQrcode, FaHistory, FaCheckCircle, FaFingerprint, FaCertificate, FaBarcode } from 'react-icons/fa';
+import { HiLightningBolt, HiSparkles, HiCube, HiChip, HiDocumentText, HiShieldCheck } from 'react-icons/hi';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import Image from '../assets/3d-casual-life-trail-map.png';
+//import Image from '../assets/3d-casual-life-trail-map.png';
 import Microsoft from '../assets/microsoft.svg';
 import AWSLogo from '../assets/awws.svg';
 import Header from '../components/header.jsx';
@@ -180,7 +180,7 @@ const LandingPage = () => {
   }, [testimonials.length]);
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-teal-50/30 dark:from-slate-900 dark:via-slate-900 dark:to-teal-950/20 text-slate-900 dark:text-slate-100 font-sans overflow-x-hidden">
+    <main className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-teal-50/30 dark:from-slate-900 dark:via-slate-900 dark:to-teal-950/20 text-slate-900 dark:text-slate-100 font-sans overflow-x-hidden" role="main">
       <Helmet>
         <title>Locsafe - Next-Gen Supply Chain Intelligence Platform</title>
         <meta
@@ -212,13 +212,6 @@ const LandingPage = () => {
         .animate-gradient-x {
           background-size: 200% 200%;
           animation: gradient-x 15s ease infinite;
-        }
-        @keyframes scroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-scroll {
-          animation: scroll 20s linear infinite;
         }
       `}</style>
 
@@ -261,9 +254,11 @@ const LandingPage = () => {
                 <span className="px-2 py-0.5 bg-gradient-to-r from-teal-500 to-blue-500 text-white text-xs font-bold rounded-full">NEW</span>
               </motion.div>
               
-              <motion.h1 
+              <motion.h1
                 variants={itemVariants}
                 className="text-6xl lg:text-7xl font-extrabold leading-[1.1] tracking-tight"
+                role="heading"
+                aria-level="1"
               >
                 The Future of
                 <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 animate-gradient-x">
@@ -302,11 +297,13 @@ const LandingPage = () => {
                     <Link
                       to="/register"
                       className="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-teal-500 to-blue-500 text-white font-bold rounded-xl shadow-2xl shadow-teal-500/25 hover:shadow-teal-500/40 transition-all duration-300 overflow-hidden"
+                      aria-label="Start your free trial"
+                      role="button"
                     >
                       <span className="absolute inset-0 bg-gradient-to-r from-teal-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                       <span className="relative flex items-center gap-2">
                         Start Free Trial
-                        <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                        <FaArrowRight className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                       </span>
                     </Link>
                   </motion.div>
@@ -315,8 +312,10 @@ const LandingPage = () => {
                     <Link
                       to="#demo"
                       className="group inline-flex items-center justify-center px-8 py-4 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm text-slate-900 dark:text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-200 dark:border-slate-700"
+                      aria-label="Watch product demo"
+                      role="button"
                     >
-                      <FaPlay className="mr-2 text-teal-500 group-hover:scale-110 transition-transform" />
+                      <FaPlay className="mr-2 text-teal-500 group-hover:scale-110 transition-transform" aria-hidden="true" />
                       Watch Demo
                     </Link>
                   </motion.div>
@@ -331,8 +330,9 @@ const LandingPage = () => {
                       <img
                         key={i}
                         src={`https://i.pravatar.cc/40?img=${i}`}
-                        alt="User"
+                        alt={`Customer ${i}`}
                         className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-800"
+                        loading="lazy"
                       />
                     ))}
                   </div>
@@ -360,11 +360,11 @@ const LandingPage = () => {
                 transition={{ type: "spring", stiffness: 300 }}
                 className="relative"
               >
-                <img 
+                {/*<img 
                   className="w-full relative z-10 drop-shadow-2xl"
                   src={Image}
                   alt="Supply chain dashboard"
-                />
+                />*/}
                 {/* Floating Elements */}
                 <motion.div
                   animate={{ y: [0, -20, 0] }}
@@ -405,7 +405,7 @@ const LandingPage = () => {
                   transition={{ delay: index * 0.1 }}
                   className="text-center text-white"
                 >
-                  <stat.icon className="w-12 h-12 mx-auto mb-4 opacity-80" />
+                  <stat.icon className="w-12 h-12 mx-auto mb-4 opacity-80" aria-hidden="true" />
                   <div className="text-4xl font-bold mb-2">
                     <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                   </div>
@@ -416,32 +416,95 @@ const LandingPage = () => {
           </div>
         </section>
 
-        {/* Partners Section with Infinite Scroll */}
-        <section className="py-16 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm overflow-hidden">
+        {/* Partners Section - Improved Layout */}
+        <section className="py-20 bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-800">
           <div className="container mx-auto px-4">
-            <motion.p 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center text-sm font-bold text-slate-600 dark:text-slate-400 mb-8 tracking-wider uppercase"
+              transition={{ duration: 0.6 }}
+              className="text-center"
             >
-              Trusted by Industry Leaders
-            </motion.p>
-            <div className="relative">
-              <div className="flex animate-scroll">
-                {[...Array(3)].map((_, groupIndex) => (
-                  <div key={groupIndex} className="flex gap-16 px-8">
-                    {[Microsoft, AWSLogo, Microsoft, AWSLogo].map((logo, index) => (
-                      <img
-                        key={index}
-                        src={logo}
-                        alt="Partner"
-                        className="h-10 w-auto opacity-60 hover:opacity-100 transition-opacity dark:brightness-200 grayscale hover:grayscale-0"
-                      />
-                    ))}
+              <p className="text-sm font-bold text-slate-500 dark:text-slate-400 mb-2 tracking-wider uppercase">
+                Trusted by Industry Leaders
+              </p>
+              <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-12">
+                Powering Supply Chains for Global Enterprises
+              </h3>
+            </motion.div>
+            
+            <div className="max-w-5xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center"
+              >
+                {/* Partner Logo Cards */}
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  className="flex items-center justify-center p-8 bg-white dark:bg-slate-800 rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                >
+                  <img
+                    src={Microsoft}
+                    alt="Microsoft Partner"
+                    className="h-8 w-auto opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0 dark:brightness-200"
+                  />
+                </motion.div>
+                
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  className="flex items-center justify-center p-8 bg-white dark:bg-slate-800 rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                >
+                  <img
+                    src={AWSLogo}
+                    alt="AWS Partner"
+                    className="h-8 w-auto opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0 dark:brightness-200"
+                  />
+                </motion.div>
+                
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  className="flex items-center justify-center p-8 bg-white dark:bg-slate-800 rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                >
+                  <div className="text-2xl font-bold text-slate-400">
+                    Oracle
                   </div>
-                ))}
-              </div>
+                </motion.div>
+                
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  className="flex items-center justify-center p-8 bg-white dark:bg-slate-800 rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                >
+                  <div className="text-2xl font-bold text-slate-400">
+                    SAP
+                  </div>
+                </motion.div>
+              </motion.div>
+              
+              {/* Stats under partners */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="grid grid-cols-3 gap-8 mt-12 text-center"
+              >
+                <div>
+                  <p className="text-3xl font-bold text-teal-500">500+</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Enterprise Clients</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-bold text-blue-500">99.9%</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Uptime SLA</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-bold text-purple-500">24/7</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Support Available</p>
+                </div>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -496,6 +559,256 @@ const LandingPage = () => {
                 </motion.div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Digital Product Passport Section - NEW */}
+        <section className="py-24 relative bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 overflow-hidden">
+          {/* Animated Background Pattern */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-teal-500/5 to-blue-500/5"></div>
+            <motion.div
+              animate={{
+                backgroundPosition: ['0% 0%', '100% 100%'],
+              }}
+              transition={{
+                duration: 20,
+                repeat: Infinity,
+                repeatType: "reverse"
+              }}
+              className="absolute inset-0 opacity-30"
+              style={{
+                backgroundImage: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.1"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                backgroundSize: '60px 60px'
+              }}
+            />
+          </div>
+
+          <div className="container mx-auto px-4 relative">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="max-w-6xl mx-auto"
+            >
+              {/* Section Header */}
+              <div className="text-center mb-16">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ type: "spring", stiffness: 100 }}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500/20 to-teal-500/20 backdrop-blur-sm border border-purple-500/30 rounded-full mb-6"
+                >
+                  <HiShieldCheck className="text-purple-400 animate-pulse" />
+                  <span className="text-purple-300 text-sm font-semibold">Revolutionary Technology</span>
+                  <span className="px-2 py-0.5 bg-gradient-to-r from-purple-500 to-teal-500 text-white text-xs font-bold rounded-full">DPP</span>
+                </motion.div>
+                
+                <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
+                  Digital Product Passports
+                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-teal-400 to-blue-400 mt-2">
+                    Complete Product Lifecycle Transparency
+                  </span>
+                </h2>
+                <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+                  Every product gets a unique digital identity on the blockchain, creating an immutable record from manufacturing to end-of-life, ensuring authenticity and compliance.
+                </p>
+              </div>
+
+              {/* Main Content Grid */}
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
+                {/* Left Side - Interactive Demo */}
+                <motion.div
+                  initial={{ opacity: 0, x: -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  className="relative"
+                >
+                  <div className="relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-3xl p-8 border border-purple-500/20">
+                    {/* QR Code Scanner Animation */}
+                    <motion.div
+                      animate={{
+                        rotateY: [0, 360],
+                      }}
+                      transition={{
+                        duration: 10,
+                        repeat: Infinity,
+                        ease: "linear"
+                      }}
+                      className="w-48 h-48 mx-auto mb-8 relative preserve-3d"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-teal-500 rounded-2xl opacity-20 blur-xl"></div>
+                      <div className="relative bg-white rounded-2xl p-6 shadow-2xl">
+                        <FaQrcode className="w-full h-full text-slate-900" />
+                      </div>
+                      <motion.div
+                        animate={{
+                          scale: [1, 1.2, 1],
+                          opacity: [0.5, 1, 0.5]
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity
+                        }}
+                        className="absolute -inset-4 border-2 border-purple-500 rounded-2xl"
+                      />
+                    </motion.div>
+
+                    {/* Product Info Cards */}
+                    <div className="space-y-4">
+                      <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="flex items-center gap-4 p-4 bg-gradient-to-r from-purple-500/10 to-transparent rounded-xl border border-purple-500/20"
+                      >
+                        <FaFingerprint className="text-2xl text-purple-400" />
+                        <div>
+                          <p className="text-sm text-slate-400">Product ID</p>
+                          <p className="font-mono text-white">DPP-2024-XK9-7B2M</p>
+                        </div>
+                      </motion.div>
+
+                      <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.3 }}
+                        className="flex items-center gap-4 p-4 bg-gradient-to-r from-teal-500/10 to-transparent rounded-xl border border-teal-500/20"
+                      >
+                        <FaCertificate className="text-2xl text-teal-400" />
+                        <div>
+                          <p className="text-sm text-slate-400">Certification</p>
+                          <p className="font-semibold text-white">ISO 9001:2015 Verified</p>
+                        </div>
+                      </motion.div>
+
+                      <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.4 }}
+                        className="flex items-center gap-4 p-4 bg-gradient-to-r from-blue-500/10 to-transparent rounded-xl border border-blue-500/20"
+                      >
+                        <FaHistory className="text-2xl text-blue-400" />
+                        <div>
+                          <p className="text-sm text-slate-400">Lifecycle Stage</p>
+                          <p className="font-semibold text-white">In Transit - 72% Complete</p>
+                        </div>
+                      </motion.div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Right Side - Features */}
+                <motion.div
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  className="space-y-6"
+                >
+                  <div className="grid gap-6">
+                    {[
+                      {
+                        icon: FaBarcode,
+                        title: "Unique Digital Identity",
+                        description: "Every product receives a blockchain-verified digital passport with complete manufacturing details, certifications, and origin data.",
+                        color: "from-purple-500 to-pink-500"
+                      },
+                      {
+                        icon: HiDocumentText,
+                        title: "Regulatory Compliance",
+                        description: "Automatically meet global compliance requirements with built-in documentation for customs, sustainability, and quality standards.",
+                        color: "from-teal-500 to-green-500"
+                      },
+                      {
+                        icon: FaCheckCircle,
+                        title: "Authenticity Verification",
+                        description: "Instant verification prevents counterfeiting and ensures customers receive genuine products with complete transparency.",
+                        color: "from-blue-500 to-cyan-500"
+                      },
+                      {
+                        icon: FaHistory,
+                        title: "Complete Lifecycle Tracking",
+                        description: "Track products from raw materials through manufacturing, distribution, use, and recycling with immutable blockchain records.",
+                        color: "from-orange-500 to-red-500"
+                      }
+                    ].map((feature, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.1 }}
+                        whileHover={{ scale: 1.02, x: 10 }}
+                        className="group relative"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-teal-500/5 rounded-2xl blur-xl group-hover:from-purple-500/10 group-hover:to-teal-500/10 transition-all duration-300"></div>
+                        <div className="relative p-6 bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 hover:border-purple-500/30 transition-all duration-300">
+                          <div className="flex items-start gap-4">
+                            <div className={`w-12 h-12 bg-gradient-to-r ${feature.color} rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+                              <feature.icon className="text-xl text-white" />
+                            </div>
+                            <div>
+                              <h3 className="text-lg font-bold text-white mb-2">{feature.title}</h3>
+                              <p className="text-slate-400">{feature.description}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* CTA Button */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.5 }}
+                    className="pt-4"
+                  >
+                    <Link
+                      to="/features"
+                      className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-500 to-teal-500 text-white font-bold rounded-xl shadow-2xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300"
+                    >
+                      <span>Explore Digital Passports</span>
+                      <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </motion.div>
+                </motion.div>
+              </div>
+
+              {/* Bottom Stats */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.6 }}
+                className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 p-8 bg-gradient-to-r from-slate-800/30 via-purple-900/20 to-slate-800/30 backdrop-blur-sm rounded-3xl border border-purple-500/10"
+              >
+                {[
+                  { value: "1M+", label: "Digital Passports Issued" },
+                  { value: "100%", label: "Traceability Coverage" },
+                  { value: "50+", label: "Supported Standards" },
+                  { value: "0.1s", label: "Verification Time" }
+                ].map((stat, index) => (
+                  <div key={index} className="text-center">
+                    <motion.p
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.7 + index * 0.1, type: "spring" }}
+                      className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-teal-400"
+                    >
+                      {stat.value}
+                    </motion.p>
+                    <p className="text-sm text-slate-400 mt-1">{stat.label}</p>
+                  </div>
+                ))}
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 
@@ -683,7 +996,7 @@ const LandingPage = () => {
 
         <Footer />
       </div>
-    </div>
+    </main>
   );
 };
 
