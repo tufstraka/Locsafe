@@ -13,14 +13,21 @@ const makeRequest = (options, data = null) => {
       
       res.on('end', () => {
         try {
-          resolve(JSON.parse(responseData));
+          const parsed = JSON.parse(responseData);
+          console.log(`Response status code: ${res.statusCode}`);
+          if (res.statusCode >= 400) {
+            console.error('HTTP Error Response:', parsed);
+          }
+          resolve(parsed);
         } catch (error) {
-          reject(error);
+          console.error('Failed to parse response:', responseData);
+          reject(new Error(`Invalid JSON response: ${responseData}`));
         }
       });
     });
     
     req.on('error', (error) => {
+      console.error('Request error:', error);
       reject(error);
     });
     
@@ -82,6 +89,8 @@ const PLANS = {
 
 // Main handler function
 exports.handler = async (event) => {
+  console.log('Lambda invoked with event:', JSON.stringify(event, null, 2));
+  
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
@@ -90,7 +99,7 @@ exports.handler = async (event) => {
   };
 
   // Handle CORS preflight
-  if (event.httpMethod === 'OPTIONS') {
+  if (event.httpMethod === 'OPTIONS' || event.requestContext?.http?.method === 'OPTIONS') {
     return {
       statusCode: 200,
       headers,
@@ -98,8 +107,10 @@ exports.handler = async (event) => {
     };
   }
 
-  const path = event.path || event.rawPath || '';
+  const path = event.path || event.rawPath || event.requestContext?.http?.path || '';
   const method = event.httpMethod || event.requestContext?.http?.method || 'GET';
+  
+  console.log(`Processing ${method} request to ${path}`);
   
   try {
     // Parse request body
@@ -229,7 +240,7 @@ async function initializePayment(body, headers) {
     path: '/transaction/initialize',
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+      'Authorization': `Bearer ${process.env.PAYSTACK_SECRET_KEY || ''}`,
       'Content-Type': 'application/json'
     }
   };
@@ -305,6 +316,8 @@ async function verifyPayment(reference, headers) {
   
   try {
     const response = await makeRequest(options);
+
+    console.log(response)
     
     if (response.status && response.data.status === 'success') {
       // Payment successful
@@ -368,7 +381,7 @@ async function handleWebhook(event, headers) {
   
   // Verify webhook signature
   const hash = crypto
-    .createHmac('sha512', process.env.PAYSTACK_SECRET_KEY)
+    .createHmac('sha512', process.env.PAYSTACK_SECRET_KEY || '')
     .update(body)
     .digest('hex');
   
