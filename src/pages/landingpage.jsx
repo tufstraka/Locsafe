@@ -5,7 +5,7 @@ import { FaMapMarkerAlt, FaCalendarAlt, FaLock, FaNetworkWired, FaBell, FaChartL
 import { HiLightningBolt, HiSparkles, HiCube, HiChip, HiDocumentText, HiShieldCheck } from 'react-icons/hi';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-//import Image from '../assets/3d-casual-life-trail-map.png';
+import DashboardImage from '/Locsafe-Dashboard.png';
 import Microsoft from '../assets/microsoft.svg';
 import AWSLogo from '../assets/awws.svg';
 import Header from '../components/header.jsx';
@@ -180,7 +180,7 @@ const LandingPage = () => {
   }, [testimonials.length]);
 
   return (
-    <main className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-teal-50/30 dark:from-slate-900 dark:via-slate-900 dark:to-teal-950/20 text-slate-900 dark:text-slate-100 font-sans overflow-x-hidden" role="main">
+    <main className="relative min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans overflow-x-hidden" role="main">
       <Helmet>
         <title>Locsafe - Next-Gen Supply Chain Intelligence Platform</title>
         <meta
@@ -217,16 +217,16 @@ const LandingPage = () => {
 
       <ToastContainer position="top-left" autoClose={3000} hideProgressBar closeOnClick pauseOnHover draggable />
 
-      {/* Animated Background Elements */}
+      {/* Animated Background Elements - More Subtle */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-teal-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-40 right-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+        <div className="absolute top-20 left-10 w-72 h-72 bg-teal-400 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
+        <div className="absolute top-40 right-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-4000"></div>
       </div>
 
-      {/* Progress Bar */}
+      {/* Progress Bar - Solid Color */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-blue-500 z-50 origin-left"
+        className="fixed top-0 left-0 right-0 h-1 bg-teal-500 z-50 origin-left"
         style={{ scaleX: scrollYProgress }}
       />
 
@@ -247,11 +247,11 @@ const LandingPage = () => {
             <div className="space-y-8">
               <motion.div 
                 variants={itemVariants}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-teal-500/10 to-blue-500/10 backdrop-blur-sm border border-teal-500/20 rounded-full"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800 rounded-full"
               >
-                <HiSparkles className="text-teal-500 animate-pulse" />
+                <HiSparkles className="text-teal-600 dark:text-teal-400 animate-pulse" />
                 <span className="text-teal-700 dark:text-teal-400 text-sm font-semibold">AI-Powered Supply Chain Intelligence</span>
-                <span className="px-2 py-0.5 bg-gradient-to-r from-teal-500 to-blue-500 text-white text-xs font-bold rounded-full">NEW</span>
+                <span className="px-2 py-0.5 bg-teal-500 text-white text-xs font-bold rounded-full">NEW</span>
               </motion.div>
               
               <motion.h1
@@ -261,7 +261,7 @@ const LandingPage = () => {
                 aria-level="1"
               >
                 The Future of
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 animate-gradient-x">
+                <span className="block text-teal-600 dark:text-teal-400">
                   Supply Chain
                 </span>
                 <span className="block">Intelligence</span>
@@ -296,12 +296,11 @@ const LandingPage = () => {
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Link
                       to="/register"
-                      className="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-teal-500 to-blue-500 text-white font-bold rounded-xl shadow-2xl shadow-teal-500/25 hover:shadow-teal-500/40 transition-all duration-300 overflow-hidden"
+                      className="group relative inline-flex items-center justify-center px-8 py-4 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                       aria-label="Start your free trial"
                       role="button"
                     >
-                      <span className="absolute inset-0 bg-gradient-to-r from-teal-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                      <span className="relative flex items-center gap-2">
+                      <span className="flex items-center gap-2">
                         Start Free Trial
                         <FaArrowRight className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                       </span>
@@ -354,17 +353,17 @@ const LandingPage = () => {
               variants={itemVariants}
               className="relative"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-teal-500/30 via-blue-500/30 to-purple-500/30 rounded-3xl blur-3xl animate-pulse" />
+              <div className="absolute inset-0 bg-teal-500/10 rounded-3xl blur-3xl" />
               <motion.div
                 whileHover={{ scale: 1.02, rotate: 1 }}
                 transition={{ type: "spring", stiffness: 300 }}
                 className="relative"
               >
-                {/*<img 
-                  className="w-full relative z-10 drop-shadow-2xl"
-                  src={Image}
-                  alt="Supply chain dashboard"
-                />*/}
+                <img
+                  className="w-full relative z-10 drop-shadow-2xl rounded-2xl"
+                  src={DashboardImage}
+                  alt="Locsafe Supply Chain Dashboard"
+                />
                 {/* Floating Elements */}
                 <motion.div
                   animate={{ y: [0, -20, 0] }}
@@ -392,8 +391,7 @@ const LandingPage = () => {
         </motion.section>
 
         {/* Stats Section with Counter Animation */}
-        <section className="py-20 bg-gradient-to-r from-teal-500 to-blue-500 relative overflow-hidden">
-          <div className="absolute inset-0 bg-black/10"></div>
+        <section className="py-20 bg-slate-50 dark:bg-slate-800 relative overflow-hidden">
           <div className="container mx-auto px-4 relative">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
               {stats.map((stat, index) => (
@@ -403,13 +401,13 @@ const LandingPage = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="text-center text-white"
+                  className="text-center"
                 >
-                  <stat.icon className="w-12 h-12 mx-auto mb-4 opacity-80" aria-hidden="true" />
-                  <div className="text-4xl font-bold mb-2">
+                  <stat.icon className="w-12 h-12 mx-auto mb-4 text-teal-600 dark:text-teal-400" aria-hidden="true" />
+                  <div className="text-4xl font-bold mb-2 text-slate-900 dark:text-white">
                     <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                   </div>
-                  <div className="text-sm opacity-90">{stat.label}</div>
+                  <div className="text-sm text-slate-600 dark:text-slate-400">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
@@ -417,7 +415,7 @@ const LandingPage = () => {
         </section>
 
         {/* Partners Section - Improved Layout */}
-        <section className="py-20 bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-800">
+        <section className="py-20 bg-white dark:bg-slate-900">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -523,7 +521,7 @@ const LandingPage = () => {
               </span>
               <h2 className="text-4xl lg:text-5xl font-bold mb-6">
                 Everything You Need for
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-blue-500"> Modern Logistics</span>
+                <span className="text-teal-600 dark:text-teal-400"> Modern Logistics</span>
               </h2>
               <p className="text-lg text-slate-600 dark:text-slate-300">
                 Comprehensive tools powered by cutting-edge blockchain and AI technology
@@ -541,8 +539,7 @@ const LandingPage = () => {
                   whileHover={{ y: -10 }}
                   className="group relative"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-blue-500 rounded-2xl opacity-0 group-hover:opacity-10 transition-opacity duration-300 blur-xl"></div>
-                  <div className="relative p-8 bg-white dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 dark:border-slate-700 overflow-hidden">
+                  <div className="relative p-8 bg-white dark:bg-slate-800 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-slate-200 dark:border-slate-700 overflow-hidden">
                     <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${feature.gradient} opacity-10 rounded-full -mr-16 -mt-16`}></div>
                     <div className="relative">
                       <div className={`w-14 h-14 bg-gradient-to-r ${feature.gradient} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
@@ -563,10 +560,10 @@ const LandingPage = () => {
         </section>
 
         {/* Digital Product Passport Section - NEW */}
-        <section className="py-24 relative bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 overflow-hidden">
+        <section className="py-24 relative bg-slate-900 overflow-hidden">
           {/* Animated Background Pattern */}
           <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-teal-500/5 to-blue-500/5"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-teal-500/10"></div>
             <motion.div
               animate={{
                 backgroundPosition: ['0% 0%', '100% 100%'],
@@ -598,16 +595,16 @@ const LandingPage = () => {
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ type: "spring", stiffness: 100 }}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500/20 to-teal-500/20 backdrop-blur-sm border border-purple-500/30 rounded-full mb-6"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-purple-900/30 backdrop-blur-sm border border-purple-500/30 rounded-full mb-6"
                 >
                   <HiShieldCheck className="text-purple-400 animate-pulse" />
                   <span className="text-purple-300 text-sm font-semibold">Revolutionary Technology</span>
-                  <span className="px-2 py-0.5 bg-gradient-to-r from-purple-500 to-teal-500 text-white text-xs font-bold rounded-full">DPP</span>
+                  <span className="px-2 py-0.5 bg-purple-500 text-white text-xs font-bold rounded-full">DPP</span>
                 </motion.div>
                 
                 <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
                   Digital Product Passports
-                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-teal-400 to-blue-400 mt-2">
+                  <span className="block text-purple-400 mt-2">
                     Complete Product Lifecycle Transparency
                   </span>
                 </h2>
@@ -625,7 +622,7 @@ const LandingPage = () => {
                   viewport={{ once: true }}
                   className="relative"
                 >
-                  <div className="relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-3xl p-8 border border-purple-500/20">
+                  <div className="relative bg-slate-800/50 backdrop-blur-xl rounded-3xl p-8 border border-purple-500/20">
                     {/* QR Code Scanner Animation */}
                     <motion.div
                       animate={{
@@ -638,7 +635,7 @@ const LandingPage = () => {
                       }}
                       className="w-48 h-48 mx-auto mb-8 relative preserve-3d"
                     >
-                      <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-teal-500 rounded-2xl opacity-20 blur-xl"></div>
+                      <div className="absolute inset-0 bg-purple-500/20 rounded-2xl blur-xl"></div>
                       <div className="relative bg-white rounded-2xl p-6 shadow-2xl">
                         <FaQrcode className="w-full h-full text-slate-900" />
                       </div>
@@ -662,7 +659,7 @@ const LandingPage = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="flex items-center gap-4 p-4 bg-gradient-to-r from-purple-500/10 to-transparent rounded-xl border border-purple-500/20"
+                        className="flex items-center gap-4 p-4 bg-purple-900/20 rounded-xl border border-purple-500/20"
                       >
                         <FaFingerprint className="text-2xl text-purple-400" />
                         <div>
@@ -676,7 +673,7 @@ const LandingPage = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.3 }}
-                        className="flex items-center gap-4 p-4 bg-gradient-to-r from-teal-500/10 to-transparent rounded-xl border border-teal-500/20"
+                        className="flex items-center gap-4 p-4 bg-teal-900/20 rounded-xl border border-teal-500/20"
                       >
                         <FaCertificate className="text-2xl text-teal-400" />
                         <div>
@@ -690,7 +687,7 @@ const LandingPage = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.4 }}
-                        className="flex items-center gap-4 p-4 bg-gradient-to-r from-blue-500/10 to-transparent rounded-xl border border-blue-500/20"
+                        className="flex items-center gap-4 p-4 bg-blue-900/20 rounded-xl border border-blue-500/20"
                       >
                         <FaHistory className="text-2xl text-blue-400" />
                         <div>
@@ -745,7 +742,6 @@ const LandingPage = () => {
                         whileHover={{ scale: 1.02, x: 10 }}
                         className="group relative"
                       >
-                        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-teal-500/5 rounded-2xl blur-xl group-hover:from-purple-500/10 group-hover:to-teal-500/10 transition-all duration-300"></div>
                         <div className="relative p-6 bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 hover:border-purple-500/30 transition-all duration-300">
                           <div className="flex items-start gap-4">
                             <div className={`w-12 h-12 bg-gradient-to-r ${feature.color} rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
@@ -771,7 +767,7 @@ const LandingPage = () => {
                   >
                     <Link
                       to="/features"
-                      className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-500 to-teal-500 text-white font-bold rounded-xl shadow-2xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300"
+                      className="group inline-flex items-center gap-3 px-8 py-4 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                     >
                       <span>Explore Digital Passports</span>
                       <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
@@ -786,7 +782,7 @@ const LandingPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.6 }}
-                className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 p-8 bg-gradient-to-r from-slate-800/30 via-purple-900/20 to-slate-800/30 backdrop-blur-sm rounded-3xl border border-purple-500/10"
+                className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 p-8 bg-slate-800/30 backdrop-blur-sm rounded-3xl border border-purple-500/10"
               >
                 {[
                   { value: "1M+", label: "Digital Passports Issued" },
@@ -800,7 +796,7 @@ const LandingPage = () => {
                       whileInView={{ scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.7 + index * 0.1, type: "spring" }}
-                      className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-teal-400"
+                      className="text-3xl font-bold text-purple-400"
                     >
                       {stat.value}
                     </motion.p>
@@ -813,7 +809,7 @@ const LandingPage = () => {
         </section>
 
         {/* Testimonials Carousel */}
-        <section className="py-24 bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-800">
+        <section className="py-24 bg-slate-50 dark:bg-slate-800">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -826,7 +822,7 @@ const LandingPage = () => {
               </span>
               <h2 className="text-4xl lg:text-5xl font-bold mb-6">
                 Loved by Teams
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-blue-500"> Worldwide</span>
+                <span className="text-teal-600 dark:text-teal-400"> Worldwide</span>
               </h2>
             </motion.div>
 
@@ -899,7 +895,7 @@ const LandingPage = () => {
               </span>
               <h2 className="text-4xl lg:text-5xl font-bold mb-6">
                 Frequently Asked
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-blue-500"> Questions</span>
+                <span className="text-teal-600 dark:text-teal-400"> Questions</span>
               </h2>
             </motion.div>
 
@@ -944,10 +940,9 @@ const LandingPage = () => {
           </div>
         </section>
 
-        {/* CTA Section with Gradient Animation */}
-        <section className="py-24 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 animate-gradient-x"></div>
-          <div className="absolute inset-0 bg-black/20"></div>
+        {/* CTA Section - Elegant Minimal */}
+        <section className="py-24 relative overflow-hidden bg-teal-600 dark:bg-teal-700">
+          <div className="absolute inset-0 bg-black/10"></div>
           <div className="container mx-auto px-4 relative">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
