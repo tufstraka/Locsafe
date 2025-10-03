@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   HiLightningBolt,
@@ -10,31 +10,40 @@ import {
 } from 'react-icons/hi';
 import {
   FaLock,
-  FaMobileAlt,
+  FaCreditCard,
   FaCheckCircle,
   FaArrowRight,
   FaInfoCircle,
-  FaShieldAlt
+  FaShieldAlt,
+  FaUniversity,
+  FaMobileAlt
 } from 'react-icons/fa';
-import getOAuthToken from '../utils/darajaAuth';
-import { Base64 } from 'js-base64';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Paywall = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
-  const phoneNumber = searchParams.get('phoneNumber');
+  const userEmail = searchParams.get('email') || localStorage.getItem('userEmail');
+  const phoneNumber = searchParams.get('phoneNumber') || localStorage.getItem('phoneNumber');
+  
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState('basic');
+  const [email, setEmail] = useState(userEmail || '');
+  const [phone, setPhone] = useState(phoneNumber || '');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const paystackScriptLoaded = useRef(false);
 
   const plans = [
     {
       id: 'basic',
       name: 'Basic Plan',
       price: 'Ksh 4,500',
+      priceValue: 4500,
       period: '/month',
       description: 'Perfect for small businesses',
       assets: 'Up to 200 assets',
@@ -52,6 +61,7 @@ const Paywall = () => {
       id: 'pro',
       name: 'Pro Plan',
       price: 'Ksh 9,500',
+      priceValue: 9500,
       period: '/month',
       description: 'For growing enterprises',
       assets: 'Up to 1000 assets',
@@ -70,6 +80,7 @@ const Paywall = () => {
       id: 'enterprise',
       name: 'Enterprise',
       price: 'Custom',
+      priceValue: null,
       period: '',
       description: 'Unlimited scalability',
       assets: 'Unlimited assets',
@@ -85,6 +96,27 @@ const Paywall = () => {
       popular: false
     }
   ];
+
+  // Load Paystack script on component mount
+  useEffect(() => {
+    if (!paystackScriptLoaded.current) {
+      const script = document.createElement('script');
+      script.src = 'https://js.paystack.co/v2/inline.js';
+      script.async = true;
+      script.onload = () => {
+        paystackScriptLoaded.current = true;
+        console.log('Paystack script loaded');
+      };
+      document.body.appendChild(script);
+
+      return () => {
+        // Cleanup script on unmount if needed
+        if (script.parentNode) {
+          script.parentNode.removeChild(script);
+        }
+      };
+    }
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -106,69 +138,182 @@ const Paywall = () => {
     }
   };
 
-  const handlePayment = () => {
+  const handlePaystackPayment = async () => {
     if (selectedPlan === 'enterprise') {
-      window.location.href = '/contact';
+      navigate('/contact');
+      return;
+    }
+
+    // Validation
+    if (!email) {
+      setResponse('Please enter your email address');
+      setTimeout(() => setResponse(''), 3000);
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setResponse('Please enter a valid email address');
+      setTimeout(() => setResponse(''), 3000);
       return;
     }
 
     setLoading(true);
+    setResponse('');
 
-    const businessShortCode = 174379;
-    const passKey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919';
-    
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const date = String(now.getDate()).padStart(2, '0');
-    const hour = String(now.getHours()).padStart(2, '0');
-    const minute = String(now.getMinutes()).padStart(2, '0');
-    const second = String(now.getSeconds()).padStart(2, '0');
+    try {
+      // Get selected plan details
+      const selectedPlanDetails = plans.find(p => p.id === selectedPlan);
+      const amount = selectedPlanDetails.priceValue * 100; // Convert to kobo/cents
 
-    const timestamp = `${year}${month}${date}${hour}${minute}${second}`;    
-    const password = Base64.encode(`${businessShortCode}${passKey}${timestamp}`);
-
-    const amount = selectedPlan === 'basic' ? 4500 : 9500;
-    const planName = selectedPlan === 'basic' ? 'Basic Package' : 'Pro Package';
-
-    getOAuthToken()
-      .then(token => {
-        const requestData = {
-          BusinessShortCode: businessShortCode,
-          Password: password,
-          Timestamp: timestamp,
-          TransactionType: 'CustomerPayBillOnline',
-          Amount: amount,
-          PartyA: phoneNumber,
-          PartyB: businessShortCode,
-          PhoneNumber: phoneNumber,
-          CallBackURL: 'https://loc-safe.com/payment-callback',
-          AccountReference: 'Locsafe',
-          TransactionDesc: planName,
-          token: token
+      // Option 1: Use Paystack Popup directly (Recommended for simplicity)
+      if (window.PaystackPop) {
+        const publicKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || 'pk_test_xxxxxxxxxx';
+        
+        const handler = window.PaystackPop.setup({
+          key: publicKey,
+          email: email,
+          amount: amount,
+          currency: 'KES',
+          firstname: firstName,
+          lastname: lastName,
+          phone: phone,
+          metadata: {
+            planId: selectedPlan,
+            planName: selectedPlanDetails.name,
+            custom_fields: [
+              {
+                display_name: "Plan Type",
+                variable_name: "plan_type",
+                value: selectedPlanDetails.name
+              },
+              {
+                display_name: "Assets Limit",
+                variable_name: "assets_limit",
+                value: selectedPlanDetails.assets
+              }
+            ]
+          },
+          onClose: function() {
+            setLoading(false);
+            if (!showSuccess) {
+              setResponse('Payment cancelled. Please try again when ready.');
+              setTimeout(() => setResponse(''), 3000);
+            }
+          },
+          callback: function(response) {
+            // Payment successful
+            console.log('Payment successful:', response);
+            verifyPayment(response.reference);
+          }
+        });
+        
+        handler.openIframe();
+      } else {
+        // Option 2: Use backend initialization with Lambda (More secure)
+        const lambdaUrl = import.meta.env.VITE_PAYSTACK_LAMBDA_URL || 
+                         'https://your-lambda-url.amazonaws.com/paystack/initialize';
+        
+        const paymentData = {
+          email,
+          phoneNumber: phone,
+          firstName,
+          lastName,
+          planId: selectedPlan,
+          metadata: {
+            customerName: `${firstName} ${lastName}`.trim() || email,
+            source: 'web_app',
+            timestamp: new Date().toISOString()
+          }
         };
 
-        axios
-          .post('https://zxs-klzo.onrender.com/api/stkpush', requestData)
-          .then(response => {
-            setLoading(false);
-            setResponse(response.data.CustomerMessage);
-            if (response.data.ResponseCode === '0') {
-              setShowSuccess(true);
-              setTimeout(() => setShowSuccess(false), 5000);
-            }
-          })
-          .catch(error => {
-            console.log('Payment error:', error);
-            setLoading(false);
-            setResponse('Payment failed. Please try again.');
-          });
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        setLoading(false);
-        setResponse('Authentication failed. Please try again.');
-      });
+        const response = await axios.post(lambdaUrl, paymentData, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.data.status === 'success' && response.data.data.access_code) {
+          // Use PaystackPop to resume transaction with access_code
+          if (window.PaystackPop) {
+            const popup = new window.PaystackPop();
+            popup.resumeTransaction(response.data.data.access_code, {
+              onClose: function() {
+                setLoading(false);
+                if (!showSuccess) {
+                  setResponse('Payment cancelled. Please try again when ready.');
+                  setTimeout(() => setResponse(''), 3000);
+                }
+              },
+              callback: function(response) {
+                // Payment successful 
+                console.log('Payment successful:', response);
+                verifyPayment(response.reference || response.data.data.reference);
+              }
+            });
+          } else {
+            // Fallback to redirect if popup not available
+            window.location.href = response.data.data.authorization_url;
+          }
+        } else if (response.data.status === 'redirect') {
+          navigate('/contact');
+        } else {
+          setResponse(response.data.message || 'Payment initialization failed');
+          setLoading(false);
+        }
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      setLoading(false);
+      setResponse(
+        error.response?.data?.message || 
+        'Payment failed. Please try again or contact support.'
+      );
+      setTimeout(() => setResponse(''), 5000);
+    }
+  };
+
+  // Check for payment verification on component mount (for redirect flow)
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const reference = urlParams.get('reference');
+    const trxref = urlParams.get('trxref');
+    
+    if (reference || trxref) {
+      verifyPayment(reference || trxref);
+    }
+  }, []);
+
+  const verifyPayment = async (reference) => {
+    setLoading(true);
+    try {
+      const lambdaUrl = import.meta.env.VITE_PAYSTACK_LAMBDA_URL || 
+                       'https://your-lambda-url.amazonaws.com/paystack/verify';
+      
+      const response = await axios.get(`${lambdaUrl}?reference=${reference}`);
+      
+      if (response.data.status === 'success') {
+        setShowSuccess(true);
+        setResponse('🎉 Payment successful! Your subscription has been activated.');
+        
+        // Store subscription details
+        localStorage.setItem('subscriptionPlan', response.data.data.planId);
+        localStorage.setItem('subscriptionStatus', 'active');
+        localStorage.removeItem('paymentReference');
+        
+        // Redirect to dashboard after 3 seconds
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 3000);
+      } else {
+        setResponse('Payment verification failed. Please contact support if you were charged.');
+      }
+    } catch (error) {
+      console.error('Verification error:', error);
+      setResponse('Unable to verify payment. Please contact support for assistance.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const features = [
@@ -176,6 +321,12 @@ const Paywall = () => {
     { icon: HiShieldCheck, text: 'Secure payment' },
     { icon: HiOutlineClock, text: '24/7 support' },
     { icon: HiOutlineGlobe, text: 'Global coverage' }
+  ];
+
+  const paymentMethods = [
+    { icon: FaCreditCard, text: 'Credit/Debit Cards' },
+    { icon: FaUniversity, text: 'Bank Transfer' },
+    { icon: FaMobileAlt, text: 'Mobile Money' }
   ];
 
   return (
@@ -308,18 +459,95 @@ const Paywall = () => {
                   {plans.find(p => p.id === selectedPlan)?.name}
                 </span>
               </p>
+              <p className="text-2xl font-bold text-slate-900 mt-2">
+                {plans.find(p => p.id === selectedPlan)?.price}
+                <span className="text-sm text-slate-600 ml-1">
+                  {plans.find(p => p.id === selectedPlan)?.period}
+                </span>
+              </p>
             </div>
 
-            {phoneNumber && (
-              <div className="bg-slate-50 rounded-lg p-4 mb-6">
-                <p className="text-sm text-slate-600 mb-1">Payment will be sent to:</p>
-                <p className="font-semibold text-slate-900">{phoneNumber}</p>
+            {/* Customer Information Form */}
+            <div className="space-y-4 mb-6">
+              {/* Email Input */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="your@email.com"
+                  className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  required
+                />
               </div>
-            )}
+
+              {/* Name Inputs */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    placeholder="John"
+                    className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    placeholder="Doe"
+                    className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  />
+                </div>
+              </div>
+
+              {/* Phone Input (Optional) */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Phone Number (Optional)
+                </label>
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="+254700000000"
+                  className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                />
+              </div>
+            </div>
+
+            {/* Payment Methods Display */}
+            <div className="mb-6 p-4 bg-gradient-to-r from-slate-50 to-blue-50 rounded-lg border border-slate-200">
+              <p className="text-xs text-slate-600 mb-3 text-center font-semibold">
+                Secure Payment Methods Available
+              </p>
+              <div className="flex justify-center gap-4">
+                {paymentMethods.map((method, index) => (
+                  <div key={index} className="flex items-center gap-1 text-slate-700">
+                    <method.icon className="text-lg text-teal-600" />
+                    <span className="text-xs font-medium">{method.text}</span>
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs text-slate-500 text-center mt-2">
+                Powered by Paystack - PCI DSS Certified
+              </p>
+            </div>
 
             <motion.button
-              onClick={handlePayment}
-              disabled={loading}
+              onClick={handlePaystackPayment}
+              disabled={loading || selectedPlan === 'enterprise' && !email}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className={`w-full flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-teal-500 to-blue-500 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all ${
@@ -337,8 +565,8 @@ const Paywall = () => {
                 </>
               ) : (
                 <>
-                  <FaMobileAlt />
-                  {selectedPlan === 'enterprise' ? 'Contact Sales' : 'Pay with M-Pesa'}
+                  <FaCreditCard />
+                  {selectedPlan === 'enterprise' ? 'Contact Sales' : 'Pay Securely Now'}
                   <FaArrowRight />
                 </>
               )}
@@ -369,13 +597,21 @@ const Paywall = () => {
             <div className="flex items-center justify-center gap-4 mt-6 pt-6 border-t border-slate-200">
               <div className="flex items-center gap-2 text-slate-600">
                 <FaLock className="text-green-600" />
-                <span className="text-xs">Secure Payment</span>
+                <span className="text-xs">256-bit SSL</span>
               </div>
               <div className="flex items-center gap-2 text-slate-600">
                 <FaShieldAlt className="text-blue-600" />
-                <span className="text-xs">SSL Encrypted</span>
+                <span className="text-xs">PCI DSS Compliant</span>
               </div>
             </div>
+
+            {/* Additional Info */}
+            <p className="text-xs text-slate-500 text-center mt-4">
+              By completing this purchase, you agree to our{' '}
+              <a href="/terms" className="text-teal-600 hover:underline">Terms of Service</a>
+              {' '}and{' '}
+              <a href="/privacy" className="text-teal-600 hover:underline">Privacy Policy</a>
+            </p>
           </div>
         </motion.div>
 
@@ -413,7 +649,7 @@ const Paywall = () => {
           className="text-center mb-8"
         >
           <h2 className="text-3xl font-bold text-slate-900 mb-4">Frequently Asked Questions</h2>
-          <p className="text-slate-600">Everything you need to know about our pricing</p>
+          <p className="text-slate-600">Everything you need to know about our pricing and payment</p>
         </motion.div>
 
         <motion.div
@@ -424,20 +660,36 @@ const Paywall = () => {
         >
           {[
             {
-              q: "Can I change my plan later?",
-              a: "Yes, you can upgrade or downgrade your plan at any time. Changes take effect at the next billing cycle."
-            },
-            {
-              q: "Is there a free trial?",
-              a: "Yes, we offer a 14-day free trial for all new customers. No credit card required."
-            },
-            {
               q: "What payment methods do you accept?",
-              a: "We accept M-Pesa, credit cards, and bank transfers for enterprise customers."
+              a: "We accept all major credit and debit cards (Visa, Mastercard, American Express), bank transfers, and mobile money payments through our secure Paystack payment gateway."
             },
             {
-              q: "Is my data secure?",
-              a: "Absolutely. We use bank-grade encryption and are ISO 27001 certified."
+              q: "Is my payment information secure?",
+              a: "Absolutely! We use Paystack, a PCI DSS certified payment processor with bank-grade 256-bit SSL encryption. Your card details are never stored on our servers."
+            },
+            {
+              q: "Can I change my plan later?",
+              a: "Yes, you can upgrade or downgrade your plan at any time. Changes take effect at the next billing cycle, and we'll prorate any differences."
+            },
+            {
+              q: "Do you offer a free trial?",
+              a: "Yes, we offer a 14-day free trial for all new customers. No credit card required to start your trial."
+            },
+            {
+              q: "How do I get a refund?",
+              a: "We offer a 30-day money-back guarantee. Contact our support team within 30 days of purchase to initiate a refund."
+            },
+            {
+              q: "Can I pay annually?",
+              a: "Yes! Annual payments come with a 20% discount. Contact our sales team to set up annual billing."
+            },
+            {
+              q: "What currencies do you accept?",
+              a: "We primarily accept payments in Kenyan Shillings (KES), but can also process USD, EUR, and GBP for international customers."
+            },
+            {
+              q: "How quickly is my account activated?",
+              a: "Your account is activated instantly upon successful payment. You'll receive login credentials via email immediately."
             }
           ].map((faq, index) => (
             <div key={index} className="bg-white rounded-lg p-6 shadow-md border border-slate-200">
