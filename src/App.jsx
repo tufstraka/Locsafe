@@ -6,6 +6,7 @@ import { NavigationProvider } from './contexts/navigationContext.jsx'
 import Staff from './components/staff.jsx'
 import AssetForm from './components/assetForm.jsx'
 import { AuthProvider } from './contexts/authContext.jsx'
+import { OnboardingProvider } from './contexts/onboardingContext.jsx'
 import UserList from './components/userList.jsx'
 import UserReg from './components/userReg.jsx'
 import DispatcherReg from './components/dispatcherReg.jsx'
@@ -35,6 +36,7 @@ import Settings from './pages/settings.jsx'
 import Reports from './pages/reports.jsx'
 import Insights from './pages/insights.jsx'
 import UserConsent from './components/user-consent.jsx'
+import Onboarding from './pages/onboarding.jsx'
 //import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
 
 
@@ -42,8 +44,9 @@ const App = () => {
   return (
     <>
       <AuthProvider>
-        <NavigationProvider>
-          <Router>
+        <OnboardingProvider>
+          <NavigationProvider>
+            <Router>
           <UserConsent/>
             <Routes>
               <Route exact path='/' element={<LandingPage />} />
@@ -58,6 +61,7 @@ const App = () => {
               <Route path='/login' element={<Login />} />
               <Route path='/pay' element={<Paywall />} />
               <Route path='/register' element={<Register />} />
+              <Route path='/onboarding' element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
               <Route path='/calendar' element={<MyCalendar />} />
               <Route path='/contact' element={<ContactUs />} />
               <Route path='/pricing' element={<PricingPage />} />
@@ -94,7 +98,8 @@ const App = () => {
                 onLoad={() => console.log('Tawk Messenger loaded')}
           onChatMinimized={() => console.log('Chat minimized')}
           onChatMaximized={() => console.log('Chat maximized')}/>*/}
-        </NavigationProvider>
+          </NavigationProvider>
+        </OnboardingProvider>
       </AuthProvider>
     </>
   )
