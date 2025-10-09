@@ -37,6 +37,8 @@ import Reports from './pages/reports.jsx'
 import Insights from './pages/insights.jsx'
 import UserConsent from './components/user-consent.jsx'
 import Onboarding from './pages/onboarding.jsx'
+import LastMileSolution from './pages/solutions/last-mile.jsx'
+import ColdChainSolution from './pages/solutions/cold-chain.jsx'
 //import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
 
 
@@ -77,10 +79,9 @@ const App = () => {
               {/*<Route path="/user/profile" element={<UpdateProfilePage username={username} setUsername={setUsername} />} />*/}
               <Route path='/assets' element={<Assets />} />
               <Route path="/user/dashboard" element={<UserDashboard/>} />
-              <Route path='' element={<SignInForm />} />
-              <Route path='' element={<SignInForm />} />
+              <Route path='/solutions/last-mile' element={<LastMileSolution />} />
+              <Route path='/solutions/cold-chain' element={<ColdChainSolution />} />
               {/*<Route path="/user/signup" element={<SignUpForm username={username} setUsername={setUsername}/>} />*/}
-              <Route path='' element={<SignInForm />} />
               <Route
                 path='/admin/dashboard'
                 element={
