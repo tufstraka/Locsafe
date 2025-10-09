@@ -306,13 +306,13 @@ const LandingPage = () => {
                   
                   <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                     <Link
-                      to="#demo"
+                      to="https://demo.locsafe.org/admin/dashboard"
                       className="group ripple inline-flex items-center justify-center px-8 py-4 bg-surface-light dark:bg-surface-elevated-dark text-on-surface-light dark:text-on-surface-dark font-medium rounded-full shadow-elevation-2 hover:shadow-elevation-3 transition-all duration-300 border border-primary-200 dark:border-primary-800"
                       aria-label="Watch product demo"
                       role="button"
                     >
                       <span className="material-icons mr-3 text-primary-500 group-hover:scale-110 transition-transform">play_circle</span>
-                      Watch Demo
+                      Interactive Demo
                     </Link>
                   </motion.div>
                 </div>
