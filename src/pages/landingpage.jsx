@@ -5,7 +5,7 @@ import { FaRocket, FaStar, FaChevronDown, FaChevronUp, FaQuoteLeft, FaArrowRight
 import { HiSparkles, HiLightningBolt, HiChip } from 'react-icons/hi';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import DashboardImage from '/Locsafe-Dashboard.png';
+import DashboardImage from '/LocsafeDashboard2.png';
 import Microsoft from '../assets/microsoft.svg';
 import AWSLogo from '../assets/awws.svg';
 import Header from '../components/header.jsx';
@@ -211,7 +211,6 @@ const LandingPage = () => {
         toastClassName="rounded-lg shadow-elevation-3"
       />
 
-      {/* Material Design Background Pattern */}
       <div className="fixed inset-0 z-0 opacity-30 dark:opacity-10">
         <div className="absolute inset-0" style={{
           backgroundImage: `radial-gradient(circle at 25% 25%, var(--md-primary) 0%, transparent 50%),
@@ -220,7 +219,6 @@ const LandingPage = () => {
         }} />
       </div>
 
-      {/* Progress Bar with Material Design */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 z-50 origin-left shadow-elevation-2"
         style={{ scaleX: scrollYProgress }}
@@ -229,7 +227,6 @@ const LandingPage = () => {
       <div className="relative z-10">
         <Header />
         
-        {/* Hero Section with Material Design */}
         <motion.section
           style={{ y: heroY, opacity: heroOpacity }}
           className="container mx-auto px-6 pt-32 pb-24 relative"
@@ -238,9 +235,9 @@ const LandingPage = () => {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center"
+            className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center"
           >
-            <div className="space-y-8">
+            <div className="space-y-6 lg:space-y-8">
               <motion.div
                 variants={itemVariants}
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-secondary-50 to-primary-50 dark:from-secondary-900/20 dark:to-primary-900/20 rounded-full shadow-elevation-2 border border-secondary-200 dark:border-secondary-800"
@@ -270,8 +267,8 @@ const LandingPage = () => {
                 Harness the power of blockchain and AI to create unprecedented transparency, security, and efficiency in your global supply chain operations.
               </motion.p>
               
-              <motion.div variants={itemVariants} className="space-y-6">
-                <div className="flex flex-wrap gap-3">
+              <motion.div variants={itemVariants} className="space-y-4 lg:space-y-6">
+                <div className="flex flex-wrap gap-2 lg:gap-3">
                   {[
                     { icon: 'security', text: "Bank-Grade Security", isMaterial: true },
                     { Component: HiLightningBolt, text: "Real-Time Tracking", isMaterial: false },
@@ -292,7 +289,7 @@ const LandingPage = () => {
                   ))}
                 </div>
 
-                <div className="flex flex-wrap items-center gap-4">
+                <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 lg:gap-4">
                   <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                     <Link
                       to="/register"
@@ -361,47 +358,464 @@ const LandingPage = () => {
 
             <motion.div
               variants={itemVariants}
-              className="relative"
+              className="relative order-first lg:order-last"
             >
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className="relative"
-              >
-                <div className="absolute -inset-4 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-3xl blur-2xl" />
-                <img
-                  className="w-full relative z-10 rounded-2xl shadow-elevation-5"
-                  src={DashboardImage}
-                  alt="Locsafe Supply Chain Dashboard"
-                />
-                {/* Material Design Floating Action Cards */}
-                <motion.div
-                  animate={{ y: [0, -20, 0] }}
-                  transition={{ repeat: Infinity, duration: 3 }}
-                  className="absolute top-8 right-8 px-5 py-3 bg-surface-light/95 dark:bg-surface-elevated-dark/95 backdrop-blur-md rounded-xl shadow-elevation-3"
+              {/* Modern SVG Graphic - Supply Chain Network Visualization */}
+              <div className="relative">
+                <svg
+                  viewBox="0 0 600 500"
+                  className="w-full h-auto"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style={{ filter: 'drop-shadow(0 20px 40px rgba(0, 0, 0, 0.1))' }}
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-success-500 rounded-full animate-pulse shadow-elevation-1"></div>
-                    <span className="font-medium">Live Tracking</span>
-                  </div>
-                </motion.div>
+                  <defs>
+                    {/* Enhanced gradients */}
+                    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.8" />
+                      <stop offset="100%" stopColor="#2563EB" stopOpacity="1" />
+                    </linearGradient>
+                    
+                    <linearGradient id="successGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#10B981" stopOpacity="0.8" />
+                      <stop offset="100%" stopColor="#059669" stopOpacity="1" />
+                    </linearGradient>
+                    
+                    <linearGradient id="secondaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#8B5CF6" stopOpacity="0.8" />
+                      <stop offset="100%" stopColor="#7C3AED" stopOpacity="1" />
+                    </linearGradient>
+                    
+                    <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.3" />
+                      <stop offset="100%" stopColor="#3B82F6" stopOpacity="0" />
+                    </radialGradient>
+                    
+                    {/* Enhanced filters */}
+                    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+                      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                      <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                    
+                    <filter id="nodeDropShadow" x="-50%" y="-50%" width="200%" height="200%">
+                      <feDropShadow dx="0" dy="4" stdDeviation="6" floodOpacity="0.15"/>
+                    </filter>
+                  </defs>
+                  
+                  {/* Background subtle pattern */}
+                  <pattern id="dotPattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+                    <circle cx="25" cy="25" r="1" fill="currentColor" className="text-primary-200 dark:text-primary-800" opacity="0.3" />
+                  </pattern>
+                  <rect width="600" height="500" fill="url(#dotPattern)" opacity="0.5" />
+                  
+                  {/* Animated background glow */}
+                  <motion.circle
+                    cx="300" cy="250"
+                    r="200"
+                    fill="url(#glowGradient)"
+                    initial={{ r: 150, opacity: 0 }}
+                    animate={{
+                      r: [150, 250, 150],
+                      opacity: [0.3, 0.5, 0.3]
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                  
+                  {/* Network connections */}
+                  <g opacity="0.6">
+                    {/* Animated flow paths */}
+                    <motion.path
+                      d="M 100 250 Q 300 150, 500 250"
+                      stroke="url(#primaryGradient)"
+                      strokeWidth="3"
+                      fill="none"
+                      strokeDasharray="10,5"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{
+                        pathLength: 1,
+                        opacity: [0.3, 0.7, 0.3]
+                      }}
+                      transition={{
+                        pathLength: { duration: 3, repeat: Infinity, ease: "linear" },
+                        opacity: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                      }}
+                    />
+                    
+                    <motion.path
+                      d="M 100 250 Q 300 350, 500 250"
+                      stroke="url(#successGradient)"
+                      strokeWidth="3"
+                      fill="none"
+                      strokeDasharray="10,5"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{
+                        pathLength: 1,
+                        opacity: [0.3, 0.7, 0.3]
+                      }}
+                      transition={{
+                        pathLength: { duration: 3.5, repeat: Infinity, ease: "linear", delay: 0.5 },
+                        opacity: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }
+                      }}
+                    />
+                    
+                    {/* Central connections */}
+                    <motion.line
+                      x1="300" y1="100" x2="300" y2="400"
+                      stroke="url(#secondaryGradient)"
+                      strokeWidth="2"
+                      strokeDasharray="5,10"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: [0.2, 0.5, 0.2] }}
+                      transition={{ duration: 3, repeat: Infinity, delay: 1 }}
+                    />
+                  </g>
+                  
+                  {/* Main nodes */}
+                  <g filter="url(#nodeDropShadow)">
+                    {/* Source Node - Factory */}
+                    <motion.g
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                    >
+                      <motion.circle
+                        cx="100" cy="250" r="45"
+                        fill="url(#primaryGradient)"
+                        filter="url(#softGlow)"
+                        animate={{
+                          scale: [1, 1.05, 1],
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                      />
+                      <circle cx="100" cy="250" r="38" fill="white" opacity="0.2" />
+                      <foreignObject x="70" y="220" width="60" height="60">
+                        <div className="flex items-center justify-center w-full h-full">
+                          <span className="material-icons text-white text-3xl drop-shadow-lg">precision_manufacturing</span>
+                        </div>
+                      </foreignObject>
+                    </motion.g>
+                    
+                    {/* Central Hub - Processing */}
+                    <motion.g
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.4, type: "spring", stiffness: 200 }}
+                    >
+                      <motion.circle
+                        cx="300" cy="250" r="55"
+                        fill="url(#successGradient)"
+                        filter="url(#softGlow)"
+                        animate={{
+                          scale: [1, 1.05, 1],
+                          rotate: [0, 360]
+                        }}
+                        transition={{
+                          scale: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 },
+                          rotate: { duration: 20, repeat: Infinity, ease: "linear" }
+                        }}
+                      />
+                      <circle cx="300" cy="250" r="48" fill="white" opacity="0.2" />
+                      <foreignObject x="265" y="215" width="70" height="70">
+                        <div className="flex items-center justify-center w-full h-full">
+                          <span className="material-icons text-white text-4xl drop-shadow-lg">hub</span>
+                        </div>
+                      </foreignObject>
+                    </motion.g>
+                    
+                    {/* Destination Node - Delivery */}
+                    <motion.g
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.6, type: "spring", stiffness: 200 }}
+                    >
+                      <motion.circle
+                        cx="500" cy="250" r="45"
+                        fill="url(#secondaryGradient)"
+                        filter="url(#softGlow)"
+                        animate={{
+                          scale: [1, 1.05, 1],
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: 1
+                        }}
+                      />
+                      <circle cx="500" cy="250" r="38" fill="white" opacity="0.2" />
+                      <foreignObject x="470" y="220" width="60" height="60">
+                        <div className="flex items-center justify-center w-full h-full">
+                          <span className="material-icons text-white text-3xl drop-shadow-lg">storefront</span>
+                        </div>
+                      </foreignObject>
+                    </motion.g>
+                    
+                    {/* Satellite features */}
+                    <motion.g
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.8, type: "spring" }}
+                    >
+                      <circle cx="300" cy="100" r="35" fill="#F59E0B" opacity="0.8" filter="url(#softGlow)" />
+                      <foreignObject x="275" y="75" width="50" height="50">
+                        <div className="flex items-center justify-center w-full h-full">
+                          <span className="material-icons text-white text-2xl">local_shipping</span>
+                        </div>
+                      </foreignObject>
+                    </motion.g>
+                    
+                    <motion.g
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 1, type: "spring" }}
+                    >
+                      <circle cx="300" cy="400" r="35" fill="#EF4444" opacity="0.8" filter="url(#softGlow)" />
+                      <foreignObject x="275" y="375" width="50" height="50">
+                        <div className="flex items-center justify-center w-full h-full">
+                          <span className="material-icons text-white text-2xl">analytics</span>
+                        </div>
+                      </foreignObject>
+                    </motion.g>
+                  </g>
+                  
+                  {/* Data flow particles */}
+                  <motion.circle
+                    r="6"
+                    fill="#3B82F6"
+                    filter="url(#softGlow)"
+                    animate={{
+                      x: [100, 300, 500, 300, 100],
+                      y: [250, 150, 250, 350, 250]
+                    }}
+                    transition={{
+                      duration: 6,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    <animate attributeName="opacity" values="0;1;1;1;0" dur="6s" repeatCount="indefinite" />
+                  </motion.circle>
+                  
+                  <motion.circle
+                    r="6"
+                    fill="#10B981"
+                    filter="url(#softGlow)"
+                    animate={{
+                      x: [100, 300, 500],
+                      y: [250, 350, 250]
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 1
+                    }}
+                  >
+                    <animate attributeName="opacity" values="0;1;1;1;0" dur="4s" repeatCount="indefinite" begin="1s" />
+                  </motion.circle>
+                  
+                  <motion.circle
+                    r="6"
+                    fill="#8B5CF6"
+                    filter="url(#softGlow)"
+                    animate={{
+                      x: [500, 300, 100],
+                      y: [250, 100, 250]
+                    }}
+                    transition={{
+                      duration: 5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 2
+                    }}
+                  >
+                    <animate attributeName="opacity" values="0;1;1;1;0" dur="5s" repeatCount="indefinite" begin="2s" />
+                  </motion.circle>
+                  
+                  {/* Connection indicators */}
+                  <g>
+                    {[
+                      { cx: 200, cy: 200 },
+                      { cx: 400, cy: 200 },
+                      { cx: 200, cy: 300 },
+                      { cx: 400, cy: 300 }
+                    ].map((pos, index) => (
+                      <motion.circle
+                        key={index}
+                        cx={pos.cx}
+                        cy={pos.cy}
+                        r="10"
+                        fill="#06B6D4"
+                        opacity="0.6"
+                        filter="url(#softGlow)"
+                        animate={{
+                          scale: [0.8, 1.2, 0.8],
+                          opacity: [0.4, 0.8, 0.4]
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          delay: index * 0.3
+                        }}
+                      />
+                    ))}
+                  </g>
+                </svg>
+                
+                {/* Floating labels */}
                 <motion.div
-                  animate={{ y: [0, 20, 0] }}
-                  transition={{ repeat: Infinity, duration: 4, delay: 1 }}
-                  className="absolute bottom-8 left-8 px-5 py-3 bg-surface-light/95 dark:bg-surface-elevated-dark/95 backdrop-blur-md rounded-xl shadow-elevation-3"
+                  className="absolute top-0 left-0 px-3 py-1 bg-primary-500/10 backdrop-blur-sm rounded-full border border-primary-500/20"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.2 }}
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="material-icons text-secondary-500">deployed_code</span>
-                    <span className="font-medium">Blockchain Secured</span>
-                  </div>
+                  <span className="text-xs font-medium text-primary-700 dark:text-primary-300">Real-time Tracking</span>
                 </motion.div>
-              </motion.div>
+                
+                <motion.div
+                  className="absolute bottom-0 right-0 px-3 py-1 bg-secondary-500/10 backdrop-blur-sm rounded-full border border-secondary-500/20"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.4 }}
+                >
+                  <span className="text-xs font-medium text-secondary-700 dark:text-secondary-300">AI Powered</span>
+                </motion.div>
+              </div>
             </motion.div>
           </motion.div>
         </motion.section>
 
-        {/* Stats Section with Material Design Cards */}
-        <section className="py-24 bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-900/10 dark:to-secondary-900/10 relative overflow-hidden">
+        {/* Dashboard Showcase Section */}
+        <section className="py-16 lg:py-24 bg-gradient-to-b from-background-light to-surface-light dark:from-background-dark dark:to-surface-dark relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10 dark:opacity-5">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+              backgroundSize: '60px 60px'
+            }} />
+          </div>
+          
+          <div className="container mx-auto px-6 relative">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="max-w-6xl mx-auto"
+            >
+              {/* Section Header */}
+              <div className="text-center mb-16">
+                <motion.span
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary-100 to-secondary-100 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-full shadow-elevation-2 mb-6"
+                >
+                  <span className="material-icons text-primary-600 dark:text-primary-400">dashboard</span>
+                  <span className="text-primary-700 dark:text-primary-400 font-medium">Powerful Dashboard</span>
+                </motion.span>
+                
+                <h2 className="headline-3 font-heading mb-6">
+                  See Everything at a
+                  <span className="bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent"> Glance</span>
+                </h2>
+                <p className="body-1 text-on-surface-light-medium dark:text-on-surface-dark-medium max-w-3xl mx-auto">
+                  Our intuitive dashboard provides real-time insights into your entire supply chain, helping you make data-driven decisions instantly.
+                </p>
+              </div>
+              
+              {/* Large Dashboard Image */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, type: "spring" }}
+                className="relative group"
+              >
+                {/* Background glow effect */}
+                <div className="absolute -inset-4 bg-gradient-to-r from-primary-500/20 via-secondary-500/20 to-primary-500/20 rounded-3xl blur-3xl opacity-75 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Main image container */}
+                <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl border border-primary-200/20 dark:border-primary-800/20">
+                  <img
+                    className="w-full h-auto"
+                    src={DashboardImage}
+                    alt="Locsafe Dashboard - Complete Supply Chain Visibility"
+                    loading="eager"
+                  />
+                  
+                  {/* Hover overlay with features */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    whileHover={{ opacity: 1 }}
+                    className="absolute inset-0 bg-gradient-to-t from-primary-900/90 via-primary-900/50 to-transparent flex items-end p-8 lg:p-12 pointer-events-none"
+                  >
+                    <div className="text-white">
+                      <h3 className="headline-5 mb-3">Key Features</h3>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        {[
+                          "Real-time Tracking",
+                          "AI Analytics",
+                          "Route Optimization",
+                          "Inventory Management",
+                          "Alert System",
+                          "Performance Metrics"
+                        ].map((feature, index) => (
+                          <motion.div
+                            key={index}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1 }}
+                            className="flex items-center gap-2"
+                          >
+                            <span className="material-icons text-sm text-secondary-300">check_circle</span>
+                            <span className="text-sm">{feature}</span>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+                
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20"
+              >
+                {[
+                  { icon: "speed", label: "Lightning Fast", value: "< 100ms" },
+                  { icon: "security", label: "Secure", value: "256-bit SSL" },
+                  { icon: "devices", label: "Responsive", value: "All Devices" },
+                  { icon: "update", label: "Real-time", value: "Live Updates" }
+                ].map((item, index) => (
+                  <motion.div
+                    key={index}
+                    whileHover={{ y: -5 }}
+                    className="text-center p-4 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-1 hover:shadow-elevation-3 transition-all duration-300"
+                  >
+                    <span className="material-icons text-3xl text-primary-500 mb-2">{item.icon}</span>
+                    <p className="font-semibold text-sm mb-1">{item.label}</p>
+                    <p className="text-xs text-on-surface-light-medium dark:text-on-surface-dark-medium">{item.value}</p>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        <section className="py-16 lg:py-24 bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-900/10 dark:to-secondary-900/10 relative overflow-hidden">
           <div className="container mx-auto px-6 relative">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
               {stats.map((stat, index) => (
@@ -429,8 +843,7 @@ const LandingPage = () => {
           </div>
         </section>
 
-        {/* Partners Section with Material Design */}
-        <section className="py-24 bg-surface-light dark:bg-surface-dark">
+        <section className="py-16 lg:py-24 bg-surface-light dark:bg-surface-dark">
           <div className="container mx-auto px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -455,7 +868,6 @@ const LandingPage = () => {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="grid grid-cols-2 md:grid-cols-4 gap-6 items-center"
               >
-                {/* Partner Logo Cards with Material Design */}
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   className="flex items-center justify-center p-8 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-1 hover:shadow-elevation-3 transition-all duration-300"
@@ -523,7 +935,7 @@ const LandingPage = () => {
         </section>
 
         {/* Features Section with Material Design Cards */}
-        <section className="py-24 relative bg-background-light dark:bg-background-dark">
+        <section className="py-16 lg:py-24 bg-background-light dark:bg-background-dark relative">
           <div className="container mx-auto px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -585,7 +997,7 @@ const LandingPage = () => {
         </section>
 
         {/* Digital Product Passport Section with Material Design */}
-        <section className="py-24 relative bg-gradient-to-br from-primary-900 to-secondary-900 overflow-hidden">
+        <section className="py-16 lg:py-24 relative bg-gradient-to-br from-primary-900 to-secondary-900 overflow-hidden">
           {/* Material Design Background Pattern */}
           <div className="absolute inset-0 opacity-20">
             <div className="absolute inset-0" style={{
@@ -822,7 +1234,7 @@ const LandingPage = () => {
         </section>
 
         {/* Testimonials Carousel with Material Design */}
-        <section className="py-24 bg-gradient-to-br from-surface-light to-primary-50 dark:from-surface-dark dark:to-primary-900/10">
+        <section className="py-16 lg:py-24 bg-gradient-to-br from-surface-light to-primary-50 dark:from-surface-dark dark:to-primary-900/10">
           <div className="container mx-auto px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -909,7 +1321,7 @@ const LandingPage = () => {
         </section>
 
         {/* FAQ Section with Material Design */}
-        <section className="py-24 bg-background-light dark:bg-background-dark">
+        <section className="py-16 lg:py-24 bg-background-light dark:bg-background-dark">
           <div className="container mx-auto px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -985,7 +1397,7 @@ const LandingPage = () => {
         </section>
 
         {/* CTA Section with Material Design */}
-        <section className="py-24 relative overflow-hidden bg-gradient-to-r from-primary-600 via-primary-700 to-secondary-600">
+        <section className="py-16 lg:py-24 relative overflow-hidden bg-gradient-to-r from-primary-600 via-primary-700 to-secondary-600">
           <div className="absolute inset-0 bg-black/10"></div>
           
           {/* Animated background elements */}
