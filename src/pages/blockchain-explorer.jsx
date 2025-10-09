@@ -4,7 +4,7 @@ import { useNavigation } from '../contexts/navigationContext';
 import Sidebar from "../components/sidebar";
 import { IoMenu, IoSearch, IoCopyOutline } from 'react-icons/io5';
 import { FaEthereum, FaBitcoin, FaExternalLinkAlt } from 'react-icons/fa';
-import { SiBinance, SiPolkadot, SiCardano, SiSolana } from 'react-icons/si';
+import { SiBinance, SiPolkadot, SiCardano } from 'react-icons/si';
 import { MdVerified, MdAccessTime, MdSpeed } from 'react-icons/md';
 import { HiCube } from 'react-icons/hi';
 
@@ -103,7 +103,7 @@ const BlockchainExplorer = () => {
       id: 'solana',
       name: 'Solana',
       symbol: 'SOL',
-      icon: SiSolana,
+      icon: '⚡',
       color: '#14F195',
       explorer: 'https://solscan.io',
       description: 'Ultra-fast blockchain',
