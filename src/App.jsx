@@ -15,6 +15,9 @@ import ProtectedRoute from './components/protectedRoute.jsx'
 import SignInForm from './components/signin.jsx'
 import GeofenceMap from './components/geofence.jsx'
 import Dashboard from './pages/dashboard.jsx'
+import Geofence from './pages/geofence.jsx'
+import NewShipment from './pages/new-shipment.jsx'
+import BlockchainExplorer from './pages/blockchain-explorer.jsx'
 import Assets from './components/assets.jsx'
 import BlogArticle from './components/blog.jsx'
 //import UpdateProfilePage from './components/userProfile.jsx';
@@ -77,7 +80,10 @@ const App = () => {
               <Route path='/users/update' element={<UserList />} />
               <Route path='/user/signin' element={<SignInForm />} />
               <Route path='/dispatchers/register' element={<DispatcherReg />} />
-              <Route path='/geofence' element={<GeofenceMap />} />
+              <Route path='/geofence-old' element={<GeofenceMap />} />
+              <Route path='/geofence' element={<Geofence />} />
+              <Route path='/new-shipment' element={<NewShipment />} />
+              <Route path='/blockchain-explorer' element={<BlockchainExplorer />} />
               {/*<Route path="/user/profile" element={<UpdateProfilePage username={username} setUsername={setUsername} />} />*/}
               <Route path='/assets' element={<Assets />} />
               <Route path="/user/dashboard" element={<UserDashboard/>} />
