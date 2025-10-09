@@ -510,7 +510,7 @@ const PrivacyPolicy = () => {
                       <div className="space-y-2 text-sm">
                         <p className="flex items-center gap-2">
                           <FaEnvelope className="text-white/80" />
-                          privacy@locsafe.com
+                          privacy@locsafe.org
                         </p>
                         <p className="flex items-center gap-2">
                           <FaPhone className="text-white/80" />
@@ -527,7 +527,7 @@ const PrivacyPolicy = () => {
                       <div className="space-y-2 text-sm">
                         <p className="flex items-center gap-2">
                           <FaUserShield className="text-white/80" />
-                          DPO@locsafe.com
+                          DPO@locsafe.org
                         </p>
                         <p className="flex items-center gap-2">
                           <HiOutlineBadgeCheck className="text-white/80" />
@@ -535,7 +535,7 @@ const PrivacyPolicy = () => {
                         </p>
                         <p className="flex items-center gap-2">
                           <FaGlobe className="text-white/80" />
-                          www.locsafe.com/privacy
+                          www.locsafe.org/privacy
                         </p>
                       </div>
                     </div>

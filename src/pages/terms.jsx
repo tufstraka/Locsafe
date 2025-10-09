@@ -512,7 +512,7 @@ const TermsOfService = () => {
                       <div className="space-y-2 text-sm">
                         <p className="flex items-center gap-2">
                           <FaEnvelope className="text-white/80" />
-                          legal@locsafe.com
+                          legal@locsafe.org
                         </p>
                         <p className="flex items-center gap-2">
                           <FaPhone className="text-white/80" />
@@ -529,7 +529,7 @@ const TermsOfService = () => {
                       <div className="space-y-2 text-sm">
                         <p className="flex items-center gap-2">
                           <FaEnvelope className="text-white/80" />
-                          support@locsafe.com
+                          support@locsafe.org
                         </p>
                         <p className="flex items-center gap-2">
                           <FaHandshake className="text-white/80" />
@@ -537,7 +537,7 @@ const TermsOfService = () => {
                         </p>
                         <p className="flex items-center gap-2">
                           <HiOutlineGlobe className="text-white/80" />
-                          www.locsafe.com
+                          www.locsafe.org
                         </p>
                       </div>
                     </div>

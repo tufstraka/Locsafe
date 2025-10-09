@@ -109,8 +109,8 @@ const ContactUs = () => {
       icon: HiOutlineMail,
       title: "Email Us",
       description: "Get a response within 24 hours",
-      contact: "support@locsafe.com",
-      link: "mailto:support@locsafe.com",
+      contact: "support@locsafe.org",
+      link: "mailto:support@locsafe.org",
       color: "from-blue-500 to-cyan-500"
     },
     {
@@ -152,7 +152,7 @@ const ContactUs = () => {
       country: "Kenya",
       address: "Westlands, Nairobi",
       phone: "+254 700 000 000",
-      email: "nairobi@locsafe.com",
+      email: "nairobi@locsafe.org",
       isHeadquarters: true
     },
     {
@@ -160,7 +160,7 @@ const ContactUs = () => {
       country: "Kenya",
       address: "Nyali, Mombasa",
       phone: "+254 700 000 001",
-      email: "mombasa@locsafe.com",
+      email: "mombasa@locsafe.org",
       isHeadquarters: false
     },
     {
@@ -168,7 +168,7 @@ const ContactUs = () => {
       country: "Uganda",
       address: "Kololo, Kampala",
       phone: "+256 700 000 000",
-      email: "kampala@locsafe.com",
+      email: "kampala@locsafe.org",
       isHeadquarters: false
     }
   ];
