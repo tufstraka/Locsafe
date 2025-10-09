@@ -455,13 +455,13 @@ const Dashboard = () => {
 
       <div className='flex flex-col flex-grow'>
         {/* Enhanced Material Design Header */}
-        <motion.header 
+        <motion.header
           initial={{ y: -100 }}
           animate={{ y: 0 }}
-          className='flex items-center justify-between px-6 py-4 bg-surface-light/95 dark:bg-surface-elevated-dark/95 backdrop-blur-xl shadow-elevation-1 dark:shadow-elevation-dark-1 sticky top-0 z-20'
+          className='flex items-center justify-between px-4 sm:px-6 py-4 bg-surface-light/95 dark:bg-surface-elevated-dark/95 backdrop-blur-xl shadow-elevation-1 dark:shadow-elevation-dark-1 sticky top-0 z-20'
         >
           <div className='flex items-center gap-4'>
-            <motion.button 
+            <motion.button
               onClick={toggleNav}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -473,22 +473,35 @@ const Dashboard = () => {
               </span>
             </motion.button>
 
-            {/* Search Bar with Material Design */}
-            <div className='hidden md:flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full'>
+            {/* Search Bar with Material Design - Hidden on mobile */}
+            <div className='hidden lg:flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full'>
               <span className="material-icons text-gray-400">search</span>
               <input
                 type='text'
                 placeholder='Search shipments, customers...'
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className='bg-transparent outline-none text-sm w-64 text-gray-700 dark:text-gray-300'
+                className='bg-transparent outline-none text-sm w-48 xl:w-64 text-gray-700 dark:text-gray-300'
               />
               <kbd className='px-2 py-0.5 text-xs bg-white dark:bg-gray-700 rounded-md caption'>⌘K</kbd>
             </div>
           </div>
 
-          <div className='flex items-center gap-4'>
-            {/* Period Selector with Material Design */}
+          <div className='flex items-center gap-2 sm:gap-4'>
+            {/* Mobile Period Selector */}
+            <div className='lg:hidden'>
+              <select
+                value={selectedPeriod}
+                onChange={(e) => setSelectedPeriod(e.target.value)}
+                className='px-3 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm outline-none'
+              >
+                <option value="today">Today</option>
+                <option value="week">Week</option>
+                <option value="month">Month</option>
+              </select>
+            </div>
+
+            {/* Desktop Period Selector with Material Design */}
             <div className='hidden lg:flex items-center gap-1 p-1 bg-gray-100 dark:bg-gray-800 rounded-full'>
               {['Today', 'Week', 'Month'].map((period) => (
                 <button
@@ -517,7 +530,7 @@ const Dashboard = () => {
                 className='relative p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-all ripple'
                 aria-label='Notifications'
               >
-                <span className="material-icons-outlined text-2xl">notifications</span>
+                <span className="material-icons-outlined text-xl sm:text-2xl">notifications</span>
                 <span className='absolute top-1 right-1 w-2 h-2 bg-error-500 rounded-full animate-pulse'></span>
               </motion.button>
 
@@ -633,19 +646,19 @@ const Dashboard = () => {
 
         {/* Main Content with Material Design Grid */}
         <div className='flex-grow overflow-y-auto'>
-          <motion.div 
+          <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className='p-6 space-y-6'
+            className='p-4 sm:p-6 space-y-4 sm:space-y-6'
           >
             {/* Welcome Section with Material Typography */}
-            <motion.div variants={itemVariants} className='flex justify-between items-center'>
+            <motion.div variants={itemVariants} className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4'>
               <div>
-                <h1 className='headline-4 text-on-surface-light dark:text-on-surface-dark'>
+                <h1 className='headline-5 sm:headline-4 text-on-surface-light dark:text-on-surface-dark'>
                   Welcome back, {user ? user.displayName || 'Admin' : 'Guest'} 👋
                 </h1>
-                <p className='body-1 text-on-surface-light-medium dark:text-on-surface-dark-medium mt-1'>
+                <p className='body-2 sm:body-1 text-on-surface-light-medium dark:text-on-surface-dark-medium mt-1'>
                   Here&apos;s what&apos;s happening with your supply chain today
                 </p>
               </div>
@@ -653,7 +666,7 @@ const Dashboard = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => navigate('/dpp-generator')}
-                className='hidden lg:flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-600 to-secondary-500 text-white rounded-full font-medium shadow-elevation-3 hover:shadow-elevation-4 transition-all md-button'
+                className='flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-primary-600 to-secondary-500 text-white rounded-full font-medium shadow-elevation-3 hover:shadow-elevation-4 transition-all md-button text-sm sm:text-base'
               >
                 <FaQrcode />
                 <span className="button-text">Generate DPP</span>
@@ -661,9 +674,9 @@ const Dashboard = () => {
             </motion.div>
 
             {/* Key Metrics Cards with Material Design */}
-            <motion.div 
+            <motion.div
               variants={itemVariants}
-              className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'
+              className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6'
             >
               {stats.map((stat, index) => (
                 <MaterialCard key={index} elevation={2} className="p-6">
@@ -741,7 +754,7 @@ const Dashboard = () => {
             </motion.div>
 
             {/* Charts Section with Supply Chain Flow */}
-            <motion.div variants={itemVariants} className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
+            <motion.div variants={itemVariants} className='grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6'>
               {/* Performance Chart */}
               <MaterialCard elevation={2} className='lg:col-span-2 p-6'>
                 <div className='flex items-center justify-between mb-6'>
@@ -791,7 +804,7 @@ const Dashboard = () => {
             </motion.div>
 
             {/* Team Performance Section - New Comprehensive Section */}
-            <motion.div variants={itemVariants} className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+            <motion.div variants={itemVariants} className='grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6'>
               {/* Team Performance Radar */}
               <MaterialCard elevation={2} className='p-6'>
                 <h2 className='headline-6 text-on-surface-light dark:text-on-surface-dark mb-4'>
@@ -878,11 +891,11 @@ const Dashboard = () => {
             </motion.div>
 
             {/* Quick Actions & Recent Alerts */}
-            <motion.div variants={itemVariants} className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+            <motion.div variants={itemVariants} className='grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6'>
               {/* Quick Actions */}
               <MaterialCard elevation={2} className='p-6'>
                 <h2 className='headline-6 text-on-surface-light dark:text-on-surface-dark mb-4'>Quick Actions</h2>
-                <div className='grid grid-cols-2 gap-3'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 gap-3'>
                   {[
                     { icon: FaTruck, label: 'New Shipment', color: 'from-teal-500 to-green-500' },
                     { icon: FaQrcode, label: 'Scan QR', color: 'from-blue-500 to-cyan-500' },
@@ -975,7 +988,7 @@ const Dashboard = () => {
             </motion.div>
 
             {/* Map and Blockchain Ledger */}
-            <motion.div variants={itemVariants} className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+            <motion.div variants={itemVariants} className='grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6'>
               {/* Map Section with Fullscreen */}
               <MaterialCard elevation={2} className='p-6'>
                 <div className='flex items-center justify-between mb-4'>

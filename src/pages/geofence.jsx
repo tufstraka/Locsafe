@@ -161,52 +161,84 @@ const Geofence = () => {
 
       <div className="flex flex-col flex-grow">
         {/* Header */}
-        <motion.header 
+        <motion.header
           initial={{ y: -100 }}
           animate={{ y: 0 }}
-          className="flex items-center justify-between px-6 py-4 bg-surface-light/95 dark:bg-surface-elevated-dark/95 backdrop-blur-xl shadow-elevation-1 dark:shadow-elevation-dark-1 sticky top-0 z-20"
+          className="flex items-center justify-between px-4 sm:px-6 py-4 bg-surface-light/95 dark:bg-surface-elevated-dark/95 backdrop-blur-xl shadow-elevation-1 dark:shadow-elevation-dark-1 sticky top-0 z-20"
         >
-          <div className="flex items-center gap-4">
-            <motion.button 
+          <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+            <motion.button
               onClick={toggleNav}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="p-2 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-all duration-200"
+              className="p-2 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-all duration-200 flex-shrink-0"
               aria-label="Toggle navigation"
             >
-              <IoMenu className="text-2xl text-on-surface-light dark:text-on-surface-dark" />
+              <IoMenu className="text-xl sm:text-2xl text-on-surface-light dark:text-on-surface-dark" />
             </motion.button>
             
-            <div>
-              <h1 className="headline-5 text-on-surface-light dark:text-on-surface-dark flex items-center gap-2">
-                <IoLocationSharp className="text-primary-500" />
-                Geofence Management
+            <div className="min-w-0 flex-1">
+              <h1 className="text-lg sm:text-xl md:text-2xl font-semibold text-on-surface-light dark:text-on-surface-dark flex items-center gap-2 truncate">
+                <IoLocationSharp className="text-primary-500 flex-shrink-0" />
+                <span className="hidden sm:inline">Geofence Management</span>
+                <span className="sm:hidden">Geofence</span>
               </h1>
-              <p className="caption text-on-surface-light-medium dark:text-on-surface-dark-medium">
-                Define and monitor geographical boundaries for your fleet
+              <p className="text-xs sm:text-sm text-on-surface-light-medium dark:text-on-surface-dark-medium truncate">
+                <span className="hidden md:inline">Define and monitor geographical boundaries for your fleet</span>
+                <span className="md:hidden">Manage geo boundaries</span>
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleCreateZone}
-              className="px-4 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-lg shadow-elevation-2 hover:shadow-elevation-3 transition-all flex items-center gap-2"
+              className="px-3 sm:px-4 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-lg shadow-elevation-2 hover:shadow-elevation-3 transition-all flex items-center gap-2"
             >
-              <IoAdd className="text-xl" />
-              <span className="hidden md:inline">Create Zone</span>
+              <IoAdd className="text-lg sm:text-xl" />
+              <span className="hidden sm:inline">Create Zone</span>
+              <span className="sm:hidden text-sm">Create</span>
             </motion.button>
           </div>
         </motion.header>
 
         <div className="flex-1 overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-3 h-full">
+          <div className="flex flex-col lg:grid lg:grid-cols-3 h-full">
+            {/* Mobile: Collapsible Stats Bar */}
+            <div className="lg:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 p-3">
+              <div className="grid grid-cols-4 gap-2">
+                {stats.map((stat, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="bg-gray-50 dark:bg-gray-800 rounded-lg p-2 text-center"
+                  >
+                    <div className="flex flex-col items-center">
+                      {typeof stat.icon === 'string' ? (
+                        <span className="text-lg">{stat.icon}</span>
+                      ) : (
+                        <stat.icon className={`text-lg ${stat.color}`} />
+                      )}
+                      <span className={`text-lg font-bold ${stat.color}`}>
+                        {stat.value}
+                      </span>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 truncate w-full">
+                        {stat.label}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
             {/* Left Panel - Geofence List */}
-            <div className="lg:col-span-1 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
-              {/* Stats */}
-              <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+            <div className="lg:col-span-1 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 overflow-y-auto max-h-96 lg:max-h-none">
+              {/* Desktop Stats */}
+              <div className="hidden lg:block p-4 border-b border-gray-200 dark:border-gray-700">
                 <div className="grid grid-cols-2 gap-3">
                   {stats.map((stat, index) => (
                     <motion.div
@@ -226,7 +258,7 @@ const Geofence = () => {
                           {stat.value}
                         </span>
                       </div>
-                      <p className="caption text-gray-600 dark:text-gray-400">{stat.label}</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">{stat.label}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -238,7 +270,7 @@ const Geofence = () => {
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
-                    className={`flex-1 px-4 py-3 text-sm font-medium capitalize transition-all ${
+                    className={`flex-1 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium capitalize transition-all ${
                       activeTab === tab
                         ? 'text-primary-600 dark:text-primary-400 border-b-2 border-primary-500'
                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
@@ -250,7 +282,7 @@ const Geofence = () => {
               </div>
 
               {/* Geofence List */}
-              <div className="p-4 space-y-3">
+              <div className="p-3 sm:p-4 space-y-2 sm:space-y-3">
                 {geofences
                   .filter(g => activeTab === 'all' || g.status === activeTab)
                   .map((geofence) => (
@@ -258,38 +290,38 @@ const Geofence = () => {
                       key={geofence.id}
                       whileHover={{ scale: 1.02 }}
                       onClick={() => setSelectedZone(geofence)}
-                      className={`p-4 rounded-xl cursor-pointer transition-all ${
+                      className={`p-3 sm:p-4 rounded-xl cursor-pointer transition-all ${
                         selectedZone?.id === geofence.id
                           ? 'bg-primary-50 dark:bg-primary-900/20 border-2 border-primary-500'
                           : 'bg-gray-50 dark:bg-gray-800 border-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600'
                       }`}
                     >
                       <div className="flex items-start justify-between mb-3">
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
                           <div
-                            className="w-3 h-3 rounded-full"
+                            className="w-3 h-3 rounded-full flex-shrink-0"
                             style={{ backgroundColor: geofence.color }}
                           />
-                          <div>
-                            <h3 className="subtitle-2 text-on-surface-light dark:text-on-surface-dark">
+                          <div className="min-w-0 flex-1">
+                            <h3 className="text-sm sm:text-base font-semibold text-on-surface-light dark:text-on-surface-dark truncate">
                               {geofence.name}
                             </h3>
                             <div className="flex items-center gap-2 mt-1">
-                              <span className={`px-2 py-0.5 text-xs rounded-full ${
+                              <span className={`px-1.5 sm:px-2 py-0.5 text-xs rounded-full ${
                                 geofence.status === 'active'
                                   ? 'bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400'
                                   : 'bg-gray-100 text-gray-700 dark:bg-gray-900/20 dark:text-gray-400'
                               }`}>
                                 {geofence.status}
                               </span>
-                              <span className="caption text-gray-500 dark:text-gray-400">
+                              <span className="text-xs text-gray-500 dark:text-gray-400">
                                 {geofence.type}
                               </span>
                             </div>
                           </div>
                         </div>
                         
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-1 flex-shrink-0 ml-2">
                           <motion.button
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
@@ -300,9 +332,9 @@ const Geofence = () => {
                             className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
                           >
                             {geofence.status === 'active' ? (
-                              <FaPause className="text-sm text-yellow-600 dark:text-yellow-400" />
+                              <FaPause className="text-xs sm:text-sm text-yellow-600 dark:text-yellow-400" />
                             ) : (
-                              <FaPlay className="text-sm text-green-600 dark:text-green-400" />
+                              <FaPlay className="text-xs sm:text-sm text-green-600 dark:text-green-400" />
                             )}
                           </motion.button>
                           <motion.button
@@ -313,7 +345,7 @@ const Geofence = () => {
                             }}
                             className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
                           >
-                            <FaEdit className="text-sm text-blue-600 dark:text-blue-400" />
+                            <FaEdit className="text-xs sm:text-sm text-blue-600 dark:text-blue-400" />
                           </motion.button>
                           <motion.button
                             whileHover={{ scale: 1.1 }}
@@ -324,28 +356,28 @@ const Geofence = () => {
                             }}
                             className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
                           >
-                            <FaTrash className="text-sm text-red-600 dark:text-red-400" />
+                            <FaTrash className="text-xs sm:text-sm text-red-600 dark:text-red-400" />
                           </motion.button>
                         </div>
                       </div>
 
                       <div className="grid grid-cols-3 gap-2 text-center">
                         <div>
-                          <p className="caption text-gray-500 dark:text-gray-400">Vehicles</p>
-                          <p className="subtitle-2">{geofence.vehicles}</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">Vehicles</p>
+                          <p className="text-sm font-semibold">{geofence.vehicles}</p>
                         </div>
                         <div>
-                          <p className="caption text-gray-500 dark:text-gray-400">Alerts</p>
-                          <p className="subtitle-2 text-yellow-600 dark:text-yellow-400">
+                          <p className="text-xs text-gray-500 dark:text-gray-400">Alerts</p>
+                          <p className="text-sm font-semibold text-yellow-600 dark:text-yellow-400">
                             {geofence.alerts}
                           </p>
                         </div>
                         <div>
-                          <p className="caption text-gray-500 dark:text-gray-400">
-                            {geofence.type === 'circular' ? 'Radius' : 
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
+                            {geofence.type === 'circular' ? 'Radius' :
                              geofence.type === 'route' ? 'Length' : 'Area'}
                           </p>
-                          <p className="subtitle-2">
+                          <p className="text-sm font-semibold truncate">
                             {geofence.radius || geofence.area || geofence.length}
                           </p>
                         </div>
@@ -353,12 +385,12 @@ const Geofence = () => {
 
                       {geofence.rules && (
                         <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
-                          <p className="caption text-gray-500 dark:text-gray-400 mb-2">Active Rules:</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">Active Rules:</p>
                           <div className="flex flex-wrap gap-1">
                             {geofence.rules.map((rule, idx) => (
                               <span
                                 key={idx}
-                                className="px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-xs rounded"
+                                className="px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-xs rounded truncate"
                               >
                                 {rule}
                               </span>
@@ -372,7 +404,7 @@ const Geofence = () => {
             </div>
 
             {/* Right Panel - Map & Details */}
-            <div className="lg:col-span-2 relative">
+            <div className="lg:col-span-2 relative flex-1">
               {/* Map */}
               <div className="absolute inset-0">
                 <GeofenceMap
@@ -385,18 +417,19 @@ const Geofence = () => {
               </div>
 
               {/* Overlay Controls */}
-              <div className="absolute top-4 left-4 right-4 flex justify-between items-start pointer-events-none">
+              <div className="absolute top-2 sm:top-4 left-2 sm:left-4 right-2 sm:right-4 flex justify-between items-start pointer-events-none">
                 {/* Zone Type Selector */}
                 {isCreatingZone && (
                   <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-white dark:bg-gray-900 rounded-xl shadow-elevation-3 p-4 pointer-events-auto"
+                    className="bg-white dark:bg-gray-900 rounded-xl shadow-elevation-3 p-3 sm:p-4 pointer-events-auto max-w-xs sm:max-w-none"
                   >
-                    <h3 className="subtitle-2 text-on-surface-light dark:text-on-surface-dark mb-3">
-                      Select Zone Type
+                    <h3 className="text-sm sm:text-base font-semibold text-on-surface-light dark:text-on-surface-dark mb-3">
+                      <span className="hidden sm:inline">Select Zone Type</span>
+                      <span className="sm:hidden">Zone Type</span>
                     </h3>
-                    <div className="flex gap-2">
+                    <div className="flex gap-1 sm:gap-2">
                       {[
                         { id: 'circular', icon: '⭕', label: 'Circle' },
                         { id: 'polygon', icon: '⬡', label: 'Polygon' },
@@ -407,23 +440,23 @@ const Geofence = () => {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => setZoneType(type.id)}
-                          className={`px-4 py-2 rounded-lg transition-all ${
+                          className={`px-2 sm:px-4 py-2 rounded-lg transition-all ${
                             zoneType === type.id
                               ? 'bg-primary-500 text-white'
                               : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                           }`}
                         >
-                          <div className="flex items-center gap-2">
-                            <span className="text-lg">{type.icon}</span>
-                            <span className="text-sm">{type.label}</span>
+                          <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
+                            <span className="text-base sm:text-lg">{type.icon}</span>
+                            <span className="text-xs sm:text-sm">{type.label}</span>
                           </div>
                         </motion.button>
                       ))}
                     </div>
-                    <div className="mt-4 flex gap-2">
+                    <div className="mt-3 sm:mt-4 flex gap-2">
                       <button
                         onClick={() => setIsCreatingZone(false)}
-                        className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                        className="flex-1 sm:flex-none px-3 sm:px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors text-sm"
                       >
                         Cancel
                       </button>
@@ -432,9 +465,10 @@ const Geofence = () => {
                           // The drawing will be handled by the GeofenceMap component
                           // Just keep the isCreatingZone state true
                         }}
-                        className="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors"
+                        className="flex-1 sm:flex-none px-3 sm:px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors text-sm"
                       >
-                        Start Drawing
+                        <span className="hidden sm:inline">Start Drawing</span>
+                        <span className="sm:hidden">Draw</span>
                       </button>
                     </div>
                   </motion.div>
@@ -444,32 +478,32 @@ const Geofence = () => {
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="bg-white dark:bg-gray-900 rounded-xl shadow-elevation-3 p-2 pointer-events-auto"
+                  className="bg-white dark:bg-gray-900 rounded-xl shadow-elevation-3 p-1 sm:p-2 pointer-events-auto"
                 >
                   <div className="flex flex-col gap-1">
                     <motion.button
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                      className="p-1.5 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                       title="My Location"
                     >
-                      <MdMyLocation className="text-xl text-gray-700 dark:text-gray-300" />
+                      <MdMyLocation className="text-lg sm:text-xl text-gray-700 dark:text-gray-300" />
                     </motion.button>
                     <motion.button
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                      className="p-1.5 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                       title="Draw Polygon"
                     >
-                      <FaDrawPolygon className="text-xl text-gray-700 dark:text-gray-300" />
+                      <FaDrawPolygon className="text-lg sm:text-xl text-gray-700 dark:text-gray-300" />
                     </motion.button>
                     <motion.button
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                      className="p-1.5 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                       title="Measure Distance"
                     >
-                      <FaRoute className="text-xl text-gray-700 dark:text-gray-300" />
+                      <FaRoute className="text-lg sm:text-xl text-gray-700 dark:text-gray-300" />
                     </motion.button>
                   </div>
                 </motion.div>
@@ -480,45 +514,45 @@ const Geofence = () => {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="absolute bottom-4 left-4 right-4 bg-white dark:bg-gray-900 rounded-xl shadow-elevation-4 p-6"
+                  className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 right-2 sm:right-4 bg-white dark:bg-gray-900 rounded-xl shadow-elevation-4 p-3 sm:p-6 max-h-80 overflow-y-auto"
                 >
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h3 className="headline-6 text-on-surface-light dark:text-on-surface-dark flex items-center gap-2">
+                  <div className="flex items-start justify-between mb-3 sm:mb-4">
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-lg sm:text-xl font-semibold text-on-surface-light dark:text-on-surface-dark flex items-center gap-2 truncate">
                         <div
-                          className="w-4 h-4 rounded-full"
+                          className="w-3 sm:w-4 h-3 sm:h-4 rounded-full flex-shrink-0"
                           style={{ backgroundColor: selectedZone.color }}
                         />
-                        {selectedZone.name}
+                        <span className="truncate">{selectedZone.name}</span>
                       </h3>
-                      <p className="caption text-gray-500 dark:text-gray-400">
+                      <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                         Created on {selectedZone.createdAt}
                       </p>
                     </div>
                     <button
                       onClick={() => setSelectedZone(null)}
-                      className="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                      className="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors flex-shrink-0 ml-2"
                     >
-                      <span className="material-icons text-gray-500">close</span>
+                      <span className="material-icons text-gray-500 text-lg sm:text-xl">close</span>
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
-                      <p className="caption text-gray-500 dark:text-gray-400">Type</p>
-                      <p className="subtitle-2 capitalize">{selectedZone.type}</p>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 mb-3 sm:mb-4">
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-2 sm:p-3">
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Type</p>
+                      <p className="text-sm font-semibold capitalize">{selectedZone.type}</p>
                     </div>
-                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
-                      <p className="caption text-gray-500 dark:text-gray-400">Status</p>
-                      <p className="subtitle-2 capitalize">{selectedZone.status}</p>
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-2 sm:p-3">
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Status</p>
+                      <p className="text-sm font-semibold capitalize">{selectedZone.status}</p>
                     </div>
-                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
-                      <p className="caption text-gray-500 dark:text-gray-400">Vehicles</p>
-                      <p className="subtitle-2">{selectedZone.vehicles}</p>
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-2 sm:p-3">
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Vehicles</p>
+                      <p className="text-sm font-semibold">{selectedZone.vehicles}</p>
                     </div>
-                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
-                      <p className="caption text-gray-500 dark:text-gray-400">Alerts</p>
-                      <p className="subtitle-2 text-yellow-600 dark:text-yellow-400">
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-2 sm:p-3">
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Alerts</p>
+                      <p className="text-sm font-semibold text-yellow-600 dark:text-yellow-400">
                         {selectedZone.alerts}
                       </p>
                     </div>
@@ -526,10 +560,10 @@ const Geofence = () => {
 
                   {/* Alert Rules Configuration */}
                   <div>
-                    <h4 className="subtitle-2 text-on-surface-light dark:text-on-surface-dark mb-3">
+                    <h4 className="text-sm sm:text-base font-semibold text-on-surface-light dark:text-on-surface-dark mb-2 sm:mb-3">
                       Alert Rules
                     </h4>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
                       {alertTypes.map((alert) => (
                         <label
                           key={alert.id}
@@ -537,15 +571,15 @@ const Geofence = () => {
                         >
                           <input
                             type="checkbox"
-                            className="mt-1"
+                            className="mt-0.5 sm:mt-1 flex-shrink-0"
                             defaultChecked={Math.random() > 0.5}
                           />
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2">
-                              <span>{alert.icon}</span>
-                              <span className="caption font-medium">{alert.label}</span>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-1 sm:gap-2">
+                              <span className="text-sm">{alert.icon}</span>
+                              <span className="text-xs sm:text-sm font-medium truncate">{alert.label}</span>
                             </div>
-                            <p className="caption text-gray-500 dark:text-gray-400 text-xs">
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">
                               {alert.description}
                             </p>
                           </div>
@@ -554,11 +588,11 @@ const Geofence = () => {
                     </div>
                   </div>
 
-                  <div className="flex justify-end gap-3 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <button className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+                  <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <button className="px-3 sm:px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors text-sm">
                       View History
                     </button>
-                    <button className="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors flex items-center gap-2">
+                    <button className="px-3 sm:px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors flex items-center justify-center gap-2 text-sm">
                       <FaSave />
                       Save Changes
                     </button>
@@ -571,14 +605,14 @@ const Geofence = () => {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="absolute inset-0 bg-black/20 flex items-center justify-center pointer-events-none"
+                  className="absolute inset-0 bg-black/20 flex items-center justify-center pointer-events-none p-4"
                 >
                   <motion.div
                     initial={{ scale: 0.9 }}
                     animate={{ scale: 1 }}
-                    className="bg-white dark:bg-gray-900 rounded-xl shadow-elevation-5 p-6 max-w-md pointer-events-auto"
+                    className="bg-white dark:bg-gray-900 rounded-xl shadow-elevation-5 p-4 sm:p-6 max-w-xs sm:max-w-md pointer-events-auto"
                   >
-                    <h3 className="headline-6 text-on-surface-light dark:text-on-surface-dark mb-3">
+                    <h3 className="text-lg sm:text-xl font-semibold text-on-surface-light dark:text-on-surface-dark mb-3">
                       Drawing Instructions
                     </h3>
                     <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">

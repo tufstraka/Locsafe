@@ -265,13 +265,13 @@ const Reports = () => {
 
       <div className="flex flex-col flex-grow">
         {/* Header */}
-        <motion.header 
+        <motion.header
           initial={{ y: -100 }}
           animate={{ y: 0 }}
-          className="flex items-center justify-between px-6 py-4 bg-surface-light/95 dark:bg-surface-elevated-dark/95 backdrop-blur-xl shadow-elevation-1 dark:shadow-elevation-dark-1 sticky top-0 z-20"
+          className="flex items-center justify-between px-4 sm:px-6 py-4 bg-surface-light/95 dark:bg-surface-elevated-dark/95 backdrop-blur-xl shadow-elevation-1 dark:shadow-elevation-dark-1 sticky top-0 z-20"
         >
           <div className="flex items-center gap-4">
-            <motion.button 
+            <motion.button
               onClick={toggleNav}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -282,22 +282,22 @@ const Reports = () => {
             </motion.button>
             
             <div>
-              <h1 className="headline-5 text-on-surface-light dark:text-on-surface-dark flex items-center gap-2">
+              <h1 className="headline-6 sm:headline-5 text-on-surface-light dark:text-on-surface-dark flex items-center gap-2">
                 <HiDocumentReport className="text-primary-500" />
                 Reports Center
               </h1>
-              <p className="caption text-on-surface-light-medium dark:text-on-surface-dark-medium">
+              <p className="caption text-on-surface-light-medium dark:text-on-surface-dark-medium hidden sm:block">
                 Generate and manage reports
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowScheduleModal(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-elevation-1 hover:shadow-elevation-2 transition-all"
+              className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-elevation-1 hover:shadow-elevation-2 transition-all"
             >
               <IoCalendarOutline className="text-gray-600 dark:text-gray-400" />
               <span className="hidden md:inline text-sm">Schedule</span>
@@ -306,20 +306,20 @@ const Reports = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-lg font-medium shadow-elevation-2"
+              className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-lg font-medium shadow-elevation-2"
             >
               <HiDownload />
-              <span className="hidden md:inline">Create Report</span>
+              <span className="hidden sm:inline">Create Report</span>
             </motion.button>
           </div>
         </motion.header>
 
         <div className="flex flex-1 overflow-hidden">
-          {/* Sidebar Filters */}
-          <motion.div 
+          {/* Sidebar Filters - Hidden on mobile */}
+          <motion.div
             initial={{ x: -20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            className="w-64 border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 overflow-y-auto"
+            className="hidden lg:block w-64 border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 overflow-y-auto"
           >
             {/* Report Categories */}
             <div className="mb-6">
@@ -402,8 +402,29 @@ const Reports = () => {
             </div>
           </motion.div>
 
+          {/* Mobile Category Pills */}
+          <div className="lg:hidden w-full">
+            <div className="px-4 py-3 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+              <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+                {reportCategories.map((category) => (
+                  <button
+                    key={category.id}
+                    onClick={() => setSelectedReportType(category.id)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
+                      selectedReportType === category.id
+                        ? 'bg-primary-500 text-white'
+                        : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
+                    }`}
+                  >
+                    {category.label} ({category.count})
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {/* Main Content */}
-          <div className="flex-1 overflow-y-auto p-6">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6">
             {/* Report Templates Grid */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -411,7 +432,7 @@ const Reports = () => {
               className="mb-8"
             >
               <h2 className="headline-6 text-on-surface-light dark:text-on-surface-dark mb-4">Report Templates</h2>
-              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
                 {filteredReports.map((report, index) => (
                   <motion.div
                     key={report.id}
@@ -509,7 +530,7 @@ const Reports = () => {
 
               <div className="bg-white dark:bg-gray-900 rounded-xl shadow-elevation-2 overflow-hidden">
                 <div className="overflow-x-auto">
-                  <table className="w-full">
+                  <table className="w-full min-w-[600px]">
                     <thead className="bg-gray-50 dark:bg-gray-800">
                       <tr>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
@@ -644,6 +665,16 @@ const Reports = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <style>{`
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   );
 };

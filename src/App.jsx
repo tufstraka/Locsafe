@@ -44,6 +44,8 @@ import LastMileSolution from './pages/solutions/last-mile.jsx'
 import ColdChainSolution from './pages/solutions/cold-chain.jsx'
 import DPPGenerator from "./pages/dpp-generator.jsx";
 import Notifications from "./pages/notifications.jsx";
+import Users from "./pages/users.jsx";
+import Maintenance from "./pages/maintenance.jsx";
 //import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
 
 
@@ -100,6 +102,8 @@ const App = () => {
                 }
               />
               <Route path='/notifications' element={<Notifications />} />
+              <Route path='/users' element={<Users />} />
+              <Route path='/maintenance' element={<Maintenance />} />
               <Route path='*' element={<PageNotFound />} />
             </Routes>
           </Router>

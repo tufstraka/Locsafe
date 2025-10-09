@@ -280,35 +280,48 @@ const BlockchainExplorer = () => {
 
       <div className="flex flex-col flex-grow">
         {/* Header */}
-        <motion.header 
+        <motion.header
           initial={{ y: -100 }}
           animate={{ y: 0 }}
-          className="flex items-center justify-between px-6 py-4 bg-surface-light/95 dark:bg-surface-elevated-dark/95 backdrop-blur-xl shadow-elevation-1 dark:shadow-elevation-dark-1 sticky top-0 z-20"
+          className="flex items-center justify-between px-4 sm:px-6 py-4 bg-surface-light/95 dark:bg-surface-elevated-dark/95 backdrop-blur-xl shadow-elevation-1 dark:shadow-elevation-dark-1 sticky top-0 z-20"
         >
-          <div className="flex items-center gap-4">
-            <motion.button 
+          <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+            <motion.button
               onClick={toggleNav}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="p-2 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-all duration-200"
+              className="p-2 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-all duration-200 flex-shrink-0"
               aria-label="Toggle navigation"
             >
-              <IoMenu className="text-2xl text-on-surface-light dark:text-on-surface-dark" />
+              <IoMenu className="text-xl sm:text-2xl text-on-surface-light dark:text-on-surface-dark" />
             </motion.button>
             
-            <div>
-              <h1 className="headline-5 text-on-surface-light dark:text-on-surface-dark flex items-center gap-2">
-                <HiCube className="text-primary-500" />
-                Blockchain Explorer
+            <div className="min-w-0 flex-1">
+              <h1 className="text-lg sm:text-xl md:text-2xl font-semibold text-on-surface-light dark:text-on-surface-dark flex items-center gap-2 truncate">
+                <HiCube className="text-primary-500 flex-shrink-0" />
+                <span className="hidden sm:inline">Blockchain Explorer</span>
+                <span className="sm:hidden">Explorer</span>
               </h1>
-              <p className="caption text-on-surface-light-medium dark:text-on-surface-dark-medium">
-                Multi-chain transaction explorer and analytics
+              <p className="text-xs sm:text-sm text-on-surface-light-medium dark:text-on-surface-dark-medium truncate">
+                <span className="hidden md:inline">Multi-chain transaction explorer and analytics</span>
+                <span className="md:hidden">Multi-chain explorer</span>
               </p>
             </div>
           </div>
 
-          {/* Search Bar */}
-          <div className="hidden lg:flex items-center gap-3">
+          {/* Mobile Search Button */}
+          <div className="lg:hidden">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="p-2 bg-white dark:bg-gray-800 rounded-lg shadow-elevation-1 hover:shadow-elevation-2 transition-all"
+            >
+              <IoSearch className="text-lg text-gray-600 dark:text-gray-400" />
+            </motion.button>
+          </div>
+
+          {/* Desktop Search Bar */}
+          <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
             <select
               value={searchType}
               onChange={(e) => setSearchType(e.target.value)}
@@ -342,27 +355,64 @@ const BlockchainExplorer = () => {
           </div>
         </motion.header>
 
-        <div className="flex-1 overflow-y-auto p-6">
+        {/* Mobile Search Bar */}
+        <div className="lg:hidden px-4 sm:px-6 py-3 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex gap-2 mb-3">
+            <select
+              value={searchType}
+              onChange={(e) => setSearchType(e.target.value)}
+              className="px-3 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg outline-none text-sm flex-shrink-0"
+            >
+              <option value="transaction">Transaction</option>
+              <option value="address">Address</option>
+              <option value="block">Block</option>
+            </select>
+            
+            <div className="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg flex-1">
+              <IoSearch className="text-gray-400 flex-shrink-0" />
+              <input
+                type="text"
+                placeholder="Search hash, address..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                className="bg-transparent outline-none text-sm flex-1"
+              />
+            </div>
+            
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleSearch}
+              className="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors text-sm flex-shrink-0"
+            >
+              Go
+            </motion.button>
+          </div>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6">
           {/* Blockchain Networks Grid */}
-          <div className="mb-8">
-            <h2 className="headline-6 text-on-surface-light dark:text-on-surface-dark mb-4">
-              Supported Blockchain Networks
+          <div className="mb-6 sm:mb-8">
+            <h2 className="text-lg sm:text-xl font-semibold text-on-surface-light dark:text-on-surface-dark mb-4">
+              <span className="hidden sm:inline">Supported Blockchain Networks</span>
+              <span className="sm:hidden">Blockchain Networks</span>
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
               {blockchains.map((blockchain) => (
                 <motion.div
                   key={blockchain.id}
                   whileHover={{ scale: 1.02 }}
                   onClick={() => setSelectedBlockchain(blockchain.id)}
-                  className={`relative bg-white dark:bg-gray-900 rounded-xl p-5 cursor-pointer transition-all ${
+                  className={`relative bg-white dark:bg-gray-900 rounded-xl p-4 sm:p-5 cursor-pointer transition-all ${
                     selectedBlockchain === blockchain.id
                       ? 'ring-2 ring-primary-500 shadow-elevation-3'
                       : 'shadow-elevation-2 hover:shadow-elevation-3'
                   }`}
                 >
                   {/* Status Badge */}
-                  <div className="absolute top-3 right-3">
-                    <span className={`px-2 py-1 text-xs rounded-full ${
+                  <div className="absolute top-2 sm:top-3 right-2 sm:right-3">
+                    <span className={`px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs rounded-full ${
                       blockchain.status === 'active'
                         ? 'bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400'
                         : 'bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400'
@@ -372,39 +422,39 @@ const BlockchainExplorer = () => {
                   </div>
 
                   {/* Icon and Name */}
-                  <div className="flex items-center gap-3 mb-3">
+                  <div className="flex items-center gap-2 sm:gap-3 mb-3 pr-16 sm:pr-20">
                     {typeof blockchain.icon === 'string' ? (
-                      <span className="text-3xl">{blockchain.icon}</span>
+                      <span className="text-2xl sm:text-3xl flex-shrink-0">{blockchain.icon}</span>
                     ) : (
-                      <blockchain.icon 
-                        className="text-3xl"
+                      <blockchain.icon
+                        className="text-2xl sm:text-3xl flex-shrink-0"
                         style={{ color: blockchain.color }}
                       />
                     )}
-                    <div>
-                      <h3 className="subtitle-1 text-on-surface-light dark:text-on-surface-dark">
+                    <div className="min-w-0">
+                      <h3 className="text-sm sm:text-base font-semibold text-on-surface-light dark:text-on-surface-dark truncate">
                         {blockchain.name}
                       </h3>
-                      <p className="caption text-gray-500 dark:text-gray-400">
+                      <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                         {blockchain.symbol}
                       </p>
                     </div>
                   </div>
 
                   {/* Description */}
-                  <p className="caption text-gray-600 dark:text-gray-400 mb-3">
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
                     {blockchain.description}
                   </p>
 
                   {/* Stats */}
                   <div className="grid grid-cols-2 gap-2 mb-3">
                     <div className="text-center p-2 bg-gray-50 dark:bg-gray-800 rounded">
-                      <p className="caption text-gray-500 dark:text-gray-400">Block Time</p>
-                      <p className="caption font-semibold">{blockchain.blockTime}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Block Time</p>
+                      <p className="text-xs font-semibold truncate">{blockchain.blockTime}</p>
                     </div>
                     <div className="text-center p-2 bg-gray-50 dark:bg-gray-800 rounded">
-                      <p className="caption text-gray-500 dark:text-gray-400">Speed</p>
-                      <p className="caption font-semibold">{blockchain.tps}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Speed</p>
+                      <p className="text-xs font-semibold truncate">{blockchain.tps}</p>
                     </div>
                   </div>
 
@@ -416,9 +466,10 @@ const BlockchainExplorer = () => {
                       e.stopPropagation();
                       openExplorer(blockchain);
                     }}
-                    className="w-full py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-lg text-sm font-medium hover:from-primary-600 hover:to-primary-700 transition-all flex items-center justify-center gap-2"
+                    className="w-full py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-lg text-xs sm:text-sm font-medium hover:from-primary-600 hover:to-primary-700 transition-all flex items-center justify-center gap-2"
                   >
-                    Open Explorer
+                    <span className="hidden sm:inline">Open Explorer</span>
+                    <span className="sm:hidden">Explorer</span>
                     <FaExternalLinkAlt className="text-xs" />
                   </motion.button>
                 </motion.div>
@@ -427,46 +478,47 @@ const BlockchainExplorer = () => {
           </div>
 
           {/* Recent Transactions */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             {/* Recent Locsafe Transactions */}
-            <div className="bg-white dark:bg-gray-900 rounded-xl shadow-elevation-2 p-6">
-              <h3 className="subtitle-1 text-on-surface-light dark:text-on-surface-dark mb-4 flex items-center gap-2">
-                <MdAccessTime className="text-primary-500" />
-                Recent Locsafe Transactions
+            <div className="bg-white dark:bg-gray-900 rounded-xl shadow-elevation-2 p-4 sm:p-6">
+              <h3 className="text-base sm:text-lg font-semibold text-on-surface-light dark:text-on-surface-dark mb-4 flex items-center gap-2">
+                <MdAccessTime className="text-primary-500 flex-shrink-0" />
+                <span className="hidden sm:inline">Recent Locsafe Transactions</span>
+                <span className="sm:hidden">Recent Transactions</span>
               </h3>
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 {recentTransactions.map((tx, index) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    className="flex items-center justify-between p-2 sm:p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
                       <div className={`w-2 h-2 rounded-full ${
                         tx.status === 'confirmed' ? 'bg-green-500' : 'bg-yellow-500'
-                      } animate-pulse`} />
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <p className="caption font-mono text-primary-600 dark:text-primary-400">
-                            {tx.hash.slice(0, 12)}...{tx.hash.slice(-8)}
+                      } animate-pulse flex-shrink-0`} />
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-1 sm:gap-2">
+                          <p className="text-xs sm:text-sm font-mono text-primary-600 dark:text-primary-400 truncate">
+                            {tx.hash.slice(0, 8)}...{tx.hash.slice(-6)}
                           </p>
                           <button
                             onClick={() => copyToClipboard(tx.hash)}
-                            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 flex-shrink-0"
                           >
-                            <IoCopyOutline className="text-sm" />
+                            <IoCopyOutline className="text-xs sm:text-sm" />
                           </button>
                         </div>
-                        <p className="caption text-gray-500 dark:text-gray-400">
+                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
                           {tx.type} • {tx.timestamp}
                         </p>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <p className="caption font-semibold">{tx.value}</p>
-                      <p className="caption text-gray-500 dark:text-gray-400">
+                    <div className="text-right flex-shrink-0 ml-2">
+                      <p className="text-xs sm:text-sm font-semibold">{tx.value}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
                         {blockchains.find(b => b.id === tx.blockchain)?.symbol}
                       </p>
                     </div>
@@ -476,36 +528,37 @@ const BlockchainExplorer = () => {
             </div>
 
             {/* Network Statistics */}
-            <div className="bg-white dark:bg-gray-900 rounded-xl shadow-elevation-2 p-6">
-              <h3 className="subtitle-1 text-on-surface-light dark:text-on-surface-dark mb-4 flex items-center gap-2">
-                <MdSpeed className="text-primary-500" />
-                Network Statistics
+            <div className="bg-white dark:bg-gray-900 rounded-xl shadow-elevation-2 p-4 sm:p-6">
+              <h3 className="text-base sm:text-lg font-semibold text-on-surface-light dark:text-on-surface-dark mb-4 flex items-center gap-2">
+                <MdSpeed className="text-primary-500 flex-shrink-0" />
+                <span className="hidden sm:inline">Network Statistics</span>
+                <span className="sm:hidden">Statistics</span>
               </h3>
               {selectedBlockchain && (
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   {(() => {
                     const blockchain = blockchains.find(b => b.id === selectedBlockchain);
                     return (
                       <>
-                        <div className="flex items-center justify-between p-3 bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-lg">
-                          <span className="caption font-medium">Network</span>
-                          <span className="subtitle-2">{blockchain?.name}</span>
+                        <div className="flex items-center justify-between p-2 sm:p-3 bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-lg">
+                          <span className="text-xs sm:text-sm font-medium">Network</span>
+                          <span className="text-xs sm:text-sm font-semibold truncate ml-2">{blockchain?.name}</span>
                         </div>
-                        <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                          <span className="caption">Total Transactions</span>
-                          <span className="caption font-semibold">{blockchain?.totalTransactions}</span>
+                        <div className="flex items-center justify-between p-2 sm:p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                          <span className="text-xs sm:text-sm">Total Transactions</span>
+                          <span className="text-xs sm:text-sm font-semibold">{blockchain?.totalTransactions}</span>
                         </div>
-                        <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                          <span className="caption">Average Block Time</span>
-                          <span className="caption font-semibold">{blockchain?.blockTime}</span>
+                        <div className="flex items-center justify-between p-2 sm:p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                          <span className="text-xs sm:text-sm">Block Time</span>
+                          <span className="text-xs sm:text-sm font-semibold">{blockchain?.blockTime}</span>
                         </div>
-                        <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                          <span className="caption">Throughput</span>
-                          <span className="caption font-semibold">{blockchain?.tps}</span>
+                        <div className="flex items-center justify-between p-2 sm:p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                          <span className="text-xs sm:text-sm">Throughput</span>
+                          <span className="text-xs sm:text-sm font-semibold">{blockchain?.tps}</span>
                         </div>
-                        <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                          <span className="caption">Network Type</span>
-                          <span className="caption font-semibold">{blockchain?.network}</span>
+                        <div className="flex items-center justify-between p-2 sm:p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                          <span className="text-xs sm:text-sm">Network Type</span>
+                          <span className="text-xs sm:text-sm font-semibold truncate ml-2">{blockchain?.network}</span>
                         </div>
                       </>
                     );
@@ -516,20 +569,22 @@ const BlockchainExplorer = () => {
           </div>
 
           {/* Integration Status */}
-          <div className="mt-6 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl p-6 text-white">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="headline-6 mb-2 flex items-center gap-2">
-                  <MdVerified className="text-2xl" />
-                  Blockchain Integration Status
+          <div className="mt-4 sm:mt-6 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl p-4 sm:p-6 text-white">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg sm:text-xl font-semibold mb-2 flex items-center gap-2">
+                  <MdVerified className="text-xl sm:text-2xl flex-shrink-0" />
+                  <span className="hidden sm:inline">Blockchain Integration Status</span>
+                  <span className="sm:hidden">Integration Status</span>
                 </h3>
-                <p className="body-2 text-white/90">
-                  All blockchain networks are operational and synced with Locsafe platform
+                <p className="text-sm sm:text-base text-white/90">
+                  <span className="hidden sm:inline">All blockchain networks are operational and synced with Locsafe platform</span>
+                  <span className="sm:hidden">All networks operational</span>
                 </p>
               </div>
-              <div className="text-right">
-                <p className="headline-4">12/12</p>
-                <p className="caption text-white/80">Networks Active</p>
+              <div className="text-right flex-shrink-0">
+                <p className="text-2xl sm:text-3xl font-bold">12/12</p>
+                <p className="text-xs sm:text-sm text-white/80">Networks Active</p>
               </div>
             </div>
           </div>

@@ -189,13 +189,13 @@ const Alerts = () => {
 
       <div className="flex flex-col flex-grow">
         {/* Header */}
-        <motion.header 
+        <motion.header
           initial={{ y: -100 }}
           animate={{ y: 0 }}
-          className="flex items-center justify-between px-6 py-4 bg-surface-light/95 dark:bg-surface-elevated-dark/95 backdrop-blur-xl shadow-elevation-1 dark:shadow-elevation-dark-1 sticky top-0 z-20"
+          className="flex items-center justify-between px-4 sm:px-6 py-4 bg-surface-light/95 dark:bg-surface-elevated-dark/95 backdrop-blur-xl shadow-elevation-1 dark:shadow-elevation-dark-1 sticky top-0 z-20"
         >
           <div className="flex items-center gap-4">
-            <motion.button 
+            <motion.button
               onClick={toggleNav}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -206,15 +206,25 @@ const Alerts = () => {
             </motion.button>
             
             <div>
-              <h1 className="headline-5 text-on-surface-light dark:text-on-surface-dark">Alert Center</h1>
-              <p className="caption text-on-surface-light-medium dark:text-on-surface-dark-medium">
+              <h1 className="headline-6 sm:headline-5 text-on-surface-light dark:text-on-surface-dark">Alert Center</h1>
+              <p className="caption text-on-surface-light-medium dark:text-on-surface-dark-medium hidden sm:block">
                 {filteredAlerts.length} active alerts
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            {/* Search Bar */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Mobile Search Toggle */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setShowFilters(!showFilters)}
+              className="p-2 bg-white dark:bg-gray-800 rounded-lg shadow-elevation-1 md:hidden"
+            >
+              <IoSearch className="text-xl text-gray-600 dark:text-gray-400" />
+            </motion.button>
+
+            {/* Desktop Search Bar */}
             <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full">
               <IoSearch className="text-gray-400" />
               <input
@@ -222,7 +232,7 @@ const Alerts = () => {
                 placeholder="Search alerts..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-transparent outline-none text-sm w-48 text-gray-700 dark:text-gray-300"
+                className="bg-transparent outline-none text-sm w-48 lg:w-64 text-gray-700 dark:text-gray-300"
               />
             </div>
 
@@ -231,7 +241,7 @@ const Alerts = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowFilters(!showFilters)}
-              className="p-2 bg-white dark:bg-gray-800 rounded-lg shadow-elevation-1 hover:shadow-elevation-2 transition-all"
+              className="hidden md:block p-2 bg-white dark:bg-gray-800 rounded-lg shadow-elevation-1 hover:shadow-elevation-2 transition-all"
             >
               <IoFilterSharp className="text-xl text-gray-600 dark:text-gray-400" />
             </motion.button>
@@ -243,7 +253,7 @@ const Alerts = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 className="flex items-center gap-2 px-3 py-1 bg-primary-100 dark:bg-primary-900/20 rounded-lg"
               >
-                <span className="caption text-primary-700 dark:text-primary-300">
+                <span className="caption text-primary-700 dark:text-primary-300 hidden sm:inline">
                   {selectedAlerts.length} selected
                 </span>
                 <button className="p-1 hover:bg-primary-200 dark:hover:bg-primary-800 rounded">
@@ -252,7 +262,7 @@ const Alerts = () => {
                 <button className="p-1 hover:bg-primary-200 dark:hover:bg-primary-800 rounded">
                   <MdDelete className="text-primary-600 dark:text-primary-400" />
                 </button>
-                <button 
+                <button
                   onClick={() => setSelectedAlerts([])}
                   className="p-1 hover:bg-primary-200 dark:hover:bg-primary-800 rounded"
                 >
@@ -263,12 +273,35 @@ const Alerts = () => {
           </div>
         </motion.header>
 
+        {/* Mobile Search Bar */}
+        <AnimatePresence>
+          {showFilters && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="md:hidden px-4 py-3 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700"
+            >
+              <div className="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                <IoSearch className="text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search alerts..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="bg-transparent outline-none text-sm flex-1 text-gray-700 dark:text-gray-300"
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <div className="flex flex-1 overflow-hidden">
-          {/* Sidebar Categories */}
-          <motion.div 
+          {/* Sidebar Categories - Hidden on mobile */}
+          <motion.div
             initial={{ x: -20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            className="w-64 border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 overflow-y-auto"
+            className="hidden lg:block w-64 border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 overflow-y-auto"
           >
             <h2 className="subtitle-1 text-on-surface-light dark:text-on-surface-dark mb-4">Categories</h2>
             <div className="space-y-1">
@@ -319,8 +352,30 @@ const Alerts = () => {
             </div>
           </motion.div>
 
+          {/* Mobile Category Pills */}
+          <div className="lg:hidden w-full">
+            <div className="px-4 py-3 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+              <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+                {categories.map((category) => (
+                  <button
+                    key={category.id}
+                    onClick={() => setSelectedCategory(category.id)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all flex items-center gap-2 ${
+                      selectedCategory === category.id
+                        ? 'bg-primary-500 text-white'
+                        : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
+                    }`}
+                  >
+                    <category.icon className={`text-lg ${category.color || ''}`} />
+                    {category.label} ({category.count})
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {/* Alerts List */}
-          <div className="flex-1 overflow-y-auto p-6">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6">
             <AnimatePresence>
               {showFilters && (
                 <motion.div
@@ -362,7 +417,7 @@ const Alerts = () => {
               )}
             </AnimatePresence>
 
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {filteredAlerts.map((alert, index) => (
                 <motion.div
                   key={alert.id}
@@ -462,6 +517,15 @@ const Alerts = () => {
           </div>
         </div>
       </div>
+      <style>{`
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   );
 };
