@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import { IoMdTrendingUp, IoMdTrendingDown } from 'react-icons/io';
-import { FaTruck, FaCheckCircle, FaExclamationTriangle, FaInfoCircle, FaQrcode, FaHistory, FaChevronRight, FaLightbulb, FaStar } from 'react-icons/fa';
+import { FaTruck, FaCheckCircle, FaExclamationTriangle, FaInfoCircle, FaQrcode, FaHistory, FaChevronRight, FaLightbulb, FaStar, FaExpand, FaCompress } from 'react-icons/fa';
 import { HiSparkles, HiLightningBolt, HiCube, HiDocumentText, HiTrendingUp, HiChip } from 'react-icons/hi';
 import { BsPersonFill, BsPeopleFill, BsGraphUp } from 'react-icons/bs';
 import { GiCargoShip } from 'react-icons/gi';
@@ -130,6 +130,7 @@ const Dashboard = () => {
   const [showProfile, setShowProfile] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPeriod, setSelectedPeriod] = useState('week');
+  const [isMapFullscreen, setIsMapFullscreen] = useState(false);
   const { showNav, toggleNav } = useNavigation();
   const { scrollYProgress } = useScroll();
 
@@ -971,16 +972,27 @@ const Dashboard = () => {
 
             {/* Map and Blockchain Ledger */}
             <motion.div variants={itemVariants} className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-              {/* Map Section */}
+              {/* Map Section with Fullscreen */}
               <MaterialCard elevation={2} className='p-6'>
                 <div className='flex items-center justify-between mb-4'>
                   <h2 className='headline-6 text-on-surface-light dark:text-on-surface-dark'>Live Tracking</h2>
-                  <div className='flex items-center gap-2'>
-                    <div className='w-2 h-2 bg-green-500 rounded-full animate-pulse'></div>
-                    <span className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium'>Live</span>
+                  <div className='flex items-center gap-3'>
+                    <div className='flex items-center gap-2'>
+                      <div className='w-2 h-2 bg-green-500 rounded-full animate-pulse'></div>
+                      <span className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium'>Live</span>
+                    </div>
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={() => setIsMapFullscreen(true)}
+                      className='p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors'
+                      aria-label='Fullscreen map'
+                    >
+                      <FaExpand className='text-gray-600 dark:text-gray-400' />
+                    </motion.button>
                   </div>
                 </div>
-                <div className='h-64 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden'>
+                <div className='h-64 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden relative'>
                   <Map />
                 </div>
                 <div className='grid grid-cols-4 gap-4 mt-4'>
@@ -1032,10 +1044,76 @@ const Dashboard = () => {
         animate={{ scale: 1 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        className='fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full shadow-elevation-4 hover:shadow-elevation-5 flex items-center justify-center text-white z-50'
+        className='fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full shadow-elevation-4 hover:shadow-elevation-5 flex items-center justify-center text-white z-40'
       >
         <HiLightningBolt className='text-2xl' />
       </motion.button>
+
+      {/* Fullscreen Map Modal */}
+      <AnimatePresence>
+        {isMapFullscreen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className='fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4'
+          >
+            <motion.div
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.9 }}
+              className='relative w-full h-full max-w-7xl bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-elevation-5'
+            >
+              <div className='absolute top-4 right-4 z-10 flex gap-2'>
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setIsMapFullscreen(false)}
+                  className='p-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full shadow-elevation-3 hover:shadow-elevation-4 transition-all'
+                  aria-label='Exit fullscreen'
+                >
+                  <FaCompress className='text-gray-700 dark:text-gray-300 text-lg' />
+                </motion.button>
+              </div>
+              
+              {/* Map Statistics Bar */}
+              <div className='absolute bottom-0 left-0 right-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm p-4'>
+                <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4'>
+                  <div className='text-center'>
+                    <p className='headline-5 text-primary-600 dark:text-primary-400'>24</p>
+                    <p className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium'>Active Vehicles</p>
+                  </div>
+                  <div className='text-center'>
+                    <p className='headline-5 text-success-600 dark:text-success-400'>156</p>
+                    <p className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium'>Deliveries Today</p>
+                  </div>
+                  <div className='text-center'>
+                    <p className='headline-5 text-info-600 dark:text-info-400'>98%</p>
+                    <p className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium'>On-Time Rate</p>
+                  </div>
+                  <div className='text-center'>
+                    <p className='headline-5 text-warning-600 dark:text-warning-400'>12</p>
+                    <p className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium'>Delayed</p>
+                  </div>
+                  <div className='text-center'>
+                    <p className='headline-5 text-purple-600 dark:text-purple-400'>234km</p>
+                    <p className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium'>Total Distance</p>
+                  </div>
+                  <div className='text-center'>
+                    <p className='headline-5 text-teal-600 dark:text-teal-400'>45min</p>
+                    <p className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium'>Avg. Delivery</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Fullscreen Map */}
+              <div className='w-full h-full'>
+                <Map />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <style>{`
         @keyframes blob {
