@@ -31,7 +31,7 @@ For detailed documentation on using Locsafe, refer to the [User Manual](https://
 
 ## Support
 
-If you encounter any issues or have any questions, please don't hesitate to contact our support team at [support@loc-safe.com](mailto:kadimak@locsafe.org).
+If you encounter any issues or have any questions, please don't hesitate to contact our support team at [support@locsafe.org](mailto:support@locsafe.org).
 
 ## Contributing
 
