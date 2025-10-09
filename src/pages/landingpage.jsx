@@ -5,7 +5,7 @@ import { FaRocket, FaStar, FaChevronDown, FaChevronUp, FaQuoteLeft, FaArrowRight
 import { HiSparkles, HiLightningBolt, HiChip } from 'react-icons/hi';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import DashboardImage from '/LocsafeDashboard.png';
+import DashboardImage from '../../LocsafeDashboard.png';
 import Microsoft from '../assets/microsoft.svg';
 import AWSLogo from '../assets/awws.svg';
 import Header from '../components/header.jsx';

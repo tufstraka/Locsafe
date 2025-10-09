@@ -328,7 +328,7 @@ const Sidebar = () => {
       {/* Version Info */}
       <div className="px-4 py-2 text-center border-t border-gray-200 dark:border-gray-700">
         <p className="caption text-on-surface-light-disabled dark:text-on-surface-dark-disabled">
-          Version 2.0.0 • ©2024 Locsafe
+          Version 2.0.0 • ©2025 Locsafe
         </p>
       </div>
     </motion.div>
