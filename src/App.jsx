@@ -40,6 +40,7 @@ import Onboarding from './pages/onboarding.jsx'
 import LastMileSolution from './pages/solutions/last-mile.jsx'
 import ColdChainSolution from './pages/solutions/cold-chain.jsx'
 import DPPGenerator from "./pages/dpp-generator.jsx";
+import Notifications from "./pages/notifications.jsx";
 //import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
 
 
@@ -92,6 +93,7 @@ const App = () => {
                   </ProtectedRoute>
                 }
               />
+              <Route path='/notifications' element={<Notifications />} />
               <Route path='*' element={<PageNotFound />} />
             </Routes>
           </Router>
