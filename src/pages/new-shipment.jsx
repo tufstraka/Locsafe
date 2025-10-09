@@ -196,7 +196,7 @@ const NewShipment = () => {
         <div className="flex-1 overflow-y-auto p-6">
           {/* Progress Steps */}
           <div className="max-w-6xl mx-auto mb-8">
-            <div className="hidden sm:flex items-center justify-between">
+            <div className="flex items-center justify-between">
               {steps.map((step, index) => (
                 <div key={step.id} className="flex items-center flex-1">
                   <motion.div
@@ -216,8 +216,8 @@ const NewShipment = () => {
                         <step.icon className="text-xl" />
                       )}
                     </div>
-                    <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-max hidden lg:block">
-                      <p className={`caption font-medium text-xs lg:text-sm ${
+                    <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-max">
+                      <p className={`caption font-medium ${
                         currentStep >= step.id ? 'text-primary-600 dark:text-primary-400' : 'text-gray-500 dark:text-gray-400'
                       }`}>
                         {step.label}
@@ -235,7 +235,7 @@ const NewShipment = () => {
           </div>
 
           {/* Form Content */}
-          <div className="max-w-4xl mx-auto mt-8 sm:mt-12">
+          <div className="max-w-4xl mx-auto mt-12">
             <AnimatePresence mode="wait">
               {/* Step 5: Review & Payment */}
               {currentStep === 5 && (
@@ -252,28 +252,28 @@ const NewShipment = () => {
                       Shipment Summary
                     </h2>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                      <div className="space-y-3 sm:space-y-4">
-                        <div className="p-3 sm:p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                           <p className="caption text-gray-500 dark:text-gray-400 mb-2">From</p>
                           <p className="subtitle-2">{shipmentData.senderName || 'Not specified'}</p>
                           <p className="caption">{shipmentData.senderCity || 'Not specified'}</p>
                         </div>
-                        <div className="p-3 sm:p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                           <p className="caption text-gray-500 dark:text-gray-400 mb-2">To</p>
                           <p className="subtitle-2">{shipmentData.receiverName || 'Not specified'}</p>
                           <p className="caption">{shipmentData.receiverCity || 'Not specified'}</p>
                         </div>
                       </div>
                       
-                      <div className="space-y-3 sm:space-y-4">
-                        <div className="p-3 sm:p-4 bg-primary-50 dark:bg-primary-900/20 rounded-lg">
+                      <div className="space-y-4">
+                        <div className="p-4 bg-primary-50 dark:bg-primary-900/20 rounded-lg">
                           <p className="caption text-gray-500 dark:text-gray-400 mb-2">Estimated Cost</p>
                           <p className="headline-5 text-primary-600 dark:text-primary-400">
                             KES {calculateEstimate().toLocaleString()}
                           </p>
                         </div>
-                        <div className="p-3 sm:p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                           <p className="caption text-gray-500 dark:text-gray-400 mb-2">Delivery</p>
                           <p className="subtitle-2">
                             {shipmentTypes.find(t => t.id === shipmentData.type)?.name}
@@ -291,7 +291,7 @@ const NewShipment = () => {
                     <h3 className="subtitle-1 text-on-surface-light dark:text-on-surface-dark mb-4">
                       Payment Method
                     </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                       {[
                         { id: 'credit_card', name: 'Credit Card', icon: '💳' },
                         { id: 'mpesa', name: 'M-Pesa', icon: '📱' },
@@ -327,7 +327,7 @@ const NewShipment = () => {
             </AnimatePresence>
 
             {/* Navigation Buttons */}
-            <div className="flex justify-between mt-6 sm:mt-8">
+            <div className="flex justify-between mt-8">
               {currentStep > 1 && (
                 <motion.button
                   whileHover={{ scale: 1.05 }}
@@ -366,7 +366,7 @@ const NewShipment = () => {
             <motion.div
               initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}
-              className="bg-white dark:bg-gray-900 rounded-xl shadow-elevation-5 p-6 sm:p-8 max-w-md w-full mx-4 text-center"
+              className="bg-white dark:bg-gray-900 rounded-xl shadow-elevation-5 p-8 max-w-md mx-4 text-center"
             >
               <motion.div
                 animate={{ rotate: 360 }}
@@ -374,14 +374,14 @@ const NewShipment = () => {
               >
                 <IoCheckmarkCircle className="text-6xl text-green-500 mx-auto mb-4" />
               </motion.div>
-              <h2 className="text-xl sm:text-2xl font-bold mb-2">Shipment Created!</h2>
-              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4">
+              <h2 className="headline-5 mb-2">Shipment Created!</h2>
+              <p className="body-1 text-gray-600 dark:text-gray-400 mb-4">
                 Your shipment has been successfully created.
               </p>
-              <p className="text-base sm:text-lg font-medium mb-6">
-                Tracking ID: <span className="font-mono text-sm sm:text-base">{shipmentData.trackingId}</span>
+              <p className="subtitle-1 mb-6">
+                Tracking ID: <span className="font-mono">{shipmentData.trackingId}</span>
               </p>
-              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+              <p className="caption text-gray-500 dark:text-gray-400">
                 Redirecting to dashboard...
               </p>
             </motion.div>
