@@ -1,15 +1,266 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Signika+Negative:wght@300..700&display=swap');
+/* Material Design Typography - Unique & Elegant Font Combination */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&display=swap');
+
+/* Material Icons */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons+Outlined');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-*{
-    font-family: 'Barlow Semi Condensed';
-    font-optical-sizing: auto;
+/* Material Design CSS Variables */
+:root {
+  /* Material Design Color Palette */
+  --md-primary: #1976d2;
+  --md-primary-dark: #1565c0;
+  --md-primary-light: #42a5f5;
+  --md-secondary: #00bcd4;
+  --md-secondary-dark: #00acc1;
+  --md-secondary-light: #26c6da;
+  --md-success: #4caf50;
+  --md-warning: #ff9800;
+  --md-error: #f44336;
+  --md-info: #2196f3;
+  
+  /* Surface Colors */
+  --md-surface: #ffffff;
+  --md-surface-variant: #f5f5f5;
+  --md-background: #fafafa;
+  
+  /* Text Colors */
+  --md-on-primary: #ffffff;
+  --md-on-surface: rgba(0, 0, 0, 0.87);
+  --md-on-surface-medium: rgba(0, 0, 0, 0.60);
+  --md-on-surface-disabled: rgba(0, 0, 0, 0.38);
+  
+  /* Elevation Shadows */
+  --md-shadow-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  --md-shadow-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  --md-shadow-3: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  --md-shadow-4: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  --md-shadow-5: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  
+  /* Spacing */
+  --md-spacing-xs: 4px;
+  --md-spacing-sm: 8px;
+  --md-spacing-md: 16px;
+  --md-spacing-lg: 24px;
+  --md-spacing-xl: 32px;
+  --md-spacing-xxl: 48px;
+  
+  /* Border Radius */
+  --md-radius-sm: 4px;
+  --md-radius-md: 8px;
+  --md-radius-lg: 16px;
+  --md-radius-xl: 24px;
+  --md-radius-full: 9999px;
+  
+  /* Transitions */
+  --md-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --md-transition-standard: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --md-transition-slow: 375ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Dark Mode Variables */
+.dark {
+  --md-primary: #90caf9;
+  --md-primary-dark: #64b5f6;
+  --md-primary-light: #bbdefb;
+  --md-secondary: #4dd0e1;
+  --md-secondary-dark: #26c6da;
+  --md-secondary-light: #80deea;
+  
+  --md-surface: #121212;
+  --md-surface-variant: #1e1e1e;
+  --md-background: #121212;
+  
+  --md-on-primary: #000000;
+  --md-on-surface: rgba(255, 255, 255, 0.87);
+  --md-on-surface-medium: rgba(255, 255, 255, 0.60);
+  --md-on-surface-disabled: rgba(255, 255, 255, 0.38);
+  
+  /* Dark mode elevation */
+  --md-shadow-1: 0 1px 3px rgba(0,0,0,0.2), 0 1px 2px rgba(0,0,0,0.3);
+  --md-shadow-2: 0 3px 6px rgba(0,0,0,0.3), 0 3px 6px rgba(0,0,0,0.4);
+  --md-shadow-3: 0 10px 20px rgba(0,0,0,0.4), 0 6px 6px rgba(0,0,0,0.5);
+  --md-shadow-4: 0 14px 28px rgba(0,0,0,0.5), 0 10px 10px rgba(0,0,0,0.6);
+  --md-shadow-5: 0 19px 38px rgba(0,0,0,0.6), 0 15px 12px rgba(0,0,0,0.7);
+}
 
+/* Global Typography Styles */
+* {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography Scale - Material Design Type System */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.headline-1 {
+  font-size: 96px;
+  font-weight: 300;
+  letter-spacing: -1.5px;
+}
+
+.headline-2 {
+  font-size: 60px;
+  font-weight: 300;
+  letter-spacing: -0.5px;
+}
+
+.headline-3 {
+  font-size: 48px;
+  font-weight: 400;
+}
+
+.headline-4 {
+  font-size: 34px;
+  font-weight: 400;
+  letter-spacing: 0.25px;
+}
+
+.headline-5 {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.headline-6 {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.15px;
+}
+
+.subtitle-1 {
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.15px;
+  line-height: 1.75;
+}
+
+.subtitle-2 {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  line-height: 1.57;
+}
+
+.body-1 {
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+}
+
+.body-2 {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.25px;
+  line-height: 1.43;
+}
+
+.button-text {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+}
+
+.caption {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.4px;
+  line-height: 1.66;
+}
+
+.overline {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  line-height: 2.66;
+}
+
+/* Material Design Components */
+
+/* Elevation Classes */
+.elevation-0 {
+  box-shadow: none;
+}
+
+.elevation-1 {
+  box-shadow: var(--md-shadow-1);
+}
+
+.elevation-2 {
+  box-shadow: var(--md-shadow-2);
+}
+
+.elevation-3 {
+  box-shadow: var(--md-shadow-3);
+}
+
+.elevation-4 {
+  box-shadow: var(--md-shadow-4);
+}
+
+.elevation-5 {
+  box-shadow: var(--md-shadow-5);
+}
+
+/* Material Ripple Effect */
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.ripple:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Material Button Base */
+.md-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+  padding: 0 16px;
+  height: 36px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--md-radius-sm);
+  cursor: pointer;
+  transition: all var(--md-transition-standard);
+  overflow: hidden;
+}
+
+/* Smooth Animations */
 @keyframes pulse {
   0% {
     opacity: 0.2;
@@ -26,30 +277,31 @@
   animation: pulse 4s infinite;
 }
 
-/* Hamburger menu styles */
+/* Material Design Hamburger Menu */
 .hamburger {
-  width: 30px;
-  height: 25px;
+  width: 24px;
+  height: 24px;
   position: relative;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: all var(--md-transition-standard);
+  padding: 4px;
 }
 
 .hamburger span {
   display: block;
   position: absolute;
-  height: 3px;
-  width: 100%;
-  background: #fff;
-  border-radius: 9px;
+  height: 2px;
+  width: 18px;
+  background: currentColor;
+  border-radius: 2px;
   opacity: 1;
-  left: 0;
+  left: 3px;
   transform: rotate(0deg);
-  transition: all 0.3s ease-in-out;
+  transition: all var(--md-transition-standard);
 }
 
 .hamburger span:nth-child(1) {
-  top: 0px;
+  top: 5px;
 }
 
 .hamburger span:nth-child(2) {
@@ -57,7 +309,7 @@
 }
 
 .hamburger span:nth-child(3) {
-  top: 22px;
+  top: 17px;
 }
 
 .hamburger.open span:nth-child(1) {
@@ -67,7 +319,7 @@
 
 .hamburger.open span:nth-child(2) {
   opacity: 0;
-  left: -60px;
+  transform: translateX(-20px);
 }
 
 .hamburger.open span:nth-child(3) {
@@ -75,9 +327,40 @@
   transform: rotate(-135deg);
 }
 
-.logo{
-  font-family: 'Signika Negative';
+/* Logo with Elegant Font */
+.logo {
+  font-family: 'Playfair Display', serif;
   font-weight: 700;
+  letter-spacing: -0.02em;
 }
-  
+
+/* Material Surface */
+.md-surface {
+  background-color: var(--md-surface);
+  color: var(--md-on-surface);
+}
+
+/* Material Card */
+.md-card {
+  background-color: var(--md-surface);
+  border-radius: var(--md-radius-md);
+  transition: all var(--md-transition-standard);
+}
+
+/* Preserve 3D for animations */
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Focus Visible */
+:focus-visible {
+  outline: 2px solid var(--md-primary);
+  outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+}
 
