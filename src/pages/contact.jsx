@@ -118,7 +118,7 @@ const ContactUs = () => {
       title: "Call Us",
       description: "Mon-Fri from 8am to 6pm",
       contact: "+254 700 000 000",
-      link: "tel:+254700000000",
+      link: "tel:+254701746774",
       color: "from-teal-500 to-green-500"
     },
     {
@@ -134,7 +134,7 @@ const ContactUs = () => {
       title: "WhatsApp",
       description: "Quick support on WhatsApp",
       contact: "+254 700 000 000",
-      link: "https://wa.me/254700000000",
+      link: "https://wa.me/254701746774",
       color: "from-green-500 to-emerald-500"
     }
   ];
