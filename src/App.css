@@ -1,13 +1,145 @@
-/* Material Design Typography - Unique & Elegant Font Combination */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&display=swap');
 
-/* Material Icons */
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons+Outlined');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Supply Chain Calendar Styles */
+.supply-chain-calendar .rbc-toolbar {
+  padding: 10px;
+  margin-bottom: 20px;
+  background: rgba(99, 102, 241, 0.05);
+  border-radius: 12px;
+}
+
+.supply-chain-calendar .rbc-toolbar button {
+  color: #4B5563;
+  border: 1px solid #E5E7EB;
+  background: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.supply-chain-calendar .rbc-toolbar button:hover {
+  background: #6366F1;
+  color: white;
+  border-color: #6366F1;
+}
+
+.supply-chain-calendar .rbc-toolbar button.rbc-active {
+  background: #6366F1;
+  color: white;
+  border-color: #6366F1;
+}
+
+.supply-chain-calendar .rbc-month-view,
+.supply-chain-calendar .rbc-time-view {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.supply-chain-calendar .rbc-day-bg {
+  background: white;
+}
+
+.supply-chain-calendar .rbc-today {
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.supply-chain-calendar .rbc-header {
+  background: #F9FAFB;
+  padding: 12px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.supply-chain-calendar .rbc-event {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+.dark .supply-chain-calendar .rbc-toolbar {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.dark .supply-chain-calendar .rbc-toolbar button {
+  color: #D1D5DB;
+  border-color: #374151;
+  background: #1F2937;
+}
+
+.dark .supply-chain-calendar .rbc-toolbar button:hover {
+  background: #6366F1;
+  color: white;
+  border-color: #6366F1;
+}
+
+.dark .supply-chain-calendar .rbc-day-bg {
+  background: #111827;
+}
+
+.dark .supply-chain-calendar .rbc-today {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.dark .supply-chain-calendar .rbc-header {
+  background: #1F2937;
+  color: #D1D5DB;
+}
+
+.dark .supply-chain-calendar .rbc-off-range-bg {
+  background: #0F172A;
+}
+
+/* Leaflet Draw Toolbar Styles */
+.leaflet-draw-toolbar a {
+  background-color: white !important;
+  border: 1px solid #ccc !important;
+  border-radius: 4px !important;
+  margin: 2px !important;
+}
+
+.leaflet-draw-toolbar a:hover {
+  background-color: #f0f0f0 !important;
+}
+
+.dark .leaflet-draw-toolbar a {
+  background-color: #374151 !important;
+  border-color: #4b5563 !important;
+}
+
+.dark .leaflet-draw-toolbar a:hover {
+  background-color: #4b5563 !important;
+}
+
+.leaflet-control-attribution {
+  font-size: 10px !important;
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.dark .leaflet-control-attribution {
+  background-color: rgba(31, 41, 55, 0.8) !important;
+  color: #9ca3af !important;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 8px !important;
+}
+
+.dark .leaflet-popup-content-wrapper {
+  background-color: #1f2937 !important;
+  color: #f3f4f6 !important;
+}
+
+.dark .leaflet-popup-tip {
+  background-color: #1f2937 !important;
+}
 
 /* Material Design CSS Variables */
 :root {

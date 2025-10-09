@@ -5,7 +5,7 @@ import Sidebar from "../components/sidebar";
 import { IoMenu, IoLocationSharp, IoAdd, IoShield } from 'react-icons/io5';
 import { FaMapMarkedAlt, FaDrawPolygon, FaRoute, FaSave, FaEdit, FaTrash, FaPlay, FaPause } from 'react-icons/fa';
 import { MdMyLocation, MdNotificationImportant } from 'react-icons/md';
-import Map from '../components/map.jsx';
+import GeofenceMap from '../components/geofence-map.jsx';
 
 const Geofence = () => {
   const { showNav, toggleNav } = useNavigation();
@@ -13,8 +13,9 @@ const Geofence = () => {
   const [selectedZone, setSelectedZone] = useState(null);
   const [isCreatingZone, setIsCreatingZone] = useState(false);
   const [zoneType, setZoneType] = useState('circular');
+  const [createdShapes, setCreatedShapes] = useState([]);
   
-  const [geofences] = useState([
+  const [geofences, setGeofences] = useState([
     {
       id: 1,
       name: 'Nairobi CBD Zone',
@@ -97,7 +98,29 @@ const Geofence = () => {
 
   const handleCreateZone = () => {
     setIsCreatingZone(true);
-    // Implementation for creating new geofence
+  };
+
+  const handleShapeCreated = (shapeData) => {
+    console.log('New shape created:', shapeData);
+    setCreatedShapes([...createdShapes, shapeData]);
+    
+    // Create new geofence from shape data
+    const newGeofence = {
+      id: Date.now(),
+      name: `New Zone ${geofences.length + 1}`,
+      type: shapeData.type === 'circle' ? 'circular' : shapeData.type === 'polyline' ? 'route' : 'polygon',
+      status: 'inactive',
+      vehicles: 0,
+      alerts: 0,
+      createdAt: new Date().toISOString().split('T')[0],
+      color: '#6366f1',
+      rules: [],
+      ...shapeData
+    };
+    
+    setGeofences([...geofences, newGeofence]);
+    setSelectedZone(newGeofence);
+    setIsCreatingZone(false);
   };
 
   const handleDeleteZone = (id) => {
@@ -352,7 +375,13 @@ const Geofence = () => {
             <div className="lg:col-span-2 relative">
               {/* Map */}
               <div className="absolute inset-0">
-                <Map />
+                <GeofenceMap
+                  onShapeCreated={handleShapeCreated}
+                  existingGeofences={geofences}
+                  selectedZone={selectedZone}
+                  isDrawing={isCreatingZone}
+                  drawingType={zoneType}
+                />
               </div>
 
               {/* Overlay Controls */}
@@ -399,6 +428,10 @@ const Geofence = () => {
                         Cancel
                       </button>
                       <button
+                        onClick={() => {
+                          // The drawing will be handled by the GeofenceMap component
+                          // Just keep the isCreatingZone state true
+                        }}
                         className="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors"
                       >
                         Start Drawing
