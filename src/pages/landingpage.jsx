@@ -1191,7 +1191,7 @@ const LandingPage = () => {
                     className="pt-4"
                   >
                     <Link
-                      to="/features"
+                      to="/dpp-generator"
                       className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-secondary-500 to-secondary-600 hover:from-secondary-600 hover:to-secondary-700 text-white font-medium rounded-full shadow-elevation-3 hover:shadow-elevation-4 transition-all duration-300"
                     >
                       <span>Explore Digital Passports</span>

@@ -1,6 +1,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { IoMdTrendingUp, IoMdTrendingDown } from 'react-icons/io';
 import { FaTruck, FaCheckCircle, FaExclamationTriangle, FaInfoCircle, FaQrcode, FaHistory, FaChevronRight, FaLightbulb, FaStar, FaExpand, FaCompress } from 'react-icons/fa';
 import { HiSparkles, HiLightningBolt, HiCube, HiDocumentText, HiTrendingUp, HiChip } from 'react-icons/hi';
@@ -133,6 +134,7 @@ const Dashboard = () => {
   const [isMapFullscreen, setIsMapFullscreen] = useState(false);
   const { showNav, toggleNav } = useNavigation();
   const { scrollYProgress } = useScroll();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const auth = getAuth();
@@ -650,6 +652,7 @@ const Dashboard = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => navigate('/dpp-generator')}
                 className='hidden lg:flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-600 to-secondary-500 text-white rounded-full font-medium shadow-elevation-3 hover:shadow-elevation-4 transition-all md-button'
               >
                 <FaQrcode />
@@ -961,6 +964,7 @@ const Dashboard = () => {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={() => navigate('/dpp-generator')}
                     className='px-8 py-4 bg-white/20 backdrop-blur-sm rounded-xl font-semibold hover:bg-white/30 transition-all flex items-center gap-2 md-button'
                   >
                     <FaQrcode className='text-xl' />

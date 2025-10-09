@@ -68,28 +68,32 @@ const OnboardingComplete = () => {
       title: 'Invite Team Members',
       description: 'Add your team to collaborate on shipments',
       action: 'Invite Team',
-      color: 'from-blue-500 to-cyan-500'
+      color: 'from-blue-500 to-cyan-500',
+      path: '/settings'
     },
     {
       icon: FaTrophy,
       title: 'Create First Shipment',
       description: 'Start tracking your first delivery',
       action: 'New Shipment',
-      color: 'from-green-500 to-teal-500'
+      color: 'from-green-500 to-teal-500',
+      path: '/dashboard'
     },
     {
       icon: HiCube,
       title: 'Generate Digital Passport',
       description: 'Create blockchain-verified product passports',
       action: 'Create DPP',
-      color: 'from-purple-500 to-pink-500'
+      color: 'from-purple-500 to-pink-500',
+      path: '/dpp-generator'
     },
     {
       icon: FaChartLine,
       title: 'Explore Analytics',
       description: 'View insights and performance metrics',
       action: 'View Analytics',
-      color: 'from-orange-500 to-red-500'
+      color: 'from-orange-500 to-red-500',
+      path: '/insights'
     }
   ];
 
@@ -285,6 +289,7 @@ const OnboardingComplete = () => {
               <motion.div
                 key={index}
                 whileHover={{ scale: 1.02 }}
+                onClick={() => navigate(step.path)}
                 className="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-lg hover:shadow-xl transition-all cursor-pointer border border-slate-200 dark:border-slate-700"
               >
                 <div className="flex items-start gap-4">
