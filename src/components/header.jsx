@@ -3,16 +3,46 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import logoabs from '../assets/logoabs.png';
 
-const products = [
+const solutions = [
   {
-    title: "Chill",
-    description: "We're cooking something awesome.",
+    title: "Cold Chain Management",
+    description: "End-to-end temperature-controlled logistics for pharmaceuticals and perishables",
     icon: (
       <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-secondary-500 to-secondary-600 flex items-center justify-center">
-        <span className="material-icons text-white text-xl">lock</span>
+        <span className="material-icons text-white text-xl">ac_unit</span>
       </div>
     ),
-    href: "#"
+    href: "/solutions/cold-chain"
+  },
+  {
+    title: "Last-Mile Delivery",
+    description: "Optimize final delivery routes with AI-powered logistics",
+    icon: (
+      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
+        <span className="material-icons text-white text-xl">local_shipping</span>
+      </div>
+    ),
+    href: "/solutions/last-mile"
+  },
+  {
+    title: "Fleet Management",
+    description: "Real-time tracking and management of your entire fleet",
+    icon: (
+      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
+        <span className="material-icons text-white text-xl">directions_car</span>
+      </div>
+    ),
+    href: "/solutions/fleet"
+  },
+  {
+    title: "Warehouse Automation",
+    description: "Smart inventory management with IoT and AI integration",
+    icon: (
+      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center">
+        <span className="material-icons text-white text-xl">warehouse</span>
+      </div>
+    ),
+    href: "/solutions/warehouse"
   }
 ];
 
@@ -67,13 +97,13 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-1">
-            {/* Products Dropdown */}
+            {/* Solutions Dropdown */}
             <div className="relative">
               <button
                 onMouseEnter={() => setIsProductsOpen(true)}
                 className="flex items-center space-x-1 px-4 py-2 rounded-lg text-on-surface-light dark:text-on-surface-dark hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all duration-200 group"
               >
-                <span className="font-medium">Products</span>
+                <span className="font-medium">Solutions</span>
                 <motion.span
                   animate={{ rotate: isProductsOpen ? 180 : 0 }}
                   className="material-icons text-base"
@@ -82,7 +112,7 @@ const Header = () => {
                 </motion.span>
               </button>
 
-              {/* Products Dropdown Menu */}
+              {/* Solutions Dropdown Menu */}
               <AnimatePresence>
                 {isProductsOpen && (
                   <motion.div
@@ -90,24 +120,24 @@ const Header = () => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -10, scale: 0.95 }}
                     onMouseLeave={() => setIsProductsOpen(false)}
-                    className="absolute left-0 mt-2 w-80 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-3 dark:shadow-elevation-dark-3 overflow-hidden"
+                    className="absolute left-0 mt-2 w-96 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-3 dark:shadow-elevation-dark-3 overflow-hidden"
                   >
                     <div className="p-2">
-                      {products.map((product) => (
+                      {solutions.map((solution) => (
                         <Link
-                          key={product.title}
-                          to={product.href}
+                          key={solution.title}
+                          to={solution.href}
                           className="flex items-start p-4 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/10 transition-all duration-200 group"
                         >
                           <div className="flex-shrink-0 group-hover:scale-110 transition-transform">
-                            {product.icon}
+                            {solution.icon}
                           </div>
                           <div className="ml-4">
                             <p className="font-heading font-semibold text-on-surface-light dark:text-on-surface-dark">
-                              {product.title}
+                              {solution.title}
                             </p>
                             <p className="text-sm text-on-surface-light-medium dark:text-on-surface-dark-medium mt-1">
-                              {product.description}
+                              {solution.description}
                             </p>
                           </div>
                         </Link>
@@ -191,18 +221,18 @@ const Header = () => {
               <div className="px-2 py-4 space-y-1">
                 <div className="space-y-2 mb-4">
                   <p className="px-4 text-xs font-semibold text-on-surface-light-medium dark:text-on-surface-dark-medium uppercase tracking-wider">
-                    Products
+                    Solutions
                   </p>
-                  {products.map((product) => (
+                  {solutions.map((solution) => (
                     <Link
-                      key={product.title}
-                      to={product.href}
+                      key={solution.title}
+                      to={solution.href}
                       className="flex items-center px-4 py-3 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/10 transition-all duration-200"
                     >
-                      <span className="mr-3">{product.icon}</span>
+                      <span className="mr-3">{solution.icon}</span>
                       <div>
-                        <p className="font-medium text-on-surface-light dark:text-on-surface-dark">{product.title}</p>
-                        <p className="text-sm text-on-surface-light-medium dark:text-on-surface-dark-medium">{product.description}</p>
+                        <p className="font-medium text-on-surface-light dark:text-on-surface-dark">{solution.title}</p>
+                        <p className="text-sm text-on-surface-light-medium dark:text-on-surface-dark-medium">{solution.description}</p>
                       </div>
                     </Link>
                   ))}
