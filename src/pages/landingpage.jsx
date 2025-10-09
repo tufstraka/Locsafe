@@ -1190,18 +1190,10 @@ const LandingPage = () => {
                     transition={{ delay: 0.5 }}
                     className="pt-4"
                   >
-                    <Link
-                      to="/dpp-generator"
-                      className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-secondary-500 to-secondary-600 hover:from-secondary-600 hover:to-secondary-700 text-white font-medium rounded-full shadow-elevation-3 hover:shadow-elevation-4 transition-all duration-300"
-                    >
-                      <span>Explore Digital Passports</span>
-                      <span className="material-icons group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                    </Link>
                   </motion.div>
                 </motion.div>
               </div>
 
-              {/* Bottom Stats */}
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -1233,7 +1225,6 @@ const LandingPage = () => {
           </div>
         </section>
 
-        {/* Testimonials Carousel with Material Design */}
         <section className="py-16 lg:py-24 bg-gradient-to-br from-surface-light to-primary-50 dark:from-surface-dark dark:to-primary-900/10">
           <div className="container mx-auto px-6">
             <motion.div
