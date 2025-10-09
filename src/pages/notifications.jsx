@@ -27,19 +27,19 @@ const Notifications = () => {
       id: 1,
       type: 'shipment',
       title: 'Shipment Delivered Successfully',
-      message: 'Shipment #KE2024-789 has been delivered to Nairobi warehouse.',
+      message: 'Shipment #KE2025-789 has been delivered to Nairobi warehouse.',
       timestamp: new Date(Date.now() - 5 * 60000),
       read: false,
       important: true,
       icon: '📦',
       category: 'deliveries',
-      action: { label: 'View Details', link: '/shipments/KE2024-789' }
+      action: { label: 'View Details', link: '/shipments/KE2025-789' }
     },
     {
       id: 2,
       type: 'alert',
       title: 'Temperature Alert',
-      message: 'Cold chain temperature exceeded threshold for shipment #VAC2024-001.',
+      message: 'Cold chain temperature exceeded threshold for shipment #VAC2025-001.',
       timestamp: new Date(Date.now() - 15 * 60000),
       read: false,
       important: true,
@@ -63,13 +63,13 @@ const Notifications = () => {
       id: 4,
       type: 'report',
       title: 'Monthly Report Ready',
-      message: 'Your January 2024 performance report is ready for download.',
+      message: 'Your January 2025 performance report is ready for download.',
       timestamp: new Date(Date.now() - 3 * 3600000),
       read: false,
       important: false,
       icon: '📊',
       category: 'reports',
-      action: { label: 'Download', link: '/reports/january-2024' }
+      action: { label: 'Download', link: '/reports/january-2025' }
     },
     {
       id: 5,
@@ -93,19 +93,19 @@ const Notifications = () => {
       important: true,
       icon: '💰',
       category: 'finance',
-      action: { label: 'View Invoice', link: '/invoices/INV-2024-089' }
+      action: { label: 'View Invoice', link: '/invoices/INV-2025-089' }
     },
     {
       id: 7,
       type: 'compliance',
       title: 'Compliance Update',
-      message: 'New GDP compliance requirements effective from February 1, 2024.',
+      message: 'New GDP compliance requirements effective from December 1, 2025.',
       timestamp: new Date(Date.now() - 24 * 3600000),
       read: false,
       important: true,
       icon: '📋',
       category: 'compliance',
-      action: { label: 'Learn More', link: '/compliance/gdp-2024' }
+      action: { label: 'Learn More', link: '/compliance/gdp-2025' }
     },
     {
       id: 8,

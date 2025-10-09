@@ -159,7 +159,7 @@ const ColdChainSolution = () => {
     {
       id: 2,
       type: 'success',
-      message: 'Shipment #VAC2024-001 delivered within temperature range',
+      message: 'Shipment #VAC2025-001 delivered within temperature range',
       time: '15 mins ago',
       action: 'View report'
     },

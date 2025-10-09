@@ -512,7 +512,7 @@ const OrganizationSetup = () => {
                 name="businessRegistration"
                 value={formData.businessRegistration}
                 onChange={handleInputChange}
-                placeholder="BRN/2024/123456"
+                placeholder="BRN/2025/123456"
                 className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
               />
             </div>

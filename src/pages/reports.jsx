@@ -52,7 +52,7 @@ const Reports = () => {
       icon: MdDashboard,
       color: 'from-blue-500 to-cyan-500',
       frequency: 'Monthly',
-      lastGenerated: '2024-01-01',
+      lastGenerated: '2025-01-01',
       format: ['PDF', 'Excel'],
       size: '2.4 MB',
       scheduled: true
@@ -65,7 +65,7 @@ const Reports = () => {
       icon: FaChartLine,
       color: 'from-green-500 to-teal-500',
       frequency: 'Weekly',
-      lastGenerated: '2024-01-05',
+      lastGenerated: '2025-01-05',
       format: ['PDF', 'CSV'],
       size: '1.8 MB',
       scheduled: false
@@ -78,7 +78,7 @@ const Reports = () => {
       icon: MdInventory,
       color: 'from-purple-500 to-pink-500',
       frequency: 'Daily',
-      lastGenerated: '2024-01-08',
+      lastGenerated: '2025-01-08',
       format: ['Excel'],
       size: '3.1 MB',
       scheduled: true
@@ -91,7 +91,7 @@ const Reports = () => {
       icon: MdLocalShipping,
       color: 'from-orange-500 to-red-500',
       frequency: 'Weekly',
-      lastGenerated: '2024-01-07',
+      lastGenerated: '2025-01-07',
       format: ['PDF'],
       size: '1.5 MB',
       scheduled: false
@@ -104,7 +104,7 @@ const Reports = () => {
       icon: MdInsights,
       color: 'from-indigo-500 to-purple-500',
       frequency: 'Monthly',
-      lastGenerated: '2024-01-01',
+      lastGenerated: '2025-01-01',
       format: ['PDF', 'Word'],
       size: '2.0 MB',
       scheduled: true
@@ -128,9 +128,9 @@ const Reports = () => {
   const recentReports = [
     {
       id: 1,
-      name: 'January 2024 Performance Report',
+      name: 'January 2025 Performance Report',
       type: 'Monthly Report',
-      date: '2024-01-08 14:30',
+      date: '2025-01-08 14:30',
       size: '2.4 MB',
       status: 'completed',
       icon: FaFilePdf
@@ -139,7 +139,7 @@ const Reports = () => {
       id: 2,
       name: 'Week 1 Financial Summary',
       type: 'Weekly Report',
-      date: '2024-01-07 09:00',
+      date: '2025-01-07 09:00',
       size: '1.8 MB',
       status: 'completed',
       icon: FaFileExcel
@@ -148,7 +148,7 @@ const Reports = () => {
       id: 3,
       name: 'Daily Inventory Report',
       type: 'Daily Report',
-      date: '2024-01-08 06:00',
+      date: '2025-01-08 06:00',
       size: '3.1 MB',
       status: 'completed',
       icon: FaFileExcel
@@ -166,7 +166,7 @@ const Reports = () => {
       id: 5,
       name: 'Customer Satisfaction Analysis',
       type: 'Custom Report',
-      date: '2024-01-06 11:30',
+      date: '2025-01-06 11:30',
       size: '2.0 MB',
       status: 'processing',
       icon: FaFileWord

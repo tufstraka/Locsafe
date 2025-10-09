@@ -82,10 +82,10 @@ const PreferencesSetup = () => {
   ];
 
   const dateFormats = [
-    { value: 'DD/MM/YYYY', label: 'DD/MM/YYYY', example: '31/12/2024' },
-    { value: 'MM/DD/YYYY', label: 'MM/DD/YYYY', example: '12/31/2024' },
-    { value: 'YYYY-MM-DD', label: 'YYYY-MM-DD', example: '2024-12-31' },
-    { value: 'DD-MM-YYYY', label: 'DD-MM-YYYY', example: '31-12-2024' }
+    { value: 'DD/MM/YYYY', label: 'DD/MM/YYYY', example: '31/12/2025' },
+    { value: 'MM/DD/YYYY', label: 'MM/DD/YYYY', example: '12/31/2025' },
+    { value: 'YYYY-MM-DD', label: 'YYYY-MM-DD', example: '2025-12-31' },
+    { value: 'DD-MM-YYYY', label: 'DD-MM-YYYY', example: '31-12-2025' }
   ];
 
   const timeFormats = [

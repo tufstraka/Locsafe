@@ -1089,7 +1089,7 @@ const LandingPage = () => {
                         <span className="material-icons text-2xl text-primary-300">fingerprint</span>
                         <div>
                           <p className="caption text-white/60">Product ID</p>
-                          <p className="font-mono text-white">DPP-2024-XK9-7B2M</p>
+                          <p className="font-mono text-white">DPP-2025-XK9-7B2M</p>
                         </div>
                       </motion.div>
 

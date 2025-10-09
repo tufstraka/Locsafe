@@ -358,7 +358,7 @@ const Dashboard = () => {
     {
       id: 1,
       type: 'warning',
-      title: 'Delay in Shipment #KE2024-789',
+      title: 'Delay in Shipment #KE2025-789',
       description: 'Expected delay of 2 hours due to traffic',
       time: '5 mins ago',
       icon: FaExclamationTriangle,
@@ -367,7 +367,7 @@ const Dashboard = () => {
     {
       id: 2,
       type: 'success',
-      title: 'Delivery Completed #KE2024-788',
+      title: 'Delivery Completed #KE2025-788',
       description: 'Successfully delivered to Nairobi warehouse',
       time: '1 hour ago',
       icon: FaCheckCircle,

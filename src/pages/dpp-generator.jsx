@@ -94,23 +94,23 @@ const DPPGenerator = () => {
 
   const recentDPPs = [
     {
-      id: 'DPP-2024-001',
+      id: 'DPP-2025-001',
       product: 'COVID-19 Vaccine Batch',
-      date: '2024-01-25',
+      date: '2025-01-25',
       status: 'verified',
       blockchain: 'ETH-0x742d35Cc6634C0532925a3b844Bc9e7595f0bFAA'
     },
     {
-      id: 'DPP-2024-002',
+      id: 'DPP-2025-002',
       product: 'Insulin Shipment',
-      date: '2024-01-24',
+      date: '2025-01-24',
       status: 'verified',
       blockchain: 'ETH-0x5aAeb6053f3E94C9b9A09f33669435E7Ef1BeAed'
     },
     {
-      id: 'DPP-2024-003',
+      id: 'DPP-2025-003',
       product: 'Medical Equipment Set',
-      date: '2024-01-23',
+      date: '2025-01-23',
       status: 'pending',
       blockchain: 'Processing...'
     }
@@ -431,7 +431,7 @@ const DPPGenerator = () => {
                         value={dppData.productId}
                         onChange={(e) => handleInputChange('productId', e.target.value)}
                         className="mt-1 w-full px-3 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg outline-none focus:ring-2 focus:ring-primary-500"
-                        placeholder="e.g., PRD-2024-001"
+                        placeholder="e.g., PRD-2025-001"
                       />
                     </div>
                   </div>

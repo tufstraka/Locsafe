@@ -279,7 +279,7 @@ const Settings = () => {
                   </span>
                 </div>
                 <div className="mt-4 flex items-center justify-between">
-                  <span className="caption text-on-surface-light-medium dark:text-on-surface-dark-medium">Next billing date: Feb 1, 2024</span>
+                  <span className="caption text-on-surface-light-medium dark:text-on-surface-dark-medium">Next billing date: Feb 1, 2025</span>
                   <button className="text-primary-600 dark:text-primary-400 text-sm hover:text-primary-700 dark:hover:text-primary-300">
                     Manage Subscription
                   </button>
