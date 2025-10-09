@@ -1,25 +1,27 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll } from 'framer-motion';
-import { IoIosNotificationsOutline, IoMdTrendingUp, IoMdTrendingDown } from 'react-icons/io';
-import { IoMenu, IoClose, IoSettingsSharp, IoLogOutOutline, IoSearch } from 'react-icons/io5';
-import { FaUserCircle, FaTruck, FaCheckCircle, FaExclamationTriangle, FaInfoCircle, FaQrcode, FaHistory, FaChevronRight } from 'react-icons/fa';
-import { HiSparkles, HiLightningBolt, HiCube, HiDocumentText } from 'react-icons/hi';
+import { IoMdTrendingUp, IoMdTrendingDown } from 'react-icons/io';
+import { FaTruck, FaCheckCircle, FaExclamationTriangle, FaInfoCircle, FaQrcode, FaHistory, FaChevronRight, FaLightbulb, FaStar } from 'react-icons/fa';
+import { HiSparkles, HiLightningBolt, HiCube, HiDocumentText, HiTrendingUp, HiChip } from 'react-icons/hi';
 import { BsPersonFill, BsPeopleFill, BsGraphUp } from 'react-icons/bs';
 import { GiCargoShip } from 'react-icons/gi';
+import { MdAutoGraph, MdWarning } from 'react-icons/md';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import Map from '../components/map.jsx';
 import Sidebar from '../components/sidebar.jsx';
 import { useNavigation } from '../contexts/navigationContext';
 import ShipmentsContainer from '../components/shipments-container';
 import BlockchainLedgerSummary from '../components/blockchainledger.jsx';
-import { Line, Doughnut } from 'react-chartjs-2';
+import { Line, Doughnut, Bar, Radar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
+  RadialLinearScale,
   Title,
   Tooltip,
   Legend,
@@ -33,6 +35,8 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
+  RadialLinearScale,
   Title,
   Tooltip,
   Legend,
@@ -41,6 +45,32 @@ ChartJS.register(
 );
 
 import PropTypes from 'prop-types';
+
+// Material Design Card Component
+const MaterialCard = ({ children, elevation = 2, className = '', onClick }) => {
+  return (
+    <motion.div
+      whileHover={{ y: -2 }}
+      className={`bg-surface-light dark:bg-surface-elevated-dark rounded-xl ${className} ${
+        elevation === 1 ? 'shadow-elevation-1 dark:shadow-elevation-dark-1' :
+        elevation === 2 ? 'shadow-elevation-2 dark:shadow-elevation-dark-2' :
+        elevation === 3 ? 'shadow-elevation-3 dark:shadow-elevation-dark-3' :
+        elevation === 4 ? 'shadow-elevation-4 dark:shadow-elevation-dark-4' :
+        'shadow-elevation-5 dark:shadow-elevation-dark-5'
+      } ${onClick ? 'cursor-pointer ripple' : ''}`}
+      onClick={onClick}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+MaterialCard.propTypes = {
+  children: PropTypes.node.isRequired,
+  elevation: PropTypes.number,
+  className: PropTypes.string,
+  onClick: PropTypes.func
+};
 
 // Animated Counter Component
 const AnimatedCounter = ({ value, suffix = '', prefix = '' }) => {
@@ -114,7 +144,7 @@ const Dashboard = () => {
     };
   }, []);
 
-  // Chart data
+  // Enhanced Chart Data
   const lineChartData = {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     datasets: [
@@ -133,6 +163,14 @@ const Dashboard = () => {
         backgroundColor: 'rgba(59, 130, 246, 0.1)',
         tension: 0.4,
         fill: true,
+      },
+      {
+        label: 'Returns',
+        data: [5, 8, 12, 9, 7, 10, 8],
+        borderColor: 'rgb(239, 68, 68)',
+        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+        tension: 0.4,
+        fill: true,
       }
     ]
   };
@@ -149,6 +187,44 @@ const Dashboard = () => {
           'rgba(239, 68, 68, 0.8)',
         ],
         borderWidth: 0,
+      }
+    ]
+  };
+
+  // Team Performance Radar Chart
+  const radarData = {
+    labels: ['Efficiency', 'Speed', 'Accuracy', 'Communication', 'Safety', 'Innovation'],
+    datasets: [
+      {
+        label: 'Current Performance',
+        data: [85, 92, 88, 78, 95, 72],
+        backgroundColor: 'rgba(20, 184, 166, 0.2)',
+        borderColor: 'rgb(20, 184, 166)',
+        pointBackgroundColor: 'rgb(20, 184, 166)',
+      },
+      {
+        label: 'Target',
+        data: [90, 90, 90, 85, 95, 80],
+        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+        borderColor: 'rgb(59, 130, 246)',
+        pointBackgroundColor: 'rgb(59, 130, 246)',
+      }
+    ]
+  };
+
+  // Supply Chain Flow Bar Chart
+  const barChartData = {
+    labels: ['Sourcing', 'Manufacturing', 'Warehousing', 'Distribution', 'Delivery', 'Returns'],
+    datasets: [
+      {
+        label: 'Efficiency %',
+        data: [88, 92, 85, 90, 94, 78],
+        backgroundColor: 'rgba(20, 184, 166, 0.8)',
+      },
+      {
+        label: 'Cost Optimization %',
+        data: [75, 82, 88, 85, 80, 65],
+        backgroundColor: 'rgba(59, 130, 246, 0.8)',
       }
     ]
   };
@@ -223,6 +299,58 @@ const Dashboard = () => {
     }
   ];
 
+  // AI Insights Data
+  const aiInsights = [
+    {
+      id: 1,
+      type: 'optimization',
+      title: 'Route Optimization Opportunity',
+      description: 'AI detected potential 23% reduction in delivery time for Eastern routes',
+      impact: 'High',
+      icon: MdAutoGraph,
+      color: 'text-green-500',
+      action: 'Apply Optimization'
+    },
+    {
+      id: 2,
+      type: 'prediction',
+      title: 'Demand Surge Predicted',
+      description: 'Expected 45% increase in orders for next week based on historical patterns',
+      impact: 'Medium',
+      icon: HiTrendingUp,
+      color: 'text-blue-500',
+      action: 'Prepare Resources'
+    },
+    {
+      id: 3,
+      type: 'anomaly',
+      title: 'Unusual Pattern Detected',
+      description: 'Abnormal delay patterns in Northern corridor require investigation',
+      impact: 'High',
+      icon: MdWarning,
+      color: 'text-yellow-500',
+      action: 'Investigate'
+    },
+    {
+      id: 4,
+      type: 'recommendation',
+      title: 'Cost Saving Opportunity',
+      description: 'Consolidating shipments could save $12,450 this month',
+      impact: 'Medium',
+      icon: FaLightbulb,
+      color: 'text-purple-500',
+      action: 'Review Details'
+    }
+  ];
+
+  // Team Performance Data
+  const teamMembers = [
+    { name: 'John Kamau', role: 'Driver', rating: 4.8, deliveries: 234, onTime: 98, avatar: 'JK' },
+    { name: 'Sarah Wanjiru', role: 'Dispatcher', rating: 4.9, tasks: 456, efficiency: 95, avatar: 'SW' },
+    { name: 'Peter Ochieng', role: 'Driver', rating: 4.7, deliveries: 198, onTime: 96, avatar: 'PO' },
+    { name: 'Mary Njeri', role: 'Coordinator', rating: 4.9, tasks: 324, efficiency: 97, avatar: 'MN' },
+  ];
+
   const recentAlerts = [
     {
       id: 1,
@@ -289,10 +417,10 @@ const Dashboard = () => {
   };
 
   return (
-    <div className='flex h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 overflow-hidden'>
+    <div className='flex h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 overflow-hidden'>
       {/* Progress Bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-blue-500 z-50 origin-left"
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 z-50 origin-left"
         style={{ scaleX: scrollYProgress }}
       />
 
@@ -323,48 +451,50 @@ const Dashboard = () => {
       )}
 
       <div className='flex flex-col flex-grow'>
-        {/* Enhanced Header */}
+        {/* Enhanced Material Design Header */}
         <motion.header 
           initial={{ y: -100 }}
           animate={{ y: 0 }}
-          className='flex items-center justify-between px-6 py-4 bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl shadow-sm border-b border-slate-200 dark:border-slate-700 sticky top-0 z-20'
+          className='flex items-center justify-between px-6 py-4 bg-surface-light/95 dark:bg-surface-elevated-dark/95 backdrop-blur-xl shadow-elevation-1 dark:shadow-elevation-dark-1 sticky top-0 z-20'
         >
           <div className='flex items-center gap-4'>
             <motion.button 
               onClick={toggleNav}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className='p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors'
+              className='p-2 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-all duration-200 ripple'
               aria-label='Toggle navigation'
             >
-              {showNav ? <IoClose size={24} /> : <IoMenu size={24} />}
+              <span className="material-icons text-2xl text-on-surface-light dark:text-on-surface-dark">
+                {showNav ? 'close' : 'menu'}
+              </span>
             </motion.button>
 
-            {/* Search Bar */}
-            <div className='hidden md:flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700 rounded-lg'>
-              <IoSearch className='text-slate-400' />
+            {/* Search Bar with Material Design */}
+            <div className='hidden md:flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full'>
+              <span className="material-icons text-gray-400">search</span>
               <input
                 type='text'
                 placeholder='Search shipments, customers...'
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className='bg-transparent outline-none text-sm w-64 text-slate-700 dark:text-slate-300'
+                className='bg-transparent outline-none text-sm w-64 text-gray-700 dark:text-gray-300'
               />
-              <kbd className='px-2 py-0.5 text-xs bg-white dark:bg-slate-600 rounded'>⌘K</kbd>
+              <kbd className='px-2 py-0.5 text-xs bg-white dark:bg-gray-700 rounded-md caption'>⌘K</kbd>
             </div>
           </div>
 
           <div className='flex items-center gap-4'>
-            {/* Period Selector */}
-            <div className='hidden lg:flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-700 rounded-lg'>
+            {/* Period Selector with Material Design */}
+            <div className='hidden lg:flex items-center gap-1 p-1 bg-gray-100 dark:bg-gray-800 rounded-full'>
               {['Today', 'Week', 'Month'].map((period) => (
                 <button
                   key={period}
                   onClick={() => setSelectedPeriod(period.toLowerCase())}
-                  className={`px-3 py-1 text-sm rounded-md transition-all ${
+                  className={`px-4 py-2 text-sm rounded-full transition-all duration-200 ${
                     selectedPeriod === period.toLowerCase()
-                      ? 'bg-white dark:bg-slate-600 shadow text-teal-600 dark:text-teal-400'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                      ? 'bg-primary-500 text-white shadow-elevation-2'
+                      : 'text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
                   }`}
                 >
                   {period}
@@ -372,7 +502,7 @@ const Dashboard = () => {
               ))}
             </div>
 
-            {/* Notifications */}
+            {/* Notifications with Material Badge */}
             <div className='relative'>
               <motion.button
                 whileHover={{ scale: 1.1 }}
@@ -381,41 +511,41 @@ const Dashboard = () => {
                   setShowNotifications(!showNotifications);
                   setShowProfile(false);
                 }}
-                className='relative p-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-all'
+                className='relative p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-all ripple'
                 aria-label='Notifications'
               >
-                <IoIosNotificationsOutline className='w-6 h-6' />
-                <span className='absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse'></span>
+                <span className="material-icons-outlined text-2xl">notifications</span>
+                <span className='absolute top-1 right-1 w-2 h-2 bg-error-500 rounded-full animate-pulse'></span>
               </motion.button>
 
               {/* Notifications Dropdown */}
               <AnimatePresence>
                 {showNotifications && (
                   <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className='absolute right-0 mt-2 w-80 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden'
+                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                    className='absolute right-0 mt-2 w-80 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-4 dark:shadow-elevation-dark-4 overflow-hidden'
                   >
-                    <div className='p-4 border-b border-slate-200 dark:border-slate-700'>
-                      <h3 className='font-semibold text-slate-900 dark:text-white'>Notifications</h3>
+                    <div className='p-4 border-b border-gray-200 dark:border-gray-700'>
+                      <h3 className='headline-6 text-on-surface-light dark:text-on-surface-dark'>Notifications</h3>
                     </div>
                     <div className='max-h-96 overflow-y-auto'>
                       {notifications.map((notif) => (
                         <motion.div
                           key={notif.id}
                           whileHover={{ backgroundColor: 'rgba(0,0,0,0.02)' }}
-                          className={`p-4 border-b border-slate-100 dark:border-slate-700 cursor-pointer ${
-                            notif.unread ? 'bg-teal-50/50 dark:bg-teal-900/20' : ''
+                          className={`p-4 border-b border-gray-100 dark:border-gray-800 cursor-pointer ${
+                            notif.unread ? 'bg-primary-50/50 dark:bg-primary-900/20' : ''
                           }`}
                         >
-                          <p className='text-sm text-slate-700 dark:text-slate-300'>{notif.text}</p>
-                          <p className='text-xs text-slate-500 dark:text-slate-400 mt-1'>{notif.time}</p>
+                          <p className='body-2 text-on-surface-light dark:text-on-surface-dark'>{notif.text}</p>
+                          <p className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium mt-1'>{notif.time}</p>
                         </motion.div>
                       ))}
                     </div>
-                    <div className='p-3 text-center border-t border-slate-200 dark:border-slate-700'>
-                      <button className='text-sm text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300'>
+                    <div className='p-3 text-center border-t border-gray-200 dark:border-gray-700'>
+                      <button className='button-text text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300'>
                         View all notifications
                       </button>
                     </div>
@@ -424,7 +554,7 @@ const Dashboard = () => {
               </AnimatePresence>
             </div>
 
-            {/* Profile Dropdown */}
+            {/* Profile Dropdown with Material Design */}
             <div className='relative'>
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -433,19 +563,19 @@ const Dashboard = () => {
                   setShowProfile(!showProfile);
                   setShowNotifications(false);
                 }}
-                className='flex items-center gap-3 px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-all'
+                className='flex items-center gap-3 px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-all ripple'
               >
                 <div className='text-right hidden md:block'>
-                  <p className='text-sm font-medium text-slate-900 dark:text-white'>
+                  <p className='subtitle-2 text-on-surface-light dark:text-on-surface-dark'>
                     {user ? user.displayName || 'Admin User' : 'Guest'}
                   </p>
-                  <p className='text-xs text-slate-500 dark:text-slate-400'>
+                  <p className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium'>
                     {user ? user.email : 'Not logged in'}
                   </p>
                 </div>
                 <img
-                  className='w-10 h-10 rounded-full border-2 border-teal-500'
-                  src={user?.photoURL || `https://ui-avatars.com/api/?name=${user?.email || 'Guest'}&background=14b8a6&color=fff`}
+                  className='w-10 h-10 rounded-full border-2 border-primary-500'
+                  src={user?.photoURL || `https://ui-avatars.com/api/?name=${user?.email || 'Guest'}&background=2196F3&color=fff`}
                   alt='Profile'
                 />
               </motion.button>
@@ -454,40 +584,40 @@ const Dashboard = () => {
               <AnimatePresence>
                 {showProfile && (
                   <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className='absolute right-0 mt-2 w-64 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden'
+                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                    className='absolute right-0 mt-2 w-64 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-4 dark:shadow-elevation-dark-4 overflow-hidden'
                   >
-                    <div className='p-4 border-b border-slate-200 dark:border-slate-700'>
+                    <div className='p-4 border-b border-gray-200 dark:border-gray-700'>
                       <div className='flex items-center gap-3'>
                         <img
                           className='w-12 h-12 rounded-full'
-                          src={user?.photoURL || `https://ui-avatars.com/api/?name=${user?.email || 'Guest'}&background=14b8a6&color=fff`}
+                          src={user?.photoURL || `https://ui-avatars.com/api/?name=${user?.email || 'Guest'}&background=2196F3&color=fff`}
                           alt='Profile'
                         />
                         <div>
-                          <p className='font-medium text-slate-900 dark:text-white'>
+                          <p className='subtitle-1 text-on-surface-light dark:text-on-surface-dark'>
                             {user ? user.displayName || 'Admin' : 'Guest'}
                           </p>
-                          <p className='text-xs text-slate-500 dark:text-slate-400'>
+                          <p className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium'>
                             {user ? user.email : 'Not logged in'}
                           </p>
                         </div>
                       </div>
                     </div>
                     <div className='p-2'>
-                      <button className='w-full flex items-center gap-3 px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors'>
-                        <FaUserCircle />
+                      <button className='w-full flex items-center gap-3 px-3 py-2 text-left body-2 text-on-surface-light dark:text-on-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors'>
+                        <span className="material-icons text-xl">account_circle</span>
                         Profile Settings
                       </button>
-                      <button className='w-full flex items-center gap-3 px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors'>
-                        <IoSettingsSharp />
+                      <button className='w-full flex items-center gap-3 px-3 py-2 text-left body-2 text-on-surface-light dark:text-on-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors'>
+                        <span className="material-icons text-xl">settings</span>
                         Preferences
                       </button>
-                      <hr className='my-2 border-slate-200 dark:border-slate-700' />
-                      <button className='w-full flex items-center gap-3 px-3 py-2 text-left text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors'>
-                        <IoLogOutOutline />
+                      <hr className='my-2 border-gray-200 dark:border-gray-700' />
+                      <button className='w-full flex items-center gap-3 px-3 py-2 text-left body-2 text-error-600 dark:text-error-400 hover:bg-error-50 dark:hover:bg-error-900/20 rounded-lg transition-colors'>
+                        <span className="material-icons text-xl">logout</span>
                         Sign Out
                       </button>
                     </div>
@@ -498,7 +628,7 @@ const Dashboard = () => {
           </div>
         </motion.header>
 
-        {/* Main Content */}
+        {/* Main Content with Material Design Grid */}
         <div className='flex-grow overflow-y-auto'>
           <motion.div 
             variants={containerVariants}
@@ -506,97 +636,138 @@ const Dashboard = () => {
             animate="visible"
             className='p-6 space-y-6'
           >
-            {/* Welcome Section */}
+            {/* Welcome Section with Material Typography */}
             <motion.div variants={itemVariants} className='flex justify-between items-center'>
               <div>
-                <h1 className='text-3xl font-bold text-slate-900 dark:text-white'>
+                <h1 className='headline-4 text-on-surface-light dark:text-on-surface-dark'>
                   Welcome back, {user ? user.displayName || 'Admin' : 'Guest'} 👋
                 </h1>
-                <p className='text-slate-600 dark:text-slate-400 mt-1'>
+                <p className='body-1 text-on-surface-light-medium dark:text-on-surface-dark-medium mt-1'>
                   Here&apos;s what&apos;s happening with your supply chain today
                 </p>
               </div>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className='hidden lg:flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-teal-500 to-blue-500 text-white rounded-xl font-semibold shadow-lg shadow-teal-500/25 hover:shadow-xl transition-all'
+                className='hidden lg:flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-600 to-secondary-500 text-white rounded-full font-medium shadow-elevation-3 hover:shadow-elevation-4 transition-all md-button'
               >
                 <FaQrcode />
-                Generate DPP
+                <span className="button-text">Generate DPP</span>
               </motion.button>
             </motion.div>
 
-            {/* Stats Cards */}
+            {/* Key Metrics Cards with Material Design */}
             <motion.div 
               variants={itemVariants}
               className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'
             >
               {stats.map((stat, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ y: -5, scale: 1.02 }}
-                  className='relative bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all overflow-hidden'
-                >
-                  {/* Background Gradient */}
-                  <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${stat.gradient} opacity-10 rounded-full -mr-16 -mt-16`}></div>
-                  
-                  <div className='relative'>
-                    <div className='flex items-start justify-between mb-4'>
-                      <div className={`w-12 h-12 bg-gradient-to-r ${stat.gradient} rounded-xl flex items-center justify-center shadow-lg`}>
-                        <stat.icon className='text-white text-xl' />
-                      </div>
-                      <div className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-semibold ${
-                        stat.trend === 'up' 
-                          ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400' 
-                          : 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400'
-                      }`}>
-                        {stat.trend === 'up' ? <IoMdTrendingUp /> : <IoMdTrendingDown />}
-                        {Math.abs(stat.change)}%
-                      </div>
+                <MaterialCard key={index} elevation={2} className="p-6">
+                  <div className='flex items-start justify-between mb-4'>
+                    <div className={`w-12 h-12 bg-gradient-to-r ${stat.gradient} rounded-xl flex items-center justify-center shadow-elevation-2`}>
+                      <stat.icon className='text-white text-xl' />
                     </div>
-                    
-                    <h3 className='text-sm font-medium text-slate-600 dark:text-slate-400 mb-1'>
-                      {stat.title}
-                    </h3>
-                    <p className='text-2xl font-bold text-slate-900 dark:text-white'>
-                      <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                    </p>
-                    <p className='text-xs text-slate-500 dark:text-slate-400 mt-2'>
-                      {stat.description}
-                    </p>
+                    <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold ${
+                      stat.trend === 'up' 
+                        ? 'bg-success-100 dark:bg-success-900/30 text-success-600 dark:text-success-400' 
+                        : 'bg-error-100 dark:bg-error-900/30 text-error-600 dark:text-error-400'
+                    }`}>
+                      {stat.trend === 'up' ? <IoMdTrendingUp /> : <IoMdTrendingDown />}
+                      {Math.abs(stat.change)}%
+                    </div>
                   </div>
-                </motion.div>
+                  
+                  <h3 className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium mb-1'>
+                    {stat.title}
+                  </h3>
+                  <p className='headline-5 text-on-surface-light dark:text-on-surface-dark'>
+                    <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                  </p>
+                  <p className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium mt-2'>
+                    {stat.description}
+                  </p>
+                </MaterialCard>
               ))}
             </motion.div>
 
-            {/* Charts Section */}
+            {/* AI Insights Section - New Comprehensive Section */}
+            <motion.div variants={itemVariants}>
+              <div className='flex items-center justify-between mb-4'>
+                <h2 className='headline-5 text-on-surface-light dark:text-on-surface-dark flex items-center gap-2'>
+                  <HiChip className='text-primary-500' />
+                  AI Insights & Predictions
+                </h2>
+                <button className='button-text text-primary-600 dark:text-primary-400'>
+                  View All
+                </button>
+              </div>
+              <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4'>
+                {aiInsights.map((insight) => (
+                  <MaterialCard key={insight.id} elevation={2} className='p-4'>
+                    <div className='flex items-start gap-3'>
+                      <div className={`p-2 rounded-lg bg-gray-100 dark:bg-gray-800 ${insight.color}`}>
+                        <insight.icon className='text-xl' />
+                      </div>
+                      <div className='flex-1'>
+                        <span className={`caption px-2 py-1 rounded-full text-xs ${
+                          insight.impact === 'High' ? 'bg-error-100 text-error-700 dark:bg-error-900/30 dark:text-error-400' :
+                          insight.impact === 'Medium' ? 'bg-warning-100 text-warning-700 dark:bg-warning-900/30 dark:text-warning-400' :
+                          'bg-info-100 text-info-700 dark:bg-info-900/30 dark:text-info-400'
+                        }`}>
+                          {insight.impact} Impact
+                        </span>
+                        <h3 className='subtitle-2 text-on-surface-light dark:text-on-surface-dark mt-2'>
+                          {insight.title}
+                        </h3>
+                        <p className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium mt-1'>
+                          {insight.description}
+                        </p>
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className='mt-3 px-3 py-1 bg-primary-500 text-white rounded-full text-xs font-medium hover:bg-primary-600 transition-colors'
+                        >
+                          {insight.action}
+                        </motion.button>
+                      </div>
+                    </div>
+                  </MaterialCard>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Charts Section with Supply Chain Flow */}
             <motion.div variants={itemVariants} className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
-              {/* Line Chart */}
-              <div className='lg:col-span-2 bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg'>
+              {/* Performance Chart */}
+              <MaterialCard elevation={2} className='lg:col-span-2 p-6'>
                 <div className='flex items-center justify-between mb-6'>
                   <div>
-                    <h2 className='text-lg font-semibold text-slate-900 dark:text-white'>Performance Overview</h2>
-                    <p className='text-sm text-slate-600 dark:text-slate-400'>Weekly shipment trends</p>
+                    <h2 className='headline-6 text-on-surface-light dark:text-on-surface-dark'>Performance Overview</h2>
+                    <p className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium'>Weekly shipment trends</p>
                   </div>
                   <div className='flex items-center gap-4'>
                     <div className='flex items-center gap-2'>
                       <div className='w-3 h-3 bg-teal-500 rounded-full'></div>
-                      <span className='text-sm text-slate-600 dark:text-slate-400'>Shipments</span>
+                      <span className='caption'>Shipments</span>
                     </div>
                     <div className='flex items-center gap-2'>
                       <div className='w-3 h-3 bg-blue-500 rounded-full'></div>
-                      <span className='text-sm text-slate-600 dark:text-slate-400'>Deliveries</span>
+                      <span className='caption'>Deliveries</span>
+                    </div>
+                    <div className='flex items-center gap-2'>
+                      <div className='w-3 h-3 bg-red-500 rounded-full'></div>
+                      <span className='caption'>Returns</span>
                     </div>
                   </div>
                 </div>
                 <div className='h-64'>
                   <Line data={lineChartData} options={chartOptions} />
                 </div>
-              </div>
+              </MaterialCard>
 
-              {/* Doughnut Chart */}
-              <div className='bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg'>
-                <h2 className='text-lg font-semibold text-slate-900 dark:text-white mb-6'>Shipment Status</h2>
+              {/* Status Distribution */}
+              <MaterialCard elevation={2} className='p-6'>
+                <h2 className='headline-6 text-on-surface-light dark:text-on-surface-dark mb-6'>Shipment Status</h2>
                 <div className='h-48'>
                   <Doughnut data={doughnutData} />
                 </div>
@@ -608,18 +779,105 @@ const Dashboard = () => {
                         index === 1 ? 'bg-blue-500' :
                         index === 2 ? 'bg-purple-500' : 'bg-red-500'
                       }`}></div>
-                      <span className='text-xs text-slate-600 dark:text-slate-400'>{label}</span>
+                      <span className='caption'>{label}</span>
                     </div>
                   ))}
                 </div>
-              </div>
+              </MaterialCard>
+            </motion.div>
+
+            {/* Team Performance Section - New Comprehensive Section */}
+            <motion.div variants={itemVariants} className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+              {/* Team Performance Radar */}
+              <MaterialCard elevation={2} className='p-6'>
+                <h2 className='headline-6 text-on-surface-light dark:text-on-surface-dark mb-4'>
+                  Team Performance Metrics
+                </h2>
+                <div className='h-64'>
+                  <Radar data={radarData} options={{ ...chartOptions, plugins: { ...chartOptions.plugins, legend: { display: true } } }} />
+                </div>
+              </MaterialCard>
+
+              {/* Top Performers */}
+              <MaterialCard elevation={2} className='p-6'>
+                <h2 className='headline-6 text-on-surface-light dark:text-on-surface-dark mb-4'>
+                  Top Performers
+                </h2>
+                <div className='space-y-3'>
+                  {teamMembers.map((member, index) => (
+                    <motion.div
+                      key={index}
+                      whileHover={{ x: 5 }}
+                      className='flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-all cursor-pointer'
+                    >
+                      <div className='flex items-center gap-3'>
+                        <div className='w-10 h-10 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full flex items-center justify-center text-white font-semibold'>
+                          {member.avatar}
+                        </div>
+                        <div>
+                          <p className='subtitle-2 text-on-surface-light dark:text-on-surface-dark'>{member.name}</p>
+                          <p className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium'>{member.role}</p>
+                        </div>
+                      </div>
+                      <div className='text-right'>
+                        <div className='flex items-center gap-1'>
+                          <FaStar className='text-yellow-500 text-sm' />
+                          <span className='subtitle-2'>{member.rating}</span>
+                        </div>
+                        <p className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium'>
+                          {member.deliveries ? `${member.deliveries} deliveries` : `${member.tasks} tasks`}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </MaterialCard>
+            </motion.div>
+
+            {/* Supply Chain Flow Section - New Comprehensive Section */}
+            <motion.div variants={itemVariants}>
+              <MaterialCard elevation={2} className='p-6'>
+                <div className='flex items-center justify-between mb-4'>
+                  <h2 className='headline-6 text-on-surface-light dark:text-on-surface-dark'>
+                    Supply Chain Flow Analysis
+                  </h2>
+                  <div className='flex items-center gap-4'>
+                    <div className='flex items-center gap-2'>
+                      <div className='w-3 h-3 bg-teal-500 rounded-full'></div>
+                      <span className='caption'>Efficiency</span>
+                    </div>
+                    <div className='flex items-center gap-2'>
+                      <div className='w-3 h-3 bg-blue-500 rounded-full'></div>
+                      <span className='caption'>Cost Optimization</span>
+                    </div>
+                  </div>
+                </div>
+                <div className='h-64'>
+                  <Bar data={barChartData} options={chartOptions} />
+                </div>
+                <div className='grid grid-cols-6 gap-4 mt-6 text-center'>
+                  {['Sourcing', 'Manufacturing', 'Warehousing', 'Distribution', 'Delivery', 'Returns'].map((stage, index) => (
+                    <div key={index}>
+                      <div className='relative'>
+                        <div className='w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
+                          <div
+                            className='bg-gradient-to-r from-primary-500 to-secondary-500 h-2 rounded-full'
+                            style={{ width: `${barChartData.datasets[0].data[index]}%` }}
+                          />
+                        </div>
+                        <p className='caption mt-2'>{stage}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </MaterialCard>
             </motion.div>
 
             {/* Quick Actions & Recent Alerts */}
             <motion.div variants={itemVariants} className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
               {/* Quick Actions */}
-              <div className='bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg'>
-                <h2 className='text-lg font-semibold text-slate-900 dark:text-white mb-4'>Quick Actions</h2>
+              <MaterialCard elevation={2} className='p-6'>
+                <h2 className='headline-6 text-on-surface-light dark:text-on-surface-dark mb-4'>Quick Actions</h2>
                 <div className='grid grid-cols-2 gap-3'>
                   {[
                     { icon: FaTruck, label: 'New Shipment', color: 'from-teal-500 to-green-500' },
@@ -631,22 +889,22 @@ const Dashboard = () => {
                       key={index}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className='flex items-center gap-3 p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 transition-all'
+                      className='flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-xl hover:shadow-elevation-2 transition-all ripple'
                     >
-                      <div className={`w-10 h-10 bg-gradient-to-r ${action.color} rounded-lg flex items-center justify-center`}>
+                      <div className={`w-10 h-10 bg-gradient-to-r ${action.color} rounded-lg flex items-center justify-center shadow-elevation-1`}>
                         <action.icon className='text-white text-lg' />
                       </div>
-                      <span className='text-sm font-medium text-slate-700 dark:text-slate-300'>{action.label}</span>
+                      <span className='subtitle-2 text-on-surface-light dark:text-on-surface-dark'>{action.label}</span>
                     </motion.button>
                   ))}
                 </div>
-              </div>
+              </MaterialCard>
 
-              {/* Recent Alerts */}
-              <div className='bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg'>
+              {/* Recent Alerts with Priority */}
+              <MaterialCard elevation={2} className='p-6'>
                 <div className='flex items-center justify-between mb-4'>
-                  <h2 className='text-lg font-semibold text-slate-900 dark:text-white'>Recent Alerts</h2>
-                  <button className='text-sm text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300'>
+                  <h2 className='headline-6 text-on-surface-light dark:text-on-surface-dark'>Recent Alerts</h2>
+                  <button className='button-text text-primary-600 dark:text-primary-400'>
                     View all
                   </button>
                 </div>
@@ -655,107 +913,109 @@ const Dashboard = () => {
                     <motion.div
                       key={alert.id}
                       whileHover={{ x: 5 }}
-                      className='flex items-start gap-3 p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-all cursor-pointer'
+                      className='flex items-start gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-all cursor-pointer'
                     >
                       <div className={`mt-1 ${alert.color}`}>
                         <alert.icon className='w-5 h-5' />
                       </div>
                       <div className='flex-1'>
-                        <p className='text-sm font-medium text-slate-900 dark:text-white'>{alert.title}</p>
-                        <p className='text-xs text-slate-600 dark:text-slate-400 mt-1'>{alert.description}</p>
-                        <p className='text-xs text-slate-500 dark:text-slate-500 mt-2'>{alert.time}</p>
+                        <p className='subtitle-2 text-on-surface-light dark:text-on-surface-dark'>{alert.title}</p>
+                        <p className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium mt-1'>{alert.description}</p>
+                        <p className='caption text-on-surface-light-disabled dark:text-on-surface-dark-disabled mt-2'>{alert.time}</p>
                       </div>
-                      <FaChevronRight className='text-slate-400' />
+                      <FaChevronRight className='text-gray-400' />
                     </motion.div>
                   ))}
                 </div>
-              </div>
+              </MaterialCard>
             </motion.div>
 
             {/* Digital Product Passport Section */}
-            <motion.div variants={itemVariants} className='bg-gradient-to-r from-purple-500 to-teal-500 rounded-2xl p-8 shadow-xl text-white'>
-              <div className='flex flex-col lg:flex-row items-center justify-between gap-6'>
-                <div className='flex-1'>
-                  <div className='flex items-center gap-2 mb-4'>
-                    <HiSparkles className='text-2xl' />
-                    <h2 className='text-2xl font-bold'>Digital Product Passports</h2>
+            <motion.div variants={itemVariants}>
+              <MaterialCard elevation={3} className='bg-gradient-to-r from-purple-500 to-teal-500 p-8 text-white'>
+                <div className='flex flex-col lg:flex-row items-center justify-between gap-6'>
+                  <div className='flex-1'>
+                    <div className='flex items-center gap-2 mb-4'>
+                      <HiSparkles className='text-2xl' />
+                      <h2 className='headline-5'>Digital Product Passports</h2>
+                    </div>
+                    <p className='body-1 text-white/90 mb-6'>
+                      Create blockchain-verified digital passports for your products with complete lifecycle tracking
+                    </p>
+                    <div className='grid grid-cols-3 gap-4'>
+                      <div>
+                        <p className='headline-4'>1M+</p>
+                        <p className='caption text-white/80'>Passports Issued</p>
+                      </div>
+                      <div>
+                        <p className='headline-4'>100%</p>
+                        <p className='caption text-white/80'>Traceability</p>
+                      </div>
+                      <div>
+                        <p className='headline-4'>0.1s</p>
+                        <p className='caption text-white/80'>Verification</p>
+                      </div>
+                    </div>
                   </div>
-                  <p className='text-white/90 mb-6'>
-                    Create blockchain-verified digital passports for your products with complete lifecycle tracking
-                  </p>
-                  <div className='grid grid-cols-3 gap-4'>
-                    <div>
-                      <p className='text-3xl font-bold'>1M+</p>
-                      <p className='text-sm text-white/80'>Passports Issued</p>
-                    </div>
-                    <div>
-                      <p className='text-3xl font-bold'>100%</p>
-                      <p className='text-sm text-white/80'>Traceability</p>
-                    </div>
-                    <div>
-                      <p className='text-3xl font-bold'>0.1s</p>
-                      <p className='text-sm text-white/80'>Verification</p>
-                    </div>
-                  </div>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className='px-8 py-4 bg-white/20 backdrop-blur-sm rounded-xl font-semibold hover:bg-white/30 transition-all flex items-center gap-2 md-button'
+                  >
+                    <FaQrcode className='text-xl' />
+                    <span className='button-text'>Create New Passport</span>
+                  </motion.button>
                 </div>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className='px-8 py-4 bg-white/20 backdrop-blur-sm rounded-xl font-semibold hover:bg-white/30 transition-all flex items-center gap-2'
-                >
-                  <FaQrcode className='text-xl' />
-                  Create New Passport
-                </motion.button>
-              </div>
+              </MaterialCard>
             </motion.div>
 
             {/* Map and Blockchain Ledger */}
             <motion.div variants={itemVariants} className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
               {/* Map Section */}
-              <div className='bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg'>
+              <MaterialCard elevation={2} className='p-6'>
                 <div className='flex items-center justify-between mb-4'>
-                  <h2 className='text-lg font-semibold text-slate-900 dark:text-white'>Live Tracking</h2>
+                  <h2 className='headline-6 text-on-surface-light dark:text-on-surface-dark'>Live Tracking</h2>
                   <div className='flex items-center gap-2'>
                     <div className='w-2 h-2 bg-green-500 rounded-full animate-pulse'></div>
-                    <span className='text-sm text-slate-600 dark:text-slate-400'>Live</span>
+                    <span className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium'>Live</span>
                   </div>
                 </div>
-                <div className='h-64 bg-slate-100 dark:bg-slate-700 rounded-lg overflow-hidden'>
+                <div className='h-64 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden'>
                   <Map />
                 </div>
                 <div className='grid grid-cols-4 gap-4 mt-4'>
                   <div className='text-center'>
-                    <p className='text-2xl font-bold text-slate-900 dark:text-white'>24</p>
-                    <p className='text-xs text-slate-600 dark:text-slate-400'>Active</p>
+                    <p className='headline-6 text-on-surface-light dark:text-on-surface-dark'>24</p>
+                    <p className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium'>Active</p>
                   </div>
                   <div className='text-center'>
-                    <p className='text-2xl font-bold text-slate-900 dark:text-white'>156</p>
-                    <p className='text-xs text-slate-600 dark:text-slate-400'>Today</p>
+                    <p className='headline-6 text-on-surface-light dark:text-on-surface-dark'>156</p>
+                    <p className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium'>Today</p>
                   </div>
                   <div className='text-center'>
-                    <p className='text-2xl font-bold text-slate-900 dark:text-white'>98%</p>
-                    <p className='text-xs text-slate-600 dark:text-slate-400'>On Time</p>
+                    <p className='headline-6 text-on-surface-light dark:text-on-surface-dark'>98%</p>
+                    <p className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium'>On Time</p>
                   </div>
                   <div className='text-center'>
-                    <p className='text-2xl font-bold text-slate-900 dark:text-white'>12</p>
-                    <p className='text-xs text-slate-600 dark:text-slate-400'>Delayed</p>
+                    <p className='headline-6 text-on-surface-light dark:text-on-surface-dark'>12</p>
+                    <p className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium'>Delayed</p>
                   </div>
                 </div>
-              </div>
+              </MaterialCard>
 
               {/* Blockchain Ledger */}
-              <div className='bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg'>
+              <MaterialCard elevation={2} className='p-6'>
                 <div className='flex items-center justify-between mb-4'>
-                  <h2 className='text-lg font-semibold text-slate-900 dark:text-white'>Blockchain Activity</h2>
+                  <h2 className='headline-6 text-on-surface-light dark:text-on-surface-dark'>Blockchain Activity</h2>
                   <div className='flex items-center gap-2'>
                     <HiCube className='text-teal-500' />
-                    <span className='text-sm text-slate-600 dark:text-slate-400'>Verified</span>
+                    <span className='caption text-on-surface-light-medium dark:text-on-surface-dark-medium'>Verified</span>
                   </div>
                 </div>
                 <div className='h-80 overflow-hidden'>
                   <BlockchainLedgerSummary />
                 </div>
-              </div>
+              </MaterialCard>
             </motion.div>
 
             {/* Shipments Container */}
@@ -766,13 +1026,13 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Floating Action Button */}
+      {/* Floating Action Button with Material Design */}
       <motion.button
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        className='fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-teal-500 to-blue-500 rounded-full shadow-xl shadow-teal-500/25 flex items-center justify-center text-white z-50'
+        className='fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full shadow-elevation-4 hover:shadow-elevation-5 flex items-center justify-center text-white z-50'
       >
         <HiLightningBolt className='text-2xl' />
       </motion.button>
