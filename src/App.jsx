@@ -95,11 +95,7 @@ const App = () => {
               {/*<Route path="/user/signup" element={<SignUpForm username={username} setUsername={setUsername}/>} />*/}
               <Route
                 path='/admin/dashboard'
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                }
+                element={<Dashboard />}
               />
               <Route path='/notifications' element={<Notifications />} />
               <Route path='/users' element={<Users />} />
