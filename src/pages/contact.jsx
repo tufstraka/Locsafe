@@ -117,7 +117,7 @@ const ContactUs = () => {
       icon: HiOutlinePhone,
       title: "Call Us",
       description: "Mon-Fri from 8am to 6pm",
-      contact: "+254 700 000 000",
+      contact: "+254 701 746 774",
       link: "tel:+254701746774",
       color: "from-teal-500 to-green-500"
     },
@@ -133,7 +133,7 @@ const ContactUs = () => {
       icon: FaWhatsapp,
       title: "WhatsApp",
       description: "Quick support on WhatsApp",
-      contact: "+254 700 000 000",
+      contact: "+254 701 746 774",
       link: "https://wa.me/254701746774",
       color: "from-green-500 to-emerald-500"
     }
@@ -151,7 +151,7 @@ const ContactUs = () => {
       city: "Nairobi",
       country: "Kenya",
       address: "Westlands, Nairobi",
-      phone: "+254 700 000 000",
+      //phone: "+254 700 000 000",
       email: "nairobi@locsafe.org",
       isHeadquarters: true
     },
@@ -159,7 +159,7 @@ const ContactUs = () => {
       city: "Mombasa",
       country: "Kenya",
       address: "Nyali, Mombasa",
-      phone: "+254 700 000 001",
+      //phone: "+254 700 000 001",
       email: "mombasa@locsafe.org",
       isHeadquarters: false
     },
@@ -167,7 +167,7 @@ const ContactUs = () => {
       city: "Kampala",
       country: "Uganda",
       address: "Kololo, Kampala",
-      phone: "+256 700 000 000",
+      //phone: "+256 700 000 000",
       email: "kampala@locsafe.org",
       isHeadquarters: false
     }
