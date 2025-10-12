@@ -1,0 +1,15 @@
+{
+  "name": "locsafe-contact-form",
+  "version": "1.0.0",
+  "description": "AWS Lambda function for Locsafe contact form using AWS SES",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Locsafe",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-ses": "^3.540.0",
+    "@aws-sdk/client-secrets-manager": "^3.540.0"
+  }
+}
