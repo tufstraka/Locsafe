@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import { Helmet } from 'react-helmet';
-import emailjs from '@emailjs/browser';
 import {
   FaEnvelope,
   FaPhone,
@@ -36,14 +35,15 @@ import {
 const ContactUs = () => {
   const [formData, setFormData] = useState({
     from_name: '',
-    to_name: 'Keith',
     from_email: '',
-    subject: 'general',
+    department: 'sales',
     message: ''
   });
   const [status, setStatus] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState('sales');
+
+  const LAMBDA_ENDPOINT = 'https://t930qv3xji.execute-api.us-east-1.amazonaws.com/dev/contact';
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -65,13 +65,6 @@ const ContactUs = () => {
     }
   };
 
-  useEffect(() => {
-    let options = {
-      publicKey: 'Cb5HEKZQvWTTqRJJU'
-    };
-    emailjs.init(options);
-  }, []);
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -79,29 +72,57 @@ const ContactUs = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleDepartmentChange = (dept) => {
+    setSelectedDepartment(dept);
+    setFormData({
+      ...formData,
+      department: dept
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setStatus('');
     
-    emailjs.sendForm('service_uislhik', 'template_cxhx4bo', e.target)
-      .then(() => {
+    try {
+      const response = await fetch(LAMBDA_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from_name: formData.from_name,
+          from_email: formData.from_email,
+          department: formData.department,
+          message: formData.message
+        })
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
         setStatus('success');
         setFormData({
           from_name: '',
-          to_name: 'Keith',
           from_email: '',
-          subject: 'general',
+          department: 'sales',
           message: ''
         });
+        setSelectedDepartment('sales');
         setTimeout(() => setStatus(''), 5000);
-      }, () => {
+      } else {
         setStatus('error');
+        console.error('Contact form error:', result.error);
         setTimeout(() => setStatus(''), 5000);
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+      setStatus('error');
+      setTimeout(() => setStatus(''), 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactMethods = [
@@ -315,7 +336,8 @@ const ContactUs = () => {
                     {departments.map((dept) => (
                       <motion.button
                         key={dept.id}
-                        onClick={() => setSelectedDepartment(dept.id)}
+                        type="button"
+                        onClick={() => handleDepartmentChange(dept.id)}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         className={`p-3 rounded-lg border transition-all ${
