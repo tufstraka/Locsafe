@@ -298,7 +298,7 @@ const LandingPage = () => {
                       role="button"
                     >
                       <span className="flex items-center gap-3">
-                        Start Free Trial
+                        Get Started
                         <span className="material-icons text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
                       </span>
                     </Link>
@@ -1456,7 +1456,7 @@ const LandingPage = () => {
                     to="/register"
                     className="ripple inline-flex items-center justify-center px-10 py-5 bg-white text-primary-700 font-medium rounded-full shadow-elevation-5 hover:shadow-elevation-4 transition-all duration-300"
                   >
-                    Start Your Free Trial
+                    Get Started
                     <FaArrowRight className="ml-3" />
                   </Link>
                 </motion.div>

@@ -560,7 +560,7 @@ const Register = () => {
                   {!loading.register ? (
                     <>
                       <HiLightningBolt className="text-lg" />
-                      <span>Start Free Trial</span>
+                      <span>Start</span>
                       <FaArrowRight className="text-sm" />
                     </>
                   ) : (
