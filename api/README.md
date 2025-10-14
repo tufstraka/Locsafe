@@ -240,7 +240,7 @@ This project is licensed under the MIT License.
 
 ## 🛟 Support
 
-For support, email support@locsafe.io or open an issue in the repository.
+For support, email support@locsafe.org or open an issue in the repository.
 
 ## 🏗️ Built With
 
