@@ -185,6 +185,11 @@ jobs:
             sudo mkdir -p monitoring/grafana/dashboards monitoring/grafana/datasources backups nginx/ssl
             sudo chown -R $USER:$USER monitoring backups nginx
             
+            # Remove nginx.conf if it exists as a directory
+            if [ -d nginx/nginx.conf ]; then
+              sudo rm -rf nginx/nginx.conf
+            fi
+            
             # Create nginx config if it doesn't exist
             if [ ! -f nginx/nginx.conf ]; then
               cat > nginx/nginx.conf << 'NGINX_EOF'
@@ -347,6 +352,7 @@ jobs:
             Commit: ${{ github.sha }}
           username: GitHub Actions
           icon_emoji: ':warning:'
+
 
 
 
