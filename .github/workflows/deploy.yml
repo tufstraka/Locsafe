@@ -74,6 +74,11 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
+      - name: Create ECR repository if it doesn't exist
+        run: |
+          aws ecr describe-repositories --repository-names locsafe-api --region ${{ secrets.AWS_REGION }} || \
+          aws ecr create-repository --repository-name locsafe-api --region ${{ secrets.AWS_REGION }}
+
       - name: Build, tag, and push API image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
