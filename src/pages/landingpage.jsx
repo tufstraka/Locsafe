@@ -319,9 +319,9 @@ const LandingPage = () => {
 
                 <motion.div
                   variants={itemVariants}
-                  className="flex items-center gap-6 pt-8"
+                  className="flex flex-col sm:flex-row items-start sm:items-center gap-6 pt-8"
                 >
-                  <div className="flex -space-x-3">
+                  <div className="flex -space-x-3 w-full sm:w-auto justify-start">
                     {[1, 2, 3, 4, 5].map((i) => (
                       <motion.img
                         key={i}
@@ -335,7 +335,7 @@ const LandingPage = () => {
                       />
                     ))}
                   </div>
-                  <div className="flex flex-col">
+                  <div className="flex flex-col pr-4 sm:pr-0 w-full sm:w-auto mt-4 sm:mt-0">
                     <div className="flex gap-0.5">
                       {[...Array(5)].map((_, i) => (
                         <motion.div
