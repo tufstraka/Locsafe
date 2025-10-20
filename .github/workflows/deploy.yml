@@ -101,6 +101,10 @@ jobs:
             mkdir -p /home/ubuntu/locsafe
             cd /home/ubuntu/locsafe
             
+            # Install system dependencies
+            sudo apt-get update
+            sudo apt-get install -y unzip curl git
+            
             # Clone repository if it doesn't exist
             if [ ! -d ".git" ]; then
               git clone https://github.com/${{ github.repository }}.git .
@@ -124,18 +128,42 @@ jobs:
             if ! command -v docker &> /dev/null; then
               curl -fsSL https://get.docker.com -o get-docker.sh
               sudo sh get-docker.sh
-              sudo usermod -aG docker $USER
-              rm get-docker.sh
+              sudo usermod -aG docker ubuntu
+              # Reload group membership
+              newgrp docker || true
             fi
             
             # Install Docker Compose if not present
-            if ! command -v docker compose &> /dev/null; then
-              sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-              sudo chmod +x /usr/local/bin/docker-compose
+            if ! command -v docker &> /dev/null || ! docker compose version &> /dev/null; then
+              sudo mkdir -p /usr/local/lib/docker/cli-plugins
+              sudo curl -SL "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/lib/docker/cli-plugins/docker-compose
+              sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
             fi
             
-            # Update environment variables
+            # Install Node.js and build frontend if needed
+            if [ ! -d "dist" ]; then
+              curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+              sudo apt-get install -y nodejs
+              npm install
+              npm run build
+            fi
+            
+            # Update environment variables for API
             echo "${{ secrets.ENV_FILE }}" > ./api/.env
+            
+            # Create docker-compose environment file
+            cat > .env << EOF
+            ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
+            DB_USER=${{ secrets.DB_USER }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            DB_NAME=${{ secrets.DB_NAME }}
+            REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}
+            JWT_SECRET=${{ secrets.JWT_SECRET }}
+            AWS_REGION=${{ secrets.AWS_REGION }}
+            AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            GRAFANA_PASSWORD=${{ secrets.GRAFANA_PASSWORD }}
+            EOF
             
             # Configure AWS credentials
             aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -144,6 +172,9 @@ jobs:
             
             # Login to ECR
             aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
+            
+            # Set ECR_REGISTRY for docker-compose
+            export ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
             
             # Pull latest images
             docker compose -f docker-compose.prod.yml pull
@@ -158,7 +189,7 @@ jobs:
             docker image prune -f
             
             # Wait for containers to start
-            sleep 15
+            sleep 20
             
             # Run database migrations
             docker compose -f docker-compose.prod.yml exec -T api ./main migrate || echo "Migration might have already been applied"
@@ -220,4 +251,5 @@ jobs:
             Commit: ${{ github.sha }}
           username: GitHub Actions
           icon_emoji: ':warning:'
+
 
