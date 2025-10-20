@@ -165,6 +165,41 @@ jobs:
             GRAFANA_PASSWORD=${{ secrets.GRAFANA_PASSWORD }}
             EOF
             
+            # Create monitoring directories and basic config files if they don't exist
+            mkdir -p monitoring/grafana/dashboards monitoring/grafana/datasources backups
+            
+            # Create basic Prometheus config if it doesn't exist
+            if [ ! -f monitoring/prometheus.yml ]; then
+              cat > monitoring/prometheus.yml << 'PROMETHEUS_EOF'
+            global:
+              scrape_interval: 15s
+              evaluation_interval: 15s
+            
+            scrape_configs:
+              - job_name: 'prometheus'
+                static_configs:
+                  - targets: ['localhost:9090']
+              
+              - job_name: 'api'
+                static_configs:
+                  - targets: ['api:8080']
+                metrics_path: '/metrics'
+            PROMETHEUS_EOF
+            fi
+            
+            # Create basic Grafana datasource config if it doesn't exist
+            if [ ! -f monitoring/grafana/datasources/prometheus.yml ]; then
+              cat > monitoring/grafana/datasources/prometheus.yml << 'GRAFANA_DS_EOF'
+            apiVersion: 1
+            datasources:
+              - name: Prometheus
+                type: prometheus
+                access: proxy
+                url: http://prometheus:9090
+                isDefault: true
+            GRAFANA_DS_EOF
+            fi
+            
             # Configure AWS credentials
             aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
             aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -251,5 +286,7 @@ jobs:
             Commit: ${{ github.sha }}
           username: GitHub Actions
           icon_emoji: ':warning:'
+
+
 
 
