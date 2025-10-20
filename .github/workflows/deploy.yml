@@ -175,4 +175,5 @@ jobs:
             Branch: ${{ github.ref_name }}
             Commit: ${{ github.sha }}
           username: GitHub Actions
-          icon_emoji: ':warning:
+          icon_emoji: ':warning:'
+
