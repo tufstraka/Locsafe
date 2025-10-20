@@ -16,7 +16,7 @@ env:
 
 jobs:
   test:
-    name: Loc-Prod
+    name: Test Application
     runs-on: ubuntu-latest
     
     steps:
@@ -126,6 +126,8 @@ jobs:
       - name: Notify deployment status
         if: always()
         uses: 8398a7/action-slack@v3
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
         with:
           status: ${{ job.status }}
           text: |
@@ -133,7 +135,6 @@ jobs:
             Commit: ${{ github.sha }}
             Author: ${{ github.actor }}
             Message: ${{ github.event.head_commit.message }}
-          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
           username: GitHub Actions
           icon_emoji: ':rocket:'
 
@@ -165,12 +166,13 @@ jobs:
 
       - name: Notify rollback
         uses: 8398a7/action-slack@v3
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
         with:
           status: failure
           text: |
             ⚠️ Deployment failed and was rolled back!
             Branch: ${{ github.ref_name }}
             Commit: ${{ github.sha }}
-          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
           username: GitHub Actions
-          icon_emoji: ':warning:'
+          icon_emoji: ':warning:
