@@ -37,48 +37,40 @@ type DigitalPassport struct {
 	QualityGrade       string         `json:"qualityGrade"`
 	SafetyRating       string         `json:"safetyRating"`
 	
-	// Sustainability Information
 	CarbonFootprint    float64        `json:"carbonFootprint"`
 	RecyclableContent  float64        `json:"recyclableContent"` // percentage
 	SustainabilityScore string        `json:"sustainabilityScore"`
 	EnergyRating       string         `json:"energyRating"`
 	
-	// Supply Chain Journey
 	OriginCountry      string         `json:"originCountry"`
 	ImportDate         *time.Time     `json:"importDate,omitempty"`
 	CustomsClearance   bool           `json:"customsClearance"`
 	SupplyChainStages  pq.StringArray `gorm:"type:text[]" json:"supplyChainStages"`
 	
-	// Materials & Components
 	Materials          pq.StringArray `gorm:"type:text[]" json:"materials"`
 	Components         JSONB          `gorm:"type:jsonb" json:"components,omitempty"`
 	Allergens          pq.StringArray `gorm:"type:text[]" json:"allergens"`
 	
-	// Verification & Authentication
 	AuthenticationMethod string       `json:"authenticationMethod"` // blockchain, nfc, rfid, qr
 	BlockchainHash     string         `json:"blockchainHash"`
 	SmartContractAddr  string         `json:"smartContractAddr"`
 	LastVerified       *time.Time     `json:"lastVerified"`
 	VerificationCount  int            `json:"verificationCount"`
 	
-	// Related Entities
 	ShipmentID         *uuid.UUID     `gorm:"type:uuid" json:"shipmentId,omitempty"`
 	Shipment           *Shipment      `gorm:"foreignKey:ShipmentID" json:"shipment,omitempty"`
 	AssetID            *uuid.UUID     `gorm:"type:uuid" json:"assetId,omitempty"`
 	Asset              *Asset         `gorm:"foreignKey:AssetID" json:"asset,omitempty"`
 	
-	// Documents & Media
 	Documents          pq.StringArray `gorm:"type:text[]" json:"documents"`
 	Images             pq.StringArray `gorm:"type:text[]" json:"images"`
 	TestReports        pq.StringArray `gorm:"type:text[]" json:"testReports"`
 	
-	// Lifecycle Tracking
 	CurrentStage       string         `json:"currentStage"` // production, transit, retail, use, recycling
 	LifecycleEvents    JSONB          `gorm:"type:jsonb" json:"lifecycleEvents,omitempty"`
 	RecyclingInstructions string      `json:"recyclingInstructions"`
 	DisposalMethod     string         `json:"disposalMethod"`
 	
-	// Metadata
 	Tags               pq.StringArray `gorm:"type:text[]" json:"tags"`
 	CustomFields       JSONB          `gorm:"type:jsonb" json:"customFields,omitempty"`
 	CreatedAt          time.Time      `json:"createdAt"`
@@ -86,7 +78,6 @@ type DigitalPassport struct {
 	DeletedAt          gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
-// BeforeCreate hook to set UUID and generate codes
 func (dp *DigitalPassport) BeforeCreate(tx *gorm.DB) error {
 	if dp.ID == uuid.Nil {
 		dp.ID = uuid.New()
@@ -110,7 +101,7 @@ func generatePassportNumber() string {
 // generateQRCodeData generates QR code data for the passport
 func generateQRCodeData(passportNumber string) string {
 	// In production, this would generate actual QR code image
-	return "https://locsafe.io/verify/" + passportNumber
+	return "https://locsafe.org/verify/" + passportNumber
 }
 
 // GeofenceZone represents a geographical boundary for monitoring
@@ -152,7 +143,6 @@ type GeofenceZone struct {
 	DeletedAt      gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
-// BeforeCreate hook to set UUID
 func (g *GeofenceZone) BeforeCreate(tx *gorm.DB) error {
 	if g.ID == uuid.Nil {
 		g.ID = uuid.New()
@@ -169,12 +159,10 @@ type BlockchainTransaction struct {
 	Status         string         `json:"status"` // pending, confirmed, failed
 	Type           string         `json:"type"` // shipment_created, status_updated, ownership_transfer, verification
 	
-	// Network Information
 	Network        string         `json:"network"` // ethereum, polygon, binance
 	ChainID        int            `json:"chainId"`
 	ContractAddr   string         `json:"contractAddress"`
 	
-	// Transaction Details
 	FromAddress    string         `json:"fromAddress"`
 	ToAddress      string         `json:"toAddress"`
 	Value          string         `json:"value"`
@@ -182,7 +170,6 @@ type BlockchainTransaction struct {
 	GasPrice       string         `json:"gasPrice"`
 	TransactionFee string         `json:"transactionFee"`
 	
-	// Related Entities
 	ShipmentID     *uuid.UUID     `gorm:"type:uuid" json:"shipmentId,omitempty"`
 	Shipment       *Shipment      `gorm:"foreignKey:ShipmentID" json:"shipment,omitempty"`
 	PassportID     *uuid.UUID     `gorm:"type:uuid" json:"passportId,omitempty"`
@@ -190,7 +177,6 @@ type BlockchainTransaction struct {
 	EventID        *uuid.UUID     `gorm:"type:uuid" json:"eventId,omitempty"`
 	Event          *Event         `gorm:"foreignKey:EventID" json:"event,omitempty"`
 	
-	// Metadata
 	InputData      JSONB          `gorm:"type:jsonb" json:"inputData,omitempty"`
 	DecodedData    JSONB          `gorm:"type:jsonb" json:"decodedData,omitempty"`
 	Confirmations  int            `json:"confirmations"`
@@ -199,7 +185,6 @@ type BlockchainTransaction struct {
 	DeletedAt      gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
-// BeforeCreate hook to set UUID
 func (bt *BlockchainTransaction) BeforeCreate(tx *gorm.DB) error {
 	if bt.ID == uuid.Nil {
 		bt.ID = uuid.New()
@@ -207,7 +192,6 @@ func (bt *BlockchainTransaction) BeforeCreate(tx *gorm.DB) error {
 	return nil
 }
 
-// CreateDigitalPassportRequest represents DPP creation request
 type CreateDigitalPassportRequest struct {
 	ProductName         string   `json:"productName" binding:"required"`
 	ProductCategory     string   `json:"productCategory"`
@@ -226,7 +210,6 @@ type CreateDigitalPassportRequest struct {
 	RecyclableContent   float64  `json:"recyclableContent"`
 }
 
-// CreateGeofenceRequest represents geofence creation request
 type CreateGeofenceRequest struct {
 	Name            string   `json:"name" binding:"required"`
 	Type            string   `json:"type" binding:"required"`

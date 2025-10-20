@@ -8,7 +8,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// Asset represents a trackable asset
 type Asset struct {
 	ID               uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
 	AssetCode        string         `gorm:"uniqueIndex;not null" json:"assetCode"`
@@ -19,7 +18,6 @@ type Asset struct {
 	OrganizationID   uuid.UUID      `gorm:"type:uuid;not null" json:"organizationId"`
 	Organization     Organization   `gorm:"foreignKey:OrganizationID" json:"organization,omitempty"`
 	
-	// Asset Details
 	Description      string         `json:"description"`
 	Manufacturer     string         `json:"manufacturer"`
 	Model            string         `json:"model"`
@@ -29,14 +27,12 @@ type Asset struct {
 	Currency         string         `json:"currency" gorm:"default:'USD'"`
 	WarrantyExpiry   *time.Time     `json:"warrantyExpiry"`
 	
-	// Location & Assignment
 	CurrentLocation  *Location      `gorm:"embedded;embeddedPrefix:location_" json:"currentLocation"`
 	AssignedToID     *uuid.UUID     `gorm:"type:uuid" json:"assignedToId,omitempty"`
 	AssignedTo       *User          `gorm:"foreignKey:AssignedToID" json:"assignedTo,omitempty"`
 	ShipmentID       *uuid.UUID     `gorm:"type:uuid" json:"shipmentId,omitempty"`
 	Shipment         *Shipment      `gorm:"foreignKey:ShipmentID" json:"shipment,omitempty"`
 	
-	// Tracking & IoT
 	TrackerID        string         `json:"trackerId,omitempty"`
 	LastSeen         *time.Time     `json:"lastSeen"`
 	BatteryLevel     *int           `json:"batteryLevel,omitempty"`
@@ -44,12 +40,10 @@ type Asset struct {
 	Humidity         *float64       `json:"humidity,omitempty"`
 	Speed            *float64       `json:"speed,omitempty"`
 	
-	// Maintenance
 	LastMaintenance  *time.Time     `json:"lastMaintenance"`
 	NextMaintenance  *time.Time     `json:"nextMaintenance"`
 	MaintenanceNotes string         `json:"maintenanceNotes"`
 	
-	// Metadata
 	Tags             pq.StringArray `gorm:"type:text[]" json:"tags"`
 	Images           pq.StringArray `gorm:"type:text[]" json:"images"`
 	Documents        pq.StringArray `gorm:"type:text[]" json:"documents"`
@@ -60,7 +54,6 @@ type Asset struct {
 	DeletedAt        gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
-// BeforeCreate hook to set UUID
 func (a *Asset) BeforeCreate(tx *gorm.DB) error {
 	if a.ID == uuid.Nil {
 		a.ID = uuid.New()
@@ -78,7 +71,6 @@ func generateAssetCode() string {
 	return "AST-" + string(timestamp) + "-" + random
 }
 
-// CreateAssetRequest represents asset creation request
 type CreateAssetRequest struct {
 	Name           string    `json:"name" binding:"required"`
 	Type           string    `json:"type" binding:"required"`
@@ -95,7 +87,6 @@ type CreateAssetRequest struct {
 	Tags           []string  `json:"tags"`
 }
 
-// UpdateAssetRequest represents asset update request
 type UpdateAssetRequest struct {
 	Name            string    `json:"name"`
 	Status          string    `json:"status"`

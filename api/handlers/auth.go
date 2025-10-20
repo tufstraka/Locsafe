@@ -116,7 +116,6 @@ func (h *AuthHandler) Register(c *gin.Context) {
 	})
 }
 
-// Login handles user login
 func (h *AuthHandler) Login(c *gin.Context) {
 	var req models.LoginRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -127,7 +126,6 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	// Find user by email
 	var user models.User
 	if err := h.db.Where("email = ?", req.Email).First(&user).Error; err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{
@@ -136,7 +134,6 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	// Check if user is active
 	if !user.IsActive {
 		c.JSON(http.StatusForbidden, gin.H{
 			"error": "Account is deactivated",
@@ -144,7 +141,6 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	// Verify password
 	if !user.CheckPassword(req.Password) {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"error": "Invalid email or password",
@@ -152,7 +148,6 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	// Generate tokens
 	accessToken, refreshToken, err := utils.GenerateToken(user.ID, user.Email, user.Role, user.OrganizationID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -161,12 +156,10 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	// Update last login
 	now := time.Now()
 	user.LastLogin = &now
 	h.db.Save(&user)
 
-	// Load organization if exists
 	if user.OrganizationID != nil {
 		h.db.Preload("Organization").First(&user, user.ID)
 	}
@@ -209,7 +202,7 @@ func (h *AuthHandler) RefreshToken(c *gin.Context) {
 
 // Logout handles user logout
 func (h *AuthHandler) Logout(c *gin.Context) {
-	// In a production app, you might want to blacklist the token
+	// To Do, blacklist the token
 	// For now, we'll just return success
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Successfully logged out",

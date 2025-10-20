@@ -65,13 +65,11 @@ func (u *User) CheckPassword(password string) bool {
 	return err == nil
 }
 
-// LoginRequest represents login request
 type LoginRequest struct {
 	Email    string `json:"email" binding:"required,email"`
 	Password string `json:"password" binding:"required,min=6"`
 }
 
-// RegisterRequest represents registration request
 type RegisterRequest struct {
 	Email       string `json:"email" binding:"required,email"`
 	Username    string `json:"username" binding:"required,min=3,max=50"`
@@ -84,7 +82,6 @@ type RegisterRequest struct {
 	Industry    string `json:"industry"`
 }
 
-// UpdateUserRequest represents user update request
 type UpdateUserRequest struct {
 	FirstName    string `json:"firstName"`
 	LastName     string `json:"lastName"`
@@ -92,13 +89,11 @@ type UpdateUserRequest struct {
 	ProfileImage string `json:"profileImage"`
 }
 
-// ChangePasswordRequest represents password change request
 type ChangePasswordRequest struct {
 	CurrentPassword string `json:"currentPassword" binding:"required"`
 	NewPassword     string `json:"newPassword" binding:"required,min=8"`
 }
 
-// AuthResponse represents authentication response
 type AuthResponse struct {
 	Token        string    `json:"token"`
 	RefreshToken string    `json:"refreshToken"`

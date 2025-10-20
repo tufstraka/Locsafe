@@ -7,7 +7,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// Organization represents a company/organization
 type Organization struct {
 	ID              uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
 	Name            string         `gorm:"not null" json:"name"`
@@ -37,7 +36,6 @@ type Organization struct {
 	DeletedAt       gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
-// OrgSettings embedded struct for organization settings
 type OrgSettings struct {
 	BlockchainEnabled     bool   `json:"blockchainEnabled"`
 	AIAnalyticsEnabled    bool   `json:"aiAnalyticsEnabled"`
@@ -60,7 +58,6 @@ func (o *Organization) BeforeCreate(tx *gorm.DB) error {
 	return nil
 }
 
-// CreateOrganizationRequest represents organization creation request
 type CreateOrganizationRequest struct {
 	Name         string `json:"name" binding:"required"`
 	Domain       string `json:"domain"`

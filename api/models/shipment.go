@@ -10,7 +10,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// Shipment represents a shipment in the system
 type Shipment struct {
 	ID                 uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
 	TrackingNumber     string         `gorm:"uniqueIndex;not null" json:"trackingNumber"`
@@ -19,14 +18,12 @@ type Shipment struct {
 	OrganizationID     uuid.UUID      `gorm:"type:uuid;not null" json:"organizationId"`
 	Organization       Organization   `gorm:"foreignKey:OrganizationID" json:"organization,omitempty"`
 	
-	// Shipping Details
 	Origin             Location       `gorm:"embedded;embeddedPrefix:origin_" json:"origin"`
 	Destination        Location       `gorm:"embedded;embeddedPrefix:dest_" json:"destination"`
 	CurrentLocation    *Location      `gorm:"embedded;embeddedPrefix:current_" json:"currentLocation,omitempty"`
 	EstimatedDelivery  *time.Time     `json:"estimatedDelivery"`
 	ActualDelivery     *time.Time     `json:"actualDelivery"`
 	
-	// Shipment Information
 	Description        string         `json:"description"`
 	Weight             float64        `json:"weight"`
 	WeightUnit         string         `json:"weightUnit" gorm:"default:'kg'"`
@@ -36,7 +33,6 @@ type Shipment struct {
 	Quantity           int            `json:"quantity"`
 	PackageType        string         `json:"packageType"` // box, pallet, container, envelope
 	
-	// People Involved
 	SenderName         string         `json:"senderName"`
 	SenderEmail        string         `json:"senderEmail"`
 	SenderPhone        string         `json:"senderPhone"`
@@ -46,7 +42,6 @@ type Shipment struct {
 	DriverID           *uuid.UUID     `gorm:"type:uuid" json:"driverId,omitempty"`
 	Driver             *User          `gorm:"foreignKey:DriverID" json:"driver,omitempty"`
 	
-	// Tracking & Monitoring
 	Temperature        *float64       `json:"temperature,omitempty"`
 	TemperatureUnit    string         `json:"temperatureUnit" gorm:"default:'C'"`
 	Humidity           *float64       `json:"humidity,omitempty"`
@@ -54,18 +49,15 @@ type Shipment struct {
 	FragileGoods       bool           `json:"fragileGoods"`
 	HazardousMaterial  bool           `json:"hazardousMaterial"`
 	
-	// Blockchain & Security
 	BlockchainTxHash   string         `json:"blockchainTxHash,omitempty"`
 	SmartContractAddr  string         `json:"smartContractAddr,omitempty"`
 	DigitalPassportID  *uuid.UUID     `gorm:"type:uuid" json:"digitalPassportId,omitempty"`
 	
-	// Documents & Images
 	Documents          pq.StringArray `gorm:"type:text[]" json:"documents"`
 	Images             pq.StringArray `gorm:"type:text[]" json:"images"`
 	Signature          string         `json:"signature,omitempty"`
 	ProofOfDelivery    string         `json:"proofOfDelivery,omitempty"`
 	
-	// Metadata
 	Tags               pq.StringArray `gorm:"type:text[]" json:"tags"`
 	Notes              string         `json:"notes"`
 	CustomFields       JSONB          `gorm:"type:jsonb" json:"customFields,omitempty"`
@@ -77,7 +69,6 @@ type Shipment struct {
 	DeletedAt          gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
-// Location embedded struct for addresses
 type Location struct {
 	Address     string  `json:"address"`
 	City        string  `json:"city"`
@@ -88,7 +79,6 @@ type Location struct {
 	Longitude   float64 `json:"longitude"`
 }
 
-// Dimensions embedded struct for package dimensions
 type Dimensions struct {
 	Length float64 `json:"length"`
 	Width  float64 `json:"width"`
@@ -138,7 +128,6 @@ func generateTrackingNumber() string {
 	return "LCS" + string(timestamp) + random
 }
 
-// CreateShipmentRequest represents shipment creation request
 type CreateShipmentRequest struct {
 	Description       string    `json:"description" binding:"required"`
 	Priority          string    `json:"priority"`
@@ -165,7 +154,6 @@ type CreateShipmentRequest struct {
 	Notes             string    `json:"notes"`
 }
 
-// UpdateShipmentRequest represents shipment update request
 type UpdateShipmentRequest struct {
 	Status            string    `json:"status"`
 	CurrentLocation   *Location `json:"currentLocation"`
