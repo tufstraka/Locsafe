@@ -181,9 +181,48 @@ jobs:
             GRAFANA_PASSWORD=$GRAFANA_PASS
             EOF
             
-            # Create monitoring directories and basic config files if they don't exist
-            sudo mkdir -p monitoring/grafana/dashboards monitoring/grafana/datasources backups
-            sudo chown -R $USER:$USER monitoring backups
+            # Create necessary directories and config files
+            sudo mkdir -p monitoring/grafana/dashboards monitoring/grafana/datasources backups nginx/ssl
+            sudo chown -R $USER:$USER monitoring backups nginx
+            
+            # Create nginx config if it doesn't exist
+            if [ ! -f nginx/nginx.conf ]; then
+              cat > nginx/nginx.conf << 'NGINX_EOF'
+            events {
+                worker_connections 1024;
+            }
+            
+            http {
+                include /etc/nginx/mime.types;
+                default_type application/octet-stream;
+                
+                sendfile on;
+                keepalive_timeout 65;
+                
+                upstream api {
+                    server api:8080;
+                }
+                
+                server {
+                    listen 80;
+                    server_name _;
+                    
+                    location / {
+                        root /usr/share/nginx/html;
+                        try_files $uri $uri/ /index.html;
+                    }
+                    
+                    location /api/ {
+                        proxy_pass http://api/;
+                        proxy_set_header Host $host;
+                        proxy_set_header X-Real-IP $remote_addr;
+                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                        proxy_set_header X-Forwarded-Proto $scheme;
+                    }
+                }
+            }
+            NGINX_EOF
+            fi
             
             # Remove any existing prometheus.yml directory and create the file
             if [ -d monitoring/prometheus.yml ]; then
@@ -308,6 +347,7 @@ jobs:
             Commit: ${{ github.sha }}
           username: GitHub Actions
           icon_emoji: ':warning:'
+
 
 
 
