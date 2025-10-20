@@ -155,7 +155,7 @@ const Header = () => {
               Contact
             </Link>
             
-            <a
+            {/*<a
               href="https://discord.gg/wCKQCxaj"
               target="_blank"
               rel="noopener noreferrer"
@@ -163,7 +163,7 @@ const Header = () => {
             >
               <span className="material-icons text-xl">groups</span>
               Join Community
-            </a>
+            </a>*/}
 
             <button
               onClick={toggleDarkMode}
