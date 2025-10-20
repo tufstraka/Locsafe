@@ -166,7 +166,13 @@ jobs:
             EOF
             
             # Create monitoring directories and basic config files if they don't exist
-            mkdir -p monitoring/grafana/dashboards monitoring/grafana/datasources backups
+            sudo mkdir -p monitoring/grafana/dashboards monitoring/grafana/datasources backups
+            sudo chown -R $USER:$USER monitoring backups
+            
+            # Remove any existing prometheus.yml directory and create the file
+            if [ -d monitoring/prometheus.yml ]; then
+              sudo rm -rf monitoring/prometheus.yml
+            fi
             
             # Create basic Prometheus config if it doesn't exist
             if [ ! -f monitoring/prometheus.yml ]; then
@@ -286,6 +292,8 @@ jobs:
             Commit: ${{ github.sha }}
           username: GitHub Actions
           icon_emoji: ':warning:'
+
+
 
 
 
