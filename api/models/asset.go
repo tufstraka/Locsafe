@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -68,7 +69,7 @@ func (a *Asset) BeforeCreate(tx *gorm.DB) error {
 func generateAssetCode() string {
 	timestamp := time.Now().Unix()
 	random := uuid.New().String()[:6]
-	return "AST-" + string(timestamp) + "-" + random
+	return "AST-" + fmt.Sprint(timestamp) + "-" + random
 }
 
 type CreateAssetRequest struct {

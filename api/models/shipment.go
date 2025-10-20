@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql/driver"
 	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -125,7 +126,7 @@ func (s *Shipment) BeforeCreate(tx *gorm.DB) error {
 func generateTrackingNumber() string {
 	timestamp := time.Now().Unix()
 	random := uuid.New().String()[:8]
-	return "LCS" + string(timestamp) + random
+	return "LCS" + fmt.Sprint(timestamp) + random
 }
 
 type CreateShipmentRequest struct {

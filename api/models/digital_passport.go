@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -95,7 +96,7 @@ func (dp *DigitalPassport) BeforeCreate(tx *gorm.DB) error {
 func generatePassportNumber() string {
 	timestamp := time.Now().Unix()
 	random := uuid.New().String()[:8]
-	return "DPP-" + string(timestamp) + "-" + random
+	return "DPP-" + fmt.Sprint(timestamp) + "-" + random
 }
 
 // generateQRCodeData generates QR code data for the passport
