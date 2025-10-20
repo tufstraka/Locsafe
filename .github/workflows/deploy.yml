@@ -16,7 +16,7 @@ env:
 
 jobs:
   test:
-    name: Test Application
+    name: Loc-Prod
     runs-on: ubuntu-latest
     
     steps:
@@ -83,11 +83,6 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest ./api
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-
-      - name: Build frontend
-        run: |
-          npm ci
-          npm run build
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.0
