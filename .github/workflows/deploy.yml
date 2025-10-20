@@ -292,12 +292,44 @@ jobs:
             # Wait for containers to start
             sleep 20
             
-            # Run database migrations
-            docker compose -f docker-compose.prod.yml exec -T api ./main migrate || echo "Migration might have already been applied"
+            # Check container status
+            echo "Container status:"
+            docker compose -f docker-compose.prod.yml ps
             
-            # Health check
-            sleep 10
-            curl -f http://localhost:8080/api/v1/health || exit 1
+            # Check API logs for errors
+            echo "API logs:"
+            docker compose -f docker-compose.prod.yml logs api --tail=50
+            
+            # Run database migrations with retry
+            for i in {1..3}; do
+              if docker compose -f docker-compose.prod.yml exec -T api ./main migrate; then
+                echo "Migration successful"
+                break
+              else
+                echo "Migration attempt $i failed, retrying in 10s..."
+                sleep 10
+              fi
+            done
+            
+            # Health check with retries
+            echo "Performing health check..."
+            for i in {1..5}; do
+              if curl -f http://localhost:8080/api/v1/health; then
+                echo "Health check passed!"
+                exit 0
+              else
+                echo "Health check attempt $i failed, retrying in 10s..."
+                sleep 10
+              fi
+            done
+            
+            # If we get here, health check failed
+            echo "Health check failed after 5 attempts"
+            echo "Final container status:"
+            docker compose -f docker-compose.prod.yml ps
+            echo "Final API logs:"
+            docker compose -f docker-compose.prod.yml logs api --tail=100
+            exit 1
 
       - name: Notify deployment status
         if: always()
@@ -352,7 +384,6 @@ jobs:
             Commit: ${{ github.sha }}
           username: GitHub Actions
           icon_emoji: ':warning:'
-
 
 
 
