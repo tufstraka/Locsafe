@@ -151,18 +151,34 @@ jobs:
             # Update environment variables for API
             echo "${{ secrets.ENV_FILE }}" > ./api/.env
             
+            # Set default values for empty secrets
+            REDIS_PASS="${{ secrets.REDIS_PASSWORD }}"
+            GRAFANA_PASS="${{ secrets.GRAFANA_PASSWORD }}"
+            DB_USER="${{ secrets.DB_USER }}"
+            DB_PASSWORD="${{ secrets.DB_PASSWORD }}"
+            DB_NAME="${{ secrets.DB_NAME }}"
+            JWT_SECRET="${{ secrets.JWT_SECRET }}"
+            
+            # Use defaults if secrets are empty
+            [ -z "$REDIS_PASS" ] && REDIS_PASS="redis123"
+            [ -z "$GRAFANA_PASS" ] && GRAFANA_PASS="admin"
+            [ -z "$DB_USER" ] && DB_USER="postgres"
+            [ -z "$DB_PASSWORD" ] && DB_PASSWORD="postgres123"
+            [ -z "$DB_NAME" ] && DB_NAME="locsafe"
+            [ -z "$JWT_SECRET" ] && JWT_SECRET="locsafe-jwt-secret-key"
+            
             # Create docker-compose environment file
             cat > .env << EOF
             ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
-            DB_USER=${{ secrets.DB_USER }}
-            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-            DB_NAME=${{ secrets.DB_NAME }}
-            REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}
-            JWT_SECRET=${{ secrets.JWT_SECRET }}
+            DB_USER=$DB_USER
+            DB_PASSWORD=$DB_PASSWORD
+            DB_NAME=$DB_NAME
+            REDIS_PASSWORD=$REDIS_PASS
+            JWT_SECRET=$JWT_SECRET
             AWS_REGION=${{ secrets.AWS_REGION }}
             AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            GRAFANA_PASSWORD=${{ secrets.GRAFANA_PASSWORD }}
+            GRAFANA_PASSWORD=$GRAFANA_PASS
             EOF
             
             # Create monitoring directories and basic config files if they don't exist
