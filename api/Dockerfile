@@ -19,20 +19,20 @@ COPY . .
 # Build the application
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 
-# Final stage
-FROM alpine:3.19
-
-# Install runtime dependencies
-RUN apk --no-cache add ca-certificates tzdata
+# Final stage - using distroless for security and smaller size
+FROM gcr.io/distroless/static:nonroot
 
 # Set working directory
-WORKDIR /root/
+WORKDIR /app
 
 # Copy the binary from builder
 COPY --from=builder /app/main .
+
+# Use non-root user
+USER nonroot:nonroot
 
 # Expose port
 EXPOSE 8080
 
 # Run the application
-CMD ["./main"]
+ENTRYPOINT ["./main"]
