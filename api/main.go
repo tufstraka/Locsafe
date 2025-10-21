@@ -54,6 +54,7 @@ func main() {
 		"http://localhost:5173",
 		"http://localhost:3000",
 		"https://locsafe.vercel.app",
+		"https://www.locsafe.org",
 	}
 	corsConfig.AllowCredentials = true
 	corsConfig.AllowHeaders = []string{
