@@ -17,7 +17,7 @@ func SetupRoutes(router *gin.Engine, h *handlers.Handlers, authMiddleware gin.Ha
 		// Health check
 		public.GET("/health", func(c *gin.Context) {
 			c.JSON(200, gin.H{
-				"status": "healthy",
+				"status": "admin/dashboard",
 				"message": "Locsafe API is running",
 			})
 		})
@@ -38,6 +38,14 @@ func SetupRoutes(router *gin.Engine, h *handlers.Handlers, authMiddleware gin.Ha
 		// Auth
 		protected.POST("/auth/logout", h.AuthHandler.Logout)
 		protected.GET("/auth/me", h.AuthHandler.Me)
+
+		// Onboarding
+		protected.GET("/onboarding/data", h.OnboardingHandler.GetOnboardingData)
+		protected.PUT("/onboarding/profile", h.OnboardingHandler.UpdateProfile)
+		protected.PUT("/onboarding/organization", h.OnboardingHandler.UpdateOrganization)
+		protected.PUT("/onboarding/integrations", h.OnboardingHandler.UpdateIntegrations)
+		protected.PUT("/onboarding/preferences", h.OnboardingHandler.UpdatePreferences)
+		protected.POST("/onboarding/complete", h.OnboardingHandler.CompleteOnboarding)
 
 		// Users
 		protected.GET("/users", h.UserHandler.List)
