@@ -105,7 +105,7 @@ const LandingPage = () => {
   ];
 
   const stats = [
-    { value: 10000, suffix: '+', label: 'Active Shipments Daily', icon: 'local_shipping', isMaterial: true },
+    { value: 3000, suffix: '+', label: 'Active Shipments Daily', icon: 'local_shipping', isMaterial: true },
     { value: 98, suffix: '%', label: 'Delivery Accuracy', icon: 'verified_user', isMaterial: true },
     { value: 500, suffix: '+', label: 'Enterprise Clients', icon: 'business', isMaterial: true },
     { value: 150, suffix: '+', label: 'Countries Covered', icon: 'public', isMaterial: true }
@@ -349,7 +349,7 @@ const LandingPage = () => {
                       ))}
                     </div>
                     <span className="text-sm text-on-surface-light-medium dark:text-on-surface-dark-medium mt-1">
-                      Trusted by <span className="font-semibold text-on-surface-light dark:text-on-surface-dark">10,000+</span> businesses
+                      Trusted by <span className="font-semibold text-on-surface-light dark:text-on-surface-dark">26</span> businesses
                     </span>
                   </div>
                 </motion.div>

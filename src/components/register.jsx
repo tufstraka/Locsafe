@@ -4,13 +4,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaUser, FaEnvelope, FaLock, FaPhone, FaEye, FaEyeSlash, FaCheckCircle, FaShieldAlt, FaArrowRight, FaBuilding, FaGlobe, FaTrophy, FaUserShield } from 'react-icons/fa';
 import { HiSparkles, HiLightningBolt, HiBadgeCheck } from 'react-icons/hi';
 import { useNavigate, Link } from 'react-router-dom';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../utils/firebaseInit';
 import Header from '../components/header.jsx';
 import Footer from '../components/footer.jsx';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { authService } from '../services/api';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -80,11 +81,51 @@ const Register = () => {
     if (firstName && lastName && userName && email && password && phoneNumber) {
       setLoading((prev) => ({ ...prev, register: true }));
       try {
-        const result = await createUserWithEmailAndPassword(auth, email, password);
-        await setDoc(doc(db, 'users', result.user.uid), { firstName, lastName, userName, email, phoneNumber });
+        // Step 1: Create user with Firebase
+        const firebaseResult = await createUserWithEmailAndPassword(auth, email, password);
+        
+        // Update Firebase profile with name
+        await updateProfile(firebaseResult.user, {
+          displayName: `${firstName} ${lastName}`
+        });
+        
+        // Save to Firestore for backward compatibility
+        await setDoc(doc(db, 'users', firebaseResult.user.uid), {
+          firstName,
+          lastName,
+          userName,
+          email,
+          phoneNumber
+        });
+
+        // Step 2: Register user with backend API
+        const backendData = {
+          email,
+          username: userName,
+          password,
+          firstName,
+          lastName,
+          phoneNumber,
+          firebaseUid: firebaseResult.user.uid
+        };
+
+        const apiResponse = await authService.register(backendData);
+        
+        // Store the JWT token
+        if (apiResponse.token) {
+          localStorage.setItem('authToken', apiResponse.token);
+          localStorage.setItem('userId', apiResponse.user.id);
+        }
+
         toast.success('Welcome to Locsafe! 🚀');
-        navigate(`/pay?phoneNumber=${phoneNumber}`);
+
+        // Navigate to payment
+        navigate('/pay');
       } catch (error) {
+        // If Firebase succeeded but API failed, we might want to delete Firebase user
+        if (auth.currentUser && error.message.includes('api')) {
+          await auth.currentUser.delete();
+        }
         toast.error(error.message);
       } finally {
         setLoading((prev) => ({ ...prev, register: false }));
@@ -176,7 +217,7 @@ const Register = () => {
                 className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-teal-500/10 to-blue-500/10 backdrop-blur-sm border border-teal-500/20 rounded-full mb-6"
               >
                 <HiSparkles className="text-teal-500 animate-pulse" />
-                <span className="text-teal-700 dark:text-teal-400 text-sm font-semibold">Join 10,000+ Companies</span>
+                <span className="text-teal-700 dark:text-teal-400 text-sm font-semibold">Join 26 Companies</span>
               </motion.div>
               
               <h1 className="text-4xl lg:text-5xl font-extrabold mb-6 text-slate-900 dark:text-white">
