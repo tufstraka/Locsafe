@@ -17,7 +17,7 @@ func SetupRoutes(router *gin.Engine, h *handlers.Handlers, authMiddleware gin.Ha
 		// Health check
 		public.GET("/health", func(c *gin.Context) {
 			c.JSON(200, gin.H{
-				"status": "admin/dashboard",
+				"status": "healthy",
 				"message": "Locsafe API is running",
 			})
 		})
