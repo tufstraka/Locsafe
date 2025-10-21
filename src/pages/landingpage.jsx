@@ -108,7 +108,7 @@ const LandingPage = () => {
     { value: 3000, suffix: '+', label: 'Active Shipments Daily', icon: 'local_shipping', isMaterial: true },
     { value: 98, suffix: '%', label: 'Delivery Accuracy', icon: 'verified_user', isMaterial: true },
     { value: 26, suffix: '', label: 'Enterprise Clients', icon: 'business', isMaterial: true },
-    { value: 5, suffix: '+', label: 'Countries Covered', icon: 'public', isMaterial: true }
+    { value: 5, suffix: '', label: 'Countries Covered', icon: 'public', isMaterial: true }
   ];
 
   const features = [
