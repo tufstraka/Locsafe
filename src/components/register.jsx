@@ -111,22 +111,37 @@ const Register = () => {
 
         const apiResponse = await authService.register(backendData);
         
-        // Store the JWT token
-        if (apiResponse.token) {
-          localStorage.setItem('authToken', apiResponse.token);
-          localStorage.setItem('userId', apiResponse.user.id);
+        console.log('API Response:', apiResponse); // Debug log
+        
+        // Store the JWT token - Note: backend returns 'Token' with uppercase T
+        if (apiResponse.Token || apiResponse.token) {
+          localStorage.setItem('authToken', apiResponse.Token || apiResponse.token);
+          localStorage.setItem('userId', apiResponse.user?.id || apiResponse.User?.ID);
+          localStorage.setItem('userEmail', apiResponse.user?.email || apiResponse.User?.Email);
         }
 
         toast.success('Welcome to Locsafe! 🚀');
-
-        // Navigate to payment
-        navigate('/pay');
+        
+        // Add a small delay to ensure toast is shown
+        setTimeout(() => {
+          console.log('Navigating to /pay'); // Debug log
+          navigate('/pay');
+        }, 500);
       } catch (error) {
+        console.error('Registration error:', error); // Debug log
+        
         // If Firebase succeeded but API failed, we might want to delete Firebase user
-        if (auth.currentUser && error.message.includes('api')) {
-          await auth.currentUser.delete();
+        if (auth.currentUser && error.message && error.message.includes('api')) {
+          try {
+            await auth.currentUser.delete();
+          } catch (deleteError) {
+            console.error('Failed to delete Firebase user:', deleteError);
+          }
         }
-        toast.error(error.message);
+        
+        // Show more detailed error message
+        const errorMessage = error.response?.data?.message || error.message || 'Registration failed';
+        toast.error(errorMessage);
       } finally {
         setLoading((prev) => ({ ...prev, register: false }));
       }
