@@ -50,13 +50,8 @@ func main() {
 	
 	// CORS configuration
 	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowOrigins = []string{
-		"http://localhost:5173",
-		"http://localhost:3000",
-		"https://locsafe.vercel.app",
-		"https://www.locsafe.org",
-	}
-	corsConfig.AllowCredentials = true
+	corsConfig.AllowAllOrigins = true // Allow all origins
+	corsConfig.AllowCredentials = false // Must be false when allowing all origins
 	corsConfig.AllowHeaders = []string{
 		"Origin",
 		"Content-Type",
