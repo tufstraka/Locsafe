@@ -2,29 +2,142 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/favicon.png" sizes="16x16">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>Locsafe | AI-Powered Supply Chain & Asset Tracking Platform</title>
+    <meta name="title" content="Locsafe | AI-Powered Supply Chain & Asset Tracking Platform" />
+    <meta name="description" content="Transform your supply chain with Locsafe's AI-powered blockchain technology. Real-time GPS tracking, digital product passports, cold chain monitoring, and fleet management for modern logistics." />
+    <meta name="keywords" content="asset tracking, supply chain management, GPS tracking, fleet management, cold chain monitoring, digital product passport, blockchain logistics, AI analytics, inventory management, real-time tracking, Kenya logistics, Africa supply chain" />
+    <meta name="author" content="Locsafe" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href="https://locsafe.org/" />
+    
+    <!-- Favicon and App Icons -->
+    <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/favicon.png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <meta name="theme-color" content="#14B8A6" />
+    <meta name="msapplication-TileColor" content="#14B8A6" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://locsafe.org/" />
+    <meta property="og:title" content="Locsafe | AI-Powered Supply Chain & Asset Tracking Platform" />
+    <meta property="og:description" content="Transform your supply chain with Locsafe's AI-powered blockchain technology. Real-time GPS tracking, digital product passports, and predictive analytics for modern logistics." />
+    <meta property="og:image" content="https://locsafe.org/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Locsafe" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://locsafe.org/" />
+    <meta name="twitter:title" content="Locsafe | AI-Powered Supply Chain & Asset Tracking Platform" />
+    <meta name="twitter:description" content="Transform your supply chain with Locsafe's AI-powered blockchain technology. Real-time GPS tracking, digital product passports, and predictive analytics." />
+    <meta name="twitter:image" content="https://locsafe.org/og-image.png" />
+    <meta name="twitter:site" content="@Locsafe" />
+    <meta name="twitter:creator" content="@Locsafe" />
+    
+    <!-- Additional SEO Tags -->
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="geo.region" content="KE" />
+    <meta name="geo.placename" content="Nairobi" />
+    <meta name="language" content="English" />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="rating" content="general" />
+    
+    <!-- Preconnect to External Domains for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://unpkg.com" />
+    
+    <!-- Structured Data - Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Locsafe",
+      "url": "https://locsafe.org",
+      "logo": "https://locsafe.org/favicon.png",
+      "description": "AI-powered supply chain and asset tracking platform with blockchain technology, real-time GPS tracking, and digital product passports.",
+      "foundingDate": "2023",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Nairobi",
+        "addressCountry": "Kenya",
+        "postalCode": "3202"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+254-701-746-774",
+        "contactType": "customer service",
+        "email": "support@locsafe.org",
+        "availableLanguage": ["English", "Swahili"]
+      },
+      "sameAs": [
+        "https://twitter.com/Locsafe",
+        "https://linkedin.com/company/locsafe",
+        "https://facebook.com/locsafe"
+      ]
+    }
+    </script>
+    
+    <!-- Structured Data - Software Application -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Locsafe",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web, iOS, Android",
+      "offers": {
+        "@type": "Offer",
+        "price": "5000",
+        "priceCurrency": "KES",
+        "priceValidUntil": "2025-12-31"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "26"
+      },
+      "featureList": [
+        "Real-time GPS Tracking",
+        "AI-Powered Analytics",
+        "Digital Product Passports",
+        "Cold Chain Monitoring",
+        "Fleet Management",
+        "Blockchain Verification"
+      ]
+    }
+    </script>
+    
+    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
     
-    <!-- Google tag (gtag.js) -->
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-PMKXZSEZLV"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
       gtag('config', 'G-PMKXZSEZLV');
     </script>
     
+    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+    
+    <!-- Microsoft Clarity -->
     <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "lnwcu260mq");
-</script>
-    <title>Locsafe | Asset tracking and management solution</title>
+    </script>
   </head>
   <body>
     <div id="root"></div>
