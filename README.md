@@ -1,4 +1,8 @@
-# Locsafe
+# Locsafe: Blockchain supply chain tracking and asset management platform
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Web-brightgreen.svg)](https://www.locsafe.org)
+[![Demo](https://img.shields.io/badge/Demo-Live-orange.svg)](https://demo.locsafe.org/admin/dashboard)
 
 ## You've been there before
 
