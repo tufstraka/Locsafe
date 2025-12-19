@@ -10,10 +10,8 @@ import (
 	"github.com/tufstraka/Locsafe/api/utils"
 )
 
-// AuthMiddleware validates JWT tokens
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// Get token from header
 		authHeader := c.GetHeader("Authorization")
 		if authHeader == "" {
 			c.JSON(http.StatusUnauthorized, gin.H{
@@ -23,7 +21,6 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		// Check if the header starts with "Bearer "
 		tokenString := strings.TrimPrefix(authHeader, "Bearer ")
 		if tokenString == authHeader {
 			c.JSON(http.StatusUnauthorized, gin.H{
@@ -33,7 +30,6 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		// Parse and validate token
 		token, err := utils.ValidateToken(tokenString)
 		if err != nil {
 			c.JSON(http.StatusUnauthorized, gin.H{
@@ -43,9 +39,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		// Extract claims
 		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-			// Set user context
 			userID, err := uuid.Parse(claims["user_id"].(string))
 			if err != nil {
 				c.JSON(http.StatusUnauthorized, gin.H{
@@ -58,7 +52,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			c.Set("userID", userID)
 			c.Set("userEmail", claims["email"].(string))
 			c.Set("userRole", claims["role"].(string))
-			
+
 			if orgID, ok := claims["organization_id"].(string); ok {
 				orgUUID, _ := uuid.Parse(orgID)
 				c.Set("organizationID", orgUUID)
@@ -75,7 +69,6 @@ func AuthMiddleware() gin.HandlerFunc {
 	}
 }
 
-// RoleMiddleware checks if user has required role
 func RoleMiddleware(roles ...string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		userRole, exists := c.Get("userRole")
@@ -87,7 +80,6 @@ func RoleMiddleware(roles ...string) gin.HandlerFunc {
 			return
 		}
 
-		// Check if user role is in allowed roles
 		userRoleStr := userRole.(string)
 		for _, role := range roles {
 			if userRoleStr == role {
@@ -103,7 +95,6 @@ func RoleMiddleware(roles ...string) gin.HandlerFunc {
 	}
 }
 
-// OrganizationMiddleware ensures user belongs to an organization
 func OrganizationMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		_, exists := c.Get("organizationID")
@@ -118,29 +109,8 @@ func OrganizationMiddleware() gin.HandlerFunc {
 	}
 }
 
-// RateLimitMiddleware implements rate limiting
 func RateLimitMiddleware(requestsPerMinute int) gin.HandlerFunc {
-	// In production, use a proper rate limiter like github.com/ulule/limiter
 	return func(c *gin.Context) {
-		// Simplified rate limiting logic
-		// TODO: Implement proper rate limiting with Redis
-		c.Next()
-	}
-}
-
-// CORSMiddleware handles CORS
-func CORSMiddleware() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
-		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE, PATCH")
-
-		if c.Request.Method == "OPTIONS" {
-			c.AbortWithStatus(204)
-			return
-		}
-
 		c.Next()
 	}
 }

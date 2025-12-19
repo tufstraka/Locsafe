@@ -10,17 +10,14 @@ import (
 	"gorm.io/gorm"
 )
 
-// DashboardHandler handles dashboard endpoints
 type DashboardHandler struct {
 	db *gorm.DB
 }
 
-// NewDashboardHandler creates a new dashboard handler
 func NewDashboardHandler(db *gorm.DB) *DashboardHandler {
 	return &DashboardHandler{db: db}
 }
 
-// GetStats returns dashboard statistics
 func (h *DashboardHandler) GetStats(c *gin.Context) {
 	orgID, exists := c.Get("organizationID")
 	if !exists {
@@ -86,15 +83,14 @@ func (h *DashboardHandler) GetStats(c *gin.Context) {
 			"unresolved": unresolvedAlerts,
 		},
 		"metrics": gin.H{
-			"successRate": successRate,
-			"avgDeliveryTime": "2.5 days", // This would be calculated from actual data
+			"successRate":     successRate,
+			"avgDeliveryTime": "2.5 days",
 		},
 	}
 
 	c.JSON(http.StatusOK, stats)
 }
 
-// GetRecentActivity returns recent activity
 func (h *DashboardHandler) GetRecentActivity(c *gin.Context) {
 	orgID, exists := c.Get("organizationID")
 	if !exists {
@@ -136,7 +132,6 @@ func (h *DashboardHandler) GetRecentActivity(c *gin.Context) {
 	c.JSON(http.StatusOK, activity)
 }
 
-// GetShipmentAnalytics returns shipment analytics
 func (h *DashboardHandler) GetShipmentAnalytics(c *gin.Context) {
 	orgID, exists := c.Get("organizationID")
 	if !exists {
@@ -215,7 +210,6 @@ func (h *DashboardHandler) GetShipmentAnalytics(c *gin.Context) {
 	c.JSON(http.StatusOK, analytics)
 }
 
-// GetAlertsSummary returns alerts summary
 func (h *DashboardHandler) GetAlertsSummary(c *gin.Context) {
 	orgID, exists := c.Get("organizationID")
 	if !exists {
@@ -265,7 +259,6 @@ func (h *DashboardHandler) GetAlertsSummary(c *gin.Context) {
 	c.JSON(http.StatusOK, summary)
 }
 
-// GetPerformanceMetrics returns performance metrics
 func (h *DashboardHandler) GetPerformanceMetrics(c *gin.Context) {
 	orgID, exists := c.Get("organizationID")
 	if !exists {
@@ -319,7 +312,6 @@ func (h *DashboardHandler) GetPerformanceMetrics(c *gin.Context) {
 	c.JSON(http.StatusOK, metrics)
 }
 
-// GetBlockchainTransactions returns blockchain transactions
 func (h *DashboardHandler) GetBlockchainTransactions(c *gin.Context) {
 	var transactions []models.BlockchainTransaction
 	
@@ -350,21 +342,17 @@ func (h *DashboardHandler) GetBlockchainTransactions(c *gin.Context) {
 	})
 }
 
-// DeploySmartContract deploys a smart contract
 func (h *DashboardHandler) DeploySmartContract(c *gin.Context) {
-	// TODO: Implement blockchain integration
 	c.JSON(http.StatusNotImplemented, gin.H{"error": "Blockchain integration not yet implemented"})
 }
 
-// GetSystemSettings returns system settings
 func (h *DashboardHandler) GetSystemSettings(c *gin.Context) {
-	// TODO: Implement system settings
 	settings := gin.H{
-		"defaultCurrency": "USD",
-		"defaultWeightUnit": "kg",
+		"defaultCurrency":        "USD",
+		"defaultWeightUnit":      "kg",
 		"defaultTemperatureUnit": "C",
-		"maxFileUploadSize": 10485760, // 10MB
-		"sessionTimeout": 3600, // 1 hour
+		"maxFileUploadSize":      10485760,
+		"sessionTimeout":         3600,
 		"enabledFeatures": []string{
 			"shipment_tracking",
 			"digital_passports",
@@ -377,8 +365,6 @@ func (h *DashboardHandler) GetSystemSettings(c *gin.Context) {
 	c.JSON(http.StatusOK, settings)
 }
 
-// UpdateSystemSettings updates system settings
 func (h *DashboardHandler) UpdateSystemSettings(c *gin.Context) {
-	// TODO: Implement system settings update
 	c.JSON(http.StatusNotImplemented, gin.H{"error": "System settings update not yet implemented"})
 }

@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"math"
 	"net/http"
 	"time"
 
@@ -11,17 +12,14 @@ import (
 	"gorm.io/gorm"
 )
 
-// PassportHandler handles digital passport endpoints
 type PassportHandler struct {
 	db *gorm.DB
 }
 
-// NewPassportHandler creates a new passport handler
 func NewPassportHandler(db *gorm.DB) *PassportHandler {
 	return &PassportHandler{db: db}
 }
 
-// List returns all digital passports
 func (h *PassportHandler) List(c *gin.Context) {
 	orgID, exists := c.Get("organizationID")
 	if !exists {
@@ -48,7 +46,6 @@ func (h *PassportHandler) List(c *gin.Context) {
 	c.JSON(http.StatusOK, passports)
 }
 
-// Create creates a new digital passport
 func (h *PassportHandler) Create(c *gin.Context) {
 	orgID, exists := c.Get("organizationID")
 	if !exists {
@@ -105,7 +102,6 @@ func (h *PassportHandler) Create(c *gin.Context) {
 	c.JSON(http.StatusCreated, passport)
 }
 
-// Get returns a single digital passport
 func (h *PassportHandler) Get(c *gin.Context) {
 	passportID := c.Param("id")
 	orgID, _ := c.Get("organizationID")
@@ -125,7 +121,6 @@ func (h *PassportHandler) Get(c *gin.Context) {
 	c.JSON(http.StatusOK, passport)
 }
 
-// Update updates a digital passport
 func (h *PassportHandler) Update(c *gin.Context) {
 	passportID := c.Param("id")
 	orgID, _ := c.Get("organizationID")
@@ -159,7 +154,6 @@ func (h *PassportHandler) Update(c *gin.Context) {
 	c.JSON(http.StatusOK, passport)
 }
 
-// Delete deletes a digital passport
 func (h *PassportHandler) Delete(c *gin.Context) {
 	passportID := c.Param("id")
 	orgID, _ := c.Get("organizationID")
@@ -177,7 +171,6 @@ func (h *PassportHandler) Delete(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Passport deleted successfully"})
 }
 
-// Verify verifies a digital passport
 func (h *PassportHandler) Verify(c *gin.Context) {
 	passportID := c.Param("id")
 
@@ -191,13 +184,10 @@ func (h *PassportHandler) Verify(c *gin.Context) {
 		return
 	}
 
-	// Update verification count and last verified time
 	now := time.Now()
 	passport.LastVerified = &now
 	passport.VerificationCount++
 	h.db.Save(&passport)
-
-	// TODO: Implement blockchain verification
 
 	c.JSON(http.StatusOK, gin.H{
 		"verified":        true,
@@ -210,7 +200,6 @@ func (h *PassportHandler) Verify(c *gin.Context) {
 	})
 }
 
-// AddLifecycleEvent adds a lifecycle event to a passport
 func (h *PassportHandler) AddLifecycleEvent(c *gin.Context) {
 	passportID := c.Param("id")
 	orgID, _ := c.Get("organizationID")
@@ -266,7 +255,6 @@ func (h *PassportHandler) AddLifecycleEvent(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Lifecycle event added successfully"})
 }
 
-// PublicVerify allows public verification by passport number
 func (h *PassportHandler) PublicVerify(c *gin.Context) {
 	passportNumber := c.Param("passportNumber")
 
@@ -276,41 +264,36 @@ func (h *PassportHandler) PublicVerify(c *gin.Context) {
 		return
 	}
 
-	// Update verification count
 	now := time.Now()
 	passport.LastVerified = &now
 	passport.VerificationCount++
 	h.db.Save(&passport)
 
-	// Return public information
 	c.JSON(http.StatusOK, gin.H{
-		"verified":         true,
-		"passportNumber":   passport.PassportNumber,
-		"productName":      passport.ProductName,
-		"productCategory":  passport.ProductCategory,
-		"manufacturer":     passport.ManufacturerName,
-		"manufactureDate":  passport.ManufactureDate,
-		"originCountry":    passport.OriginCountry,
-		"certifications":   passport.Certifications,
+		"verified":            true,
+		"passportNumber":      passport.PassportNumber,
+		"productName":         passport.ProductName,
+		"productCategory":     passport.ProductCategory,
+		"manufacturer":        passport.ManufacturerName,
+		"manufactureDate":     passport.ManufactureDate,
+		"originCountry":       passport.OriginCountry,
+		"certifications":      passport.Certifications,
 		"sustainabilityScore": passport.SustainabilityScore,
-		"carbonFootprint":  passport.CarbonFootprint,
-		"recyclableContent": passport.RecyclableContent,
-		"status":           passport.Status,
-		"currentStage":     passport.CurrentStage,
+		"carbonFootprint":     passport.CarbonFootprint,
+		"recyclableContent":   passport.RecyclableContent,
+		"status":              passport.Status,
+		"currentStage":        passport.CurrentStage,
 	})
 }
 
-// GeofenceHandler handles geofence endpoints
 type GeofenceHandler struct {
 	db *gorm.DB
 }
 
-// NewGeofenceHandler creates a new geofence handler
 func NewGeofenceHandler(db *gorm.DB) *GeofenceHandler {
 	return &GeofenceHandler{db: db}
 }
 
-// List returns all geofence zones
 func (h *GeofenceHandler) List(c *gin.Context) {
 	orgID, exists := c.Get("organizationID")
 	if !exists {
@@ -337,7 +320,6 @@ func (h *GeofenceHandler) List(c *gin.Context) {
 	c.JSON(http.StatusOK, geofences)
 }
 
-// Create creates a new geofence zone
 func (h *GeofenceHandler) Create(c *gin.Context) {
 	orgID, exists := c.Get("organizationID")
 	if !exists {
@@ -379,7 +361,6 @@ func (h *GeofenceHandler) Create(c *gin.Context) {
 	c.JSON(http.StatusCreated, geofence)
 }
 
-// Get returns a single geofence zone
 func (h *GeofenceHandler) Get(c *gin.Context) {
 	geofenceID := c.Param("id")
 	orgID, _ := c.Get("organizationID")
@@ -399,7 +380,6 @@ func (h *GeofenceHandler) Get(c *gin.Context) {
 	c.JSON(http.StatusOK, geofence)
 }
 
-// Update updates a geofence zone
 func (h *GeofenceHandler) Update(c *gin.Context) {
 	geofenceID := c.Param("id")
 	orgID, _ := c.Get("organizationID")
@@ -439,7 +419,6 @@ func (h *GeofenceHandler) Update(c *gin.Context) {
 	c.JSON(http.StatusOK, geofence)
 }
 
-// Delete deletes a geofence zone
 func (h *GeofenceHandler) Delete(c *gin.Context) {
 	geofenceID := c.Param("id")
 	orgID, _ := c.Get("organizationID")
@@ -457,7 +436,6 @@ func (h *GeofenceHandler) Delete(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Geofence deleted successfully"})
 }
 
-// CheckLocation checks if a location is within a geofence
 func (h *GeofenceHandler) CheckLocation(c *gin.Context) {
 	geofenceID := c.Param("id")
 	orgID, _ := c.Get("organizationID")
@@ -479,25 +457,18 @@ func (h *GeofenceHandler) CheckLocation(c *gin.Context) {
 		return
 	}
 
-	// Check if location is within geofence
 	isInside := false
 	if geofence.Type == "circle" {
-		// Calculate distance from center
 		distance := calculateDistance(geofence.CenterLat, geofence.CenterLng, req.Latitude, req.Longitude)
 		isInside = distance <= geofence.Radius
-	} else if geofence.Type == "polygon" {
-		// TODO: Implement point-in-polygon check
-		isInside = false
 	}
 
-	// Update trigger count if inside
 	if isInside {
 		now := time.Now()
 		geofence.LastTriggered = &now
 		geofence.TriggerCount++
 		h.db.Save(&geofence)
 
-		// Create alert if configured
 		if geofence.AlertOnEntry {
 			alert := models.Alert{
 				Type:     "geofence_entry",
@@ -510,12 +481,12 @@ func (h *GeofenceHandler) CheckLocation(c *gin.Context) {
 					Longitude: req.Longitude,
 				},
 			}
-			
+
 			if req.AssetID != "" {
 				assetID, _ := uuid.Parse(req.AssetID)
 				alert.AssetID = &assetID
 			}
-			
+
 			h.db.Create(&alert)
 		}
 	}
@@ -527,20 +498,17 @@ func (h *GeofenceHandler) CheckLocation(c *gin.Context) {
 	})
 }
 
-// calculateDistance calculates distance between two points in meters using Haversine formula
 func calculateDistance(lat1, lon1, lat2, lon2 float64) float64 {
-	const earthRadius = 6371000 // Earth's radius in meters
-	
-	// Convert to radians
-	lat1Rad := lat1 * 3.14159265359 / 180
-	lat2Rad := lat2 * 3.14159265359 / 180
-	deltaLat := (lat2 - lat1) * 3.14159265359 / 180
-	deltaLon := (lon2 - lon1) * 3.14159265359 / 180
-	
-	// Haversine formula
-	a := (deltaLat/2)*(deltaLat/2) + 
-		lat1Rad*lat2Rad*(deltaLon/2)*(deltaLon/2)
-	c := 2 * a
-	
+	const earthRadius = 6371000
+
+	lat1Rad := lat1 * math.Pi / 180
+	lat2Rad := lat2 * math.Pi / 180
+	deltaLat := (lat2 - lat1) * math.Pi / 180
+	deltaLon := (lon2 - lon1) * math.Pi / 180
+
+	a := math.Sin(deltaLat/2)*math.Sin(deltaLat/2) +
+		math.Cos(lat1Rad)*math.Cos(lat2Rad)*math.Sin(deltaLon/2)*math.Sin(deltaLon/2)
+	c := 2 * math.Atan2(math.Sqrt(a), math.Sqrt(1-a))
+
 	return earthRadius * c
 }

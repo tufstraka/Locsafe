@@ -13,12 +13,12 @@ type Asset struct {
 	ID               uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
 	AssetCode        string         `gorm:"uniqueIndex;not null" json:"assetCode"`
 	Name             string         `gorm:"not null" json:"name"`
-	Type             string         `json:"type"` // vehicle, container, equipment, product
+	Type             string         `json:"type"`
 	Category         string         `json:"category"`
-	Status           string         `json:"status"` // active, inactive, maintenance, retired
+	Status           string         `json:"status"`
 	OrganizationID   uuid.UUID      `gorm:"type:uuid;not null" json:"organizationId"`
 	Organization     Organization   `gorm:"foreignKey:OrganizationID" json:"organization,omitempty"`
-	
+
 	Description      string         `json:"description"`
 	Manufacturer     string         `json:"manufacturer"`
 	Model            string         `json:"model"`
@@ -27,29 +27,29 @@ type Asset struct {
 	PurchasePrice    float64        `json:"purchasePrice"`
 	Currency         string         `json:"currency" gorm:"default:'USD'"`
 	WarrantyExpiry   *time.Time     `json:"warrantyExpiry"`
-	
+
 	CurrentLocation  *Location      `gorm:"embedded;embeddedPrefix:location_" json:"currentLocation"`
 	AssignedToID     *uuid.UUID     `gorm:"type:uuid" json:"assignedToId,omitempty"`
 	AssignedTo       *User          `gorm:"foreignKey:AssignedToID" json:"assignedTo,omitempty"`
 	ShipmentID       *uuid.UUID     `gorm:"type:uuid" json:"shipmentId,omitempty"`
 	Shipment         *Shipment      `gorm:"foreignKey:ShipmentID" json:"shipment,omitempty"`
-	
+
 	TrackerID        string         `json:"trackerId,omitempty"`
 	LastSeen         *time.Time     `json:"lastSeen"`
 	BatteryLevel     *int           `json:"batteryLevel,omitempty"`
 	Temperature      *float64       `json:"temperature,omitempty"`
 	Humidity         *float64       `json:"humidity,omitempty"`
 	Speed            *float64       `json:"speed,omitempty"`
-	
+
 	LastMaintenance  *time.Time     `json:"lastMaintenance"`
 	NextMaintenance  *time.Time     `json:"nextMaintenance"`
 	MaintenanceNotes string         `json:"maintenanceNotes"`
-	
+
 	Tags             pq.StringArray `gorm:"type:text[]" json:"tags"`
 	Images           pq.StringArray `gorm:"type:text[]" json:"images"`
 	Documents        pq.StringArray `gorm:"type:text[]" json:"documents"`
 	CustomFields     JSONB          `gorm:"type:jsonb" json:"customFields,omitempty"`
-	
+
 	CreatedAt        time.Time      `json:"createdAt"`
 	UpdatedAt        time.Time      `json:"updatedAt"`
 	DeletedAt        gorm.DeletedAt `gorm:"index" json:"-"`
@@ -65,7 +65,6 @@ func (a *Asset) BeforeCreate(tx *gorm.DB) error {
 	return nil
 }
 
-// generateAssetCode generates a unique asset code
 func generateAssetCode() string {
 	timestamp := time.Now().Unix()
 	random := uuid.New().String()[:6]

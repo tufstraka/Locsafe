@@ -10,17 +10,14 @@ import (
 	"gorm.io/gorm"
 )
 
-// EventHandler handles event endpoints
 type EventHandler struct {
 	db *gorm.DB
 }
 
-// NewEventHandler creates a new event handler
 func NewEventHandler(db *gorm.DB) *EventHandler {
 	return &EventHandler{db: db}
 }
 
-// List returns all events
 func (h *EventHandler) List(c *gin.Context) {
 	orgID, exists := c.Get("organizationID")
 	if !exists {
@@ -54,7 +51,6 @@ func (h *EventHandler) List(c *gin.Context) {
 	c.JSON(http.StatusOK, events)
 }
 
-// Create creates a new event
 func (h *EventHandler) Create(c *gin.Context) {
 	var req models.CreateEventRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -96,7 +92,6 @@ func (h *EventHandler) Create(c *gin.Context) {
 	c.JSON(http.StatusCreated, event)
 }
 
-// Get returns a single event
 func (h *EventHandler) Get(c *gin.Context) {
 	eventID := c.Param("id")
 
@@ -114,7 +109,6 @@ func (h *EventHandler) Get(c *gin.Context) {
 	c.JSON(http.StatusOK, event)
 }
 
-// CreateBatch creates multiple events
 func (h *EventHandler) CreateBatch(c *gin.Context) {
 	var req []models.CreateEventRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -158,7 +152,6 @@ func (h *EventHandler) CreateBatch(c *gin.Context) {
 	})
 }
 
-// HandleIoTData handles IoT data webhook
 func (h *EventHandler) HandleIoTData(c *gin.Context) {
 	var req struct {
 		DeviceID    string           `json:"deviceId" binding:"required"`
@@ -219,22 +212,21 @@ func (h *EventHandler) HandleIoTData(c *gin.Context) {
 			"temperature":      req.Temperature,
 			"humidity":         req.Humidity,
 			"battery_level":    req.Battery,
-			"speed":           req.Speed,
-			"last_seen":       time.Now(),
+			"speed":            req.Speed,
+			"last_seen":        time.Now(),
 		})
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "IoT data processed successfully"})
 }
 
-// HandleBlockchainEvent handles blockchain event webhook
 func (h *EventHandler) HandleBlockchainEvent(c *gin.Context) {
 	var req struct {
-		TxHash       string                 `json:"txHash" binding:"required"`
-		BlockNumber  uint64                 `json:"blockNumber"`
-		Network      string                 `json:"network"`
-		EventType    string                 `json:"eventType"`
-		EventData    map[string]interface{} `json:"eventData"`
+		TxHash      string                 `json:"txHash" binding:"required"`
+		BlockNumber uint64                 `json:"blockNumber"`
+		Network     string                 `json:"network"`
+		EventType   string                 `json:"eventType"`
+		EventData   map[string]interface{} `json:"eventData"`
 	}
 
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -260,17 +252,14 @@ func (h *EventHandler) HandleBlockchainEvent(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Blockchain event processed successfully"})
 }
 
-// AlertHandler handles alert endpoints
 type AlertHandler struct {
 	db *gorm.DB
 }
 
-// NewAlertHandler creates a new alert handler
 func NewAlertHandler(db *gorm.DB) *AlertHandler {
 	return &AlertHandler{db: db}
 }
 
-// List returns all alerts
 func (h *AlertHandler) List(c *gin.Context) {
 	orgID, exists := c.Get("organizationID")
 	if !exists {
@@ -304,7 +293,6 @@ func (h *AlertHandler) List(c *gin.Context) {
 	c.JSON(http.StatusOK, alerts)
 }
 
-// Create creates a new alert
 func (h *AlertHandler) Create(c *gin.Context) {
 	var req models.CreateAlertRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -343,12 +331,9 @@ func (h *AlertHandler) Create(c *gin.Context) {
 		return
 	}
 
-	// TODO: Send notifications (email, SMS, push)
-
 	c.JSON(http.StatusCreated, alert)
 }
 
-// Get returns a single alert
 func (h *AlertHandler) Get(c *gin.Context) {
 	alertID := c.Param("id")
 
@@ -366,14 +351,13 @@ func (h *AlertHandler) Get(c *gin.Context) {
 	c.JSON(http.StatusOK, alert)
 }
 
-// Acknowledge acknowledges an alert
 func (h *AlertHandler) Acknowledge(c *gin.Context) {
 	alertID := c.Param("id")
 	userID, _ := c.Get("userID")
 
 	now := time.Now()
 	uid := userID.(uuid.UUID)
-	
+
 	result := h.db.Model(&models.Alert{}).Where("id = ?", alertID).Updates(map[string]interface{}{
 		"status":          "acknowledged",
 		"acknowledged_by": uid,
@@ -392,7 +376,6 @@ func (h *AlertHandler) Acknowledge(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Alert acknowledged successfully"})
 }
 
-// Resolve resolves an alert
 func (h *AlertHandler) Resolve(c *gin.Context) {
 	alertID := c.Param("id")
 	userID, _ := c.Get("userID")
@@ -408,7 +391,7 @@ func (h *AlertHandler) Resolve(c *gin.Context) {
 
 	now := time.Now()
 	uid := userID.(uuid.UUID)
-	
+
 	result := h.db.Model(&models.Alert{}).Where("id = ?", alertID).Updates(map[string]interface{}{
 		"status":      "resolved",
 		"resolved_by": uid,

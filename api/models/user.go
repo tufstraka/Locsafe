@@ -8,7 +8,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// User represents a user in the system
 type User struct {
 	ID           uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
 	Email        string         `gorm:"uniqueIndex;not null" json:"email"`
@@ -17,9 +16,9 @@ type User struct {
 	FirstName    string         `json:"firstName"`
 	LastName     string         `json:"lastName"`
 	PhoneNumber  string         `json:"phoneNumber"`
-	Position     string         `json:"position"`    // CEO, Manager, etc
-	Department   string         `json:"department"`  // Operations, Logistics, etc
-	Role         string         `gorm:"default:'user'" json:"role"` // user, admin, dispatcher, viewer
+	Position     string         `json:"position"`
+	Department   string         `json:"department"`
+	Role         string         `gorm:"default:'user'" json:"role"`
 	IsActive     bool           `gorm:"default:true" json:"isActive"`
 	IsVerified   bool           `gorm:"default:false" json:"isVerified"`
 	IsOnboarded  bool           `gorm:"default:false" json:"isOnboarded"`
@@ -33,39 +32,33 @@ type User struct {
 	DeletedAt    gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
-// UserPreferences embedded struct for user preferences
 type UserPreferences struct {
-	// Notifications
 	NotificationsEmail      bool   `json:"notificationsEmail" gorm:"default:true"`
 	NotificationsSMS        bool   `json:"notificationsSms" gorm:"default:false"`
 	NotificationsPush       bool   `json:"notificationsPush" gorm:"default:true"`
 	NotificationsShipmentAlerts bool `json:"notificationsShipmentAlerts" gorm:"default:true"`
 	NotificationsSystemUpdates  bool `json:"notificationsSystemUpdates" gorm:"default:true"`
 	NotificationsMarketing      bool `json:"notificationsMarketing" gorm:"default:false"`
-	
-	// Regional & Display
-	Theme              string `json:"theme" gorm:"default:'light'"` // light, dark, system
+
+	Theme              string `json:"theme" gorm:"default:'light'"`
 	Language           string `json:"language" gorm:"default:'en'"`
 	Timezone           string `json:"timezone" gorm:"default:'UTC'"`
-	DashboardLayout    string `json:"dashboardLayout" gorm:"default:'default'"` // default, compact, analytics, operations
+	DashboardLayout    string `json:"dashboardLayout" gorm:"default:'default'"`
 	DefaultView        string `json:"defaultView" gorm:"default:'overview'"`
 	DateFormat         string `json:"dateFormat" gorm:"default:'DD/MM/YYYY'"`
-	TimeFormat         string `json:"timeFormat" gorm:"default:'24h'"` // 12h, 24h
-	MeasurementUnit    string `json:"measurementUnit" gorm:"default:'metric'"` // metric, imperial
-	MapProvider        string `json:"mapProvider" gorm:"default:'google'"` // google, mapbox, openstreet
-	
-	// Compliance
+	TimeFormat         string `json:"timeFormat" gorm:"default:'24h'"`
+	MeasurementUnit    string `json:"measurementUnit" gorm:"default:'metric'"`
+	MapProvider        string `json:"mapProvider" gorm:"default:'google'"`
+
 	ComplianceRegion   string `json:"complianceRegion" gorm:"default:'Kenya'"`
-	DataRetention      string `json:"dataRetention" gorm:"default:'3years'"` // 1year, 3years, 5years, 7years
+	DataRetention      string `json:"dataRetention" gorm:"default:'3years'"`
 }
 
-// BeforeCreate hook to set UUID
 func (u *User) BeforeCreate(tx *gorm.DB) error {
 	if u.ID == uuid.Nil {
 		u.ID = uuid.New()
 	}
-	
-	// Hash password
+
 	if u.Password != "" {
 		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
 		if err != nil {
@@ -73,11 +66,10 @@ func (u *User) BeforeCreate(tx *gorm.DB) error {
 		}
 		u.Password = string(hashedPassword)
 	}
-	
+
 	return nil
 }
 
-// CheckPassword verifies password
 func (u *User) CheckPassword(password string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
 	return err == nil
@@ -98,7 +90,7 @@ type RegisterRequest struct {
 	CompanyName string `json:"companyName"`
 	CompanySize string `json:"companySize"`
 	Industry    string `json:"industry"`
-	FirebaseUID string `json:"firebaseUid"` // Firebase UID for linking
+	FirebaseUID string `json:"firebaseUid"`
 }
 
 type UpdateUserRequest struct {
@@ -110,7 +102,6 @@ type UpdateUserRequest struct {
 	Department   string `json:"department"`
 }
 
-// OnboardingProfileRequest for updating profile during onboarding
 type OnboardingProfileRequest struct {
 	FullName    string                   `json:"fullName"`
 	PhoneNumber string                   `json:"phoneNumber" binding:"required"`
@@ -121,7 +112,6 @@ type OnboardingProfileRequest struct {
 	Notifications NotificationPreferences `json:"notifications"`
 }
 
-// NotificationPreferences struct
 type NotificationPreferences struct {
 	Email          bool `json:"email"`
 	SMS            bool `json:"sms"`
@@ -131,7 +121,6 @@ type NotificationPreferences struct {
 	Marketing      bool `json:"marketing"`
 }
 
-// OnboardingPreferencesRequest for updating preferences
 type OnboardingPreferencesRequest struct {
 	DashboardLayout  string `json:"dashboardLayout"`
 	DefaultView      string `json:"defaultView"`
@@ -145,7 +134,6 @@ type OnboardingPreferencesRequest struct {
 	DataRetention    string `json:"dataRetention"`
 }
 
-// OnboardingCompleteRequest marks onboarding as complete
 type OnboardingCompleteRequest struct {
 	IsOnboarded bool `json:"isOnboarded"`
 }

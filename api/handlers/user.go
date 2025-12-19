@@ -10,21 +10,17 @@ import (
 	"gorm.io/gorm"
 )
 
-// UserHandler handles user endpoints
 type UserHandler struct {
 	db *gorm.DB
 }
 
-// NewUserHandler creates a new user handler
 func NewUserHandler(db *gorm.DB) *UserHandler {
 	return &UserHandler{db: db}
 }
 
-// List returns all users
 func (h *UserHandler) List(c *gin.Context) {
 	orgID, exists := c.Get("organizationID")
 	if !exists {
-		// If no org, just return empty list for non-org users
 		c.JSON(http.StatusOK, []models.User{})
 		return
 	}
@@ -38,10 +34,9 @@ func (h *UserHandler) List(c *gin.Context) {
 	c.JSON(http.StatusOK, users)
 }
 
-// Get returns a single user
 func (h *UserHandler) Get(c *gin.Context) {
 	userID := c.Param("id")
-	
+
 	var user models.User
 	if err := h.db.Preload("Organization").First(&user, "id = ?", userID).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
@@ -55,7 +50,6 @@ func (h *UserHandler) Get(c *gin.Context) {
 	c.JSON(http.StatusOK, user)
 }
 
-// Create creates a new user (admin only)
 func (h *UserHandler) Create(c *gin.Context) {
 	var req models.RegisterRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -90,10 +84,9 @@ func (h *UserHandler) Create(c *gin.Context) {
 	c.JSON(http.StatusCreated, user)
 }
 
-// Update updates a user
 func (h *UserHandler) Update(c *gin.Context) {
 	userID := c.Param("id")
-	
+
 	var user models.User
 	if err := h.db.First(&user, "id = ?", userID).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
@@ -110,7 +103,6 @@ func (h *UserHandler) Update(c *gin.Context) {
 		return
 	}
 
-	// Update fields
 	if req.FirstName != "" {
 		user.FirstName = req.FirstName
 	}
@@ -132,10 +124,9 @@ func (h *UserHandler) Update(c *gin.Context) {
 	c.JSON(http.StatusOK, user)
 }
 
-// Delete deletes a user
 func (h *UserHandler) Delete(c *gin.Context) {
 	userID := c.Param("id")
-	
+
 	result := h.db.Delete(&models.User{}, "id = ?", userID)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete user"})
@@ -149,12 +140,10 @@ func (h *UserHandler) Delete(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "User deleted successfully"})
 }
 
-// ChangePassword changes user password
 func (h *UserHandler) ChangePassword(c *gin.Context) {
 	userID := c.Param("id")
 	currentUserID, _ := c.Get("userID")
-	
-	// Users can only change their own password unless admin
+
 	if userID != currentUserID.(uuid.UUID).String() {
 		role, _ := c.Get("userRole")
 		if role != "admin" {
@@ -175,13 +164,11 @@ func (h *UserHandler) ChangePassword(c *gin.Context) {
 		return
 	}
 
-	// Verify current password
 	if !user.CheckPassword(req.CurrentPassword) {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Current password is incorrect"})
 		return
 	}
 
-	// Hash new password
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.NewPassword), bcrypt.DefaultCost)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash password"})
@@ -197,12 +184,10 @@ func (h *UserHandler) ChangePassword(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Password changed successfully"})
 }
 
-// UpdatePreferences updates user preferences
 func (h *UserHandler) UpdatePreferences(c *gin.Context) {
 	userID := c.Param("id")
 	currentUserID, _ := c.Get("userID")
-	
-	// Users can only update their own preferences
+
 	if userID != currentUserID.(uuid.UUID).String() {
 		c.JSON(http.StatusForbidden, gin.H{"error": "Cannot update another user's preferences"})
 		return
@@ -229,20 +214,18 @@ func (h *UserHandler) UpdatePreferences(c *gin.Context) {
 	c.JSON(http.StatusOK, user.Preferences)
 }
 
-// UpdateRole updates user role (admin only)
 func (h *UserHandler) UpdateRole(c *gin.Context) {
 	userID := c.Param("id")
-	
+
 	var req struct {
 		Role string `json:"role" binding:"required"`
 	}
-	
+
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request data"})
 		return
 	}
 
-	// Validate role
 	validRoles := []string{"user", "admin", "dispatcher", "viewer"}
 	isValidRole := false
 	for _, r := range validRoles {
@@ -251,7 +234,7 @@ func (h *UserHandler) UpdateRole(c *gin.Context) {
 			break
 		}
 	}
-	
+
 	if !isValidRole {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid role"})
 		return
@@ -270,10 +253,9 @@ func (h *UserHandler) UpdateRole(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Role updated successfully"})
 }
 
-// Activate activates a user account
 func (h *UserHandler) Activate(c *gin.Context) {
 	userID := c.Param("id")
-	
+
 	result := h.db.Model(&models.User{}).Where("id = ?", userID).Update("is_active", true)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to activate user"})
@@ -287,10 +269,9 @@ func (h *UserHandler) Activate(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "User activated successfully"})
 }
 
-// Deactivate deactivates a user account
 func (h *UserHandler) Deactivate(c *gin.Context) {
 	userID := c.Param("id")
-	
+
 	result := h.db.Model(&models.User{}).Where("id = ?", userID).Update("is_active", false)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to deactivate user"})
@@ -304,22 +285,20 @@ func (h *UserHandler) Deactivate(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "User deactivated successfully"})
 }
 
-// ListOrganizations lists all organizations (admin only)
 func (h *UserHandler) ListOrganizations(c *gin.Context) {
 	var organizations []models.Organization
-	
+
 	query := h.db.Model(&models.Organization{})
-	
-	// Apply filters
+
 	if status := c.Query("status"); status != "" {
 		isActive := status == "active"
 		query = query.Where("is_active = ?", isActive)
 	}
-	
+
 	if plan := c.Query("plan"); plan != "" {
 		query = query.Where("subscription_plan = ?", plan)
 	}
-	
+
 	if err := query.Find(&organizations).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch organizations"})
 		return
@@ -328,7 +307,6 @@ func (h *UserHandler) ListOrganizations(c *gin.Context) {
 	c.JSON(http.StatusOK, organizations)
 }
 
-// CreateOrganization creates a new organization
 func (h *UserHandler) CreateOrganization(c *gin.Context) {
 	var req models.CreateOrganizationRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -337,20 +315,20 @@ func (h *UserHandler) CreateOrganization(c *gin.Context) {
 	}
 
 	org := models.Organization{
-		Name:         req.Name,
-		Domain:       req.Domain,
-		Type:         req.Type,
-		Industry:     req.Industry,
-		Size:         req.Size,
-		Description:  req.Description,
-		Website:      req.Website,
-		Address:      req.Address,
-		City:         req.City,
-		State:        req.State,
-		Country:      req.Country,
-		PostalCode:   req.PostalCode,
-		ContactEmail: req.ContactEmail,
-		ContactPhone: req.ContactPhone,
+		Name:             req.Name,
+		Domain:           req.Domain,
+		Type:             req.Type,
+		Industry:         req.Industry,
+		Size:             req.Size,
+		Description:      req.Description,
+		Website:          req.Website,
+		Address:          req.Address,
+		City:             req.City,
+		State:            req.State,
+		Country:          req.Country,
+		PostalCode:       req.PostalCode,
+		ContactEmail:     req.ContactEmail,
+		ContactPhone:     req.ContactPhone,
 		SubscriptionPlan: "free",
 		Settings: models.OrgSettings{
 			MaxShipments:  100,
@@ -367,10 +345,9 @@ func (h *UserHandler) CreateOrganization(c *gin.Context) {
 	c.JSON(http.StatusCreated, org)
 }
 
-// UpdateOrganization updates an organization
 func (h *UserHandler) UpdateOrganization(c *gin.Context) {
 	orgID := c.Param("id")
-	
+
 	var org models.Organization
 	if err := h.db.First(&org, "id = ?", orgID).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
@@ -387,7 +364,6 @@ func (h *UserHandler) UpdateOrganization(c *gin.Context) {
 		return
 	}
 
-	// Update fields
 	org.Name = req.Name
 	org.Domain = req.Domain
 	org.Type = req.Type
@@ -411,11 +387,9 @@ func (h *UserHandler) UpdateOrganization(c *gin.Context) {
 	c.JSON(http.StatusOK, org)
 }
 
-// DeleteOrganization deletes an organization
 func (h *UserHandler) DeleteOrganization(c *gin.Context) {
 	orgID := c.Param("id")
-	
-	// Check if organization has users
+
 	var userCount int64
 	h.db.Model(&models.User{}).Where("organization_id = ?", orgID).Count(&userCount)
 	if userCount > 0 {

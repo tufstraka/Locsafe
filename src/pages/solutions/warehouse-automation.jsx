@@ -1,4 +1,5 @@
 
+import { Helmet } from 'react-helmet';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -291,7 +292,60 @@ const WarehouseAutomation = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" itemScope itemType="https://schema.org/WebPage">
+      <Helmet>
+        <title>Warehouse Automation Solution | Robotics & AI - Locsafe</title>
+        <meta
+          name="description"
+          content="Transform your warehouse with Locsafe's intelligent automation. AI-powered robotics, smart inventory management, dynamic slotting, and predictive analytics. Achieve 3x faster fulfillment and 99.9% accuracy."
+        />
+        <meta name="keywords" content="warehouse automation, robotics, inventory management, WMS, smart warehouse, AI warehouse, automated storage, Kenya warehouse, fulfillment automation" />
+        
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://locsafe.org/solutions/warehouse" />
+        <meta property="og:title" content="Warehouse Automation Solution | Robotics & AI - Locsafe" />
+        <meta property="og:description" content="Transform your warehouse with intelligent automation. AI-powered robotics for 3x faster fulfillment and 99.9% accuracy." />
+        <meta property="og:image" content="https://locsafe.org/og-image.png" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Warehouse Automation Solution - Locsafe" />
+        <meta name="twitter:description" content="AI-powered robotics and smart inventory management for modern warehouses." />
+        
+        {/* Canonical */}
+        <link rel="canonical" href="https://locsafe.org/solutions/warehouse" />
+        
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "Warehouse Automation Solution",
+            "description": "Intelligent warehouse automation with AI-powered robotics and smart inventory management",
+            "provider": {
+              "@type": "Organization",
+              "name": "Locsafe"
+            },
+            "serviceType": "Warehouse Automation",
+            "areaServed": {
+              "@type": "Country",
+              "name": "Kenya"
+            },
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Warehouse Services",
+              "itemListElement": [
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Autonomous Robots"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Smart Inventory Management"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Dynamic Slotting"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Predictive Analytics"}}
+              ]
+            }
+          })}
+        </script>
+      </Helmet>
+      
       {/* Header with Material Design 3 elevation */}
       <motion.header 
         initial={{ y: -100 }}

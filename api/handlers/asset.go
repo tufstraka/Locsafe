@@ -11,17 +11,14 @@ import (
 	"gorm.io/gorm"
 )
 
-// AssetHandler handles asset endpoints
 type AssetHandler struct {
 	db *gorm.DB
 }
 
-// NewAssetHandler creates a new asset handler
 func NewAssetHandler(db *gorm.DB) *AssetHandler {
 	return &AssetHandler{db: db}
 }
 
-// List returns all assets
 func (h *AssetHandler) List(c *gin.Context) {
 	orgID, exists := c.Get("organizationID")
 	if !exists {
@@ -32,7 +29,6 @@ func (h *AssetHandler) List(c *gin.Context) {
 	var assets []models.Asset
 	query := h.db.Preload("Organization").Preload("AssignedTo").Preload("Shipment")
 
-	// Apply filters
 	if status := c.Query("status"); status != "" {
 		query = query.Where("status = ?", status)
 	}
@@ -48,7 +44,6 @@ func (h *AssetHandler) List(c *gin.Context) {
 	c.JSON(http.StatusOK, assets)
 }
 
-// Create creates a new asset
 func (h *AssetHandler) Create(c *gin.Context) {
 	orgID, exists := c.Get("organizationID")
 	if !exists {
@@ -78,7 +73,6 @@ func (h *AssetHandler) Create(c *gin.Context) {
 		Tags:           pq.StringArray(req.Tags),
 	}
 
-	// Parse dates
 	if req.PurchaseDate != "" {
 		t, _ := time.Parse(time.RFC3339, req.PurchaseDate)
 		asset.PurchaseDate = &t
@@ -96,7 +90,6 @@ func (h *AssetHandler) Create(c *gin.Context) {
 	c.JSON(http.StatusCreated, asset)
 }
 
-// Get returns a single asset
 func (h *AssetHandler) Get(c *gin.Context) {
 	assetID := c.Param("id")
 	orgID, _ := c.Get("organizationID")
@@ -116,7 +109,6 @@ func (h *AssetHandler) Get(c *gin.Context) {
 	c.JSON(http.StatusOK, asset)
 }
 
-// Update updates an asset
 func (h *AssetHandler) Update(c *gin.Context) {
 	assetID := c.Param("id")
 	orgID, _ := c.Get("organizationID")
@@ -133,7 +125,6 @@ func (h *AssetHandler) Update(c *gin.Context) {
 		return
 	}
 
-	// Update fields
 	if req.Name != "" {
 		asset.Name = req.Name
 	}
@@ -159,7 +150,6 @@ func (h *AssetHandler) Update(c *gin.Context) {
 		asset.BatteryLevel = req.BatteryLevel
 	}
 
-	// Update assignments
 	if req.AssignedToID != "" {
 		userID, _ := uuid.Parse(req.AssignedToID)
 		asset.AssignedToID = &userID
@@ -169,7 +159,6 @@ func (h *AssetHandler) Update(c *gin.Context) {
 		asset.ShipmentID = &shipmentID
 	}
 
-	// Update maintenance dates
 	if req.LastMaintenance != "" {
 		t, _ := time.Parse(time.RFC3339, req.LastMaintenance)
 		asset.LastMaintenance = &t
@@ -194,7 +183,6 @@ func (h *AssetHandler) Update(c *gin.Context) {
 	c.JSON(http.StatusOK, asset)
 }
 
-// Delete deletes an asset
 func (h *AssetHandler) Delete(c *gin.Context) {
 	assetID := c.Param("id")
 	orgID, _ := c.Get("organizationID")
@@ -212,7 +200,6 @@ func (h *AssetHandler) Delete(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Asset deleted successfully"})
 }
 
-// Assign assigns an asset to a user or shipment
 func (h *AssetHandler) Assign(c *gin.Context) {
 	assetID := c.Param("id")
 	orgID, _ := c.Get("organizationID")
@@ -250,7 +237,6 @@ func (h *AssetHandler) Assign(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Asset assigned successfully"})
 }
 
-// UpdateLocation updates asset location
 func (h *AssetHandler) UpdateLocation(c *gin.Context) {
 	assetID := c.Param("id")
 	orgID, _ := c.Get("organizationID")
@@ -276,7 +262,6 @@ func (h *AssetHandler) UpdateLocation(c *gin.Context) {
 		return
 	}
 
-	// Create location event
 	event := models.Event{
 		Type:        "location_update",
 		Description: "Asset location updated",
@@ -289,17 +274,16 @@ func (h *AssetHandler) UpdateLocation(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Location updated successfully"})
 }
 
-// LogMaintenance logs maintenance for an asset
 func (h *AssetHandler) LogMaintenance(c *gin.Context) {
 	assetID := c.Param("id")
 	orgID, _ := c.Get("organizationID")
 
 	var req struct {
-		MaintenanceType string `json:"type" binding:"required"`
-		Description     string `json:"description"`
+		MaintenanceType string  `json:"type" binding:"required"`
+		Description     string  `json:"description"`
 		Cost            float64 `json:"cost"`
-		NextMaintenance string `json:"nextMaintenance"`
-		Notes           string `json:"notes"`
+		NextMaintenance string  `json:"nextMaintenance"`
+		Notes           string  `json:"notes"`
 	}
 
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -316,7 +300,7 @@ func (h *AssetHandler) LogMaintenance(c *gin.Context) {
 	now := time.Now()
 	asset.LastMaintenance = &now
 	asset.MaintenanceNotes = req.Notes
-	
+
 	if req.NextMaintenance != "" {
 		t, _ := time.Parse(time.RFC3339, req.NextMaintenance)
 		asset.NextMaintenance = &t

@@ -11,9 +11,9 @@ type Organization struct {
 	ID              uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
 	Name            string         `gorm:"not null" json:"name"`
 	Domain          string         `gorm:"uniqueIndex" json:"domain"`
-	Type            string         `json:"type"` // logistics, manufacturer, retailer, distributor, warehouse, freight, other
+	Type            string         `json:"type"`
 	Industry        string         `json:"industry"`
-	Size            string         `json:"size"` // small, medium, large, enterprise
+	Size            string         `json:"size"`
 	Description     string         `json:"description"`
 	Logo            string         `json:"logo"`
 	Website         string         `json:"website"`
@@ -24,15 +24,13 @@ type Organization struct {
 	PostalCode      string         `json:"postalCode"`
 	ContactEmail    string         `json:"contactEmail"`
 	ContactPhone    string         `json:"contactPhone"`
-	// Primary Contact
 	PrimaryContactName  string     `json:"primaryContactName"`
 	PrimaryContactEmail string     `json:"primaryContactEmail"`
 	PrimaryContactPhone string     `json:"primaryContactPhone"`
-	// Legal Information
 	BusinessRegistration string     `json:"businessRegistration"`
 	TaxID               string     `json:"taxId"`
 	IsActive        bool           `gorm:"default:true" json:"isActive"`
-	SubscriptionPlan string        `json:"subscriptionPlan"` // free, starter, professional, enterprise
+	SubscriptionPlan string        `json:"subscriptionPlan"`
 	SubscriptionEnd *time.Time     `json:"subscriptionEnd"`
 	Settings        OrgSettings    `gorm:"embedded" json:"settings"`
 	Integrations    OrgIntegrations `gorm:"type:jsonb" json:"integrations"`
@@ -58,7 +56,6 @@ type OrgSettings struct {
 	DefaultDistanceUnit  string `json:"defaultDistanceUnit" gorm:"default:'km'"`
 }
 
-// OrgIntegrations stores integration configurations
 type OrgIntegrations struct {
 	ERP struct {
 		Enabled  bool   `json:"enabled"`
@@ -99,7 +96,6 @@ type OrgIntegrations struct {
 	} `json:"notifications"`
 }
 
-// BeforeCreate hook to set UUID
 func (o *Organization) BeforeCreate(tx *gorm.DB) error {
 	if o.ID == uuid.Nil {
 		o.ID = uuid.New()
@@ -123,16 +119,13 @@ type CreateOrganizationRequest struct {
 	PostalCode   string `json:"postalCode"`
 	ContactEmail string `json:"contactEmail" binding:"email"`
 	ContactPhone string `json:"contactPhone"`
-	// Primary Contact
 	PrimaryContactName  string `json:"primaryContactName"`
 	PrimaryContactEmail string `json:"primaryContactEmail"`
 	PrimaryContactPhone string `json:"primaryContactPhone"`
-	// Legal
 	BusinessRegistration string `json:"businessRegistration"`
 	TaxID               string `json:"taxId"`
 }
 
-// OnboardingOrganizationRequest for updating organization during onboarding
 type OnboardingOrganizationRequest struct {
 	Name         string `json:"name" binding:"required"`
 	Type         string `json:"type" binding:"required"`
@@ -156,12 +149,10 @@ type OnboardingOrganizationRequest struct {
 	TaxID               string `json:"taxId"`
 }
 
-// OnboardingIntegrationsRequest for saving integration settings
 type OnboardingIntegrationsRequest struct {
 	Integrations OrgIntegrations `json:"integrations"`
 }
 
-// OnboardingDataResponse combined response for all onboarding data
 type OnboardingDataResponse struct {
 	User         OnboardingUserData         `json:"user"`
 	Organization OnboardingOrganizationData `json:"organization"`

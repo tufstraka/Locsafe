@@ -1,0 +1,64 @@
+# Robots.txt for Locsafe - https://locsafe.org
+# Last updated: December 2025
+
+# Allow all search engines
+User-agent: *
+Allow: /
+
+# Allow specific crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# Disallow admin and private routes
+Disallow: /admin/
+Disallow: /user/dashboard
+Disallow: /user/signin
+Disallow: /user/register
+Disallow: /dispatchers/register
+Disallow: /users/update
+Disallow: /users/*/edit
+Disallow: /onboarding
+Disallow: /settings
+Disallow: /notifications
+Disallow: /maintenance
+Disallow: /pay
+
+# Disallow API endpoints
+Disallow: /api/
+
+# Allow important pages for crawling
+Allow: /
+Allow: /features
+Allow: /pricing
+Allow: /contact
+Allow: /blog
+Allow: /login
+Allow: /register
+Allow: /terms
+Allow: /privacy
+Allow: /solutions/
+Allow: /solutions/cold-chain
+Allow: /solutions/last-mile
+Allow: /solutions/fleet
+Allow: /solutions/warehouse
+
+# Crawl-delay for polite crawling (optional, 10 second delay)
+Crawl-delay: 10
+
+# Sitemap location
+Sitemap: https://locsafe.org/sitemap.xml
