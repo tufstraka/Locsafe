@@ -78,30 +78,37 @@ const Header = () => {
           ? 'bg-surface-light dark:bg-surface-dark shadow-elevation-2 dark:shadow-elevation-dark-2'
           : 'bg-surface-light/95 dark:bg-surface-dark/95 backdrop-blur-md'
       }`}
+      role="banner"
+      itemScope
+      itemType="https://schema.org/WPHeader"
     >
       <div className="container mx-auto px-6">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
+          <Link to="/" className="flex items-center space-x-3 group" aria-label="Locsafe - Go to homepage" itemProp="url">
             <motion.img
               whileHover={{ rotate: 360 }}
               transition={{ duration: 0.5 }}
               src={logoabs}
-              alt="Locsafe Logo"
+              alt="Locsafe - AI-Powered Supply Chain & Asset Tracking Platform"
               className="h-9 w-auto"
+              itemProp="logo"
             />
-            <span className="font-display text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent">
+            <span className="font-display text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent" itemProp="name">
               Locsafe
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
+          <nav className="hidden md:flex items-center space-x-1" role="navigation" aria-label="Main navigation">
             {/* Solutions Dropdown */}
             <div className="relative">
               <button
                 onMouseEnter={() => setIsProductsOpen(true)}
                 className="flex items-center space-x-1 px-4 py-2 rounded-lg text-on-surface-light dark:text-on-surface-dark hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all duration-200 group"
+                aria-expanded={isProductsOpen}
+                aria-haspopup="true"
+                aria-controls="solutions-menu"
               >
                 <span className="font-medium">Solutions</span>
                 <motion.span
@@ -116,18 +123,23 @@ const Header = () => {
               <AnimatePresence>
                 {isProductsOpen && (
                   <motion.div
+                    id="solutions-menu"
                     initial={{ opacity: 0, y: -10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -10, scale: 0.95 }}
                     onMouseLeave={() => setIsProductsOpen(false)}
                     className="absolute left-0 mt-2 w-96 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-3 dark:shadow-elevation-dark-3 overflow-hidden"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="solutions-button"
                   >
-                    <div className="p-2">
+                    <div className="p-2" role="none">
                       {solutions.map((solution) => (
                         <Link
                           key={solution.title}
                           to={solution.href}
                           className="flex items-start p-4 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/10 transition-all duration-200 group"
+                          role="menuitem"
                         >
                           <div className="flex-shrink-0 group-hover:scale-110 transition-transform">
                             {solution.icon}

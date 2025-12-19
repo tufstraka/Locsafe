@@ -38,20 +38,22 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-gray-900 text-gray-300">
+    <footer className="bg-gray-900 text-gray-300" role="contentinfo" itemScope itemType="https://schema.org/WPFooter">
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 pt-16 pb-8">
+      <div className="container mx-auto px-4 pt-16 pb-8" itemScope itemType="https://schema.org/Organization">
+        <meta itemProp="name" content="Locsafe" />
+        <meta itemProp="url" content="https://locsafe.org" />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2 mb-4">
-              <img src={logoabs} alt="Locsafe Logo" className="h-8 w-auto" />
-              <span className="text-white font-bold text-xl">Locsafe</span>
+              <img src={logoabs} alt="Locsafe - AI-Powered Supply Chain Platform Logo" className="h-8 w-auto" itemProp="logo" />
+              <span className="text-white font-bold text-xl" itemProp="name">Locsafe</span>
             </div>
-            <p className="text-sm text-gray-400">
-              Securing assets and ensuring safety through innovative technology solutions.
+            <p className="text-sm text-gray-400" itemProp="description">
+              AI-powered supply chain and asset tracking platform. Real-time GPS tracking, digital product passports, and predictive analytics for modern logistics.
             </p>
-            <div className="flex space-x-4">
+            <nav aria-label="Social media links" className="flex space-x-4">
               {footerSections.social.map((item, index) => (
                 <a
                   key={index}
@@ -63,13 +65,13 @@ const Footer = () => {
                   {item.icon}
                 </a>
               ))}
-            </div>
+            </nav>
           </div>
 
           {/* Company Links */}
-          <div>
+          <nav aria-label="Company links">
             <h3 className="text-white font-semibold text-lg mb-4">Company</h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2" role="list">
               {footerSections.company.map((item) => (
                 <li key={item.label}>
                   <Link
@@ -81,12 +83,12 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Product Links */}
-          <div>
+          <nav aria-label="Product links">
             <h3 className="text-white font-semibold text-lg mb-4">Products</h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2" role="list">
               {footerSections.product.map((item) => (
                 <li key={item.label}>
                   <a
@@ -100,36 +102,40 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Contact Information */}
-          <div>
+          <address className="not-italic" itemScope itemType="https://schema.org/PostalAddress">
             <h3 className="text-white font-semibold text-lg mb-4">Contact Us</h3>
-            <ul className="space-y-3">
+            <ul className="space-y-3" role="list">
               <li className="flex items-start space-x-3">
-                <FaMapMarkerAlt className="w-5 h-5 text-teal-400 mt-1" />
-                <span className="text-gray-400">{footerSections.contact.address}</span>
+                <FaMapMarkerAlt className="w-5 h-5 text-teal-400 mt-1" aria-hidden="true" />
+                <span className="text-gray-400" itemProp="streetAddress">{footerSections.contact.address}</span>
               </li>
               <li className="flex items-center space-x-3">
-                <FaEnvelope className="w-5 h-5 text-teal-400" />
+                <FaEnvelope className="w-5 h-5 text-teal-400" aria-hidden="true" />
                 <a
                   href={`mailto:${footerSections.contact.email}`}
                   className="text-gray-400 hover:text-teal-400 transition-colors duration-300"
+                  itemProp="email"
+                  aria-label="Send email to Locsafe support"
                 >
                   {footerSections.contact.email}
                 </a>
               </li>
               <li className="flex items-center space-x-3">
-                <FaPhone className="w-5 h-5 text-teal-400" />
+                <FaPhone className="w-5 h-5 text-teal-400" aria-hidden="true" />
                 <a
                   href={`tel:${footerSections.contact.phone}`}
                   className="text-gray-400 hover:text-teal-400 transition-colors duration-300"
+                  itemProp="telephone"
+                  aria-label="Call Locsafe support"
                 >
                   {footerSections.contact.phone}
                 </a>
               </li>
             </ul>
-          </div>
+          </address>
         </div>
 
         {/* Newsletter Section */}
@@ -137,15 +143,21 @@ const Footer = () => {
           <div className="max-w-lg mx-auto text-center">
             <h3 className="text-white font-semibold text-lg mb-2">Stay Updated</h3>
             <p className="text-gray-400 mb-4">Subscribe to our newsletter for updates and security tips.</p>
-            <form className="flex flex-col sm:flex-row gap-2">
+            <form className="flex flex-col sm:flex-row gap-2" aria-label="Newsletter subscription form">
+              <label htmlFor="newsletter-email" className="sr-only">Email address</label>
               <input
                 type="email"
+                id="newsletter-email"
+                name="email"
                 placeholder="Enter your email"
                 className="flex-1 px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:border-teal-400 text-gray-300"
+                required
+                aria-required="true"
               />
               <button
                 type="submit"
                 className="px-6 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors duration-300"
+                aria-label="Subscribe to newsletter"
               >
                 Subscribe
               </button>
@@ -157,10 +169,10 @@ const Footer = () => {
         <div className="border-t border-gray-800 mt-8 pt-8">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
             <p className="text-gray-400 text-sm">
-              © {currentYear} Locsafe. All rights reserved.
+              <span itemProp="copyrightYear">{currentYear}</span> © <span itemProp="copyrightHolder">Locsafe</span>. All rights reserved.
             </p>
-            <nav>
-              <ul className="flex flex-wrap items-center space-x-4 md:space-x-8 text-sm">
+            <nav aria-label="Legal links">
+              <ul className="flex flex-wrap items-center space-x-4 md:space-x-8 text-sm" role="list">
                 {footerSections.legal.map((item) => (
                   <li key={item.label}>
                     <Link

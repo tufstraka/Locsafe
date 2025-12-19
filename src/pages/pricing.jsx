@@ -39,13 +39,72 @@ const PricingPage = () => {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
+    <div className="flex flex-col min-h-screen bg-gray-100" itemScope itemType="https://schema.org/WebPage">
       <Helmet>
-        <title>Pricing Plans - Locsafe™</title>
+        <title>Pricing Plans | Asset Tracking Software from KES 5,000/month - Locsafe</title>
         <meta
           name="description"
-          content="Choose a plan that fits your business needs. All plans are billed annually and in Kenyan Shillings. Locsafe™ offers Starter, Business, and Enterprise plans with various features to help you manage your assets effectively."
+          content="Affordable asset tracking software starting from KES 5,000/month. Choose from Starter, Business, or Enterprise plans. Real-time GPS tracking, AI analytics, and 24/7 support. Start your free trial today."
         />
+        <meta name="keywords" content="asset tracking pricing, GPS tracking cost, fleet management pricing, supply chain software pricing, Kenya logistics software, affordable asset tracking" />
+        
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://locsafe.org/pricing" />
+        <meta property="og:title" content="Pricing Plans | Asset Tracking Software - Locsafe" />
+        <meta property="og:description" content="Affordable asset tracking software starting from KES 5,000/month. Real-time GPS tracking, AI analytics, and 24/7 support." />
+        <meta property="og:image" content="https://locsafe.org/og-image.png" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Pricing Plans - Locsafe" />
+        <meta name="twitter:description" content="Asset tracking software from KES 5,000/month with real-time GPS tracking and AI analytics." />
+        
+        {/* Canonical */}
+        <link rel="canonical" href="https://locsafe.org/pricing" />
+        
+        {/* Structured Data - Product with Offers */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "Locsafe Asset Tracking Platform",
+            "description": "AI-powered supply chain and asset tracking platform",
+            "brand": {
+              "@type": "Brand",
+              "name": "Locsafe"
+            },
+            "offers": [
+              {
+                "@type": "Offer",
+                "name": "Starter Plan",
+                "price": "5000",
+                "priceCurrency": "KES",
+                "priceValidUntil": "2025-12-31",
+                "availability": "https://schema.org/InStock",
+                "description": "Real-time tracking, Basic reporting, Up to 100 assets"
+              },
+              {
+                "@type": "Offer",
+                "name": "Business Plan",
+                "price": "15000",
+                "priceCurrency": "KES",
+                "priceValidUntil": "2025-12-31",
+                "availability": "https://schema.org/InStock",
+                "description": "Advanced analytics, Custom reports, Up to 500 assets"
+              },
+              {
+                "@type": "Offer",
+                "name": "Enterprise Plan",
+                "price": "30000",
+                "priceCurrency": "KES",
+                "priceValidUntil": "2025-12-31",
+                "availability": "https://schema.org/InStock",
+                "description": "Fleet management, Unlimited assets, 24/7 support"
+              }
+            ]
+          })}
+        </script>
       </Helmet>
       <Header/>
       <main className="flex-grow container mx-auto py-16 px-4">

@@ -214,13 +214,87 @@ const ContactUs = () => {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50" itemScope itemType="https://schema.org/ContactPage">
       <Helmet>
-        <title>Contact Us - Locsafe™</title>
+        <title>Contact Us | Get Support & Schedule a Demo - Locsafe</title>
         <meta
           name="description"
-          content="Get in touch with Locsafe™ to learn more about our asset tracking and management system. Fill out the contact form and we'll get back to you as soon as possible."
+          content="Contact Locsafe for asset tracking support, sales inquiries, or schedule a demo. Available 24/7 via email, phone (+254 701 746 774), or WhatsApp. Offices in Nairobi, Mombasa, and Kampala."
         />
+        <meta name="keywords" content="contact locsafe, asset tracking support, supply chain demo, Kenya logistics support, fleet management help, GPS tracking support" />
+        
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://locsafe.org/contact" />
+        <meta property="og:title" content="Contact Us | Get Support & Schedule a Demo - Locsafe" />
+        <meta property="og:description" content="Contact Locsafe for asset tracking support, sales inquiries, or schedule a demo. Available 24/7 via email, phone, or WhatsApp." />
+        <meta property="og:image" content="https://locsafe.org/og-image.png" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Contact Locsafe - Get Support & Demo" />
+        <meta name="twitter:description" content="Contact us for asset tracking support, sales inquiries, or schedule a demo." />
+        
+        {/* Canonical */}
+        <link rel="canonical" href="https://locsafe.org/contact" />
+        
+        {/* Structured Data - LocalBusiness */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Locsafe",
+            "description": "AI-powered supply chain and asset tracking platform",
+            "url": "https://locsafe.org",
+            "telephone": "+254-701-746-774",
+            "email": "support@locsafe.org",
+            "address": [
+              {
+                "@type": "PostalAddress",
+                "streetAddress": "Westlands",
+                "addressLocality": "Nairobi",
+                "addressCountry": "Kenya"
+              },
+              {
+                "@type": "PostalAddress",
+                "streetAddress": "Nyali",
+                "addressLocality": "Mombasa",
+                "addressCountry": "Kenya"
+              },
+              {
+                "@type": "PostalAddress",
+                "streetAddress": "Kololo",
+                "addressLocality": "Kampala",
+                "addressCountry": "Uganda"
+              }
+            ],
+            "openingHoursSpecification": {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+              "opens": "08:00",
+              "closes": "18:00"
+            },
+            "contactPoint": [
+              {
+                "@type": "ContactPoint",
+                "telephone": "+254-701-746-774",
+                "contactType": "sales",
+                "availableLanguage": ["English", "Swahili"]
+              },
+              {
+                "@type": "ContactPoint",
+                "telephone": "+254-701-746-774",
+                "contactType": "customer support",
+                "availableLanguage": ["English", "Swahili"]
+              }
+            ],
+            "sameAs": [
+              "https://twitter.com/Locsafe",
+              "https://linkedin.com/company/locsafe",
+              "https://facebook.com/locsafe"
+            ]
+          })}
+        </script>
       </Helmet>
       <Header />
       

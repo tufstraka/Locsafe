@@ -1,4 +1,5 @@
 
+import { Helmet } from 'react-helmet';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -270,7 +271,60 @@ const FleetManagementSolution = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" itemScope itemType="https://schema.org/WebPage">
+      <Helmet>
+        <title>Fleet Management Solution | GPS Tracking & Analytics - Locsafe</title>
+        <meta
+          name="description"
+          content="Master your fleet operations with Locsafe's comprehensive fleet management solution. Real-time GPS tracking, fuel management, predictive maintenance, and driver behavior analytics. Reduce costs by 30% and downtime by 40%."
+        />
+        <meta name="keywords" content="fleet management, GPS tracking, vehicle tracking, fuel management, predictive maintenance, driver analytics, fleet optimization, Kenya fleet, transport management" />
+        
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://locsafe.org/solutions/fleet" />
+        <meta property="og:title" content="Fleet Management Solution | GPS Tracking & Analytics - Locsafe" />
+        <meta property="og:description" content="Master your fleet operations with real-time GPS tracking, fuel management, and predictive maintenance. Reduce costs by 30%." />
+        <meta property="og:image" content="https://locsafe.org/og-image.png" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Fleet Management Solution - Locsafe" />
+        <meta name="twitter:description" content="Real-time GPS tracking, fuel management, and predictive maintenance for your fleet." />
+        
+        {/* Canonical */}
+        <link rel="canonical" href="https://locsafe.org/solutions/fleet" />
+        
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "Fleet Management Solution",
+            "description": "Comprehensive fleet management with GPS tracking, fuel management, and predictive maintenance",
+            "provider": {
+              "@type": "Organization",
+              "name": "Locsafe"
+            },
+            "serviceType": "Fleet Management",
+            "areaServed": {
+              "@type": "Country",
+              "name": "Kenya"
+            },
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Fleet Services",
+              "itemListElement": [
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Real-Time GPS Tracking"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Fuel Management"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Predictive Maintenance"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Driver Behavior Analytics"}}
+              ]
+            }
+          })}
+        </script>
+      </Helmet>
+      
       {/* Header with Material Design elevation */}
       <motion.header 
         initial={{ y: -100 }}

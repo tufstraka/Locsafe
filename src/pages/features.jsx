@@ -127,13 +127,48 @@ const FeaturesPage = () => {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50" itemScope itemType="https://schema.org/WebPage">
       <Helmet>
-        <title>Powerful Features - Locsafe™</title>
+        <title>Asset Tracking Features | GPS, AI Analytics & Digital Passports - Locsafe</title>
         <meta
           name="description"
-          content="Discover powerful features designed to simplify asset tracking and management for your business with Locsafe™."
+          content="Discover Locsafe's powerful asset tracking features: Real-time GPS tracking, AI-powered analytics, digital product passports, blockchain verification, and enterprise-grade security. Start your 14-day free trial."
         />
+        <meta name="keywords" content="GPS tracking, AI analytics, digital product passport, blockchain verification, asset management, supply chain features, real-time tracking, fleet management, cold chain monitoring" />
+        
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://locsafe.org/features" />
+        <meta property="og:title" content="Asset Tracking Features | GPS, AI Analytics & Digital Passports - Locsafe" />
+        <meta property="og:description" content="Discover Locsafe's powerful asset tracking features: Real-time GPS tracking, AI-powered analytics, digital product passports, and blockchain verification." />
+        <meta property="og:image" content="https://locsafe.org/og-image.png" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Asset Tracking Features - Locsafe" />
+        <meta name="twitter:description" content="Real-time GPS tracking, AI analytics, digital product passports, and blockchain verification." />
+        
+        {/* Canonical */}
+        <link rel="canonical" href="https://locsafe.org/features" />
+        
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "name": "Locsafe Features",
+            "description": "Comprehensive asset tracking and supply chain management features",
+            "numberOfItems": 10,
+            "itemListElement": [
+              {"@type": "ListItem", "position": 1, "name": "Real-Time GPS Tracking", "description": "Track assets anywhere with precision GPS technology"},
+              {"@type": "ListItem", "position": 2, "name": "Digital Product Passports", "description": "Blockchain-verified digital identities for products"},
+              {"@type": "ListItem", "position": 3, "name": "AI-Powered Analytics", "description": "Predictive maintenance and route optimization"},
+              {"@type": "ListItem", "position": 4, "name": "Enterprise Security", "description": "Bank-grade 256-bit encryption"},
+              {"@type": "ListItem", "position": 5, "name": "Cloud Infrastructure", "description": "Scalable cloud platform"},
+              {"@type": "ListItem", "position": 6, "name": "Mobile Applications", "description": "Native iOS and Android apps"}
+            ]
+          })}
+        </script>
       </Helmet>
       <Header/>
       

@@ -71,13 +71,43 @@ const TermsOfService = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50" itemScope itemType="https://schema.org/WebPage">
       <Helmet>
-        <title>Terms of Service - Locsafe™</title>
+        <title>Terms of Service | Legal Agreement - Locsafe</title>
         <meta
           name="description"
-          content="Read our Terms of Service to understand your rights and responsibilities when using Locsafe™ asset tracking platform."
+          content="Read Locsafe's Terms of Service to understand your rights and responsibilities when using our asset tracking and supply chain management platform. Last updated October 2025."
         />
+        <meta name="keywords" content="terms of service, locsafe terms, user agreement, service agreement, legal terms, asset tracking terms" />
+        
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://locsafe.org/terms" />
+        <meta property="og:title" content="Terms of Service - Locsafe" />
+        <meta property="og:description" content="Read our Terms of Service to understand your rights and responsibilities when using Locsafe." />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Terms of Service - Locsafe" />
+        
+        {/* Canonical */}
+        <link rel="canonical" href="https://locsafe.org/terms" />
+        
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Terms of Service",
+            "description": "Locsafe Terms of Service and User Agreement",
+            "url": "https://locsafe.org/terms",
+            "publisher": {
+              "@type": "Organization",
+              "name": "Locsafe"
+            },
+            "dateModified": "2025-10-02"
+          })}
+        </script>
       </Helmet>
       <Header/>
       

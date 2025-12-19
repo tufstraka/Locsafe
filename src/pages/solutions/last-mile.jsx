@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { IoArrowBack, IoTime, IoSpeedometer, IoPeople } from 'react-icons/io5';
@@ -203,7 +204,50 @@ const LastMileSolution = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" itemScope itemType="https://schema.org/WebPage">
+      <Helmet>
+        <title>Last-Mile Delivery Solution | AI Route Optimization - Locsafe</title>
+        <meta
+          name="description"
+          content="Optimize your last-mile delivery with Locsafe's AI-powered routing, real-time tracking, and predictive ETAs. Reduce delivery times by 40% and improve customer satisfaction. Perfect for e-commerce, food delivery, and courier services."
+        />
+        <meta name="keywords" content="last mile delivery, route optimization, delivery tracking, AI logistics, e-commerce delivery, food delivery, courier services, Kenya delivery, real-time tracking" />
+        
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://locsafe.org/solutions/last-mile" />
+        <meta property="og:title" content="Last-Mile Delivery Solution | AI Route Optimization - Locsafe" />
+        <meta property="og:description" content="Optimize your last-mile delivery with AI-powered routing and real-time tracking. Reduce delivery times by 40%." />
+        <meta property="og:image" content="https://locsafe.org/og-image.png" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Last-Mile Delivery Solution - Locsafe" />
+        <meta name="twitter:description" content="AI-powered route optimization for e-commerce, food delivery, and courier services." />
+        
+        {/* Canonical */}
+        <link rel="canonical" href="https://locsafe.org/solutions/last-mile" />
+        
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "Last-Mile Delivery Solution",
+            "description": "AI-powered last-mile delivery optimization with real-time tracking and predictive ETAs",
+            "provider": {
+              "@type": "Organization",
+              "name": "Locsafe"
+            },
+            "serviceType": "Last-Mile Logistics",
+            "areaServed": {
+              "@type": "Country",
+              "name": "Kenya"
+            }
+          })}
+        </script>
+      </Helmet>
+      
       {/* Header */}
       <motion.header 
         initial={{ y: -100 }}

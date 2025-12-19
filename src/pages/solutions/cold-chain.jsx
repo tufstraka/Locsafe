@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { IoArrowBack, IoThermometerSharp, IoShieldCheckmark, IoTime, IoWarning } from 'react-icons/io5';
@@ -173,7 +174,77 @@ const ColdChainSolution = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" itemScope itemType="https://schema.org/WebPage">
+      <Helmet>
+        <title>Cold Chain Management Solution | Temperature Monitoring - Locsafe</title>
+        <meta
+          name="description"
+          content="Protect temperature-sensitive products with Locsafe's cold chain management solution. Real-time temperature monitoring, IoT sensors, compliance automation, and 24/7 alerts for pharmaceuticals and food logistics."
+        />
+        <meta name="keywords" content="cold chain management, temperature monitoring, pharmaceutical logistics, vaccine tracking, food cold chain, IoT temperature sensors, GDP compliance, cold storage monitoring, Kenya cold chain" />
+        
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://locsafe.org/solutions/cold-chain" />
+        <meta property="og:title" content="Cold Chain Management Solution | Temperature Monitoring - Locsafe" />
+        <meta property="og:description" content="Protect temperature-sensitive products with real-time temperature monitoring, IoT sensors, and compliance automation." />
+        <meta property="og:image" content="https://locsafe.org/og-image.png" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Cold Chain Management - Locsafe" />
+        <meta name="twitter:description" content="Real-time temperature monitoring for pharmaceuticals and food logistics." />
+        
+        {/* Canonical */}
+        <link rel="canonical" href="https://locsafe.org/solutions/cold-chain" />
+        
+        {/* Structured Data - Service */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "Cold Chain Management Solution",
+            "description": "End-to-end temperature-controlled logistics monitoring for pharmaceuticals, vaccines, and perishable goods",
+            "provider": {
+              "@type": "Organization",
+              "name": "Locsafe"
+            },
+            "serviceType": "Cold Chain Monitoring",
+            "areaServed": {
+              "@type": "Country",
+              "name": "Kenya"
+            },
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Cold Chain Services",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Real-Time Temperature Monitoring"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "IoT Sensor Integration"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Compliance Automation"
+                  }
+                }
+              ]
+            }
+          })}
+        </script>
+      </Helmet>
+      
       {/* Header */}
       <motion.header 
         initial={{ y: -100 }}

@@ -191,13 +191,96 @@ const LandingPage = () => {
   }, [testimonials.length]);
 
   return (
-    <main className="relative min-h-screen bg-background-light dark:bg-background-dark text-on-surface-light dark:text-on-surface-dark overflow-x-hidden" role="main">
+    <main className="relative min-h-screen bg-background-light dark:bg-background-dark text-on-surface-light dark:text-on-surface-dark overflow-x-hidden" role="main" itemScope itemType="https://schema.org/WebPage">
       <Helmet>
-        <title>Locsafe - Supply Chain Intelligence Platform</title>
+        <title>Locsafe - AI-Powered Supply Chain & Asset Tracking Platform | Real-Time GPS Tracking</title>
         <meta
           name="description"
-          content="Transform your supply chain with AI-powered blockchain technology. Real-time tracking, predictive analytics, and complete transparency for modern logistics."
+          content="Transform your supply chain with Locsafe's AI-powered blockchain technology. Real-time GPS tracking, digital product passports, cold chain monitoring, and fleet management. Trusted by 26+ businesses across 5 countries."
         />
+        <meta name="keywords" content="supply chain management, asset tracking, GPS tracking, fleet management, cold chain monitoring, digital product passport, blockchain logistics, AI analytics, inventory management, real-time tracking, Kenya logistics" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://locsafe.org/" />
+        <meta property="og:title" content="Locsafe - AI-Powered Supply Chain & Asset Tracking Platform" />
+        <meta property="og:description" content="Transform your supply chain with AI-powered blockchain technology. Real-time GPS tracking, digital product passports, and predictive analytics for modern logistics." />
+        <meta property="og:image" content="https://locsafe.org/og-image.png" />
+        <meta property="og:site_name" content="Locsafe" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://locsafe.org/" />
+        <meta name="twitter:title" content="Locsafe - AI-Powered Supply Chain & Asset Tracking Platform" />
+        <meta name="twitter:description" content="Transform your supply chain with AI-powered blockchain technology. Real-time GPS tracking and predictive analytics." />
+        <meta name="twitter:image" content="https://locsafe.org/og-image.png" />
+        <meta name="twitter:site" content="@Locsafe" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://locsafe.org/" />
+        
+        {/* Structured Data - WebPage */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Locsafe - AI-Powered Supply Chain Intelligence Platform",
+            "description": "Transform your supply chain with AI-powered blockchain technology. Real-time GPS tracking, digital product passports, and predictive analytics.",
+            "url": "https://locsafe.org/",
+            "mainEntity": {
+              "@type": "SoftwareApplication",
+              "name": "Locsafe",
+              "applicationCategory": "BusinessApplication",
+              "offers": {
+                "@type": "Offer",
+                "price": "5000",
+                "priceCurrency": "KES"
+              }
+            }
+          })}
+        </script>
+        
+        {/* Structured Data - FAQPage */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "How does blockchain improve supply chain transparency?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Our blockchain technology creates an immutable record of every transaction and movement in your supply chain. This means every stakeholder can verify the authenticity and journey of products, reducing fraud and increasing accountability."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What kind of AI analytics does Locsafe provide?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Our AI analyzes patterns in your supply chain data to predict potential delays, optimize routes, identify inefficiencies, and provide actionable insights for cost reduction and performance improvement."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How quickly can we implement Locsafe?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Most businesses can be fully operational within 2-4 weeks. Our team provides comprehensive onboarding, training, and 24/7 support to ensure a smooth transition."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is Locsafe suitable for small businesses?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Absolutely! Our platform scales to businesses of all sizes. We offer flexible pricing plans and features that grow with your business needs."
+                }
+              }
+            ]
+          })}
+        </script>
       </Helmet>
 
       <ToastContainer

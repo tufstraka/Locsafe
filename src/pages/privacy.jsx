@@ -135,13 +135,48 @@ const PrivacyPolicy = () => {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50" itemScope itemType="https://schema.org/WebPage">
       <Helmet>
-        <title>Privacy Policy - Locsafe™</title>
+        <title>Privacy Policy | Data Protection & GDPR Compliance - Locsafe</title>
         <meta
           name="description"
-          content="Learn how Locsafe™ protects your privacy and handles your data with our comprehensive privacy policy."
+          content="Learn how Locsafe protects your privacy with bank-grade encryption, GDPR compliance, and transparent data practices. We never sell your personal data. Effective October 2025."
         />
+        <meta name="keywords" content="privacy policy, data protection, GDPR compliance, data security, locsafe privacy, information security, user data" />
+        
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://locsafe.org/privacy" />
+        <meta property="og:title" content="Privacy Policy - Locsafe" />
+        <meta property="og:description" content="Learn how Locsafe protects your privacy with bank-grade encryption and GDPR compliance." />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Privacy Policy - Locsafe" />
+        
+        {/* Canonical */}
+        <link rel="canonical" href="https://locsafe.org/privacy" />
+        
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Privacy Policy",
+            "description": "Locsafe Privacy Policy - Data Protection and GDPR Compliance",
+            "url": "https://locsafe.org/privacy",
+            "publisher": {
+              "@type": "Organization",
+              "name": "Locsafe"
+            },
+            "dateModified": "2025-10-02",
+            "about": {
+              "@type": "Thing",
+              "name": "Data Protection",
+              "description": "How Locsafe handles and protects user data"
+            }
+          })}
+        </script>
       </Helmet>
       <Header/>
       
