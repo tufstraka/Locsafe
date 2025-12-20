@@ -1,4 +1,4 @@
-name: Deploy to EC2
+name: Production Pipeline
 
 on:
   push:
@@ -54,7 +54,7 @@ jobs:
           CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 
   deploy:
-    name: Deploy to EC2
+    name: Deploy to Prod
     runs-on: ubuntu-latest
     needs: test
     if: github.ref == 'refs/heads/Hogsmeade' || github.ref == 'refs/heads/production'
@@ -140,13 +140,16 @@ jobs:
               sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
             fi
             
-            # Install Node.js and build frontend if needed
-            if [ ! -d "dist" ]; then
+            # Install Node.js if not present
+            if ! command -v node &> /dev/null; then
               curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
               sudo apt-get install -y nodejs
-              npm install
-              npm run build
             fi
+            
+            # Always rebuild frontend to pick up changes
+            echo "Building frontend..."
+            npm install
+            npm run build
             
             # Update environment variables for API
             echo "${{ secrets.ENV_FILE }}" > ./api/.env
@@ -280,11 +283,11 @@ jobs:
             # Pull latest images
             docker compose -f docker-compose.prod.yml pull
             
-            # Stop existing containers
-            docker compose -f docker-compose.prod.yml down || true
+            # Stop existing containers and remove orphans (like prometheus/grafana if commented out)
+            docker compose -f docker-compose.prod.yml down --remove-orphans || true
             
             # Start new containers
-            docker compose -f docker-compose.prod.yml up -d
+            docker compose -f docker-compose.prod.yml up -d --remove-orphans
             
             # Clean up old images
             docker image prune -f
@@ -367,8 +370,8 @@ jobs:
             git reset --hard HEAD~1
             
             # Restart with previous version
-            docker compose -f docker-compose.prod.yml down
-            docker compose -f docker-compose.prod.yml up -d
+            docker compose -f docker-compose.prod.yml down --remove-orphans
+            docker compose -f docker-compose.prod.yml up -d --remove-orphans
             
             echo "Rollback completed"
 
@@ -384,10 +387,3 @@ jobs:
             Commit: ${{ github.sha }}
           username: GitHub Actions
           icon_emoji: ':warning:'
-
-
-
-
-
-
-
