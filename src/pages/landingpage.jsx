@@ -1,12 +1,11 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
-import { FaRocket, FaStar, FaChevronDown, FaChevronUp, FaArrowRight } from 'react-icons/fa';
+import { FaRocket, FaChevronDown, FaChevronUp, FaArrowRight } from 'react-icons/fa';
 import { HiSparkles, HiLightningBolt, HiChip } from 'react-icons/hi';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import DashboardImage from '../../LocsafeDashboard.png';
-import Microsoft from '../assets/microsoft.svg';
 import AWSLogo from '../assets/awws.svg';
 import Header from '../components/header.jsx';
 import Footer from '../components/footer.jsx';
@@ -60,30 +59,26 @@ const LandingPage = () => {
   const heroY = useTransform(scrollYProgress, [0, 1], [0, -150]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0.3]);
 
-  const enterprises = [
+  const useCases = [
     {
-      name: "Twiga Foods",
-      industry: "Agricultural Distribution",
-      description: "Fresh produce supply chain across East Africa",
-      icon: "agriculture"
+      industry: "Fleet & Logistics",
+      description: "Track vehicles, optimize routes, and monitor driver behavior in real-time",
+      icon: "local_shipping"
     },
     {
-      name: "KPLC",
-      industry: "Energy & Utilities",
-      description: "Asset tracking for power infrastructure",
-      icon: "bolt"
+      industry: "Cold Chain",
+      description: "Temperature monitoring for pharmaceuticals, food, and perishables",
+      icon: "ac_unit"
     },
     {
-      name: "Kenya Airways",
-      industry: "Aviation & Cargo",
-      description: "Cargo and baggage tracking solutions",
-      icon: "flight"
+      industry: "Asset Management",
+      description: "Monitor equipment, tools, and high-value assets across locations",
+      icon: "inventory_2"
     },
     {
-      name: "Safaricom",
-      industry: "Telecommunications",
-      description: "Equipment and fleet management",
-      icon: "cell_tower"
+      industry: "Supply Chain",
+      description: "End-to-end visibility from warehouse to final delivery",
+      icon: "hub"
     }
   ];
 
@@ -106,11 +101,11 @@ const LandingPage = () => {
     }
   ];
 
-  const stats = [
-    { value: 850, suffix: '+', label: 'Active Shipments Daily', icon: 'local_shipping', isMaterial: true },
-    { value: 97, suffix: '%', label: 'Delivery Accuracy', icon: 'verified_user', isMaterial: true },
-    { value: 45, suffix: '+', label: 'Business Clients', icon: 'business', isMaterial: true },
-    { value: 3, suffix: '', label: 'Countries Covered', icon: 'public', isMaterial: true }
+  const capabilities = [
+    { icon: 'gps_fixed', label: 'Real-Time GPS Tracking', description: 'Sub-minute location updates' },
+    { icon: 'notifications_active', label: 'Smart Alerts', description: 'Geofencing & anomaly detection' },
+    { icon: 'analytics', label: 'AI Analytics', description: 'Route optimization & insights' },
+    { icon: 'security', label: 'Bank-Grade Security', description: '256-bit encryption' }
   ];
 
   const features = [
@@ -191,7 +186,7 @@ const LandingPage = () => {
         <title>Locsafe - AI-Powered Supply Chain & Asset Tracking Platform | Real-Time GPS Tracking</title>
         <meta
           name="description"
-          content="Transform your supply chain with Locsafe's AI-powered tracking technology. Real-time GPS tracking, digital product passports, cold chain monitoring, and fleet management. Trusted by 45+ businesses across East Africa."
+          content="Transform your supply chain with Locsafe's AI-powered tracking technology. Real-time GPS tracking, digital product passports, cold chain monitoring, and fleet management for businesses of all sizes."
         />
         <meta name="keywords" content="supply chain management, asset tracking, GPS tracking, fleet management, cold chain monitoring, digital product passport, blockchain logistics, AI analytics, inventory management, real-time tracking, Kenya logistics" />
         
@@ -398,38 +393,19 @@ const LandingPage = () => {
 
                 <motion.div
                   variants={itemVariants}
-                  className="flex flex-col sm:flex-row items-start sm:items-center gap-6 pt-8"
+                  className="flex flex-wrap items-center gap-4 pt-8"
                 >
-                  <div className="flex -space-x-3 w-full sm:w-auto justify-start">
-                    {[1, 2, 3, 4, 5].map((i) => (
-                      <motion.img
-                        key={i}
-                        initial={{ scale: 0, rotate: -180 }}
-                        animate={{ scale: 1, rotate: 0 }}
-                        transition={{ delay: 0.1 * i, type: "spring" }}
-                        src={`https://i.pravatar.cc/40?img=${i}`}
-                        alt={`Customer ${i}`}
-                        className="w-12 h-12 rounded-full border-3 border-surface-light dark:border-surface-dark shadow-elevation-2"
-                        loading="lazy"
-                      />
-                    ))}
+                  <div className="flex items-center gap-2 px-4 py-2 bg-success-50 dark:bg-success-900/20 rounded-full border border-success-200 dark:border-success-800">
+                    <span className="material-icons text-success-600 dark:text-success-400 text-sm">check_circle</span>
+                    <span className="text-sm text-success-700 dark:text-success-400">14-day free trial</span>
                   </div>
-                  <div className="flex flex-col pr-4 sm:pr-0 w-full sm:w-auto mt-4 sm:mt-0">
-                    <div className="flex gap-0.5">
-                      {[...Array(5)].map((_, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{ opacity: 0, scale: 0, rotate: -180 }}
-                          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                          transition={{ delay: 0.05 * i, type: "spring" }}
-                        >
-                          <FaStar className="w-4 h-4 text-warning-500" />
-                        </motion.div>
-                      ))}
-                    </div>
-                    <span className="text-sm text-on-surface-light-medium dark:text-on-surface-dark-medium mt-1">
-                      Trusted by <span className="font-semibold text-on-surface-light dark:text-on-surface-dark">45+</span> businesses
-                    </span>
+                  <div className="flex items-center gap-2 px-4 py-2 bg-info-50 dark:bg-info-900/20 rounded-full border border-info-200 dark:border-info-800">
+                    <span className="material-icons text-info-600 dark:text-info-400 text-sm">credit_card_off</span>
+                    <span className="text-sm text-info-700 dark:text-info-400">No credit card required</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2 bg-primary-50 dark:bg-primary-900/20 rounded-full border border-primary-200 dark:border-primary-800">
+                    <span className="material-icons text-primary-600 dark:text-primary-400 text-sm">support_agent</span>
+                    <span className="text-sm text-primary-700 dark:text-primary-400">Free setup assistance</span>
                   </div>
                 </motion.div>
               </motion.div>
@@ -894,10 +870,25 @@ const LandingPage = () => {
           </div>
         </section>
 
+        {/* Core Capabilities Section */}
         <section className="py-16 lg:py-24 bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-900/10 dark:to-secondary-900/10 relative overflow-hidden">
           <div className="container mx-auto px-6 relative">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h3 className="headline-4 font-heading mb-4">
+                Everything You Need to Track Your Assets
+              </h3>
+              <p className="body-1 text-on-surface-light-medium dark:text-on-surface-dark-medium max-w-2xl mx-auto">
+                Powerful features designed to give you complete visibility and control over your operations
+              </p>
+            </motion.div>
+            
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-              {stats.map((stat, index) => (
+              {capabilities.map((capability, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 30 }}
@@ -908,20 +899,19 @@ const LandingPage = () => {
                   className="bg-surface-light dark:bg-surface-elevated-dark rounded-2xl p-6 text-center shadow-elevation-2 hover:shadow-elevation-4 transition-all duration-300"
                 >
                   <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-100 to-secondary-100 dark:from-primary-900/30 dark:to-secondary-900/30 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <span className={`material-icons text-3xl text-primary-600 dark:text-primary-400`} aria-hidden="true">
-                      {stat.icon}
+                    <span className="material-icons text-3xl text-primary-600 dark:text-primary-400" aria-hidden="true">
+                      {capability.icon}
                     </span>
                   </div>
-                  <div className="text-4xl font-heading font-bold mb-2">
-                    <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                  </div>
-                  <div className="text-sm text-on-surface-light-medium dark:text-on-surface-dark-medium">{stat.label}</div>
+                  <h4 className="font-semibold mb-2">{capability.label}</h4>
+                  <p className="text-sm text-on-surface-light-medium dark:text-on-surface-dark-medium">{capability.description}</p>
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
 
+        {/* Technology Stack Section */}
         <section className="py-16 lg:py-24 bg-surface-light dark:bg-surface-dark">
           <div className="container mx-auto px-6">
             <motion.div
@@ -929,17 +919,20 @@ const LandingPage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="text-center"
+              className="text-center mb-12"
             >
-              <p className="overline text-on-surface-light-medium dark:text-on-surface-dark-medium mb-2">
-                Trusted by Industry Leaders
-              </p>
-              <h3 className="headline-4 font-heading mb-12">
-                Powering Supply Chains for Global Enterprises
+              <span className="overline text-on-surface-light-medium dark:text-on-surface-dark-medium mb-2 block">
+                Built on Modern Technology
+              </span>
+              <h3 className="headline-4 font-heading mb-4">
+                Enterprise-Grade Infrastructure
               </h3>
+              <p className="body-1 text-on-surface-light-medium dark:text-on-surface-dark-medium max-w-2xl mx-auto">
+                Leveraging industry-leading cloud platforms for reliability, security, and scalability
+              </p>
             </motion.div>
             
-            <div className="max-w-5xl mx-auto">
+            <div className="max-w-4xl mx-auto">
               <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
@@ -949,65 +942,38 @@ const LandingPage = () => {
               >
                 <motion.div
                   whileHover={{ scale: 1.05 }}
-                  className="flex items-center justify-center p-8 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-1 hover:shadow-elevation-3 transition-all duration-300"
-                >
-                  <img
-                    src={Microsoft}
-                    alt="Microsoft Partner"
-                    className="h-8 w-auto opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0 dark:brightness-200"
-                  />
-                </motion.div>
-                
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="flex items-center justify-center p-8 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-1 hover:shadow-elevation-3 transition-all duration-300"
+                  className="flex items-center justify-center p-6 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-1 hover:shadow-elevation-3 transition-all duration-300"
                 >
                   <img
                     src={AWSLogo}
-                    alt="AWS Partner"
-                    className="h-8 w-auto opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0 dark:brightness-200"
+                    alt="Powered by AWS"
+                    className="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity duration-300 dark:brightness-200"
                   />
                 </motion.div>
                 
                 <motion.div
                   whileHover={{ scale: 1.05 }}
-                  className="flex items-center justify-center p-8 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-1 hover:shadow-elevation-3 transition-all duration-300"
+                  className="flex flex-col items-center justify-center p-6 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-1 hover:shadow-elevation-3 transition-all duration-300"
                 >
-                  <div className="text-2xl font-heading font-bold text-on-surface-light-medium dark:text-on-surface-dark-medium">
-                    Oracle
-                  </div>
+                  <span className="material-icons text-3xl text-primary-500 mb-2">lock</span>
+                  <span className="text-sm font-medium text-on-surface-light-medium dark:text-on-surface-dark-medium">256-bit SSL</span>
                 </motion.div>
                 
                 <motion.div
                   whileHover={{ scale: 1.05 }}
-                  className="flex items-center justify-center p-8 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-1 hover:shadow-elevation-3 transition-all duration-300"
+                  className="flex flex-col items-center justify-center p-6 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-1 hover:shadow-elevation-3 transition-all duration-300"
                 >
-                  <div className="text-2xl font-heading font-bold text-on-surface-light-medium dark:text-on-surface-dark-medium">
-                    SAP
-                  </div>
+                  <span className="material-icons text-3xl text-success-500 mb-2">verified_user</span>
+                  <span className="text-sm font-medium text-on-surface-light-medium dark:text-on-surface-dark-medium">GDPR Ready</span>
                 </motion.div>
-              </motion.div>
-              
-              {/* Stats under partners with Material Design */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="grid grid-cols-3 gap-8 mt-16 text-center"
-              >
-                <div>
-                  <p className="text-4xl font-heading font-bold text-secondary-500">45+</p>
-                  <p className="body-2 text-on-surface-light-medium dark:text-on-surface-dark-medium mt-1">Business Clients</p>
-                </div>
-                <div>
-                  <p className="text-4xl font-heading font-bold text-primary-500">99.5%</p>
-                  <p className="body-2 text-on-surface-light-medium dark:text-on-surface-dark-medium mt-1">Uptime SLA</p>
-                </div>
-                <div>
-                  <p className="text-4xl font-heading font-bold text-info-500">24/7</p>
-                  <p className="body-2 text-on-surface-light-medium dark:text-on-surface-dark-medium mt-1">Support Available</p>
-                </div>
+                
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  className="flex flex-col items-center justify-center p-6 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-1 hover:shadow-elevation-3 transition-all duration-300"
+                >
+                  <span className="material-icons text-3xl text-info-500 mb-2">speed</span>
+                  <span className="text-sm font-medium text-on-surface-light-medium dark:text-on-surface-dark-medium">99.9% Uptime</span>
+                </motion.div>
               </motion.div>
             </div>
           </div>
@@ -1304,7 +1270,7 @@ const LandingPage = () => {
           </div>
         </section>
 
-        {/* Enterprise Clients Section */}
+        {/* Use Cases Section */}
         <section className="py-16 lg:py-24 bg-gradient-to-br from-surface-light to-primary-50 dark:from-surface-dark dark:to-primary-900/10">
           <div className="container mx-auto px-6">
             <motion.div
@@ -1314,20 +1280,20 @@ const LandingPage = () => {
               className="max-w-3xl mx-auto text-center mb-16"
             >
               <span className="overline text-secondary-600 dark:text-secondary-400 mb-4 block">
-                ENTERPRISE CLIENTS
+                USE CASES
               </span>
               <h2 className="headline-3 font-heading mb-6">
-                Trusted by Leading
-                <span className="bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent"> Enterprises</span>
+                Built for
+                <span className="bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent"> Your Industry</span>
               </h2>
               <p className="body-1 text-on-surface-light-medium dark:text-on-surface-dark-medium">
-                Industry leaders across East Africa rely on Locsafe for their supply chain operations
+                Flexible solutions designed to meet the unique challenges of different industries
               </p>
             </motion.div>
 
             <div className="max-w-5xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {enterprises.map((enterprise, index) => (
+                {useCases.map((useCase, index) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, y: 30 }}
@@ -1340,15 +1306,12 @@ const LandingPage = () => {
                     <div className="h-full p-6 bg-surface-light dark:bg-surface-elevated-dark rounded-2xl shadow-elevation-2 hover:shadow-elevation-4 transition-all duration-300 text-center">
                       <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-100 to-secondary-100 dark:from-primary-900/30 dark:to-secondary-900/30 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
                         <span className="material-icons text-3xl text-primary-600 dark:text-primary-400">
-                          {enterprise.icon}
+                          {useCase.icon}
                         </span>
                       </div>
-                      <h3 className="headline-6 mb-2">{enterprise.name}</h3>
-                      <p className="caption text-secondary-600 dark:text-secondary-400 font-medium mb-2">
-                        {enterprise.industry}
-                      </p>
+                      <h3 className="headline-6 mb-2">{useCase.industry}</h3>
                       <p className="body-2 text-on-surface-light-medium dark:text-on-surface-dark-medium">
-                        {enterprise.description}
+                        {useCase.description}
                       </p>
                     </div>
                   </motion.div>
