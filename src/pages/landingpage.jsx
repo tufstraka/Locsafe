@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
-import { FaRocket, FaStar, FaChevronDown, FaChevronUp, FaQuoteLeft, FaArrowRight } from 'react-icons/fa';
+import { FaRocket, FaStar, FaChevronDown, FaChevronUp, FaArrowRight } from 'react-icons/fa';
 import { HiSparkles, HiLightningBolt, HiChip } from 'react-icons/hi';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
@@ -54,34 +54,36 @@ AnimatedCounter.propTypes = {
 
 const LandingPage = () => {
   const { scrollYProgress } = useScroll();
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [openFAQ, setOpenFAQ] = useState(null);
 
   // Parallax transformations with Material Motion
   const heroY = useTransform(scrollYProgress, [0, 1], [0, -150]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0.3]);
 
-  const testimonials = [
+  const enterprises = [
     {
-      name: "Sarah Chen",
-      role: "Supply Chain Director, TechCorp",
-      content: "Locsafe transformed our entire supply chain operation. The blockchain transparency has reduced disputes by 87% and increased customer trust dramatically.",
-      rating: 5,
-      image: "https://i.pravatar.cc/150?img=1"
+      name: "Twiga Foods",
+      industry: "Agricultural Distribution",
+      description: "Fresh produce supply chain across East Africa",
+      icon: "agriculture"
     },
     {
-      name: "Michael Rodriguez",
-      role: "CEO, Global Logistics Inc",
-      content: "The AI-powered analytics have given us insights we never had before. We've optimized routes and reduced costs by 45% in just 6 months.",
-      rating: 5,
-      image: "https://i.pravatar.cc/150?img=3"
+      name: "KPLC",
+      industry: "Energy & Utilities",
+      description: "Asset tracking for power infrastructure",
+      icon: "bolt"
     },
     {
-      name: "Emma Williams",
-      role: "Operations Manager, FastShip",
-      content: "Real-time tracking and smart alerts have revolutionized how we manage our fleet. Customer satisfaction is at an all-time high.",
-      rating: 5,
-      image: "https://i.pravatar.cc/150?img=5"
+      name: "Kenya Airways",
+      industry: "Aviation & Cargo",
+      description: "Cargo and baggage tracking solutions",
+      icon: "flight"
+    },
+    {
+      name: "Safaricom",
+      industry: "Telecommunications",
+      description: "Equipment and fleet management",
+      icon: "cell_tower"
     }
   ];
 
@@ -105,10 +107,10 @@ const LandingPage = () => {
   ];
 
   const stats = [
-    { value: 3000, suffix: '+', label: 'Active Shipments Daily', icon: 'local_shipping', isMaterial: true },
-    { value: 98, suffix: '%', label: 'Delivery Accuracy', icon: 'verified_user', isMaterial: true },
-    { value: 26, suffix: '', label: 'Enterprise Clients', icon: 'business', isMaterial: true },
-    { value: 5, suffix: '', label: 'Countries Covered', icon: 'public', isMaterial: true }
+    { value: 850, suffix: '+', label: 'Active Shipments Daily', icon: 'local_shipping', isMaterial: true },
+    { value: 97, suffix: '%', label: 'Delivery Accuracy', icon: 'verified_user', isMaterial: true },
+    { value: 45, suffix: '+', label: 'Business Clients', icon: 'business', isMaterial: true },
+    { value: 3, suffix: '', label: 'Countries Covered', icon: 'public', isMaterial: true }
   ];
 
   const features = [
@@ -182,13 +184,6 @@ const LandingPage = () => {
     }
   };
 
-  // Auto-rotate testimonials
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [testimonials.length]);
 
   return (
     <main className="relative min-h-screen bg-background-light dark:bg-background-dark text-on-surface-light dark:text-on-surface-dark overflow-x-hidden" role="main" itemScope itemType="https://schema.org/WebPage">
@@ -196,7 +191,7 @@ const LandingPage = () => {
         <title>Locsafe - AI-Powered Supply Chain & Asset Tracking Platform | Real-Time GPS Tracking</title>
         <meta
           name="description"
-          content="Transform your supply chain with Locsafe's AI-powered blockchain technology. Real-time GPS tracking, digital product passports, cold chain monitoring, and fleet management. Trusted by 26+ businesses across 5 countries."
+          content="Transform your supply chain with Locsafe's AI-powered tracking technology. Real-time GPS tracking, digital product passports, cold chain monitoring, and fleet management. Trusted by 45+ businesses across East Africa."
         />
         <meta name="keywords" content="supply chain management, asset tracking, GPS tracking, fleet management, cold chain monitoring, digital product passport, blockchain logistics, AI analytics, inventory management, real-time tracking, Kenya logistics" />
         
@@ -233,8 +228,9 @@ const LandingPage = () => {
               "applicationCategory": "BusinessApplication",
               "offers": {
                 "@type": "Offer",
-                "price": "5000",
-                "priceCurrency": "KES"
+                "price": "25000",
+                "priceCurrency": "KES",
+                "description": "One-time installation fee starting from KES 25,000"
               }
             }
           })}
@@ -432,7 +428,7 @@ const LandingPage = () => {
                       ))}
                     </div>
                     <span className="text-sm text-on-surface-light-medium dark:text-on-surface-dark-medium mt-1">
-                      Trusted by <span className="font-semibold text-on-surface-light dark:text-on-surface-dark">26</span> businesses
+                      Trusted by <span className="font-semibold text-on-surface-light dark:text-on-surface-dark">45+</span> businesses
                     </span>
                   </div>
                 </motion.div>
@@ -1001,11 +997,11 @@ const LandingPage = () => {
                 className="grid grid-cols-3 gap-8 mt-16 text-center"
               >
                 <div>
-                  <p className="text-4xl font-heading font-bold text-secondary-500">500+</p>
-                  <p className="body-2 text-on-surface-light-medium dark:text-on-surface-dark-medium mt-1">Enterprise Clients</p>
+                  <p className="text-4xl font-heading font-bold text-secondary-500">45+</p>
+                  <p className="body-2 text-on-surface-light-medium dark:text-on-surface-dark-medium mt-1">Business Clients</p>
                 </div>
                 <div>
-                  <p className="text-4xl font-heading font-bold text-primary-500">99.9%</p>
+                  <p className="text-4xl font-heading font-bold text-primary-500">99.5%</p>
                   <p className="body-2 text-on-surface-light-medium dark:text-on-surface-dark-medium mt-1">Uptime SLA</p>
                 </div>
                 <div>
@@ -1285,10 +1281,10 @@ const LandingPage = () => {
                 className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 p-8 bg-white/5 backdrop-blur-sm rounded-3xl shadow-elevation-3 border border-white/10"
               >
                 {[
-                  { value: "1M+", label: "Digital Passports Issued" },
+                  { value: "12K+", label: "Digital Passports Issued" },
                   { value: "100%", label: "Traceability Coverage" },
-                  { value: "50+", label: "Supported Standards" },
-                  { value: "0.1s", label: "Verification Time" }
+                  { value: "15+", label: "Supported Standards" },
+                  { value: "0.3s", label: "Verification Time" }
                 ].map((stat, index) => (
                   <div key={index} className="text-center">
                     <motion.p
@@ -1308,6 +1304,7 @@ const LandingPage = () => {
           </div>
         </section>
 
+        {/* Enterprise Clients Section */}
         <section className="py-16 lg:py-24 bg-gradient-to-br from-surface-light to-primary-50 dark:from-surface-dark dark:to-primary-900/10">
           <div className="container mx-auto px-6">
             <motion.div
@@ -1317,78 +1314,45 @@ const LandingPage = () => {
               className="max-w-3xl mx-auto text-center mb-16"
             >
               <span className="overline text-secondary-600 dark:text-secondary-400 mb-4 block">
-                TESTIMONIALS
+                ENTERPRISE CLIENTS
               </span>
               <h2 className="headline-3 font-heading mb-6">
-                Loved by Teams
-                <span className="bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent"> Worldwide</span>
+                Trusted by Leading
+                <span className="bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent"> Enterprises</span>
               </h2>
+              <p className="body-1 text-on-surface-light-medium dark:text-on-surface-dark-medium">
+                Industry leaders across East Africa rely on Locsafe for their supply chain operations
+              </p>
             </motion.div>
 
-            <div className="max-w-4xl mx-auto">
-              <div className="relative">
-                <AnimatePresence mode="wait">
+            <div className="max-w-5xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {enterprises.map((enterprise, index) => (
                   <motion.div
-                    key={activeTestimonial}
-                    initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -30, scale: 0.95 }}
-                    className="bg-surface-light dark:bg-surface-elevated-dark rounded-3xl shadow-elevation-4 p-8 lg:p-12"
+                    key={index}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    className="group"
                   >
-                    <div className="flex items-start gap-2 mb-6">
-                      <FaQuoteLeft className="text-4xl text-secondary-500/20" />
-                      <span className="material-icons text-4xl text-secondary-500/20">format_quote</span>
-                    </div>
-                    <p className="body-1 text-on-surface-light dark:text-on-surface-dark mb-8 leading-relaxed text-lg">
-                      {testimonials[activeTestimonial].content}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <motion.img
-                          whileHover={{ scale: 1.1 }}
-                          src={testimonials[activeTestimonial].image}
-                          alt={testimonials[activeTestimonial].name}
-                          className="w-14 h-14 rounded-full shadow-elevation-2"
-                        />
-                        <div>
-                          <h4 className="headline-6">{testimonials[activeTestimonial].name}</h4>
-                          <p className="body-2 text-on-surface-light-medium dark:text-on-surface-dark-medium">
-                            {testimonials[activeTestimonial].role}
-                          </p>
-                        </div>
+                    <div className="h-full p-6 bg-surface-light dark:bg-surface-elevated-dark rounded-2xl shadow-elevation-2 hover:shadow-elevation-4 transition-all duration-300 text-center">
+                      <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-100 to-secondary-100 dark:from-primary-900/30 dark:to-secondary-900/30 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <span className="material-icons text-3xl text-primary-600 dark:text-primary-400">
+                          {enterprise.icon}
+                        </span>
                       </div>
-                      <div className="flex gap-1">
-                        {[...Array(testimonials[activeTestimonial].rating)].map((_, i) => (
-                          <motion.div
-                            key={i}
-                            initial={{ opacity: 0, rotate: -180 }}
-                            animate={{ opacity: 1, rotate: 0 }}
-                            transition={{ delay: i * 0.1 }}
-                          >
-                            <FaStar className="w-5 h-5 text-warning-500" />
-                          </motion.div>
-                        ))}
-                      </div>
+                      <h3 className="headline-6 mb-2">{enterprise.name}</h3>
+                      <p className="caption text-secondary-600 dark:text-secondary-400 font-medium mb-2">
+                        {enterprise.industry}
+                      </p>
+                      <p className="body-2 text-on-surface-light-medium dark:text-on-surface-dark-medium">
+                        {enterprise.description}
+                      </p>
                     </div>
                   </motion.div>
-                </AnimatePresence>
-                
-                {/* Material Design Pagination Dots */}
-                <div className="flex justify-center gap-3 mt-8">
-                  {testimonials.map((_, index) => (
-                    <motion.button
-                      key={index}
-                      whileHover={{ scale: 1.2 }}
-                      whileTap={{ scale: 0.9 }}
-                      onClick={() => setActiveTestimonial(index)}
-                      className={`transition-all duration-300 ${
-                        index === activeTestimonial
-                          ? 'w-8 h-3 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full shadow-elevation-2'
-                          : 'w-3 h-3 bg-primary-200 dark:bg-primary-800 rounded-full'
-                      }`}
-                    />
-                  ))}
-                </div>
+                ))}
               </div>
             </div>
           </div>
@@ -1530,7 +1494,7 @@ const LandingPage = () => {
                 Ready to Transform Your Supply Chain?
               </h2>
               <p className="body-1 mb-10 text-white/90 text-xl">
-                Join thousands of companies already using Locsafe to revolutionize their logistics
+                Join 45+ businesses already using Locsafe to transform their logistics operations
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">

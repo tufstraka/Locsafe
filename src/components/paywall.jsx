@@ -42,18 +42,20 @@ const Paywall = () => {
     {
       id: 'starter',
       name: 'Starter Plan',
-      installationFee: 25000,
-      monthlyFee: 8000,
-      displayInstallation: 'Ksh 25,000',
-      displayMonthly: 'Ksh 8,000',
-      description: 'Perfect for small businesses',
-      assets: 'Up to 100 assets',
+      installationFee: 15000,
+      monthlyFee: 3500,
+      displayInstallation: 'Ksh 15,000',
+      displayMonthly: 'Ksh 3,500',
+      description: 'Perfect for personal & small businesses',
+      assets: 'Up to 10 assets',
+      hardwareNote: 'GPS trackers from Ksh 4,500/unit',
       features: [
         'Real-time GPS tracking',
-        'Basic reporting',
+        'Basic reporting & alerts',
         'Email support',
         'Mobile app access',
-        'Data export'
+        'Data export (CSV)',
+        'Geofence notifications'
       ],
       gradient: 'from-blue-500 to-cyan-500',
       popular: false
@@ -61,19 +63,22 @@ const Paywall = () => {
     {
       id: 'business',
       name: 'Business Plan',
-      installationFee: 75000,
-      monthlyFee: 25000,
-      displayInstallation: 'Ksh 75,000',
-      displayMonthly: 'Ksh 25,000',
-      description: 'For growing enterprises',
-      assets: 'Up to 500 assets',
+      installationFee: 45000,
+      monthlyFee: 12000,
+      displayInstallation: 'Ksh 45,000',
+      displayMonthly: 'Ksh 12,000',
+      description: 'For growing SMEs & fleets',
+      assets: 'Up to 50 assets',
+      hardwareNote: 'Integrated trackers from Ksh 7,500/unit',
       features: [
-        'Advanced analytics',
-        'Custom reports',
-        'Priority email support',
-        'API access',
-        'Geofencing alerts',
-        'Digital Product Passports'
+        'Advanced analytics dashboard',
+        'Custom reports & scheduling',
+        'Priority email & phone support',
+        'Full API access',
+        'Geofencing with alerts',
+        'Digital Product Passports',
+        'Driver behavior monitoring',
+        'Fuel consumption tracking'
       ],
       gradient: 'from-purple-500 to-pink-500',
       popular: true
@@ -82,19 +87,22 @@ const Paywall = () => {
       id: 'enterprise',
       name: 'Enterprise Plan',
       installationFee: 150000,
-      monthlyFee: 50000,
+      monthlyFee: 35000,
       displayInstallation: 'Ksh 150,000',
-      displayMonthly: 'Ksh 50,000',
-      description: 'Unlimited scalability',
+      displayMonthly: 'Ksh 35,000',
+      description: 'For large fleet operations',
       assets: 'Unlimited assets',
+      hardwareNote: 'Premium Teltonika trackers from Ksh 12,000/unit',
       features: [
         'All Business features',
-        'Fleet management',
+        'Fleet management suite',
         'Dedicated account manager',
-        '24/7 phone support',
-        'Custom integrations',
-        'SLA guarantee',
-        'On-site training'
+        '24/7 phone & on-site support',
+        'Custom integrations (ERP, SAP)',
+        'SLA guarantee (99.9% uptime)',
+        'On-site training & setup',
+        'White-label options',
+        'Cold chain monitoring'
       ],
       gradient: 'from-orange-500 to-red-500',
       popular: false
@@ -436,18 +444,27 @@ const Paywall = () => {
                 
                 <div className="mb-4">
                   <div className="mb-2">
-                    <p className="text-xs text-slate-500 uppercase tracking-wide">Installation (One-time)</p>
+                    <p className="text-xs text-slate-500 uppercase tracking-wide">Setup & Installation</p>
                     <span className="text-2xl font-bold text-slate-900">{plan.displayInstallation}</span>
+                    <p className="text-xs text-slate-400">One-time fee</p>
                   </div>
                   <div className="border-t pt-2">
-                    <p className="text-xs text-slate-500 uppercase tracking-wide">Monthly Maintenance</p>
+                    <p className="text-xs text-slate-500 uppercase tracking-wide">Platform Subscription</p>
                     <span className="text-xl font-bold text-teal-600">{plan.displayMonthly}<span className="text-sm font-normal text-slate-500">/month</span></span>
                   </div>
                 </div>
 
-                <div className="bg-slate-50 rounded-lg px-4 py-3 mb-6">
+                <div className="bg-slate-50 rounded-lg px-4 py-3 mb-4">
                   <p className="text-sm font-semibold text-slate-700">{plan.assets}</p>
                 </div>
+                
+                {plan.hardwareNote && (
+                  <div className="bg-blue-50 rounded-lg px-4 py-2 mb-4 border border-blue-100">
+                    <p className="text-xs text-blue-700">
+                      <span className="font-semibold">Hardware:</span> {plan.hardwareNote}
+                    </p>
+                  </div>
+                )}
 
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, idx) => (
@@ -516,8 +533,11 @@ const Paywall = () => {
               </p>
               <p className="text-xs text-slate-500 mt-1">
                 {paymentType === 'installation'
-                  ? 'Setup, hardware installation & configuration'
-                  : 'Ongoing platform access & support'}
+                  ? 'Platform setup, configuration & training'
+                  : 'Platform access, support & updates'}
+              </p>
+              <p className="text-xs text-amber-600 mt-2 font-medium">
+                * GPS tracker hardware priced separately per device
               </p>
             </div>
 
@@ -676,7 +696,7 @@ const Paywall = () => {
           transition={{ delay: 0.7 }}
           className="text-center mt-12"
         >
-          <p className="text-slate-600 mb-4">Trusted by 500+ businesses across Kenya</p>
+          <p className="text-slate-600 mb-4">Trusted by 45+ businesses across East Africa</p>
           <div className="flex justify-center gap-8">
             <div className="text-center">
               <p className="text-3xl font-bold text-slate-900">99.9%</p>
