@@ -303,16 +303,8 @@ jobs:
             echo "API logs:"
             docker compose -f docker-compose.prod.yml logs api --tail=50
             
-            # Run database migrations with retry
-            for i in {1..3}; do
-              if docker compose -f docker-compose.prod.yml exec -T api ./main migrate; then
-                echo "Migration successful"
-                break
-              else
-                echo "Migration attempt $i failed, retrying in 10s..."
-                sleep 10
-              fi
-            done
+            # Note: Database migrations run automatically on API startup via GORM AutoMigrate
+            # No separate migration command needed
             
             # Health check with retries
             echo "Performing health check..."
