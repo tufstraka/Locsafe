@@ -40,16 +40,17 @@ const Paywall = () => {
 
   const plans = [
     {
-      id: 'basic',
-      name: 'Basic Plan',
-      price: 'Ksh 4,500',
-      priceValue: 4500,
-      period: '/month',
+      id: 'starter',
+      name: 'Starter Plan',
+      installationFee: 25000,
+      monthlyFee: 8000,
+      displayInstallation: 'Ksh 25,000',
+      displayMonthly: 'Ksh 8,000',
       description: 'Perfect for small businesses',
-      assets: 'Up to 200 assets',
+      assets: 'Up to 100 assets',
       features: [
         'Real-time GPS tracking',
-        'Basic analytics',
+        'Basic reporting',
         'Email support',
         'Mobile app access',
         'Data export'
@@ -58,19 +59,20 @@ const Paywall = () => {
       popular: false
     },
     {
-      id: 'pro',
-      name: 'Pro Plan',
-      price: 'Ksh 9,500',
-      priceValue: 9500,
-      period: '/month',
+      id: 'business',
+      name: 'Business Plan',
+      installationFee: 75000,
+      monthlyFee: 25000,
+      displayInstallation: 'Ksh 75,000',
+      displayMonthly: 'Ksh 25,000',
       description: 'For growing enterprises',
-      assets: 'Up to 1000 assets',
+      assets: 'Up to 500 assets',
       features: [
-        'Everything in Basic',
         'Advanced analytics',
-        'Priority support',
+        'Custom reports',
+        'Priority email support',
         'API access',
-        'Custom alerts',
+        'Geofencing alerts',
         'Digital Product Passports'
       ],
       gradient: 'from-purple-500 to-pink-500',
@@ -78,24 +80,28 @@ const Paywall = () => {
     },
     {
       id: 'enterprise',
-      name: 'Enterprise',
-      price: 'Custom',
-      priceValue: null,
-      period: '',
+      name: 'Enterprise Plan',
+      installationFee: 150000,
+      monthlyFee: 50000,
+      displayInstallation: 'Ksh 150,000',
+      displayMonthly: 'Ksh 50,000',
       description: 'Unlimited scalability',
       assets: 'Unlimited assets',
       features: [
-        'Everything in Pro',
+        'All Business features',
+        'Fleet management',
         'Dedicated account manager',
         '24/7 phone support',
         'Custom integrations',
         'SLA guarantee',
-        'Training & onboarding'
+        'On-site training'
       ],
       gradient: 'from-orange-500 to-red-500',
       popular: false
     }
   ];
+
+  const [paymentType, setPaymentType] = useState('installation'); // 'installation' or 'maintenance'
 
   // Load Paystack script on component mount
   useEffect(() => {
@@ -139,11 +145,6 @@ const Paywall = () => {
   };
 
   const handlePaystackPayment = async () => {
-    if (selectedPlan === 'enterprise') {
-      navigate('/contact');
-      return;
-    }
-
     // Validation
     if (!email) {
       setResponse('Please enter your email address');
@@ -164,7 +165,12 @@ const Paywall = () => {
     try {
       // Get selected plan details
       const selectedPlanDetails = plans.find(p => p.id === selectedPlan);
-      const amount = selectedPlanDetails.priceValue * 100; // Convert to kobo/cents
+      
+      // Determine amount based on payment type
+      const baseAmount = paymentType === 'installation'
+        ? selectedPlanDetails.installationFee
+        : selectedPlanDetails.monthlyFee;
+      const amount = baseAmount * 100; // Convert to kobo/cents
 
       // Option 1: Use Paystack Popup directly (Recommended for simplicity)
       if (window.PaystackPop) {
@@ -181,11 +187,18 @@ const Paywall = () => {
           metadata: {
             planId: selectedPlan,
             planName: selectedPlanDetails.name,
+            paymentType: paymentType,
+            isInstallation: paymentType === 'installation',
             custom_fields: [
               {
                 display_name: "Plan Type",
                 variable_name: "plan_type",
                 value: selectedPlanDetails.name
+              },
+              {
+                display_name: "Payment Type",
+                variable_name: "payment_type",
+                value: paymentType === 'installation' ? 'One-time Installation' : 'Monthly Maintenance'
               },
               {
                 display_name: "Assets Limit",
@@ -220,9 +233,12 @@ const Paywall = () => {
           firstName,
           lastName,
           planId: selectedPlan,
+          paymentType: paymentType,
           metadata: {
             customerName: `${firstName} ${lastName}`.trim() || email,
             source: 'web_app',
+            paymentType: paymentType,
+            isInstallation: paymentType === 'installation',
             timestamp: new Date().toISOString()
           }
         };
@@ -418,9 +434,15 @@ const Paywall = () => {
                 <h3 className="text-2xl font-bold text-slate-900 mb-2">{plan.name}</h3>
                 <p className="text-slate-600 mb-4">{plan.description}</p>
                 
-                <div className="flex items-baseline mb-4">
-                  <span className="text-4xl font-bold text-slate-900">{plan.price}</span>
-                  <span className="text-slate-600 ml-1">{plan.period}</span>
+                <div className="mb-4">
+                  <div className="mb-2">
+                    <p className="text-xs text-slate-500 uppercase tracking-wide">Installation (One-time)</p>
+                    <span className="text-2xl font-bold text-slate-900">{plan.displayInstallation}</span>
+                  </div>
+                  <div className="border-t pt-2">
+                    <p className="text-xs text-slate-500 uppercase tracking-wide">Monthly Maintenance</p>
+                    <span className="text-xl font-bold text-teal-600">{plan.displayMonthly}<span className="text-sm font-normal text-slate-500">/month</span></span>
+                  </div>
                 </div>
 
                 <div className="bg-slate-50 rounded-lg px-4 py-3 mb-6">
@@ -459,11 +481,43 @@ const Paywall = () => {
                   {plans.find(p => p.id === selectedPlan)?.name}
                 </span>
               </p>
+              
+              {/* Payment Type Toggle */}
+              <div className="flex justify-center gap-2 mt-4 mb-4">
+                <button
+                  onClick={() => setPaymentType('installation')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                    paymentType === 'installation'
+                      ? 'bg-teal-500 text-white'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }`}
+                >
+                  Installation (One-time)
+                </button>
+                <button
+                  onClick={() => setPaymentType('maintenance')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                    paymentType === 'maintenance'
+                      ? 'bg-teal-500 text-white'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }`}
+                >
+                  Monthly Maintenance
+                </button>
+              </div>
+
               <p className="text-2xl font-bold text-slate-900 mt-2">
-                {plans.find(p => p.id === selectedPlan)?.price}
+                {paymentType === 'installation'
+                  ? plans.find(p => p.id === selectedPlan)?.displayInstallation
+                  : plans.find(p => p.id === selectedPlan)?.displayMonthly}
                 <span className="text-sm text-slate-600 ml-1">
-                  {plans.find(p => p.id === selectedPlan)?.period}
+                  {paymentType === 'installation' ? '(one-time)' : '/month'}
                 </span>
+              </p>
+              <p className="text-xs text-slate-500 mt-1">
+                {paymentType === 'installation'
+                  ? 'Setup, hardware installation & configuration'
+                  : 'Ongoing platform access & support'}
               </p>
             </div>
 
@@ -547,7 +601,7 @@ const Paywall = () => {
 
             <motion.button
               onClick={handlePaystackPayment}
-              disabled={loading || selectedPlan === 'enterprise' && !email}
+              disabled={loading}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className={`w-full flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-teal-500 to-blue-500 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all ${
@@ -566,7 +620,7 @@ const Paywall = () => {
               ) : (
                 <>
                   <FaCreditCard />
-                  {selectedPlan === 'enterprise' ? 'Contact Sales' : 'Pay Securely Now'}
+                  Pay {paymentType === 'installation' ? 'Installation Fee' : 'Monthly Fee'} Securely
                   <FaArrowRight />
                 </>
               )}
