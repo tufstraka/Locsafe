@@ -1,45 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
-const AnimatedProgress = ({ target, current, label }) => {
-  const [progress, setProgress] = useState(0);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-
-  useEffect(() => {
-    if (isInView) {
-      const percentage = (current / target) * 100;
-      const timer = setTimeout(() => setProgress(percentage), 200);
-      return () => clearTimeout(timer);
-    }
-  }, [isInView, current, target]);
-
-  return (
-    <div ref={ref} className="space-y-2.5">
-      <div className="flex items-center justify-between">
-        <span className="text-[13px] text-gray-400 font-medium tracking-tight">{label}</span>
-        <span className="text-[13px] text-gray-500 tabular-nums font-mono">{current}/{target}</span>
-      </div>
-      <div className="h-1 bg-gray-800/80 rounded-full overflow-hidden">
-        <motion.div
-          className="h-full bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full"
-          initial={{ width: 0 }}
-          animate={{ width: `${progress}%` }}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-        />
-      </div>
-    </div>
-  );
-};
-
-AnimatedProgress.propTypes = {
-  target: PropTypes.number.isRequired,
-  current: PropTypes.number.isRequired,
-  label: PropTypes.string.isRequired
-};
 
 const FloatingParticle = ({ delay = 0, size = 4, duration = 20, startX = 0, startY = 0 }) => (
   <motion.div
@@ -152,11 +114,11 @@ const LandingPage = () => {
     { stat: "$680B", label: "Spent on legacy vs. innovation", source: "McKinsey Digital" }
   ];
 
-  const milestones = [
-    { label: "Core Platform Architecture", current: 8, target: 8 },
-    { label: "Smart Contract Development", current: 6, target: 10 },
-    { label: "Security Audit Preparation", current: 3, target: 5 },
-    { label: "Beta Testing Framework", current: 2, target: 8 }
+  const techPrinciples = [
+    { icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>), title: "Security First", description: "End-to-end encryption and zero-knowledge architecture" },
+    { icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>), title: "Performance Optimized", description: "Built for scale with sub-second response times" },
+    { icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>), title: "Developer Friendly", description: "Comprehensive APIs and documentation" },
+    { icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>), title: "Globally Distributed", description: "Multi-region infrastructure for low latency" }
   ];
 
   const credentials = [
@@ -169,16 +131,16 @@ const LandingPage = () => {
   return (
     <main className="relative min-h-screen bg-gray-950 text-white overflow-x-hidden antialiased" role="main">
       <Helmet>
-        <title>Locsafe | AI & Blockchain Technology Company</title>
+        <title>Locsafe | AI and Blockchain Technology Company</title>
         <meta name="description" content="Locsafe is a technology company building AI and blockchain innovations. Discover our products: ShadowChain and FixFlow." />
         <meta name="keywords" content="technology company, AI, blockchain technology, ShadowChain, FixFlow, Web3, developer tools, decentralized" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://locsafe.org/" />
-        <meta property="og:title" content="Locsafe | AI & Blockchain Technology Company" />
+        <meta property="og:title" content="Locsafe | AI and Blockchain Technology Company" />
         <meta property="og:description" content="Building the future through AI and blockchain innovation. Explore our transformative technology products." />
         <meta property="og:image" content="https://locsafe.org/og-image.png" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Locsafe | AI & Blockchain Technology Company" />
+        <meta name="twitter:title" content="Locsafe | AI and Blockchain Technology Company" />
         <meta name="twitter:description" content="Building the future through AI and blockchain innovation." />
         <link rel="canonical" href="https://locsafe.org/" />
       </Helmet>
@@ -189,7 +151,6 @@ const LandingPage = () => {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-900 via-gray-950 to-black" />
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-purple-500/[0.08] rounded-full blur-[150px]" />
         <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-cyan-500/[0.08] rounded-full blur-[150px]" />
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMiI+PHBhdGggZD0iTTMwIDMwaDMwdjMwSDMwek0wIDBoMzB2MzBIMHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-40" />
       </div>
 
       <nav className="fixed top-0 left-0 right-0 z-40 backdrop-blur-2xl bg-gray-950/60 border-b border-white/[0.04]">
@@ -200,7 +161,6 @@ const LandingPage = () => {
                 <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/20 group-hover:shadow-purple-500/30 transition-all duration-300">
                   <span className="text-white font-bold text-base">L</span>
                 </div>
-                <div className="absolute -inset-1 rounded-xl bg-gradient-to-br from-cyan-500 to-purple-600 opacity-0 group-hover:opacity-20 blur transition-opacity duration-300" />
               </div>
               <span className="font-semibold text-lg tracking-tight text-white">Locsafe</span>
             </Link>
@@ -224,7 +184,7 @@ const LandingPage = () => {
             </motion.div>
             <motion.h1 variants={itemVariants} className="text-[clamp(2.5rem,6vw,4.5rem)] font-bold leading-[1.08] tracking-tight mb-6">
               <span className="text-white">Building</span><br />
-              <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Tomorrow&apos;s Technology</span><br />
+              <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Tomorrow's Technology</span><br />
               <span className="text-white">Today</span>
             </motion.h1>
             <motion.p variants={itemVariants} className="text-lg text-gray-400 max-w-xl mx-auto mb-10 leading-relaxed font-light">
@@ -233,17 +193,11 @@ const LandingPage = () => {
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <a href="#portfolio" className="group relative px-7 py-3.5 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full font-medium text-[14px] text-white shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30 transition-all duration-300 overflow-hidden">
                 <span className="relative z-10 flex items-center gap-2">Explore Products<svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg></span>
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </a>
               <a href="#about" className="px-7 py-3.5 border border-white/[0.12] hover:border-white/[0.2] rounded-full font-medium text-[14px] text-white hover:bg-white/[0.04] transition-all duration-200">Learn More</a>
             </motion.div>
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
               {[...Array(12)].map((_, i) => (<FloatingParticle key={i} delay={i * 0.8} size={Math.random() * 4 + 2} duration={Math.random() * 8 + 18} startX={Math.random() * 100} startY={Math.random() * 100} />))}
-            </div>
-          </motion.div>
-          <motion.div className="absolute bottom-8 left-1/2 -translate-x-1/2" animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
-            <div className="w-5 h-8 rounded-full border border-white/15 flex justify-center pt-1.5">
-              <motion.div className="w-1 h-1 rounded-full bg-white/50" animate={{ y: [0, 10, 0], opacity: [1, 0.3, 1] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} />
             </div>
           </motion.div>
         </motion.section>
@@ -252,7 +206,7 @@ const LandingPage = () => {
           <div className="max-w-6xl mx-auto">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-center mb-14">
               <span className="text-[11px] text-cyan-400 uppercase tracking-[0.2em] font-semibold mb-3 block">Why This Matters</span>
-              <h2 className="text-2xl lg:text-3xl font-bold text-white mb-4 tracking-tight">The Problems We&apos;re Solving</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold text-white mb-4 tracking-tight">The Problems We're Solving</h2>
               <p className="text-gray-400 text-[15px] max-w-lg mx-auto leading-relaxed">Industry challenges that drive our mission to build better technology solutions.</p>
             </motion.div>
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }} className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-16">
@@ -268,15 +222,25 @@ const LandingPage = () => {
               <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-purple-500/20 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                    <svg className="w-5 h-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white">Development Progress</h3>
-                    <p className="text-[12px] text-gray-500">Current milestone completion</p>
+                    <h3 className="text-lg font-semibold text-white">Our Approach</h3>
+                    <p className="text-[12px] text-gray-500">Core technology principles</p>
                   </div>
                 </div>
-                <div className="space-y-5">
-                  {milestones.map((milestone, index) => (<AnimatedProgress key={index} label={milestone.label} current={milestone.current} target={milestone.target} />))}
+                <div className="space-y-4">
+                  {techPrinciples.map((principle, index) => (
+                    <motion.div key={index} initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="flex items-start gap-3 p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all duration-200">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500/20 to-purple-500/20 flex items-center justify-center text-cyan-400">
+                        {principle.icon}
+                      </div>
+                      <div>
+                        <h4 className="text-[13px] font-semibold text-white mb-0.5">{principle.title}</h4>
+                        <p className="text-[11px] text-gray-500 leading-relaxed">{principle.description}</p>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
               </motion.div>
               <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="space-y-4">
@@ -289,8 +253,7 @@ const LandingPage = () => {
         <section id="about" className="py-24 px-6 relative">
           <div className="max-w-6xl mx-auto">
             <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="grid lg:grid-cols-2 gap-16 items-center">
-              <div>
-                <motion.span initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-[11px] text-cyan-400 uppercase tracking-[0.2em] font-semibold mb-4 block">About Us</motion.span>
+              <div>                <motion.span initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-[11px] text-cyan-400 uppercase tracking-[0.2em] font-semibold mb-4 block">About Us</motion.span>
                 <h2 className="text-3xl lg:text-4xl font-bold mb-6 tracking-tight">Shaping the Future of<span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent"> Digital Innovation</span></h2>
                 <p className="text-[15px] text-gray-400 mb-6 leading-relaxed">Locsafe identifies and builds breakthrough technologies at the intersection of artificial intelligence and blockchain. We create solutions that redefine industries and empower users.</p>
                 <p className="text-[15px] text-gray-400 mb-8 leading-relaxed">Our products share a common vision: leveraging cutting-edge technology to create more transparent, efficient, and accessible systems for the digital age.</p>
@@ -303,16 +266,12 @@ const LandingPage = () => {
               <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="relative">
                 <div className="aspect-square rounded-3xl bg-gradient-to-br from-cyan-500/10 via-purple-500/10 to-pink-500/10 p-[1px]">
                   <div className="w-full h-full rounded-3xl bg-gray-900 flex items-center justify-center relative overflow-hidden">
-                    <div className="absolute inset-0"><svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#grid)" /></svg></div>
                     <div className="relative">
                       <motion.div animate={{ rotate: 360 }} transition={{ duration: 30, repeat: Infinity, ease: "linear" }} className="w-48 h-48 rounded-full border border-cyan-500/20" />
                       <motion.div animate={{ rotate: -360 }} transition={{ duration: 25, repeat: Infinity, ease: "linear" }} className="absolute inset-4 rounded-full border border-purple-500/20" />
                       <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="absolute inset-8 rounded-full border border-pink-500/20" />
                       <div className="absolute inset-0 flex items-center justify-center"><div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/25"><span className="text-xl font-bold text-white">L</span></div></div>
                     </div>
-                    {[{ top: '20%', left: '20%', delay: 0 }, { top: '20%', right: '20%', delay: 0.5 }, { bottom: '20%', left: '20%', delay: 1 }, { bottom: '20%', right: '20%', delay: 1.5 }].map((pos, i) => (
-                      <motion.div key={i} className="absolute w-2.5 h-2.5 rounded-full bg-gradient-to-r from-cyan-400 to-purple-400" style={pos} animate={{ scale: [1, 1.5, 1], opacity: [0.4, 1, 0.4] }} transition={{ duration: 2, repeat: Infinity, delay: pos.delay }} />
-                    ))}
                   </div>
                 </div>
               </motion.div>
@@ -346,7 +305,7 @@ const LandingPage = () => {
           <div className="max-w-6xl mx-auto">
             <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
               <span className="text-[11px] text-cyan-400 uppercase tracking-[0.2em] font-semibold mb-4 block">Our Products</span>
-              <h2 className="text-3xl lg:text-4xl font-bold mb-6 tracking-tight">What We&apos;re<span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent"> Building</span></h2>
+              <h2 className="text-3xl lg:text-4xl font-bold mb-6 tracking-tight">What We're<span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent"> Building</span></h2>
               <p className="text-[15px] text-gray-400 max-w-xl mx-auto leading-relaxed">Innovative products creating the next generation of technology solutions.</p>
             </motion.div>
             <div className="grid lg:grid-cols-2 gap-6">
@@ -372,7 +331,6 @@ const LandingPage = () => {
                     <div className="mt-5 pt-5 border-t border-white/[0.06]">
                       <span className={`inline-flex items-center gap-2 text-[13px] font-medium bg-gradient-to-r ${company.gradient} bg-clip-text text-transparent`}>Visit {company.name}<svg className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg></span>
                     </div>
-                    <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-br ${company.gradient} opacity-[0.03] rounded-full -mr-32 -mt-32 group-hover:opacity-[0.06] transition-opacity duration-300`} />
                   </div>
                 </motion.a>
               ))}
@@ -387,12 +345,11 @@ const LandingPage = () => {
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-cyan-500/15 to-purple-500/15 mb-8">
                 <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
               </div>
-              <h2 className="text-3xl lg:text-4xl font-bold mb-6 tracking-tight">Let&apos;s Build the<span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent"> Future Together</span></h2>
-              <p className="text-lg text-gray-400 mb-10 max-w-xl mx-auto leading-relaxed">Whether you&apos;re a developer interested in our products or a potential partner, we&apos;d love to hear from you.</p>
+              <h2 className="text-3xl lg:text-4xl font-bold mb-6 tracking-tight">Let's Build the<span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent"> Future Together</span></h2>
+              <p className="text-lg text-gray-400 mb-10 max-w-xl mx-auto leading-relaxed">Whether you're a developer interested in our products or a potential partner, we'd love to hear from you.</p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <Link to="/contact" className="group relative px-7 py-3.5 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full font-medium text-[14px] text-white shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30 transition-all duration-300 overflow-hidden">
                   <span className="relative z-10 flex items-center gap-2">Get in Touch<svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg></span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </Link>
                 <a href="mailto:hello@locsafe.org" className="px-7 py-3.5 border border-white/[0.12] hover:border-white/[0.2] rounded-full font-medium text-[14px] text-white hover:bg-white/[0.04] transition-all duration-200 flex items-center gap-2">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
