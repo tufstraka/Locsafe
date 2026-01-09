@@ -135,7 +135,7 @@ const PrivacyPolicy = () => {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50" itemScope itemType="https://schema.org/WebPage">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 pt-16" itemScope itemType="https://schema.org/WebPage">
       <Helmet>
         <title>Privacy Policy | Data Protection & GDPR Compliance - Locsafe</title>
         <meta

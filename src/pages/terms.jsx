@@ -71,7 +71,7 @@ const TermsOfService = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50" itemScope itemType="https://schema.org/WebPage">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 pt-16" itemScope itemType="https://schema.org/WebPage">
       <Helmet>
         <title>Terms of Service | Legal Agreement - Locsafe</title>
         <meta

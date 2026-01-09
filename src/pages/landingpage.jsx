@@ -121,7 +121,6 @@ const LandingPage = () => {
       url: "https://shadowchain.locsafe.org",
       gradient: "from-violet-600 via-purple-600 to-indigo-600",
       bgGlow: "from-violet-500/20 via-purple-500/20 to-indigo-500/20",
-      stage: "Private Alpha",
       icon: (<svg className="w-9 h-9" viewBox="0 0 48 48" fill="none"><path d="M24 4L4 14V34L24 44L44 34V14L24 4Z" stroke="currentColor" strokeWidth="1.5" fill="none"/><path d="M24 4V44" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4"/><path d="M4 14L44 34" stroke="currentColor" strokeWidth="1.5" opacity="0.4"/><path d="M44 14L4 34" stroke="currentColor" strokeWidth="1.5" opacity="0.4"/><circle cx="24" cy="24" r="8" stroke="currentColor" strokeWidth="1.5"/></svg>),
       features: ["Private Blockchain", "Web2/Web3 Bridge", "Data Sovereignty", "Decentralized Identity"],
       category: "Blockchain Infrastructure"
@@ -133,9 +132,8 @@ const LandingPage = () => {
       url: "https://fixflow.locsafe.org",
       gradient: "from-amber-500 via-orange-500 to-red-500",
       bgGlow: "from-amber-500/20 via-orange-500/20 to-red-500/20",
-      stage: "Development",
       icon: (<svg className="w-9 h-9" viewBox="0 0 48 48" fill="none"><path d="M24 4L28 16H40L30 24L34 36L24 28L14 36L18 24L8 16H20L24 4Z" stroke="currentColor" strokeWidth="1.5" fill="none"/><circle cx="24" cy="24" r="6" stroke="currentColor" strokeWidth="1.5"/><path d="M24 18V30M18 24H30" stroke="currentColor" strokeWidth="1.5"/></svg>),
-      features: ["Instant Payments", "Zero Platform Fees", "GitHub Integration", "Auto Bounty Escalation"],
+      features: ["Instant Payments", "GitHub Integration", "Auto Bounty Escalation"],
       category: "AI-Powered DevTools"
     }
   ];
@@ -360,10 +358,7 @@ const LandingPage = () => {
                       <div className="flex items-center gap-4">
                         <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${company.gradient} flex items-center justify-center text-white shadow-lg group-hover:scale-105 transition-transform duration-300`}>{company.icon}</div>
                         <div>
-                          <div className="flex items-center gap-2 mb-0.5">
-                            <span className="text-[10px] text-gray-500 uppercase tracking-wider">{company.category}</span>
-                            <span className={`px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider rounded bg-gradient-to-r ${company.gradient} text-white`}>{company.stage}</span>
-                          </div>
+                          <span className="text-[10px] text-gray-500 uppercase tracking-wider block mb-0.5">{company.category}</span>
                           <h3 className="text-xl font-bold text-white tracking-tight">{company.name}</h3>
                         </div>
                       </div>

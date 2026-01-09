@@ -214,7 +214,7 @@ const ContactUs = () => {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50" itemScope itemType="https://schema.org/ContactPage">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 pt-16" itemScope itemType="https://schema.org/ContactPage">
       <Helmet>
         <title>Contact Us | Get Support & Schedule a Demo - Locsafe</title>
         <meta
