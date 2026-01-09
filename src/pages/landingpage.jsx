@@ -1,19 +1,12 @@
 
 import { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
-import { FaRocket, FaChevronDown, FaChevronUp, FaArrowRight } from 'react-icons/fa';
-import { HiSparkles, HiLightningBolt, HiChip } from 'react-icons/hi';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import DashboardImage from '../../LocsafeDashboard.png';
-import AWSLogo from '../assets/awws.svg';
-import Header from '../components/header.jsx';
-import Footer from '../components/footer.jsx';
-import { ToastContainer } from 'react-toastify';
 import PropTypes from 'prop-types';
 
 // Animated Counter Component
-const AnimatedCounter = ({ value, suffix = '' }) => {
+const AnimatedCounter = ({ value, suffix = '', prefix = '' }) => {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
@@ -41,1454 +34,771 @@ const AnimatedCounter = ({ value, suffix = '' }) => {
 
   return (
     <span ref={ref} className="tabular-nums">
-      {count.toLocaleString()}{suffix}
+      {prefix}{count.toLocaleString()}{suffix}
     </span>
   );
 };
 
 AnimatedCounter.propTypes = {
   value: PropTypes.number.isRequired,
-  suffix: PropTypes.string
+  suffix: PropTypes.string,
+  prefix: PropTypes.string
+};
+
+// Floating Particle Component
+const FloatingParticle = ({ delay = 0, size = 4, duration = 20 }) => (
+  <motion.div
+    className="absolute rounded-full bg-gradient-to-r from-cyan-500/20 to-purple-500/20"
+    style={{ width: size, height: size }}
+    animate={{
+      y: [-20, -100, -20],
+      x: [0, 30, 0],
+      opacity: [0, 1, 0],
+    }}
+    transition={{
+      duration,
+      repeat: Infinity,
+      delay,
+      ease: "easeInOut",
+    }}
+  />
+);
+
+FloatingParticle.propTypes = {
+  delay: PropTypes.number,
+  size: PropTypes.number,
+  duration: PropTypes.number
 };
 
 const LandingPage = () => {
   const { scrollYProgress } = useScroll();
-  const [openFAQ, setOpenFAQ] = useState(null);
-
-  // Parallax transformations with Material Motion
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0.3]);
-
-  const useCases = [
-    {
-      industry: "Fleet & Logistics",
-      description: "Track vehicles, optimize routes, and monitor driver behavior in real-time",
-      icon: "local_shipping"
-    },
-    {
-      industry: "Cold Chain",
-      description: "Temperature monitoring for pharmaceuticals, food, and perishables",
-      icon: "ac_unit"
-    },
-    {
-      industry: "Asset Management",
-      description: "Monitor equipment, tools, and high-value assets across locations",
-      icon: "inventory_2"
-    },
-    {
-      industry: "Supply Chain",
-      description: "End-to-end visibility from warehouse to final delivery",
-      icon: "hub"
-    }
-  ];
-
-  const faqs = [
-    {
-      question: "How does blockchain improve supply chain transparency?",
-      answer: "Our blockchain technology creates an immutable record of every transaction and movement in your supply chain. This means every stakeholder can verify the authenticity and journey of products, reducing fraud and increasing accountability."
-    },
-    {
-      question: "What kind of AI analytics does Locsafe provide?",
-      answer: "Our AI analyzes patterns in your supply chain data to predict potential delays, optimize routes, identify inefficiencies, and provide actionable insights for cost reduction and performance improvement."
-    },
-    {
-      question: "How quickly can we implement Locsafe?",
-      answer: "Most businesses can be fully operational within 2-4 weeks. Our team provides comprehensive onboarding, training, and 24/7 support to ensure a smooth transition."
-    },
-    {
-      question: "Is Locsafe suitable for small businesses?",
-      answer: "Absolutely! Our platform scales to businesses of all sizes. We offer flexible pricing plans and features that grow with your business needs."
-    }
-  ];
-
-  const capabilities = [
-    { icon: 'gps_fixed', label: 'Real-Time GPS Tracking', description: 'Sub-minute location updates' },
-    { icon: 'notifications_active', label: 'Smart Alerts', description: 'Geofencing & anomaly detection' },
-    { icon: 'analytics', label: 'AI Analytics', description: 'Route optimization & insights' },
-    { icon: 'security', label: 'Bank-Grade Security', description: '256-bit encryption' }
-  ];
-
-  const features = [
-    {
-      icon: 'location_on',
-      isMaterial: true,
-      title: "Global Traceability",
-      description: "Track your products and assets at every stage, from production to delivery with pinpoint accuracy.",
-      color: "secondary",
-      gradient: "from-secondary-500 to-secondary-600"
-    },
-    {
-      icon: 'lock_outline',
-      isMaterial: true,
-      title: "Enhanced Security",
-      description: "Immutable blockchain records that reduce fraud risks and increase accountability across the supply chain.",
-      color: "primary",
-      gradient: "from-primary-500 to-primary-600"
-    },
-    {
-      icon: 'notifications_active',
-      isMaterial: true,
-      title: "Smart Alerts",
-      description: "Get instant AI-powered notifications for any supply chain discrepancies or important updates.",
-      color: "warning",
-      gradient: "from-warning-500 to-warning-600"
-    },
-    {
-      icon: 'hub',
-      isMaterial: true,
-      title: "Decentralized Network",
-      description: "Maintain complete transparency across global supply chains without central authority dependency.",
-      color: "error",
-      gradient: "from-error-500 to-error-600"
-    },
-    {
-      icon: 'analytics',
-      isMaterial: true,
-      title: "Advanced Analytics",
-      description: "Gain actionable insights with AI-powered supply chain analytics and predictive modeling.",
-      color: "success",
-      gradient: "from-success-500 to-success-600"
-    },
-    {
-      icon: 'event_note',
-      isMaterial: true,
-      title: "Custom Workflows",
-      description: "Set up personalized notification rules and workflows based on your specific business needs.",
-      color: "info",
-      gradient: "from-info-500 to-info-600"
-    }
-  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.15,
         delayChildren: 0.3
       }
     }
   };
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 30, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
-      transition: { type: "spring", stiffness: 100 }
+      transition: { type: "spring", stiffness: 100, damping: 15 }
     }
   };
 
+  const portfolioCompanies = [
+    {
+      name: "ShadowChain",
+      tagline: "Mirror Your Web2 Activity on Web3",
+      description: "A revolutionary blockchain platform that bridges the gap between Web2 and Web3. ShadowChain creates a private, secure blockchain mirror of your digital activity, giving users true ownership and privacy of their data.",
+      url: "https://shadowchain.locsafe.org",
+      gradient: "from-violet-600 via-purple-600 to-indigo-600",
+      bgGlow: "from-violet-500/20 via-purple-500/20 to-indigo-500/20",
+      icon: (
+        <svg className="w-12 h-12" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 4L4 14V34L24 44L44 34V14L24 4Z" stroke="currentColor" strokeWidth="2" fill="none"/>
+          <path d="M24 4V44" stroke="currentColor" strokeWidth="2" strokeDasharray="4 4"/>
+          <path d="M4 14L44 34" stroke="currentColor" strokeWidth="2" opacity="0.5"/>
+          <path d="M44 14L4 34" stroke="currentColor" strokeWidth="2" opacity="0.5"/>
+          <circle cx="24" cy="24" r="8" stroke="currentColor" strokeWidth="2"/>
+        </svg>
+      ),
+      features: ["Private Blockchain", "Web2/Web3 Bridge", "Data Sovereignty", "Decentralized Identity"],
+      category: "Blockchain Infrastructure"
+    },
+    {
+      name: "FixFlow",
+      tagline: "Fix Bugs, Get Paid Instantly",
+      description: "An AI-powered automated bug bounty platform that revolutionizes how developers get compensated. When CI tests fail, bounties are created automatically. Fix the bug, get paid in stablecoin the moment your PR is merged.",
+      url: "https://fixflow.locsafe.org",
+      gradient: "from-amber-500 via-orange-500 to-red-500",
+      bgGlow: "from-amber-500/20 via-orange-500/20 to-red-500/20",
+      icon: (
+        <svg className="w-12 h-12" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 4L28 16H40L30 24L34 36L24 28L14 36L18 24L8 16H20L24 4Z" stroke="currentColor" strokeWidth="2" fill="none"/>
+          <circle cx="24" cy="24" r="6" stroke="currentColor" strokeWidth="2"/>
+          <path d="M24 18V30M18 24H30" stroke="currentColor" strokeWidth="2"/>
+        </svg>
+      ),
+      features: ["Instant Payments", "Zero Platform Fees", "GitHub Integration", "Auto Bounty Escalation"],
+      category: "AI-Powered DevTools"
+    }
+  ];
+
+  const focusAreas = [
+    {
+      title: "Artificial Intelligence",
+      description: "Investing in transformative AI technologies that automate workflows, enhance decision-making, and create new possibilities across industries.",
+      icon: (
+        <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="12" stroke="currentColor" strokeWidth="2"/>
+          <circle cx="16" cy="16" r="4" fill="currentColor"/>
+          <path d="M16 4V8M16 24V28M4 16H8M24 16H28M7.5 7.5L10.5 10.5M21.5 21.5L24.5 24.5M7.5 24.5L10.5 21.5M21.5 10.5L24.5 7.5" stroke="currentColor" strokeWidth="2"/>
+        </svg>
+      ),
+      gradient: "from-cyan-500 to-blue-500"
+    },
+    {
+      title: "Blockchain Technology",
+      description: "Building the decentralized infrastructure of tomorrow through innovative blockchain solutions that prioritize security, scalability, and user sovereignty.",
+      icon: (
+        <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="4" width="10" height="10" rx="2" stroke="currentColor" strokeWidth="2"/>
+          <rect x="18" y="4" width="10" height="10" rx="2" stroke="currentColor" strokeWidth="2"/>
+          <rect x="4" y="18" width="10" height="10" rx="2" stroke="currentColor" strokeWidth="2"/>
+          <rect x="18" y="18" width="10" height="10" rx="2" stroke="currentColor" strokeWidth="2"/>
+          <path d="M14 9H18M14 23H18M9 14V18M23 14V18" stroke="currentColor" strokeWidth="2"/>
+        </svg>
+      ),
+      gradient: "from-purple-500 to-violet-500"
+    },
+    {
+      title: "Developer Tools",
+      description: "Empowering developers with next-generation tools that streamline workflows, improve code quality, and accelerate the path from idea to production.",
+      icon: (
+        <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 12L4 16L10 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M22 12L28 16L22 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M18 8L14 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        </svg>
+      ),
+      gradient: "from-emerald-500 to-teal-500"
+    },
+    {
+      title: "FinTech Innovation",
+      description: "Reimagining financial services through technology that makes transactions faster, more accessible, and more equitable for everyone.",
+      icon: (
+        <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="12" stroke="currentColor" strokeWidth="2"/>
+          <path d="M16 8V24M12 12H20M12 20H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        </svg>
+      ),
+      gradient: "from-amber-500 to-orange-500"
+    }
+  ];
+
+  const stats = [
+    { value: 2, suffix: "", label: "Portfolio Companies" },
+    { value: 50, suffix: "M+", prefix: "$", label: "Combined Valuation" },
+    { value: 100, suffix: "K+", label: "Users Served" },
+    { value: 15, suffix: "+", label: "Countries Reached" }
+  ];
 
   return (
-    <main className="relative min-h-screen bg-background-light dark:bg-background-dark text-on-surface-light dark:text-on-surface-dark overflow-x-hidden" role="main" itemScope itemType="https://schema.org/WebPage">
+    <main className="relative min-h-screen bg-gray-950 text-white overflow-x-hidden" role="main">
       <Helmet>
-        <title>Locsafe - AI-Powered Supply Chain & Asset Tracking Platform | Real-Time GPS Tracking</title>
+        <title>Locsafe Ventures | AI & Blockchain Technology Holdings</title>
         <meta
           name="description"
-          content="Transform your supply chain with Locsafe's AI-powered tracking technology. Real-time GPS tracking, digital product passports, cold chain monitoring, and fleet management for businesses of all sizes."
+          content="Locsafe Ventures is a technology holding company focused on AI and blockchain innovations. Discover our portfolio companies: ShadowChain and FixFlow."
         />
-        <meta name="keywords" content="supply chain management, asset tracking, GPS tracking, fleet management, cold chain monitoring, digital product passport, blockchain logistics, AI analytics, inventory management, real-time tracking, Kenya logistics" />
+        <meta name="keywords" content="technology holding company, AI investments, blockchain technology, venture capital, ShadowChain, FixFlow, Web3, developer tools" />
         
-        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://locsafe.org/" />
-        <meta property="og:title" content="Locsafe - AI-Powered Supply Chain & Asset Tracking Platform" />
-        <meta property="og:description" content="Transform your supply chain with AI-powered blockchain technology. Real-time GPS tracking, digital product passports, and predictive analytics for modern logistics." />
+        <meta property="og:title" content="Locsafe Ventures | AI & Blockchain Technology Holdings" />
+        <meta property="og:description" content="Building the future through AI and blockchain innovation. Explore our portfolio of transformative technology companies." />
         <meta property="og:image" content="https://locsafe.org/og-image.png" />
-        <meta property="og:site_name" content="Locsafe" />
         
-        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://locsafe.org/" />
-        <meta name="twitter:title" content="Locsafe - AI-Powered Supply Chain & Asset Tracking Platform" />
-        <meta name="twitter:description" content="Transform your supply chain with AI-powered blockchain technology. Real-time GPS tracking and predictive analytics." />
-        <meta name="twitter:image" content="https://locsafe.org/og-image.png" />
-        <meta name="twitter:site" content="@Locsafe" />
+        <meta name="twitter:title" content="Locsafe Ventures | AI & Blockchain Technology Holdings" />
+        <meta name="twitter:description" content="Building the future through AI and blockchain innovation." />
         
-        {/* Canonical URL */}
         <link rel="canonical" href="https://locsafe.org/" />
-        
-        {/* Structured Data - WebPage */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "name": "Locsafe - AI-Powered Supply Chain Intelligence Platform",
-            "description": "Transform your supply chain with AI-powered blockchain technology. Real-time GPS tracking, digital product passports, and predictive analytics.",
-            "url": "https://locsafe.org/",
-            "mainEntity": {
-              "@type": "SoftwareApplication",
-              "name": "Locsafe",
-              "applicationCategory": "BusinessApplication",
-              "offers": {
-                "@type": "Offer",
-                "price": "25000",
-                "priceCurrency": "KES",
-                "description": "One-time installation fee starting from KES 25,000"
-              }
-            }
-          })}
-        </script>
-        
-        {/* Structured Data - FAQPage */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "How does blockchain improve supply chain transparency?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Our blockchain technology creates an immutable record of every transaction and movement in your supply chain. This means every stakeholder can verify the authenticity and journey of products, reducing fraud and increasing accountability."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "What kind of AI analytics does Locsafe provide?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Our AI analyzes patterns in your supply chain data to predict potential delays, optimize routes, identify inefficiencies, and provide actionable insights for cost reduction and performance improvement."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "How quickly can we implement Locsafe?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Most businesses can be fully operational within 2-4 weeks. Our team provides comprehensive onboarding, training, and 24/7 support to ensure a smooth transition."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Is Locsafe suitable for small businesses?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Absolutely! Our platform scales to businesses of all sizes. We offer flexible pricing plans and features that grow with your business needs."
-                }
-              }
-            ]
-          })}
-        </script>
       </Helmet>
 
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar
-        closeOnClick
-        pauseOnHover
-        draggable
-        className="mt-16"
-        toastClassName="rounded-lg shadow-elevation-3"
-      />
-
-      <div className="fixed inset-0 z-0 opacity-30 dark:opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 25% 25%, var(--md-primary) 0%, transparent 50%),
-                           radial-gradient(circle at 75% 75%, var(--md-secondary) 0%, transparent 50%)`,
-          filter: 'blur(100px)',
-        }} />
-      </div>
-
+      {/* Progress Bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 z-50 origin-left shadow-elevation-2"
+        className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 z-50 origin-left"
         style={{ scaleX: scrollYProgress }}
       />
 
+      {/* Ambient Background */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-900 via-gray-950 to-black" />
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px]" />
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTMwIDMwaDMwdjMwSDMwek0wIDBoMzB2MzBIMHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-50" />
+      </div>
+
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-40 backdrop-blur-xl bg-gray-950/70 border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <Link to="/" className="flex items-center gap-3 group">
+              <div className="relative">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/25 group-hover:shadow-purple-500/40 transition-shadow">
+                  <span className="text-white font-bold text-lg">L</span>
+                </div>
+                <div className="absolute -inset-1 rounded-xl bg-gradient-to-br from-cyan-500 to-purple-600 opacity-0 group-hover:opacity-30 blur transition-opacity" />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-bold text-lg tracking-tight">Locsafe</span>
+                <span className="text-[10px] text-gray-500 uppercase tracking-widest">Ventures</span>
+              </div>
+            </Link>
+            
+            <div className="hidden md:flex items-center gap-8">
+              <a href="#about" className="text-sm text-gray-400 hover:text-white transition-colors">About</a>
+              <a href="#portfolio" className="text-sm text-gray-400 hover:text-white transition-colors">Portfolio</a>
+              <a href="#focus" className="text-sm text-gray-400 hover:text-white transition-colors">Focus Areas</a>
+              <Link
+                to="/contact"
+                className="px-5 py-2.5 bg-white/10 hover:bg-white/15 border border-white/10 rounded-full text-sm font-medium transition-all hover:border-white/20"
+              >
+                Contact Us
+              </Link>
+            </div>
+          </div>
+        </div>
+      </nav>
+
       <div className="relative z-10">
-        <Header />
-        
+        {/* Hero Section */}
         <motion.section
           style={{ y: heroY, opacity: heroOpacity }}
-          className="container mx-auto px-6 pt-32 pb-24 relative"
+          className="min-h-screen flex items-center justify-center px-6 pt-20"
         >
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center"
+            className="max-w-5xl mx-auto text-center"
           >
-            <div className="space-y-6 lg:space-y-8">
-              <motion.div
-                variants={itemVariants}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-secondary-50 to-primary-50 dark:from-secondary-900/20 dark:to-primary-900/20 rounded-full shadow-elevation-2 border border-secondary-200 dark:border-secondary-800"
-              >
-                <HiSparkles className="text-secondary-600 dark:text-secondary-400 text-xl animate-pulse" />
-                <span className="text-secondary-700 dark:text-secondary-400 font-medium">AI-Powered Supply Chain Intelligence</span>
-                <span className="px-3 py-1 bg-gradient-to-r from-secondary-500 to-secondary-600 text-white text-xs font-bold rounded-full shadow-elevation-1">NEW</span>
-              </motion.div>
-              
-              <motion.h1
-                variants={itemVariants}
-                className="text-5xl lg:text-7xl font-heading font-bold leading-[1.1]"
-                role="heading"
-                aria-level="1"
-              >
-                The Future of
-                <span className="block bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent">
-                  Supply Chain
-                </span>
-                <span className="block">Intelligence</span>
-              </motion.h1>
-              
-              <motion.p
-                variants={itemVariants}
-                className="text-xl text-on-surface-light-medium dark:text-on-surface-dark-medium leading-relaxed"
-              >
-                Harness the power of blockchain and AI to create unprecedented transparency, security, and efficiency in your global supply chain operations.
-              </motion.p>
-              
-              <motion.div variants={itemVariants} className="space-y-4 lg:space-y-6">
-                <div className="flex flex-wrap gap-2 lg:gap-3">
-                  {[
-                    { icon: 'security', text: "Bank-Grade Security", isMaterial: true },
-                    { Component: HiLightningBolt, text: "Real-Time Tracking", isMaterial: false },
-                    { Component: HiChip, text: "AI Analytics", isMaterial: false }
-                  ].map((item, index) => (
-                    <motion.div
-                      key={index}
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      className="flex items-center gap-3 px-5 py-3 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-2 dark:shadow-elevation-dark-2 border border-primary-100 dark:border-primary-900"
-                    >
-                      {item.isMaterial ? (
-                        <span className="material-icons text-primary-500 dark:text-primary-400">{item.icon}</span>
-                      ) : (
-                        <item.Component className="text-xl text-primary-500 dark:text-primary-400" />
-                      )}
-                      <span className="font-medium">{item.text}</span>
-                    </motion.div>
-                  ))}
-                </div>
-
-                <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 lg:gap-4">
-                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                    <Link
-                      to="/register"
-                      className="group ripple relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-medium rounded-full shadow-elevation-3 hover:shadow-elevation-4 transition-all duration-300"
-                      aria-label="Start your free trial"
-                      role="button"
-                    >
-                      <span className="flex items-center gap-3">
-                        Get Started
-                        <span className="material-icons text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                      </span>
-                    </Link>
-                  </motion.div>
-                  
-                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                    <Link
-                      to="https://demo.locsafe.org/admin/dashboard"
-                      className="group ripple inline-flex items-center justify-center px-8 py-4 bg-surface-light dark:bg-surface-elevated-dark text-on-surface-light dark:text-on-surface-dark font-medium rounded-full shadow-elevation-2 hover:shadow-elevation-3 transition-all duration-300 border border-primary-200 dark:border-primary-800"
-                      aria-label="Watch product demo"
-                      role="button"
-                    >
-                      <span className="material-icons mr-3 text-primary-500 group-hover:scale-110 transition-transform">play_circle</span>
-                      Interactive Demo
-                    </Link>
-                  </motion.div>
-                </div>
-
-                <motion.div
-                  variants={itemVariants}
-                  className="flex flex-wrap items-center gap-4 pt-8"
-                >
-                  <div className="flex items-center gap-2 px-4 py-2 bg-success-50 dark:bg-success-900/20 rounded-full border border-success-200 dark:border-success-800">
-                    <span className="material-icons text-success-600 dark:text-success-400 text-sm">check_circle</span>
-                    <span className="text-sm text-success-700 dark:text-success-400">14-day free trial</span>
-                  </div>
-                  <div className="flex items-center gap-2 px-4 py-2 bg-info-50 dark:bg-info-900/20 rounded-full border border-info-200 dark:border-info-800">
-                    <span className="material-icons text-info-600 dark:text-info-400 text-sm">credit_card_off</span>
-                    <span className="text-sm text-info-700 dark:text-info-400">No credit card required</span>
-                  </div>
-                  <div className="flex items-center gap-2 px-4 py-2 bg-primary-50 dark:bg-primary-900/20 rounded-full border border-primary-200 dark:border-primary-800">
-                    <span className="material-icons text-primary-600 dark:text-primary-400 text-sm">support_agent</span>
-                    <span className="text-sm text-primary-700 dark:text-primary-400">Free setup assistance</span>
-                  </div>
-                </motion.div>
-              </motion.div>
-            </div>
-
             <motion.div
               variants={itemVariants}
-              className="relative order-first lg:order-last"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm rounded-full border border-white/10 mb-8"
             >
-              {/* Modern SVG Graphic - Supply Chain Network Visualization */}
-              <div className="relative">
-                <svg
-                  viewBox="0 0 600 500"
-                  className="w-full h-auto"
-                  xmlns="http://www.w3.org/2000/svg"
-                  style={{ filter: 'drop-shadow(0 20px 40px rgba(0, 0, 0, 0.1))' }}
-                >
-                  <defs>
-                    {/* Enhanced gradients */}
-                    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.8" />
-                      <stop offset="100%" stopColor="#2563EB" stopOpacity="1" />
-                    </linearGradient>
-                    
-                    <linearGradient id="successGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#10B981" stopOpacity="0.8" />
-                      <stop offset="100%" stopColor="#059669" stopOpacity="1" />
-                    </linearGradient>
-                    
-                    <linearGradient id="secondaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#8B5CF6" stopOpacity="0.8" />
-                      <stop offset="100%" stopColor="#7C3AED" stopOpacity="1" />
-                    </linearGradient>
-                    
-                    <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.3" />
-                      <stop offset="100%" stopColor="#3B82F6" stopOpacity="0" />
-                    </radialGradient>
-                    
-                    {/* Enhanced filters */}
-                    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
-                      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-                      <feMerge>
-                        <feMergeNode in="coloredBlur"/>
-                        <feMergeNode in="SourceGraphic"/>
-                      </feMerge>
-                    </filter>
-                    
-                    <filter id="nodeDropShadow" x="-50%" y="-50%" width="200%" height="200%">
-                      <feDropShadow dx="0" dy="4" stdDeviation="6" floodOpacity="0.15"/>
-                    </filter>
-                  </defs>
-                  
-                  {/* Background subtle pattern */}
-                  <pattern id="dotPattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
-                    <circle cx="25" cy="25" r="1" fill="currentColor" className="text-primary-200 dark:text-primary-800" opacity="0.3" />
-                  </pattern>
-                  <rect width="600" height="500" fill="url(#dotPattern)" opacity="0.5" />
-                  
-                  {/* Animated background glow */}
-                  <motion.circle
-                    cx="300" cy="250"
-                    r="200"
-                    fill="url(#glowGradient)"
-                    initial={{ r: 150, opacity: 0 }}
-                    animate={{
-                      r: [150, 250, 150],
-                      opacity: [0.3, 0.5, 0.3]
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  />
-                  
-                  {/* Network connections */}
-                  <g opacity="0.6">
-                    {/* Animated flow paths */}
-                    <motion.path
-                      d="M 100 250 Q 300 150, 500 250"
-                      stroke="url(#primaryGradient)"
-                      strokeWidth="3"
-                      fill="none"
-                      strokeDasharray="10,5"
-                      initial={{ pathLength: 0, opacity: 0 }}
-                      animate={{
-                        pathLength: 1,
-                        opacity: [0.3, 0.7, 0.3]
-                      }}
-                      transition={{
-                        pathLength: { duration: 3, repeat: Infinity, ease: "linear" },
-                        opacity: { duration: 2, repeat: Infinity, ease: "easeInOut" }
-                      }}
-                    />
-                    
-                    <motion.path
-                      d="M 100 250 Q 300 350, 500 250"
-                      stroke="url(#successGradient)"
-                      strokeWidth="3"
-                      fill="none"
-                      strokeDasharray="10,5"
-                      initial={{ pathLength: 0, opacity: 0 }}
-                      animate={{
-                        pathLength: 1,
-                        opacity: [0.3, 0.7, 0.3]
-                      }}
-                      transition={{
-                        pathLength: { duration: 3.5, repeat: Infinity, ease: "linear", delay: 0.5 },
-                        opacity: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }
-                      }}
-                    />
-                    
-                    {/* Central connections */}
-                    <motion.line
-                      x1="300" y1="100" x2="300" y2="400"
-                      stroke="url(#secondaryGradient)"
-                      strokeWidth="2"
-                      strokeDasharray="5,10"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: [0.2, 0.5, 0.2] }}
-                      transition={{ duration: 3, repeat: Infinity, delay: 1 }}
-                    />
-                  </g>
-                  
-                  {/* Main nodes */}
-                  <g filter="url(#nodeDropShadow)">
-                    {/* Source Node - Factory */}
-                    <motion.g
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                    >
-                      <motion.circle
-                        cx="100" cy="250" r="45"
-                        fill="url(#primaryGradient)"
-                        filter="url(#softGlow)"
-                        animate={{
-                          scale: [1, 1.05, 1],
-                        }}
-                        transition={{
-                          duration: 3,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                      />
-                      <circle cx="100" cy="250" r="38" fill="white" opacity="0.2" />
-                      <foreignObject x="70" y="220" width="60" height="60">
-                        <div className="flex items-center justify-center w-full h-full">
-                          <span className="material-icons text-white text-3xl drop-shadow-lg">precision_manufacturing</span>
-                        </div>
-                      </foreignObject>
-                    </motion.g>
-                    
-                    {/* Central Hub - Processing */}
-                    <motion.g
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ delay: 0.4, type: "spring", stiffness: 200 }}
-                    >
-                      <motion.circle
-                        cx="300" cy="250" r="55"
-                        fill="url(#successGradient)"
-                        filter="url(#softGlow)"
-                        animate={{
-                          scale: [1, 1.05, 1],
-                          rotate: [0, 360]
-                        }}
-                        transition={{
-                          scale: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 },
-                          rotate: { duration: 20, repeat: Infinity, ease: "linear" }
-                        }}
-                      />
-                      <circle cx="300" cy="250" r="48" fill="white" opacity="0.2" />
-                      <foreignObject x="265" y="215" width="70" height="70">
-                        <div className="flex items-center justify-center w-full h-full">
-                          <span className="material-icons text-white text-4xl drop-shadow-lg">hub</span>
-                        </div>
-                      </foreignObject>
-                    </motion.g>
-                    
-                    {/* Destination Node - Delivery */}
-                    <motion.g
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ delay: 0.6, type: "spring", stiffness: 200 }}
-                    >
-                      <motion.circle
-                        cx="500" cy="250" r="45"
-                        fill="url(#secondaryGradient)"
-                        filter="url(#softGlow)"
-                        animate={{
-                          scale: [1, 1.05, 1],
-                        }}
-                        transition={{
-                          duration: 3,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                          delay: 1
-                        }}
-                      />
-                      <circle cx="500" cy="250" r="38" fill="white" opacity="0.2" />
-                      <foreignObject x="470" y="220" width="60" height="60">
-                        <div className="flex items-center justify-center w-full h-full">
-                          <span className="material-icons text-white text-3xl drop-shadow-lg">storefront</span>
-                        </div>
-                      </foreignObject>
-                    </motion.g>
-                    
-                    {/* Satellite features */}
-                    <motion.g
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ delay: 0.8, type: "spring" }}
-                    >
-                      <circle cx="300" cy="100" r="35" fill="#F59E0B" opacity="0.8" filter="url(#softGlow)" />
-                      <foreignObject x="275" y="75" width="50" height="50">
-                        <div className="flex items-center justify-center w-full h-full">
-                          <span className="material-icons text-white text-2xl">local_shipping</span>
-                        </div>
-                      </foreignObject>
-                    </motion.g>
-                    
-                    <motion.g
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ delay: 1, type: "spring" }}
-                    >
-                      <circle cx="300" cy="400" r="35" fill="#EF4444" opacity="0.8" filter="url(#softGlow)" />
-                      <foreignObject x="275" y="375" width="50" height="50">
-                        <div className="flex items-center justify-center w-full h-full">
-                          <span className="material-icons text-white text-2xl">analytics</span>
-                        </div>
-                      </foreignObject>
-                    </motion.g>
-                  </g>
-                  
-                  {/* Data flow particles */}
-                  <motion.circle
-                    r="6"
-                    fill="#3B82F6"
-                    filter="url(#softGlow)"
-                    animate={{
-                      x: [100, 300, 500, 300, 100],
-                      y: [250, 150, 250, 350, 250]
-                    }}
-                    transition={{
-                      duration: 6,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  >
-                    <animate attributeName="opacity" values="0;1;1;1;0" dur="6s" repeatCount="indefinite" />
-                  </motion.circle>
-                  
-                  <motion.circle
-                    r="6"
-                    fill="#10B981"
-                    filter="url(#softGlow)"
-                    animate={{
-                      x: [100, 300, 500],
-                      y: [250, 350, 250]
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: 1
-                    }}
-                  >
-                    <animate attributeName="opacity" values="0;1;1;1;0" dur="4s" repeatCount="indefinite" begin="1s" />
-                  </motion.circle>
-                  
-                  <motion.circle
-                    r="6"
-                    fill="#8B5CF6"
-                    filter="url(#softGlow)"
-                    animate={{
-                      x: [500, 300, 100],
-                      y: [250, 100, 250]
-                    }}
-                    transition={{
-                      duration: 5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: 2
-                    }}
-                  >
-                    <animate attributeName="opacity" values="0;1;1;1;0" dur="5s" repeatCount="indefinite" begin="2s" />
-                  </motion.circle>
-                  
-                  {/* Connection indicators */}
-                  <g>
-                    {[
-                      { cx: 200, cy: 200 },
-                      { cx: 400, cy: 200 },
-                      { cx: 200, cy: 300 },
-                      { cx: 400, cy: 300 }
-                    ].map((pos, index) => (
-                      <motion.circle
-                        key={index}
-                        cx={pos.cx}
-                        cy={pos.cy}
-                        r="10"
-                        fill="#06B6D4"
-                        opacity="0.6"
-                        filter="url(#softGlow)"
-                        animate={{
-                          scale: [0.8, 1.2, 0.8],
-                          opacity: [0.4, 0.8, 0.4]
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          delay: index * 0.3
-                        }}
-                      />
-                    ))}
-                  </g>
-                </svg>
-                
-                {/* Floating labels */}
-                <motion.div
-                  className="absolute top-0 left-0 px-3 py-1 bg-primary-500/10 backdrop-blur-sm rounded-full border border-primary-500/20"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.2 }}
-                >
-                  <span className="text-xs font-medium text-primary-700 dark:text-primary-300">Real-time Tracking</span>
-                </motion.div>
-                
-                <motion.div
-                  className="absolute bottom-0 right-0 px-3 py-1 bg-secondary-500/10 backdrop-blur-sm rounded-full border border-secondary-500/20"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.4 }}
-                >
-                  <span className="text-xs font-medium text-secondary-700 dark:text-secondary-300">AI Powered</span>
-                </motion.div>
-              </div>
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-sm text-gray-400">Building the Future of Technology</span>
             </motion.div>
+            
+            <motion.h1
+              variants={itemVariants}
+              className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] mb-8"
+            >
+              <span className="text-white">Investing in</span>
+              <br />
+              <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Tomorrow's Technology
+              </span>
+              <br />
+              <span className="text-white">Today</span>
+            </motion.h1>
+            
+            <motion.p
+              variants={itemVariants}
+              className="text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed"
+            >
+              Locsafe Ventures is a technology holding company focused on building and scaling 
+              transformative companies in artificial intelligence and blockchain technology.
+            </motion.p>
+            
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            >
+              <a
+                href="#portfolio"
+                className="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full font-medium text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all overflow-hidden"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  Explore Portfolio
+                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </a>
+              
+              <a
+                href="#about"
+                className="px-8 py-4 border border-white/20 rounded-full font-medium text-white hover:bg-white/5 transition-all"
+              >
+                Learn More
+              </a>
+            </motion.div>
+
+            {/* Floating Elements */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+              {[...Array(20)].map((_, i) => (
+                <FloatingParticle
+                  key={i}
+                  delay={i * 0.5}
+                  size={Math.random() * 6 + 2}
+                  duration={Math.random() * 10 + 15}
+                />
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Scroll Indicator */}
+          <motion.div
+            className="absolute bottom-10 left-1/2 -translate-x-1/2"
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <div className="w-6 h-10 rounded-full border-2 border-white/20 flex justify-center pt-2">
+              <motion.div
+                className="w-1.5 h-1.5 rounded-full bg-white/60"
+                animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+            </div>
           </motion.div>
         </motion.section>
 
-        {/* Dashboard Showcase Section */}
-        <section className="py-16 lg:py-24 bg-gradient-to-b from-background-light to-surface-light dark:from-background-dark dark:to-surface-dark relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10 dark:opacity-5">
-            <div className="absolute inset-0" style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-              backgroundSize: '60px 60px'
-            }} />
-          </div>
-          
-          <div className="container mx-auto px-6 relative">
+        {/* Stats Section */}
+        <section className="py-20 px-6 relative">
+          <div className="max-w-6xl mx-auto">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="max-w-6xl mx-auto"
+              transition={{ duration: 0.8 }}
+              className="grid grid-cols-2 lg:grid-cols-4 gap-8"
             >
-              {/* Section Header */}
-              <div className="text-center mb-16">
-                <motion.span
-                  initial={{ opacity: 0, scale: 0.8 }}
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary-100 to-secondary-100 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-full shadow-elevation-2 mb-6"
+                  transition={{ delay: index * 0.1 }}
+                  className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/5 hover:border-white/10 transition-colors"
                 >
-                  <span className="material-icons text-primary-600 dark:text-primary-400">dashboard</span>
-                  <span className="text-primary-700 dark:text-primary-400 font-medium">Powerful Dashboard</span>
+                  <div className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent mb-2">
+                    <AnimatedCounter value={stat.value} suffix={stat.suffix} prefix={stat.prefix || ''} />
+                  </div>
+                  <div className="text-sm text-gray-500">{stat.label}</div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* About Section */}
+        <section id="about" className="py-24 px-6 relative">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="grid lg:grid-cols-2 gap-16 items-center"
+            >
+              <div>
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  className="text-sm text-cyan-400 uppercase tracking-widest mb-4 block"
+                >
+                  About Us
                 </motion.span>
-                
-                <h2 className="headline-3 font-heading mb-6">
-                  See Everything at a
-                  <span className="bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent"> Glance</span>
+                <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+                  Shaping the Future of
+                  <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent"> Digital Innovation</span>
                 </h2>
-                <p className="body-1 text-on-surface-light-medium dark:text-on-surface-dark-medium max-w-3xl mx-auto">
-                  Our intuitive dashboard provides real-time insights into your entire supply chain, helping you make data-driven decisions instantly.
+                <p className="text-lg text-gray-400 mb-6 leading-relaxed">
+                  Locsafe Ventures identifies and nurtures breakthrough technologies at the intersection 
+                  of artificial intelligence and blockchain. We partner with visionary founders building 
+                  solutions that redefine industries and empower users.
                 </p>
+                <p className="text-lg text-gray-400 mb-8 leading-relaxed">
+                  Our portfolio companies share a common vision: leveraging cutting-edge technology to 
+                  create more transparent, efficient, and accessible systems for the digital age.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/10">
+                    <span className="w-2 h-2 rounded-full bg-cyan-500" />
+                    <span className="text-sm text-gray-300">Deep Tech Focus</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/10">
+                    <span className="w-2 h-2 rounded-full bg-purple-500" />
+                    <span className="text-sm text-gray-300">Long-term Vision</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/10">
+                    <span className="w-2 h-2 rounded-full bg-pink-500" />
+                    <span className="text-sm text-gray-300">Active Partnership</span>
+                  </div>
+                </div>
               </div>
               
-              {/* Large Dashboard Image */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, type: "spring" }}
-                className="relative group"
+                className="relative"
               >
-                {/* Background glow effect */}
-                <div className="absolute -inset-4 bg-gradient-to-r from-primary-500/20 via-secondary-500/20 to-primary-500/20 rounded-3xl blur-3xl opacity-75 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                {/* Main image container */}
-                <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl border border-primary-200/20 dark:border-primary-800/20">
-                  <img
-                    className="w-full h-auto"
-                    src={DashboardImage}
-                    alt="Locsafe Dashboard - Complete Supply Chain Visibility"
-                    loading="eager"
-                  />
-                  
-                  {/* Hover overlay with features */}
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                    className="absolute inset-0 bg-gradient-to-t from-primary-900/90 via-primary-900/50 to-transparent flex items-end p-8 lg:p-12 pointer-events-none"
-                  >
-                    <div className="text-white">
-                      <h3 className="headline-5 mb-3">Key Features</h3>
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        {[
-                          "Real-time Tracking",
-                          "AI Analytics",
-                          "Route Optimization",
-                          "Inventory Management",
-                          "Alert System",
-                          "Performance Metrics"
-                        ].map((feature, index) => (
-                          <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 }}
-                            className="flex items-center gap-2"
-                          >
-                            <span className="material-icons text-sm text-secondary-300">check_circle</span>
-                            <span className="text-sm">{feature}</span>
-                          </motion.div>
-                        ))}
-                      </div>
+                <div className="aspect-square rounded-3xl bg-gradient-to-br from-cyan-500/20 via-purple-500/20 to-pink-500/20 p-1">
+                  <div className="w-full h-full rounded-3xl bg-gray-900 flex items-center justify-center relative overflow-hidden">
+                    {/* Animated Grid */}
+                    <div className="absolute inset-0">
+                      <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1"/>
+                          </pattern>
+                        </defs>
+                        <rect width="100%" height="100%" fill="url(#grid)" />
+                      </svg>
                     </div>
-                  </motion.div>
-                </div>
-                
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
-                className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20"
-              >
-                {[
-                  { icon: "speed", label: "Lightning Fast", value: "< 100ms" },
-                  { icon: "security", label: "Secure", value: "256-bit SSL" },
-                  { icon: "devices", label: "Responsive", value: "All Devices" },
-                  { icon: "update", label: "Real-time", value: "Live Updates" }
-                ].map((item, index) => (
-                  <motion.div
-                    key={index}
-                    whileHover={{ y: -5 }}
-                    className="text-center p-4 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-1 hover:shadow-elevation-3 transition-all duration-300"
-                  >
-                    <span className="material-icons text-3xl text-primary-500 mb-2">{item.icon}</span>
-                    <p className="font-semibold text-sm mb-1">{item.label}</p>
-                    <p className="text-xs text-on-surface-light-medium dark:text-on-surface-dark-medium">{item.value}</p>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Core Capabilities Section */}
-        <section className="py-16 lg:py-24 bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-900/10 dark:to-secondary-900/10 relative overflow-hidden">
-          <div className="container mx-auto px-6 relative">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h3 className="headline-4 font-heading mb-4">
-                Everything You Need to Track Your Assets
-              </h3>
-              <p className="body-1 text-on-surface-light-medium dark:text-on-surface-dark-medium max-w-2xl mx-auto">
-                Powerful features designed to give you complete visibility and control over your operations
-              </p>
-            </motion.div>
-            
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-              {capabilities.map((capability, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ y: -5 }}
-                  className="bg-surface-light dark:bg-surface-elevated-dark rounded-2xl p-6 text-center shadow-elevation-2 hover:shadow-elevation-4 transition-all duration-300"
-                >
-                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-100 to-secondary-100 dark:from-primary-900/30 dark:to-secondary-900/30 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <span className="material-icons text-3xl text-primary-600 dark:text-primary-400" aria-hidden="true">
-                      {capability.icon}
-                    </span>
-                  </div>
-                  <h4 className="font-semibold mb-2">{capability.label}</h4>
-                  <p className="text-sm text-on-surface-light-medium dark:text-on-surface-dark-medium">{capability.description}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Technology Stack Section */}
-        <section className="py-16 lg:py-24 bg-surface-light dark:bg-surface-dark">
-          <div className="container mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-12"
-            >
-              <span className="overline text-on-surface-light-medium dark:text-on-surface-dark-medium mb-2 block">
-                Built on Modern Technology
-              </span>
-              <h3 className="headline-4 font-heading mb-4">
-                Enterprise-Grade Infrastructure
-              </h3>
-              <p className="body-1 text-on-surface-light-medium dark:text-on-surface-dark-medium max-w-2xl mx-auto">
-                Leveraging industry-leading cloud platforms for reliability, security, and scalability
-              </p>
-            </motion.div>
-            
-            <div className="max-w-4xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="grid grid-cols-2 md:grid-cols-4 gap-6 items-center"
-              >
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="flex items-center justify-center p-6 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-1 hover:shadow-elevation-3 transition-all duration-300"
-                >
-                  <img
-                    src={AWSLogo}
-                    alt="Powered by AWS"
-                    className="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity duration-300 dark:brightness-200"
-                  />
-                </motion.div>
-                
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="flex flex-col items-center justify-center p-6 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-1 hover:shadow-elevation-3 transition-all duration-300"
-                >
-                  <span className="material-icons text-3xl text-primary-500 mb-2">lock</span>
-                  <span className="text-sm font-medium text-on-surface-light-medium dark:text-on-surface-dark-medium">256-bit SSL</span>
-                </motion.div>
-                
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="flex flex-col items-center justify-center p-6 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-1 hover:shadow-elevation-3 transition-all duration-300"
-                >
-                  <span className="material-icons text-3xl text-success-500 mb-2">verified_user</span>
-                  <span className="text-sm font-medium text-on-surface-light-medium dark:text-on-surface-dark-medium">GDPR Ready</span>
-                </motion.div>
-                
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="flex flex-col items-center justify-center p-6 bg-surface-light dark:bg-surface-elevated-dark rounded-xl shadow-elevation-1 hover:shadow-elevation-3 transition-all duration-300"
-                >
-                  <span className="material-icons text-3xl text-info-500 mb-2">speed</span>
-                  <span className="text-sm font-medium text-on-surface-light-medium dark:text-on-surface-dark-medium">99.9% Uptime</span>
-                </motion.div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Features Section with Material Design Cards */}
-        <section className="py-16 lg:py-24 bg-background-light dark:bg-background-dark relative">
-          <div className="container mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="max-w-3xl mx-auto text-center mb-16"
-            >
-              <span className="overline text-secondary-600 dark:text-secondary-400 mb-4 block">
-                FEATURES
-              </span>
-              <h2 className="headline-3 font-heading mb-6">
-                Everything You Need for
-                <span className="text-secondary-600 dark:text-secondary-400"> Modern Logistics</span>
-              </h2>
-              <p className="body-1 text-on-surface-light-medium dark:text-on-surface-dark-medium">
-                Comprehensive tools powered by cutting-edge blockchain and AI technology
-              </p>
-            </motion.div>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {features.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ y: -8 }}
-                  className="group"
-                >
-                  <div className="h-full p-6 bg-surface-light dark:bg-surface-elevated-dark rounded-2xl shadow-elevation-1 hover:shadow-elevation-4 transition-all duration-300 overflow-hidden relative">
-                    {/* Gradient accent in corner */}
-                    <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${feature.gradient} opacity-10 rounded-full -mr-16 -mt-16`}></div>
                     
+                    {/* Central Animation */}
                     <div className="relative">
-                      {/* Hybrid Icon Design */}
-                      <div className={`w-14 h-14 bg-gradient-to-br ${feature.gradient} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-elevation-2`}>
-                        <span className="material-icons text-3xl text-white">
-                          {feature.icon}
-                        </span>
-                      </div>
-                      <h3 className="headline-6 mb-3">{feature.title}</h3>
-                      <p className="body-2 text-on-surface-light-medium dark:text-on-surface-dark-medium mb-4">
-                        {feature.description}
-                      </p>
-                      <Link
-                        to="#"
-                        className={`inline-flex items-center text-${feature.color}-600 dark:text-${feature.color}-400 font-medium hover:gap-3 transition-all`}
-                      >
-                        Learn more
-                        <FaArrowRight className="ml-2 text-sm group-hover:translate-x-1 transition-transform" />
-                      </Link>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Digital Product Passport Section with Material Design */}
-        <section className="py-16 lg:py-24 relative bg-gradient-to-br from-primary-900 to-secondary-900 overflow-hidden">
-          {/* Material Design Background Pattern */}
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute inset-0" style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-              backgroundSize: '60px 60px'
-            }} />
-          </div>
-
-          <div className="container mx-auto px-6 relative">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="max-w-6xl mx-auto"
-            >
-              {/* Section Header */}
-              <div className="text-center mb-16">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ type: "spring", stiffness: 100 }}
-                  className="inline-flex items-center gap-2 px-5 py-3 bg-white/10 backdrop-blur-sm rounded-full mb-6 shadow-elevation-2"
-                >
-                  <span className="material-icons text-white animate-pulse">verified_user</span>
-                  <span className="text-white font-medium">Revolutionary Technology</span>
-                  <span className="px-3 py-1 bg-white/20 text-white text-xs font-bold rounded-full">DPP</span>
-                </motion.div>
-                
-                <h2 className="headline-2 font-heading text-white mb-6">
-                  Digital Product Passports
-                  <span className="block text-secondary-200 mt-2">
-                    Complete Product Lifecycle Transparency
-                  </span>
-                </h2>
-                <p className="body-1 text-white/90 max-w-3xl mx-auto">
-                  Every product gets a unique digital identity on the blockchain, creating an immutable record from manufacturing to end-of-life, ensuring authenticity and compliance.
-                </p>
-              </div>
-
-              {/* Main Content Grid */}
-              <div className="grid lg:grid-cols-2 gap-12 items-center">
-                {/* Left Side - Interactive Demo */}
-                <motion.div
-                  initial={{ opacity: 0, x: -50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="relative"
-                >
-                  <div className="relative bg-surface-dark/50 backdrop-blur-xl rounded-3xl p-8 shadow-elevation-5 border border-white/10">
-                    {/* QR Code Scanner Animation */}
-                    <motion.div
-                      animate={{
-                        rotateY: [0, 360],
-                      }}
-                      transition={{
-                        duration: 10,
-                        repeat: Infinity,
-                        ease: "linear"
-                      }}
-                      className="w-48 h-48 mx-auto mb-8 relative preserve-3d"
-                    >
-                      <div className="absolute inset-0 bg-secondary-500/20 rounded-2xl blur-xl"></div>
-                      <div className="relative bg-white rounded-2xl p-6 shadow-elevation-5">
-                        <span className="material-icons text-[120px] text-primary-900">qr_code_2</span>
-                      </div>
                       <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                        className="w-48 h-48 rounded-full border border-cyan-500/30"
+                      />
+                      <motion.div
+                        animate={{ rotate: -360 }}
+                        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                        className="absolute inset-4 rounded-full border border-purple-500/30"
+                      />
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        className="absolute inset-8 rounded-full border border-pink-500/30"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/30">
+                          <span className="text-2xl font-bold">L</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Floating Nodes */}
+                    {[
+                      { top: '20%', left: '20%', delay: 0 },
+                      { top: '20%', right: '20%', delay: 0.5 },
+                      { bottom: '20%', left: '20%', delay: 1 },
+                      { bottom: '20%', right: '20%', delay: 1.5 },
+                    ].map((pos, i) => (
+                      <motion.div
+                        key={i}
+                        className="absolute w-3 h-3 rounded-full bg-gradient-to-r from-cyan-400 to-purple-400"
+                        style={pos}
                         animate={{
-                          scale: [1, 1.2, 1],
-                          opacity: [0.5, 1, 0.5]
+                          scale: [1, 1.5, 1],
+                          opacity: [0.5, 1, 0.5],
                         }}
                         transition={{
                           duration: 2,
-                          repeat: Infinity
+                          repeat: Infinity,
+                          delay: pos.delay,
                         }}
-                        className="absolute -inset-4 border-2 border-secondary-400 rounded-2xl"
                       />
-                    </motion.div>
-
-                    {/* Product Info Cards */}
-                    <div className="space-y-4">
-                      <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="flex items-center gap-4 p-4 bg-primary-900/20 rounded-xl border border-primary-500/20"
-                      >
-                        <span className="material-icons text-2xl text-primary-300">fingerprint</span>
-                        <div>
-                          <p className="caption text-white/60">Product ID</p>
-                          <p className="font-mono text-white">DPP-2025-XK9-7B2M</p>
-                        </div>
-                      </motion.div>
-
-                      <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.3 }}
-                        className="flex items-center gap-4 p-4 bg-secondary-900/20 rounded-xl border border-secondary-500/20"
-                      >
-                        <span className="material-icons text-2xl text-secondary-300">workspace_premium</span>
-                        <div>
-                          <p className="caption text-white/60">Certification</p>
-                          <p className="font-medium text-white">ISO 9001:2015 Verified</p>
-                        </div>
-                      </motion.div>
-
-                      <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.4 }}
-                        className="flex items-center gap-4 p-4 bg-info-900/20 rounded-xl border border-info-500/20"
-                      >
-                        <span className="material-icons text-2xl text-info-300">history</span>
-                        <div>
-                          <p className="caption text-white/60">Lifecycle Stage</p>
-                          <p className="font-medium text-white">In Transit - 72% Complete</p>
-                        </div>
-                      </motion.div>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Right Side - Features */}
-                <motion.div
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="space-y-6"
-                >
-                  <div className="grid gap-6">
-                    {[
-                      {
-                        icon: 'qr_code',
-                        title: "Unique Digital Identity",
-                        description: "Every product receives a blockchain-verified digital passport with complete manufacturing details, certifications, and origin data.",
-                        color: "primary"
-                      },
-                      {
-                        icon: 'description',
-                        title: "Regulatory Compliance",
-                        description: "Automatically meet global compliance requirements with built-in documentation for customs, sustainability, and quality standards.",
-                        color: "secondary"
-                      },
-                      {
-                        icon: 'verified',
-                        title: "Authenticity Verification",
-                        description: "Instant verification prevents counterfeiting and ensures customers receive genuine products with complete transparency.",
-                        color: "success"
-                      },
-                      {
-                        icon: 'timeline',
-                        title: "Complete Lifecycle Tracking",
-                        description: "Track products from raw materials through manufacturing, distribution, use, and recycling with immutable blockchain records.",
-                        color: "info"
-                      }
-                    ].map((feature, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.1 }}
-                        whileHover={{ scale: 1.02, x: 10 }}
-                        className="group relative"
-                      >
-                        <div className="relative p-6 bg-surface-dark/30 backdrop-blur-sm rounded-2xl shadow-elevation-2 hover:shadow-elevation-4 border border-white/10 hover:border-white/20 transition-all duration-300">
-                          <div className="flex items-start gap-4">
-                            <div className={`w-12 h-12 bg-${feature.color}-600/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
-                              <span className={`material-icons text-xl text-${feature.color}-300`}>{feature.icon}</span>
-                            </div>
-                            <div>
-                              <h3 className="headline-6 text-white mb-2">{feature.title}</h3>
-                              <p className="body-2 text-white/70">{feature.description}</p>
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
                     ))}
                   </div>
-
-                  {/* CTA Button */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.5 }}
-                    className="pt-4"
-                  >
-                  </motion.div>
-                </motion.div>
-              </div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.6 }}
-                className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 p-8 bg-white/5 backdrop-blur-sm rounded-3xl shadow-elevation-3 border border-white/10"
-              >
-                {[
-                  { value: "12K+", label: "Digital Passports Issued" },
-                  { value: "100%", label: "Traceability Coverage" },
-                  { value: "15+", label: "Supported Standards" },
-                  { value: "0.3s", label: "Verification Time" }
-                ].map((stat, index) => (
-                  <div key={index} className="text-center">
-                    <motion.p
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.7 + index * 0.1, type: "spring" }}
-                      className="text-3xl font-heading font-bold text-secondary-300"
-                    >
-                      {stat.value}
-                    </motion.p>
-                    <p className="caption text-white/60 mt-1">{stat.label}</p>
-                  </div>
-                ))}
+                </div>
               </motion.div>
             </motion.div>
           </div>
         </section>
 
-        {/* Use Cases Section */}
-        <section className="py-16 lg:py-24 bg-gradient-to-br from-surface-light to-primary-50 dark:from-surface-dark dark:to-primary-900/10">
-          <div className="container mx-auto px-6">
+        {/* Focus Areas Section */}
+        <section id="focus" className="py-24 px-6 relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/5 to-transparent" />
+          <div className="max-w-6xl mx-auto relative">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="max-w-3xl mx-auto text-center mb-16"
+              className="text-center mb-16"
             >
-              <span className="overline text-secondary-600 dark:text-secondary-400 mb-4 block">
-                USE CASES
+              <span className="text-sm text-purple-400 uppercase tracking-widest mb-4 block">
+                Investment Thesis
               </span>
-              <h2 className="headline-3 font-heading mb-6">
-                Built for
-                <span className="bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent"> Your Industry</span>
+              <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+                Our Focus
+                <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"> Areas</span>
               </h2>
-              <p className="body-1 text-on-surface-light-medium dark:text-on-surface-dark-medium">
-                Flexible solutions designed to meet the unique challenges of different industries
+              <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+                We invest in technologies that have the potential to fundamentally transform how people interact
+                with digital systems and each other.
               </p>
             </motion.div>
 
-            <div className="max-w-5xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {useCases.map((useCase, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    whileHover={{ y: -8, scale: 1.02 }}
-                    className="group"
-                  >
-                    <div className="h-full p-6 bg-surface-light dark:bg-surface-elevated-dark rounded-2xl shadow-elevation-2 hover:shadow-elevation-4 transition-all duration-300 text-center">
-                      <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-100 to-secondary-100 dark:from-primary-900/30 dark:to-secondary-900/30 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <span className="material-icons text-3xl text-primary-600 dark:text-primary-400">
-                          {useCase.icon}
-                        </span>
-                      </div>
-                      <h3 className="headline-6 mb-2">{useCase.industry}</h3>
-                      <p className="body-2 text-on-surface-light-medium dark:text-on-surface-dark-medium">
-                        {useCase.description}
-                      </p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ Section with Material Design */}
-        <section className="py-16 lg:py-24 bg-background-light dark:bg-background-dark">
-          <div className="container mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="max-w-3xl mx-auto text-center mb-16"
-            >
-              <span className="overline text-primary-600 dark:text-primary-400 mb-4 block">
-                FAQ
-              </span>
-              <h2 className="headline-3 font-heading mb-6">
-                Frequently Asked
-                <span className="bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent"> Questions</span>
-              </h2>
-            </motion.div>
-
-            <div className="max-w-3xl mx-auto space-y-4">
-              {faqs.map((faq, index) => (
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {focusAreas.map((area, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  whileHover={{ scale: 1.01 }}
-                  className="bg-surface-light dark:bg-surface-elevated-dark rounded-2xl shadow-elevation-2 hover:shadow-elevation-4 overflow-hidden transition-all duration-300"
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  className="group relative"
                 >
-                  <button
-                    onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
-                    className="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-primary-50 dark:hover:bg-primary-900/10 transition-colors group"
-                  >
-                    <h3 className="headline-6 flex items-center gap-3">
-                      <span className="material-icons text-primary-500 group-hover:scale-110 transition-transform">
-                        help_outline
-                      </span>
-                      {faq.question}
-                    </h3>
-                    <div className="flex items-center gap-2">
-                      {openFAQ === index ? (
-                        <>
-                          <FaChevronUp className="text-primary-500 transition-transform" />
-                          <span className="material-icons text-primary-500">expand_less</span>
-                        </>
-                      ) : (
-                        <>
-                          <FaChevronDown className="text-on-surface-light-medium dark:text-on-surface-dark-medium transition-transform" />
-                          <span className="material-icons text-on-surface-light-medium dark:text-on-surface-dark-medium">expand_more</span>
-                        </>
-                      )}
+                  <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl blur-xl"
+                    style={{ backgroundImage: `linear-gradient(to bottom right, var(--tw-gradient-stops))` }}
+                  />
+                  <div className="relative p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all h-full">
+                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${area.gradient} flex items-center justify-center mb-5 text-white group-hover:scale-110 transition-transform shadow-lg`}>
+                      {area.icon}
                     </div>
-                  </button>
-                  <AnimatePresence>
-                    {openFAQ === index && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="px-8 pb-6"
-                      >
-                        <div className="pl-9">
-                          <p className="body-1 text-on-surface-light-medium dark:text-on-surface-dark-medium">
-                            {faq.answer}
-                          </p>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                    <h3 className="text-xl font-semibold mb-3 text-white">{area.title}</h3>
+                    <p className="text-gray-400 text-sm leading-relaxed">{area.description}</p>
+                  </div>
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* CTA Section with Material Design */}
-        <section className="py-16 lg:py-24 relative overflow-hidden bg-gradient-to-r from-primary-600 via-primary-700 to-secondary-600">
-          <div className="absolute inset-0 bg-black/10"></div>
-          
-          {/* Animated background elements */}
-          <div className="absolute inset-0 overflow-hidden">
+        {/* Portfolio Section */}
+        <section id="portfolio" className="py-24 px-6 relative">
+          <div className="max-w-6xl mx-auto">
             <motion.div
-              animate={{
-                x: [0, 100, 0],
-                y: [0, -100, 0],
-              }}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-              className="absolute -top-20 -left-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"
-            />
-            <motion.div
-              animate={{
-                x: [0, -100, 0],
-                y: [0, 100, 0],
-              }}
-              transition={{
-                duration: 15,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-              className="absolute -bottom-20 -right-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"
-            />
-          </div>
-          
-          <div className="container mx-auto px-6 relative">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="max-w-4xl mx-auto text-center text-white"
+              className="text-center mb-16"
             >
-              <motion.div
-                animate={{
-                  rotate: 360,
-                  scale: [1, 1.1, 1]
-                }}
-                transition={{
-                  rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-                  scale: { duration: 2, repeat: Infinity }
-                }}
-                className="w-20 h-20 mx-auto mb-8 relative"
-              >
-                <FaRocket className="w-full h-full opacity-20" />
-                <span className="material-icons absolute inset-0 flex items-center justify-center text-6xl opacity-20">
-                  rocket_launch
-                </span>
-              </motion.div>
-              
-              <h2 className="headline-2 font-heading mb-6">
-                Ready to Transform Your Supply Chain?
+              <span className="text-sm text-cyan-400 uppercase tracking-widest mb-4 block">
+                Our Companies
+              </span>
+              <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+                Portfolio
+                <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent"> Companies</span>
               </h2>
-              <p className="body-1 mb-10 text-white/90 text-xl">
-                Join 45+ businesses already using Locsafe to transform their logistics operations
+              <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+                Discover the innovative companies building the next generation of technology solutions.
               </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Link
-                    to="/register"
-                    className="ripple inline-flex items-center justify-center px-10 py-5 bg-white text-primary-700 font-medium rounded-full shadow-elevation-5 hover:shadow-elevation-4 transition-all duration-300"
-                  >
-                    Get Started
-                    <FaArrowRight className="ml-3" />
-                  </Link>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Link
-                    to="/contact"
-                    className="ripple inline-flex items-center justify-center px-10 py-5 bg-transparent text-white font-medium rounded-full border-2 border-white/50 hover:bg-white/10 backdrop-blur-sm transition-all duration-300"
-                  >
-                    <span className="material-icons mr-3">calendar_today</span>
-                    Schedule a Demo
-                  </Link>
-                </motion.div>
+            </motion.div>
+
+            <div className="grid lg:grid-cols-2 gap-8">
+              {portfolioCompanies.map((company, index) => (
+                <motion.a
+                  key={index}
+                  href={company.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.2 }}
+                  whileHover={{ y: -8 }}
+                  className="group relative block"
+                >
+                  {/* Background Glow */}
+                  <div className={`absolute -inset-1 bg-gradient-to-r ${company.bgGlow} rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                  
+                  <div className="relative p-8 rounded-2xl bg-gray-900/80 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all overflow-hidden h-full">
+                    {/* Header */}
+                    <div className="flex items-start justify-between mb-6">
+                      <div className="flex items-center gap-4">
+                        <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${company.gradient} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform`}>
+                          {company.icon}
+                        </div>
+                        <div>
+                          <span className="text-xs text-gray-500 uppercase tracking-widest">{company.category}</span>
+                          <h3 className="text-2xl font-bold text-white">{company.name}</h3>
+                        </div>
+                      </div>
+                      <svg className="w-6 h-6 text-gray-500 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </div>
+
+                    {/* Tagline */}
+                    <p className={`text-lg font-medium bg-gradient-to-r ${company.gradient} bg-clip-text text-transparent mb-4`}>
+                      {company.tagline}
+                    </p>
+
+                    {/* Description */}
+                    <p className="text-gray-400 mb-6 leading-relaxed">
+                      {company.description}
+                    </p>
+
+                    {/* Features */}
+                    <div className="flex flex-wrap gap-2">
+                      {company.features.map((feature, i) => (
+                        <span
+                          key={i}
+                          className="px-3 py-1.5 text-xs font-medium bg-white/5 rounded-full border border-white/10 text-gray-300"
+                        >
+                          {feature}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Visit CTA */}
+                    <div className="mt-6 pt-6 border-t border-white/10">
+                      <span className={`inline-flex items-center gap-2 text-sm font-medium bg-gradient-to-r ${company.gradient} bg-clip-text text-transparent`}>
+                        Visit {company.name}
+                        <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" style={{ color: 'currentColor' }} fill="none" viewBox="0 0 24 24" stroke="url(#grad)">
+                          <defs>
+                            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                              <stop offset="0%" stopColor="#06b6d4" />
+                              <stop offset="100%" stopColor="#a855f7" />
+                            </linearGradient>
+                          </defs>
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </span>
+                    </div>
+
+                    {/* Decorative Elements */}
+                    <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-br ${company.gradient} opacity-5 rounded-full -mr-32 -mt-32 group-hover:opacity-10 transition-opacity`} />
+                  </div>
+                </motion.a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-24 px-6 relative">
+          <div className="absolute inset-0 bg-gradient-to-t from-purple-500/10 via-transparent to-transparent" />
+          <div className="max-w-4xl mx-auto relative">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 mb-8">
+                <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
               </div>
               
-              <p className="mt-8 caption text-white/70">
-                No credit card required • 14-day free trial • Cancel anytime
+              <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+                Let's Build the
+                <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent"> Future Together</span>
+              </h2>
+              
+              <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+                Whether you're a founder with a breakthrough idea or an investor looking for the next big thing,
+                we'd love to hear from you.
               </p>
+              
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link
+                  to="/contact"
+                  className="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full font-medium text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all overflow-hidden"
+                >
+                  <span className="relative z-10 flex items-center gap-2">
+                    Get in Touch
+                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </Link>
+                
+                <a
+                  href="mailto:ventures@locsafe.org"
+                  className="px-8 py-4 border border-white/20 rounded-full font-medium text-white hover:bg-white/5 transition-all flex items-center gap-2"
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  ventures@locsafe.org
+                </a>
+              </div>
             </motion.div>
           </div>
         </section>
 
-        <Footer />
+        {/* Footer */}
+        <footer className="py-16 px-6 border-t border-white/10">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-4 gap-12 mb-12">
+              {/* Brand */}
+              <div className="md:col-span-2">
+                <Link to="/" className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center shadow-lg">
+                    <span className="text-white font-bold text-lg">L</span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-bold text-lg tracking-tight text-white">Locsafe</span>
+                    <span className="text-[10px] text-gray-500 uppercase tracking-widest">Ventures</span>
+                  </div>
+                </Link>
+                <p className="text-gray-400 text-sm leading-relaxed max-w-sm mb-6">
+                  A technology holding company investing in transformative AI and blockchain innovations
+                  that shape the future of digital interaction.
+                </p>
+                <div className="flex items-center gap-4">
+                  <a href="https://twitter.com/locsafe" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
+                    <svg className="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                  </a>
+                  <a href="https://linkedin.com/company/locsafe" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
+                    <svg className="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                  </a>
+                  <a href="https://github.com/locsafe" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
+                    <svg className="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              {/* Portfolio */}
+              <div>
+                <h4 className="font-semibold text-white mb-4">Portfolio</h4>
+                <ul className="space-y-3">
+                  <li>
+                    <a href="https://shadowchain.locsafe.org" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-2">
+                      ShadowChain
+                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://fixflow.locsafe.org" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-2">
+                      FixFlow
+                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Company */}
+              <div>
+                <h4 className="font-semibold text-white mb-4">Company</h4>
+                <ul className="space-y-3">
+                  <li><a href="#about" className="text-gray-400 hover:text-white transition-colors text-sm">About Us</a></li>
+                  <li><a href="#portfolio" className="text-gray-400 hover:text-white transition-colors text-sm">Portfolio</a></li>
+                  <li><a href="#focus" className="text-gray-400 hover:text-white transition-colors text-sm">Focus Areas</a></li>
+                  <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors text-sm">Contact</Link></li>
+                  <li><Link to="/privacy" className="text-gray-400 hover:text-white transition-colors text-sm">Privacy Policy</Link></li>
+                  <li><Link to="/terms" className="text-gray-400 hover:text-white transition-colors text-sm">Terms of Service</Link></li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Bottom */}
+            <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+              <p className="text-gray-500 text-sm">
+                © {new Date().getFullYear()} Locsafe Ventures. All rights reserved.
+              </p>
+              <div className="flex items-center gap-2 text-gray-500 text-sm">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                Building the future of technology
+              </div>
+            </div>
+          </div>
+        </footer>
       </div>
     </main>
   );
