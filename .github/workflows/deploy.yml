@@ -2,92 +2,29 @@ name: Production Pipeline
 
 on:
   push:
-    branches:
-      - Hogsmeade
-      - production
-  pull_request:
-    branches:
-      - Hogsmeade
+    branches: [Hogsmeade, production]
   workflow_dispatch:
 
-env:
-  NODE_VERSION: '18'
-  GO_VERSION: '1.21'
-
 jobs:
-  test:
-    name: Test Application
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: ${{ env.GO_VERSION }}
-
-      - name: Cache Go modules
-        uses: actions/cache@v3
-        with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
-
-      - name: Test API
-        working-directory: ./api
-        run: |
-          go mod download
-          go test ./... -v
-
-      - name: Build API
-        working-directory: ./api
-        run: |
-          CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
-
   deploy:
-    name: Deploy to Prod
     runs-on: ubuntu-latest
-    needs: test
-    if: github.ref == 'refs/heads/Hogsmeade' || github.ref == 'refs/heads/production'
-    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+      - uses: actions/checkout@v4
+      
+      - uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Login to Amazon ECR
-        id: login-ecr
+      - id: ecr-login
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Create ECR repository if it doesn't exist
+      - name: Build and push API image
         run: |
-          aws ecr describe-repositories --repository-names locsafe-api --region ${{ secrets.AWS_REGION }} || \
-          aws ecr create-repository --repository-name locsafe-api --region ${{ secrets.AWS_REGION }}
-
-      - name: Build, tag, and push API image to Amazon ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: locsafe-api
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest ./api
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker build -t ${{ steps.ecr-login.outputs.registry }}/locsafe-api:${{ github.sha }} \
+                       -t ${{ steps.ecr-login.outputs.registry }}/locsafe-api:latest ./api
+          docker push ${{ steps.ecr-login.outputs.registry }}/locsafe-api --all-tags
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.0
@@ -97,285 +34,21 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
           script: |
-            # Create application directory if it doesn't exist
-            mkdir -p /home/ubuntu/locsafe
             cd /home/ubuntu/locsafe
+            git pull origin ${{ github.ref_name }}
             
-            # Install system dependencies
-            sudo apt-get update
-            sudo apt-get install -y unzip curl git
+            # Build frontend
+            npm ci && npm run build
             
-            # Clone repository if it doesn't exist
-            if [ ! -d ".git" ]; then
-              git clone https://github.com/${{ github.repository }}.git .
-              git checkout ${{ github.ref_name }}
-            else
-              # Pull latest code
-              git fetch origin
-              git checkout ${{ github.ref_name }}
-              git pull origin ${{ github.ref_name }}
-            fi
-            
-            # Install AWS CLI if not present
-            if ! command -v aws &> /dev/null; then
-              curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-              unzip -q awscliv2.zip
-              sudo ./aws/install
-              rm -rf aws awscliv2.zip
-            fi
-            
-            # Install Docker if not present
-            if ! command -v docker &> /dev/null; then
-              curl -fsSL https://get.docker.com -o get-docker.sh
-              sudo sh get-docker.sh
-              sudo usermod -aG docker ubuntu
-              # Reload group membership
-              newgrp docker || true
-            fi
-            
-            # Install Docker Compose if not present
-            if ! command -v docker &> /dev/null || ! docker compose version &> /dev/null; then
-              sudo mkdir -p /usr/local/lib/docker/cli-plugins
-              sudo curl -SL "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/lib/docker/cli-plugins/docker-compose
-              sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
-            fi
-            
-            # Install Node.js if not present
-            if ! command -v node &> /dev/null; then
-              curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-              sudo apt-get install -y nodejs
-            fi
-            
-            # Always rebuild frontend to pick up changes
-            echo "Building frontend..."
-            npm install
-            npm run build
-            
-            # Update environment variables for API
+            # Update env and deploy
             echo "${{ secrets.ENV_FILE }}" > ./api/.env
             
-            # Set default values for empty secrets
-            REDIS_PASS="${{ secrets.REDIS_PASSWORD }}"
-            GRAFANA_PASS="${{ secrets.GRAFANA_PASSWORD }}"
-            DB_USER="${{ secrets.DB_USER }}"
-            DB_PASSWORD="${{ secrets.DB_PASSWORD }}"
-            DB_NAME="${{ secrets.DB_NAME }}"
-            JWT_SECRET="${{ secrets.JWT_SECRET }}"
+            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
+              docker login --username AWS --password-stdin ${{ steps.ecr-login.outputs.registry }}
             
-            # Use defaults if secrets are empty
-            [ -z "$REDIS_PASS" ] && REDIS_PASS="redis123"
-            [ -z "$GRAFANA_PASS" ] && GRAFANA_PASS="admin"
-            [ -z "$DB_USER" ] && DB_USER="postgres"
-            [ -z "$DB_PASSWORD" ] && DB_PASSWORD="postgres123"
-            [ -z "$DB_NAME" ] && DB_NAME="locsafe"
-            [ -z "$JWT_SECRET" ] && JWT_SECRET="locsafe-jwt-secret-key"
-            
-            # Create docker-compose environment file
-            cat > .env << EOF
-            ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
-            DB_USER=$DB_USER
-            DB_PASSWORD=$DB_PASSWORD
-            DB_NAME=$DB_NAME
-            REDIS_PASSWORD=$REDIS_PASS
-            JWT_SECRET=$JWT_SECRET
-            AWS_REGION=${{ secrets.AWS_REGION }}
-            AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            GRAFANA_PASSWORD=$GRAFANA_PASS
-            EOF
-            
-            # Create necessary directories and config files
-            sudo mkdir -p monitoring/grafana/dashboards monitoring/grafana/datasources backups nginx/ssl
-            sudo chown -R $USER:$USER monitoring backups nginx
-            
-            # Remove nginx.conf if it exists as a directory
-            if [ -d nginx/nginx.conf ]; then
-              sudo rm -rf nginx/nginx.conf
-            fi
-            
-            # Create nginx config if it doesn't exist
-            if [ ! -f nginx/nginx.conf ]; then
-              cat > nginx/nginx.conf << 'NGINX_EOF'
-            events {
-                worker_connections 1024;
-            }
-            
-            http {
-                include /etc/nginx/mime.types;
-                default_type application/octet-stream;
-                
-                sendfile on;
-                keepalive_timeout 65;
-                
-                upstream api {
-                    server api:8080;
-                }
-                
-                server {
-                    listen 80;
-                    server_name _;
-                    
-                    location / {
-                        root /usr/share/nginx/html;
-                        try_files $uri $uri/ /index.html;
-                    }
-                    
-                    location /api/ {
-                        proxy_pass http://api/;
-                        proxy_set_header Host $host;
-                        proxy_set_header X-Real-IP $remote_addr;
-                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                        proxy_set_header X-Forwarded-Proto $scheme;
-                    }
-                }
-            }
-            NGINX_EOF
-            fi
-            
-            # Remove any existing prometheus.yml directory and create the file
-            if [ -d monitoring/prometheus.yml ]; then
-              sudo rm -rf monitoring/prometheus.yml
-            fi
-            
-            # Create basic Prometheus config if it doesn't exist
-            if [ ! -f monitoring/prometheus.yml ]; then
-              cat > monitoring/prometheus.yml << 'PROMETHEUS_EOF'
-            global:
-              scrape_interval: 15s
-              evaluation_interval: 15s
-            
-            scrape_configs:
-              - job_name: 'prometheus'
-                static_configs:
-                  - targets: ['localhost:9090']
-              
-              - job_name: 'api'
-                static_configs:
-                  - targets: ['api:8080']
-                metrics_path: '/metrics'
-            PROMETHEUS_EOF
-            fi
-            
-            # Create basic Grafana datasource config if it doesn't exist
-            if [ ! -f monitoring/grafana/datasources/prometheus.yml ]; then
-              cat > monitoring/grafana/datasources/prometheus.yml << 'GRAFANA_DS_EOF'
-            apiVersion: 1
-            datasources:
-              - name: Prometheus
-                type: prometheus
-                access: proxy
-                url: http://prometheus:9090
-                isDefault: true
-            GRAFANA_DS_EOF
-            fi
-            
-            # Configure AWS credentials
-            aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws configure set default.region ${{ secrets.AWS_REGION }}
-            
-            # Login to ECR
-            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
-            
-            # Set ECR_REGISTRY for docker-compose
-            export ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
-            
-            # Pull latest images
             docker compose -f docker-compose.prod.yml pull
-            
-            # Stop existing containers and remove orphans (like prometheus/grafana if commented out)
-            docker compose -f docker-compose.prod.yml down --remove-orphans || true
-            
-            # Start new containers
             docker compose -f docker-compose.prod.yml up -d --remove-orphans
             
-            # Clean up old images
-            docker image prune -f
-            
-            # Wait for containers to start
-            sleep 20
-            
-            # Check container status
-            echo "Container status:"
-            docker compose -f docker-compose.prod.yml ps
-            
-            # Check API logs for errors
-            echo "API logs:"
-            docker compose -f docker-compose.prod.yml logs api --tail=50
-            
-            # Note: Database migrations run automatically on API startup via GORM AutoMigrate
-            # No separate migration command needed
-            
-            # Health check with retries
-            echo "Performing health check..."
-            for i in {1..5}; do
-              if curl -f http://localhost:8080/api/v1/health; then
-                echo "Health check passed!"
-                exit 0
-              else
-                echo "Health check attempt $i failed, retrying in 10s..."
-                sleep 10
-              fi
-            done
-            
-            # If we get here, health check failed
-            echo "Health check failed after 5 attempts"
-            echo "Final container status:"
-            docker compose -f docker-compose.prod.yml ps
-            echo "Final API logs:"
-            docker compose -f docker-compose.prod.yml logs api --tail=100
-            exit 1
-
-      - name: Notify deployment status
-        if: always()
-        uses: 8398a7/action-slack@v3
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-        with:
-          status: ${{ job.status }}
-          text: |
-            Deployment ${{ job.status }} for ${{ github.ref_name }}
-            Commit: ${{ github.sha }}
-            Author: ${{ github.actor }}
-            Message: ${{ github.event.head_commit.message }}
-          username: GitHub Actions
-          icon_emoji: ':rocket:'
-
-  rollback:
-    name: Rollback Deployment
-    runs-on: ubuntu-latest
-    needs: deploy
-    if: failure()
-    
-    steps:
-      - name: Rollback on EC2
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: ${{ secrets.EC2_PORT }}
-          script: |
-            cd /home/ubuntu/locsafe
-            
-            # Revert to previous commit
-            git reset --hard HEAD~1
-            
-            # Restart with previous version
-            docker compose -f docker-compose.prod.yml down --remove-orphans
-            docker compose -f docker-compose.prod.yml up -d --remove-orphans
-            
-            echo "Rollback completed"
-
-      - name: Notify rollback
-        uses: 8398a7/action-slack@v3
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-        with:
-          status: failure
-          text: |
-            ⚠️ Deployment failed and was rolled back!
-            Branch: ${{ github.ref_name }}
-            Commit: ${{ github.sha }}
-          username: GitHub Actions
-          icon_emoji: ':warning:'
+            # Health check
+            sleep 15
+            curl -f http://localhost:8080/api/v1/health || exit 1
