@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@aws-sdk/client-location": "^3.975.0",
+    "@aws-sdk/credential-providers": "^3.975.0",
     "@emailjs/browser": "^4.4.1",
     "@tawk.to/tawk-messenger-react": "^2.0.2",
     "axios": "^1.7.4",
@@ -42,6 +44,7 @@
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^4.0.0",
     "autoprefixer": "^10.4.14",
+    "baseline-browser-mapping": "^2.9.18",
     "eslint": "^8.38.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
