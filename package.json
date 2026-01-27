@@ -36,7 +36,7 @@
     "react-leaflet": "^4.2.1",
     "react-leaflet-draw": "^0.20.4",
     "react-qr-code": "^2.0.18",
-    "react-router-dom": "^6.11.0",
+    "react-router-dom": "^6.30.3",
     "react-toastify": "^10.0.5"
   },
   "devDependencies": {
