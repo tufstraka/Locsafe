@@ -28,11 +28,12 @@ const FeedbackPage = () => {
   const [feedbackMessage, setFeedbackMessage] = useState('');
   const paystackScriptLoaded = useRef(false);
 
-  // Fixed amount: $20 USD = 2000 cents (Paystack uses smallest currency unit)
-  // For USD, amount is in cents
-  const FEEDBACK_AMOUNT_CENTS = 2000; // $20.00
+  // Fixed amount: $20 USD ≈ 2,580 KES (Paystack uses smallest currency unit - kobo/cents)
+  // Using KES as it's supported by Paystack for Kenyan merchants
+  // Display shows $20 USD but actual charge is in KES equivalent
+  const FEEDBACK_AMOUNT_KOBO = 258000; // KES 2,580 (≈ $20 USD)
   const FEEDBACK_AMOUNT_DISPLAY = '$20.00';
-  const CURRENCY = 'USD';
+  const CURRENCY = 'KES';
 
   // Load Paystack script on component mount
   useEffect(() => {
@@ -91,7 +92,7 @@ const FeedbackPage = () => {
         const handler = window.PaystackPop.setup({
           key: publicKey,
           email: email,
-          amount: FEEDBACK_AMOUNT_CENTS,
+          amount: FEEDBACK_AMOUNT_KOBO,
           currency: CURRENCY,
           firstname: firstName,
           lastname: lastName,
