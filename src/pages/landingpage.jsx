@@ -248,13 +248,13 @@ const LandingPage = () => {
   return (
     <main className="relative min-h-screen bg-white text-gray-900 overflow-x-hidden antialiased" role="main">
       <Helmet>
-        <title>Locsafe — Technology for Tomorrow</title>
-        <meta name="description" content="Locsafe builds breakthrough technologies at the intersection of AI and blockchain. Discover ShadowChain and FixFlow." />
-        <meta name="keywords" content="technology company, AI, blockchain, ShadowChain, FixFlow, Web3, developer tools" />
+        <title>Locsafe — Ideas Worth Building</title>
+        <meta name="description" content="Locsafe builds AI and blockchain products that matter. Discover ShadowChain and FixFlow." />
+        <meta name="keywords" content="AI products, blockchain, ShadowChain, FixFlow, Web3, developer tools, technology company" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://locsafe.org/" />
-        <meta property="og:title" content="Locsafe — Technology for Tomorrow" />
-        <meta property="og:description" content="Building breakthrough technologies at the intersection of AI and blockchain." />
+        <meta property="og:title" content="Locsafe — Ideas Worth Building" />
+        <meta property="og:description" content="Building AI and blockchain products that matter." />
         <meta property="og:image" content="https://locsafe.org/og-image.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="canonical" href="https://locsafe.org/" />
@@ -332,17 +332,17 @@ const LandingPage = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="order-2 lg:order-1">
               <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="text-sm font-medium text-primary-700 uppercase tracking-wider mb-6">
-                AI & Blockchain Innovation
+                AI & Blockchain Products
               </motion.p>
               <motion.h1 id="hero-heading" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-[1.1] tracking-tight mb-6">
-                Building the<br /><span className="text-primary-700">technology</span><br />of tomorrow
+                Ideas<br /><span className="text-primary-700">worth</span><br />building
               </motion.h1>
               <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="text-lg text-gray-600 leading-relaxed max-w-lg mb-10">
-                We create transformative products at the intersection of artificial intelligence and blockchain technology—tools that redefine how people interact with digital systems.
+                We build products at the intersection of artificial intelligence and blockchain. Each product is crafted to solve real problems and create lasting value.
               </motion.p>
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} className="flex flex-wrap gap-4">
                 <a href="#products" className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-gray-900 rounded-full hover:bg-gray-800 transition-colors">
-                  Explore Products
+                  Our Products
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                 </a>
                 <a href="#about" className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-gray-700 border border-gray-200 rounded-full hover:border-gray-300 hover:bg-gray-50 transition-colors">Learn More</a>
@@ -364,8 +364,8 @@ const LandingPage = () => {
       <section id="products" className="py-24 md:py-32 bg-white" aria-labelledby="products-heading">
         <div className="max-w-6xl mx-auto px-6">
           <motion.header initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="max-w-2xl mb-16">
-            <h2 id="products-heading" className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-4">What we&apos;re building</h2>
-            <p className="text-lg text-gray-600 leading-relaxed">Our products share a common vision—leveraging cutting-edge technology to create more transparent, efficient, and accessible systems.</p>
+            <h2 id="products-heading" className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-4">Our Products</h2>
+            <p className="text-lg text-gray-600 leading-relaxed">Each product is built to solve real problems with focused execution and lasting impact.</p>
           </motion.header>
           <div className="grid md:grid-cols-2 gap-8">
             {products.map((product, index) => (<ProductCard key={product.name} product={product} index={index} />))}
@@ -394,15 +394,15 @@ const LandingPage = () => {
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <h2 id="about-heading" className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-6">Shaping the future of digital innovation</h2>
+              <h2 id="about-heading" className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-6">We build what matters</h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
-                <p>Locsafe identifies and builds breakthrough technologies at the intersection of artificial intelligence and blockchain. We create solutions that redefine industries and empower users with control over their digital lives.</p>
-                <p>Our approach is simple: take complex problems, apply deep technical expertise, and deliver elegant solutions that just work. No hype, no shortcuts—just technology that makes a difference.</p>
+                <p>Locsafe identifies opportunities and builds products at the intersection of artificial intelligence and blockchain. We&apos;re builders, focused on creating technology that makes a real difference.</p>
+                <p>Our approach is simple: find real problems, build focused solutions, and execute with conviction. No hype, no shortcuts—just products that matter.</p>
               </div>
               <div className="flex flex-wrap gap-4 mt-8">
                 <div className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full">
                   <span className="w-2 h-2 rounded-full bg-primary-600" />
-                  <span className="text-sm text-gray-700">Deep Tech Focus</span>
+                  <span className="text-sm text-gray-700">AI & Blockchain</span>
                 </div>
                 <div className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full">
                   <span className="w-2 h-2 rounded-full bg-primary-600" />
@@ -410,7 +410,7 @@ const LandingPage = () => {
                 </div>
                 <div className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full">
                   <span className="w-2 h-2 rounded-full bg-primary-600" />
-                  <span className="text-sm text-gray-700">Active Development</span>
+                  <span className="text-sm text-gray-700">Builder Mindset</span>
                 </div>
               </div>
             </motion.div>
@@ -444,7 +444,7 @@ const LandingPage = () => {
       <section className="py-24 md:py-32 bg-white" aria-labelledby="cta-heading">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-            <h2 id="cta-heading" className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-6">Ready to build the future?</h2>
+            <h2 id="cta-heading" className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-6">Let&apos;s build something great</h2>
             <p className="text-lg text-gray-600 leading-relaxed mb-10">Whether you&apos;re a developer interested in our products or a potential partner, we&apos;d love to hear from you.</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 text-sm font-medium text-white bg-gray-900 rounded-full hover:bg-gray-800 transition-colors">
@@ -469,7 +469,7 @@ const LandingPage = () => {
                 <LogoMark className="w-8 h-8" />
                 <span className="font-semibold text-lg tracking-tight">Locsafe</span>
               </Link>
-              <p className="text-gray-600 text-sm leading-relaxed max-w-sm mb-6">Building breakthrough technologies at the intersection of artificial intelligence and blockchain.</p>
+              <p className="text-gray-600 text-sm leading-relaxed max-w-sm mb-6">Building AI and blockchain products that matter. Ideas worth building.</p>
               <div className="flex items-center gap-3">
                 <a href="https://twitter.com/locsafe" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:border-gray-300 transition-colors" aria-label="Follow us on Twitter">
                   <svg className="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
