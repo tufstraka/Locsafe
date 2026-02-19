@@ -1,6 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import PropTypes from 'prop-types';
+
+const LogoMark = ({ className = "w-8 h-8" }) => (
+  <svg className={className} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="2" y="2" width="28" height="28" rx="6" stroke="currentColor" strokeWidth="2"/>
+    <path d="M10 22V10h2v10h6v2H10z" fill="currentColor"/>
+  </svg>
+);
+
+LogoMark.propTypes = {
+  className: PropTypes.string
+};
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -23,64 +35,62 @@ const Header = () => {
   const toggleMobileMenu = () => setIsMobileMenuOpen(prev => !prev);
 
   const navLinks = [
+    { label: 'Products', href: '/#products' },
     { label: 'About', href: '/#about' },
-    { label: 'Products', href: '/#portfolio' },
-    { label: 'Focus Areas', href: '/#focus' },
   ];
 
   return (
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'backdrop-blur-2xl bg-gray-900/95 shadow-lg shadow-black/10 border-b border-white/[0.06]'
-          : 'backdrop-blur-xl bg-gray-900/80 border-b border-white/[0.04]'
+          ? 'bg-white/95 backdrop-blur-lg shadow-sm border-b border-gray-100'
+          : 'bg-white/90 backdrop-blur-lg border-b border-gray-100'
       }`}
       role="banner"
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
+      <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="relative">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/20 group-hover:shadow-purple-500/30 transition-all duration-300">
-                <span className="text-white font-bold text-base">L</span>
-              </div>
-              <div className="absolute -inset-1 rounded-xl bg-gradient-to-br from-cyan-500 to-purple-600 opacity-0 group-hover:opacity-20 blur transition-opacity duration-300" />
-            </div>
-            <span className="font-semibold text-lg tracking-tight text-white">Locsafe</span>
+          <Link 
+            to="/" 
+            className="flex items-center gap-2.5 text-gray-900 hover:text-primary-700 transition-colors"
+            aria-label="Locsafe home"
+          >
+            <LogoMark className="w-8 h-8" />
+            <span className="font-semibold text-lg tracking-tight">Locsafe</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-8" role="navigation" aria-label="Main navigation">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="px-4 py-2 text-[13px] text-gray-300 hover:text-white transition-colors duration-200 rounded-lg hover:bg-white/[0.06]"
+                className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
               >
                 {link.label}
               </a>
             ))}
-            <div className="w-px h-5 bg-white/10 mx-3" />
             <Link
               to="/contact"
-              className="px-5 py-2 bg-white/[0.08] hover:bg-white/[0.12] border border-white/[0.1] hover:border-white/[0.15] rounded-full text-[13px] font-medium text-white transition-all duration-200"
+              className="px-5 py-2 text-sm font-medium text-white bg-gray-900 rounded-full hover:bg-gray-800 transition-colors"
             >
-              Contact Us
+              Contact
             </Link>
           </nav>
 
           {/* Mobile Menu Button */}
           <button
             onClick={toggleMobileMenu}
-            className="md:hidden p-2 rounded-lg hover:bg-white/[0.08] transition-all duration-200"
-            aria-label="Toggle mobile menu"
+            className="md:hidden p-2 text-gray-600 hover:text-gray-900 transition-colors rounded-lg hover:bg-gray-50"
+            aria-label="Toggle menu"
             aria-expanded={isMobileMenuOpen}
           >
             <svg
-              className="w-6 h-6 text-white"
+              className="w-6 h-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -105,22 +115,22 @@ const Header = () => {
               transition={{ duration: 0.2 }}
               className="md:hidden overflow-hidden"
             >
-              <nav className="py-4 space-y-1">
+              <nav className="py-4 space-y-1" role="navigation" aria-label="Mobile navigation">
                 {navLinks.map((link) => (
                   <a
                     key={link.label}
                     href={link.href}
-                    className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/[0.06] rounded-lg transition-colors duration-200"
+                    className="block px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
                   >
                     {link.label}
                   </a>
                 ))}
-                <div className="pt-3 mt-3 border-t border-white/[0.08]">
+                <div className="pt-3 mt-3 border-t border-gray-100">
                   <Link
                     to="/contact"
-                    className="block px-4 py-3 text-center bg-gradient-to-r from-cyan-500 to-purple-600 text-white rounded-full font-medium"
+                    className="block px-4 py-3 text-center bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition-colors"
                   >
-                    Contact Us
+                    Contact
                   </Link>
                 </div>
               </nav>
