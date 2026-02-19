@@ -4,9 +4,6 @@ import Header from '../components/header';
 import Footer from '../components/footer';
 import { Helmet } from 'react-helmet';
 import {
-  FaEnvelope,
-  FaPhone,
-  FaMapMarkerAlt,
   FaWhatsapp,
   FaLinkedin,
   FaTwitter,
@@ -23,9 +20,7 @@ import {
 import {
   HiOutlineMail,
   HiOutlinePhone,
-  HiOutlineChat,
   HiOutlineSupport,
-  HiOutlineOfficeBuilding,
   HiSparkles,
   HiOutlineGlobe,
   HiOutlineUser,
@@ -143,14 +138,6 @@ const ContactUs = () => {
       color: "from-teal-500 to-green-500"
     },
     {
-      icon: HiOutlineChat,
-      title: "Live Chat",
-      description: "Chat with our support team",
-      contact: "Start Chat",
-      link: "#",
-      color: "from-purple-500 to-pink-500"
-    },
-    {
       icon: FaWhatsapp,
       title: "WhatsApp",
       description: "Quick support on WhatsApp",
@@ -165,33 +152,6 @@ const ContactUs = () => {
     { id: 'support', name: 'Support', icon: HiOutlineSupport, description: 'Technical assistance' },
     { id: 'billing', name: 'Billing', icon: FaUserTie, description: 'Payment & invoices' },
     { id: 'general', name: 'General', icon: FaQuestionCircle, description: 'Other inquiries' }
-  ];
-
-  const offices = [
-    {
-      city: "Nairobi",
-      country: "Kenya",
-      address: "Westlands, Nairobi",
-      //phone: "+254 700 000 000",
-      email: "nairobi@locsafe.org",
-      isHeadquarters: true
-    },
-    {
-      city: "Mombasa",
-      country: "Kenya",
-      address: "Nyali, Mombasa",
-      //phone: "+254 700 000 001",
-      email: "mombasa@locsafe.org",
-      isHeadquarters: false
-    },
-    {
-      city: "Kampala",
-      country: "Uganda",
-      address: "Kololo, Kampala",
-      //phone: "+256 700 000 000",
-      email: "kampala@locsafe.org",
-      isHeadquarters: false
-    }
   ];
 
   const faqs = [
@@ -537,56 +497,13 @@ const ContactUs = () => {
               </div>
             </motion.div>
 
-            {/* Office Locations & Info */}
+            {/* Connect With Us */}
             <motion.div
               initial={{ x: 50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.5 }}
               className="space-y-6"
             >
-              {/* Office Locations */}
-              <div className="bg-white rounded-2xl shadow-xl p-8 border border-slate-200">
-                <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-                  <HiOutlineOfficeBuilding className="text-teal-500" />
-                  Our Offices
-                </h3>
-                <div className="space-y-4">
-                  {offices.map((office, index) => (
-                    <motion.div
-                      key={index}
-                      whileHover={{ x: 5 }}
-                      className="p-4 bg-slate-50 rounded-lg border border-slate-200 hover:border-teal-300 transition-all"
-                    >
-                      <div className="flex items-start justify-between mb-2">
-                        <div>
-                          <h4 className="font-semibold text-slate-900">
-                            {office.city}, {office.country}
-                          </h4>
-                          {office.isHeadquarters && (
-                            <span className="inline-block px-2 py-1 bg-teal-100 text-teal-700 text-xs rounded-full mt-1">
-                              Headquarters
-                            </span>
-                          )}
-                        </div>
-                        <FaMapMarkerAlt className="text-teal-500" />
-                      </div>
-                      <p className="text-sm text-slate-600">{office.address}</p>
-                      <div className="mt-3 space-y-1">
-                        <p className="text-sm text-slate-600 flex items-center gap-2">
-                          <FaPhone className="text-xs text-slate-400" />
-                          {office.phone}
-                        </p>
-                        <p className="text-sm text-slate-600 flex items-center gap-2">
-                          <FaEnvelope className="text-xs text-slate-400" />
-                          {office.email}
-                        </p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Connect With Us */}
               <div className="bg-gradient-to-r from-teal-500 to-blue-500 rounded-2xl shadow-xl p-8 text-white">
                 <h3 className="text-xl font-bold mb-4">Connect With Us</h3>
                 <p className="text-white/90 mb-6">
