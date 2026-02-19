@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -185,9 +185,12 @@ ProductCard.propTypes = {
 // Main Landing Page
 const LandingPage = () => {
   const heroRef = useRef(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const heroY = useTransform(scrollYProgress, [0, 0.5], [0, -50]);
+
+  const toggleMobileMenu = () => setIsMobileMenuOpen(prev => !prev);
 
   const products = [
     {
@@ -270,12 +273,56 @@ const LandingPage = () => {
               <a href="#about" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">About</a>
               <Link to="/contact" className="px-5 py-2 text-sm font-medium text-white bg-gray-900 rounded-full hover:bg-gray-800 transition-colors">Contact</Link>
             </div>
-            <button className="md:hidden p-2 text-gray-600 hover:text-gray-900 transition-colors" aria-label="Toggle menu">
+            <button 
+              onClick={toggleMobileMenu}
+              className="md:hidden p-2 text-gray-600 hover:text-gray-900 transition-colors rounded-lg hover:bg-gray-50" 
+              aria-label="Toggle menu"
+              aria-expanded={isMobileMenuOpen}
+            >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
               </svg>
             </button>
           </div>
+          
+          {/* Mobile Menu */}
+          <AnimatePresence>
+            {isMobileMenuOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="md:hidden overflow-hidden"
+              >
+                <div className="py-4 space-y-1">
+                  <a 
+                    href="#products" 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+                  >
+                    Products
+                  </a>
+                  <a 
+                    href="#about" 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+                  >
+                    About
+                  </a>
+                  <div className="pt-3 mt-3 border-t border-gray-100">
+                    <Link
+                      to="/contact"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="block px-4 py-3 text-center bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition-colors"
+                    >
+                      Contact
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </nav>
 
