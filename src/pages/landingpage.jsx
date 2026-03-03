@@ -518,7 +518,7 @@ const ProductCard = ({ product, index }) => {
       className="group relative"
     >
       <a href={product.url} target="_blank" rel="noopener noreferrer" className="block">
-        <div className="relative overflow-hidden rounded-2xl bg-gray-50 border border-gray-100 p-8 md:p-10 hover:border-gray-200 hover:shadow-elevation-1 transition-all duration-300">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-50 to-white border border-gray-100 p-8 md:p-10 hover:border-gray-200 hover:shadow-elevation-1 transition-all duration-300">
           <div className="aspect-[4/3] mb-8 flex items-center justify-center">
             <motion.div className="w-full max-w-[240px]" animate={{ scale: isHovered ? 1.03 : 1 }} transition={{ duration: 0.3 }}>
               {product.illustration}
@@ -572,18 +572,18 @@ const LandingPage = () => {
     {
       name: "ShadowChain",
       category: "Blockchain Infrastructure",
-      description: "A privacy-first blockchain platform bridging Web2 and Web3. Create secure, private mirrors of your digital activity with true data ownership.",
+      description: "Own your digital footprint. Create private, encrypted mirrors of your activity across Web2 and Web3—no middlemen, no surveillance, just you.",
       url: "https://shadowchain.locsafe.org",
       illustration: <BlockchainIllustration />,
-      tags: ["Private Blockchain", "Data Sovereignty", "Web3"]
+      tags: ["Privacy-First", "Zero-Knowledge", "Data Sovereignty"]
     },
     {
       name: "FixFlow",
       category: "Developer Tools",
-      description: "AI-powered bug bounty automation. When CI fails, bounties are created. Fix the bug, get paid instantly in stablecoin when your PR merges.",
+      description: "Turn broken code into instant income. When your CI fails, FixFlow creates a bounty. Fix it, get paid in stablecoin the moment your PR merges.",
       url: "https://fixflow.locsafe.org",
       illustration: <CodeIllustration />,
-      tags: ["AI Automation", "Instant Payments", "GitHub Integration"]
+      tags: ["AI-Powered", "Instant Payouts", "GitHub Native"]
     }
   ];
 
@@ -591,7 +591,7 @@ const LandingPage = () => {
     {
       icon: <ShieldIllustration />,
       title: "Security First",
-      description: "End-to-end encryption and zero-knowledge architecture built into every product we create."
+      description: "End-to-end encryption and zero-knowledge architecture. Your data is yours—we can't access it even if we wanted to."
     },
     {
       icon: (
@@ -603,7 +603,7 @@ const LandingPage = () => {
         </svg>
       ),
       title: "Built for Scale",
-      description: "Infrastructure designed to handle millions of transactions with sub-second response times."
+      description: "Millions of transactions, sub-second responses. Infrastructure that grows with you, not against you."
     },
     {
       icon: (
@@ -617,7 +617,7 @@ const LandingPage = () => {
         </svg>
       ),
       title: "Open by Design",
-      description: "Comprehensive APIs and documentation. Core components are publicly auditable for transparency."
+      description: "Comprehensive APIs, public audits, transparent operations. We build trust through code, not marketing."
     }
   ];
 
@@ -625,12 +625,12 @@ const LandingPage = () => {
     <main className="relative min-h-screen bg-white text-gray-900 overflow-x-hidden antialiased" role="main">
       <Helmet>
         <title>Locsafe — Ideas Worth Building</title>
-        <meta name="description" content="Locsafe builds AI and blockchain products that matter. Discover ShadowChain and FixFlow." />
-        <meta name="keywords" content="AI products, blockchain, ShadowChain, FixFlow, Web3, developer tools, technology company" />
+        <meta name="description" content="Building AI and blockchain products that actually matter. Discover ShadowChain and FixFlow." />
+        <meta name="keywords" content="AI products, blockchain, privacy, developer tools, Web3, ShadowChain, FixFlow" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://locsafe.org/" />
         <meta property="og:title" content="Locsafe — Ideas Worth Building" />
-        <meta property="og:description" content="Building AI and blockchain products that matter." />
+        <meta property="og:description" content="Building AI and blockchain products that actually matter." />
         <meta property="og:image" content="https://locsafe.org/og-image.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="canonical" href="https://locsafe.org/" />
@@ -707,17 +707,17 @@ const LandingPage = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="order-2 lg:order-1">
               <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="text-sm font-medium text-primary-700 uppercase tracking-wider mb-6">
-                AI & Blockchain Products
+                AI & Blockchain
               </motion.p>
               <motion.h1 id="hero-heading" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-[1.1] tracking-tight mb-6">
                 Ideas<br /><span className="text-primary-700">worth</span><br />building
               </motion.h1>
               <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="text-lg text-gray-600 leading-relaxed max-w-lg mb-10">
-                We build products at the intersection of artificial intelligence and blockchain. Each product is crafted to solve real problems and create lasting value.
+                We build products at the intersection of AI and blockchain. Every product solves something real, not just something possible.
               </motion.p>
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} className="flex flex-wrap gap-4">
                 <a href="#products" className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-gray-900 rounded-full hover:bg-gray-800 transition-colors">
-                  Our Products
+                  See What We Built
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                 </a>
                 <a href="#about" className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-gray-700 border border-gray-200 rounded-full hover:border-gray-300 hover:bg-gray-50 transition-colors">Learn More</a>
@@ -739,8 +739,8 @@ const LandingPage = () => {
       <section id="products" className="py-24 md:py-32 bg-white" aria-labelledby="products-heading">
         <div className="max-w-6xl mx-auto px-6">
           <motion.header initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="max-w-2xl mb-16">
-            <h2 id="products-heading" className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-4">Our Products</h2>
-            <p className="text-lg text-gray-600 leading-relaxed">Each product is built to solve real problems with focused execution and lasting impact.</p>
+            <h2 id="products-heading" className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-4">What we're building</h2>
+            <p className="text-lg text-gray-600 leading-relaxed">Two products. Focused execution. Real impact.</p>
           </motion.header>
           <div className="grid md:grid-cols-2 gap-8">
             {products.map((product, index) => (<ProductCard key={product.name} product={product} index={index} />))}
@@ -755,8 +755,8 @@ const LandingPage = () => {
       <section className="py-24 md:py-32 bg-white" aria-labelledby="features-heading">
         <div className="max-w-6xl mx-auto px-6">
           <motion.header initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="max-w-2xl mb-16">
-            <h2 id="features-heading" className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-4">Built on principles</h2>
-            <p className="text-lg text-gray-600 leading-relaxed">Every product we create follows the same foundational principles that guide our approach to technology.</p>
+            <h2 id="features-heading" className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-4">How we build</h2>
+            <p className="text-lg text-gray-600 leading-relaxed">Every product follows the same three principles.</p>
           </motion.header>
           <div className="grid md:grid-cols-3 gap-6">
             {features.map((feature, index) => (<FeatureCard key={feature.title} {...feature} index={index} />))}
@@ -769,15 +769,15 @@ const LandingPage = () => {
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <h2 id="about-heading" className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-6">We build what matters</h2>
+              <h2 id="about-heading" className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-6">Ideas worth building</h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
-                <p>Locsafe identifies opportunities and builds products at the intersection of artificial intelligence and blockchain. We&apos;re builders, focused on creating technology that makes a real difference.</p>
-                <p>Our approach is simple: find real problems, build focused solutions, and execute with conviction. No hype, no shortcuts—just products that matter.</p>
+                <p>Locsafe builds products at the intersection of AI and blockchain. We focus on ideas that solve real needs—not hype, not speculation, just technology that works.</p>
+                <p>We believe in ownership over surveillance, transparency over trust, and execution over promises. Every product we ship reflects those values.</p>
               </div>
               <div className="flex flex-wrap gap-4 mt-8">
                 <div className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full">
                   <span className="w-2 h-2 rounded-full bg-primary-600" />
-                  <span className="text-sm text-gray-700">AI & Blockchain</span>
+                  <span className="text-sm text-gray-700">Builder Mindset</span>
                 </div>
                 <div className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full">
                   <span className="w-2 h-2 rounded-full bg-primary-600" />
@@ -785,7 +785,7 @@ const LandingPage = () => {
                 </div>
                 <div className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full">
                   <span className="w-2 h-2 rounded-full bg-primary-600" />
-                  <span className="text-sm text-gray-700">Builder Mindset</span>
+                  <span className="text-sm text-gray-700">Privacy First</span>
                 </div>
               </div>
             </motion.div>
@@ -819,8 +819,8 @@ const LandingPage = () => {
       <section className="py-24 md:py-32 bg-white" aria-labelledby="cta-heading">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-            <h2 id="cta-heading" className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-6">Let&apos;s build something great</h2>
-            <p className="text-lg text-gray-600 leading-relaxed mb-10">Whether you&apos;re a developer interested in our products or a potential partner, we&apos;d love to hear from you.</p>
+            <h2 id="cta-heading" className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-6">Let&apos;s build together</h2>
+            <p className="text-lg text-gray-600 leading-relaxed mb-10">Developer, investor, or just curious? We&apos;d love to hear from you.</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 text-sm font-medium text-white bg-gray-900 rounded-full hover:bg-gray-800 transition-colors">
                 Get in Touch
