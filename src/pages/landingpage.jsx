@@ -404,6 +404,199 @@ const CodeIllustration = () => (
   </svg>
 );
 
+const SafeBiteIllustration = () => (
+  <svg className="w-full h-full" viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="plateGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stopColor="#FFFFFF"/>
+        <stop offset="100%" stopColor="#F8FAFC"/>
+      </linearGradient>
+      <linearGradient id="foodGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#1565C0" stopOpacity="0.15"/>
+        <stop offset="100%" stopColor="#1565C0" stopOpacity="0.05"/>
+      </linearGradient>
+      <filter id="plateShadow" x="-20%" y="-20%" width="140%" height="160%">
+        <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#1565C0" floodOpacity="0.12"/>
+      </filter>
+      <filter id="scanGlow" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="2" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+    
+    <pattern id="tablePattern" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="1" fill="#1565C0" fillOpacity="0.03"/>
+    </pattern>
+    <rect x="0" y="0" width="200" height="150" fill="url(#tablePattern)"/>
+    
+    <g filter="url(#plateShadow)">
+      <ellipse cx="100" cy="105" rx="55" ry="8" fill="#1565C0" fillOpacity="0.08"/>
+      <ellipse cx="100" cy="75" rx="50" ry="45" fill="url(#plateGradient)" stroke="#E2E8F0" strokeWidth="2"/>
+      <ellipse cx="100" cy="70" rx="48" ry="6" fill="#F1F5F9"/>
+      <circle cx="100" cy="70" r="42" fill="white" stroke="#E2E8F0" strokeWidth="1"/>
+    </g>
+    
+    <g transform="translate(100, 70)">
+      <ellipse cx="-8" cy="-8" rx="12" ry="10" fill="url(#foodGradient)" stroke="#1565C0" strokeWidth="1" strokeOpacity="0.3"/>
+      <ellipse cx="10" cy="-5" rx="10" ry="8" fill="url(#foodGradient)" stroke="#1565C0" strokeWidth="1" strokeOpacity="0.25"/>
+      <ellipse cx="-2" cy="8" rx="14" ry="11" fill="url(#foodGradient)" stroke="#1565C0" strokeWidth="1" strokeOpacity="0.35"/>
+      <ellipse cx="12" cy="8" rx="8" ry="7" fill="url(#foodGradient)" stroke="#1565C0" strokeWidth="1" strokeOpacity="0.2"/>
+      <ellipse cx="-12" cy="5" rx="9" ry="7" fill="url(#foodGradient)" stroke="#1565C0" strokeWidth="1" strokeOpacity="0.25"/>
+      
+      <circle cx="-8" cy="-8" r="2" fill="#FF5F57" fillOpacity="0.6">
+        <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="10" cy="-5" r="2" fill="#28C840" fillOpacity="0.6">
+        <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+      </circle>
+      <circle cx="-2" cy="8" r="2" fill="#FF5F57" fillOpacity="0.6">
+        <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" repeatCount="indefinite" begin="1s"/>
+      </circle>
+    </g>
+    
+    <g filter="url(#scanGlow)">
+      <rect x="60" y="25" width="80" height="3" rx="1.5" fill="#1565C0" fillOpacity="0.3">
+        <animate attributeName="y" values="25;95;25" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.5;0.2;0.5" dur="3s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+    
+    <g transform="translate(45, 40)">
+      <rect x="0" y="0" width="22" height="16" rx="2" fill="white" stroke="#1565C0" strokeWidth="1" strokeOpacity="0.3"/>
+      <text x="11" y="10" fontSize="8" fill="#FF5F57" fontFamily="monospace" fontWeight="600" textAnchor="middle">!</text>
+      <text x="11" y="14" fontSize="4" fill="#1565C0" fillOpacity="0.6" fontFamily="monospace" textAnchor="middle">Allergen</text>
+    </g>
+    
+    <g transform="translate(133, 35)">
+      <rect x="0" y="0" width="22" height="16" rx="2" fill="white" stroke="#28C840" strokeWidth="1" strokeOpacity="0.4"/>
+      <text x="11" y="10" fontSize="8" fill="#28C840" fontFamily="monospace" fontWeight="600" textAnchor="middle">✓</text>
+      <text x="11" y="14" fontSize="4" fill="#1565C0" fillOpacity="0.6" fontFamily="monospace" textAnchor="middle">Safe</text>
+    </g>
+    
+    <circle cx="100" cy="35" r="18" fill="none" stroke="#1565C0" strokeWidth="1.5" strokeOpacity="0.2" strokeDasharray="4 4">
+      <animate attributeName="r" values="18;25;18" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="stroke-opacity" values="0.2;0;0.2" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    
+    <g transform="translate(165, 85)">
+      <circle cx="0" cy="0" r="8" fill="white" stroke="#1565C0" strokeWidth="1" strokeOpacity="0.3"/>
+      <path d="M-3 0 L-1 2 L3 -2" stroke="#1565C0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </g>
+    
+    <path d="M35 85 Q40 75 45 85" stroke="#1565C0" strokeWidth="1" strokeOpacity="0.15" fill="none"/>
+    <path d="M155 85 Q160 75 165 85" stroke="#1565C0" strokeWidth="1" strokeOpacity="0.15" fill="none"/>
+    
+    <text x="100" y="135" fontSize="9" fill="#1565C0" fillOpacity="0.4" fontFamily="monospace" textAnchor="middle" fontWeight="500">Scanning...</text>
+    
+    <path d="M5 5 L5 12 M5 5 L12 5" stroke="#1565C0" strokeWidth="0.5" strokeOpacity="0.08" strokeLinecap="round"/>
+    <path d="M195 5 L195 12 M195 5 L188 5" stroke="#1565C0" strokeWidth="0.5" strokeOpacity="0.08" strokeLinecap="round"/>
+    <path d="M5 145 L5 138 M5 145 L12 145" stroke="#1565C0" strokeWidth="0.5" strokeOpacity="0.08" strokeLinecap="round"/>
+    <path d="M195 145 L195 138 M195 145 L188 145" stroke="#1565C0" strokeWidth="0.5" strokeOpacity="0.08" strokeLinecap="round"/>
+  </svg>
+);
+
+const LumoraIllustration = () => (
+  <svg className="w-full h-full" viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cardGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#FFFFFF"/>
+        <stop offset="100%" stopColor="#F8FAFC"/>
+      </linearGradient>
+      <linearGradient id="profileGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stopColor="#1565C0" stopOpacity="0.2"/>
+        <stop offset="100%" stopColor="#1565C0" stopOpacity="0.05"/>
+      </linearGradient>
+      <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="130%">
+        <feDropShadow dx="0" dy="3" stdDeviation="5" floodColor="#1565C0" floodOpacity="0.1"/>
+      </filter>
+      <clipPath id="avatarClip">
+        <circle cx="100" cy="45" r="18"/>
+      </clipPath>
+    </defs>
+    
+    <pattern id="dotGrid" width="15" height="15" patternUnits="userSpaceOnUse">
+      <circle cx="7.5" cy="7.5" r="0.8" fill="#1565C0" fillOpacity="0.05"/>
+    </pattern>
+    <rect x="0" y="0" width="200" height="150" fill="url(#dotGrid)"/>
+    
+    <g filter="url(#cardShadow)">
+      <rect x="35" y="20" width="130" height="100" rx="12" fill="url(#cardGradient)" stroke="#E2E8F0" strokeWidth="1.5"/>
+      
+      <rect x="35" y="20" width="130" height="35" rx="12" fill="url(#profileGradient)"/>
+      <rect x="35" y="45" width="130" height="10" fill="url(#profileGradient)" opacity="0.5"/>
+      
+      <g clipPath="url(#avatarClip)">
+        <circle cx="100" cy="45" r="18" fill="white"/>
+        <circle cx="100" cy="38" r="6" fill="#1565C0" fillOpacity="0.2"/>
+        <ellipse cx="100" cy="52" rx="12" ry="8" fill="#1565C0" fillOpacity="0.15"/>
+      </g>
+      <circle cx="100" cy="45" r="18" fill="none" stroke="#1565C0" strokeWidth="2" strokeOpacity="0.3"/>
+      
+      <line x1="50" y1="75" x2="150" y2="75" stroke="#E2E8F0" strokeWidth="1"/>
+      
+      <rect x="50" y="85" width="60" height="4" rx="2" fill="#1565C0" fillOpacity="0.15"/>
+      <rect x="50" y="93" width="80" height="3" rx="1.5" fill="#1565C0" fillOpacity="0.08"/>
+      <rect x="50" y="100" width="70" height="3" rx="1.5" fill="#1565C0" fillOpacity="0.08"/>
+      
+      <g transform="translate(135, 88)">
+        <circle cx="0" cy="0" r="12" fill="white" stroke="#1565C0" strokeWidth="1.5" strokeOpacity="0.3"/>
+        <circle cx="0" cy="0" r="8" fill="#1565C0" fillOpacity="0.08"/>
+        <path d="M-3 0 L3 0 M0 -3 L0 3" stroke="#1565C0" strokeWidth="1.5" strokeLinecap="round"/>
+      </g>
+    </g>
+    
+    <g transform="translate(20, 50)">
+      <rect x="0" y="0" width="8" height="8" rx="1" fill="white" stroke="#1565C0" strokeWidth="0.75" strokeOpacity="0.3"/>
+      <line x1="2" y1="4" x2="6" y2="4" stroke="#1565C0" strokeWidth="0.75" strokeOpacity="0.5"/>
+      <line x1="4" y1="2" x2="4" y2="6" stroke="#1565C0" strokeWidth="0.75" strokeOpacity="0.5"/>
+    </g>
+    
+    <g transform="translate(172, 50)">
+      <rect x="0" y="0" width="8" height="8" rx="1" fill="white" stroke="#1565C0" strokeWidth="0.75" strokeOpacity="0.3"/>
+      <circle cx="4" cy="4" r="2" fill="none" stroke="#1565C0" strokeWidth="0.75" strokeOpacity="0.5"/>
+      <circle cx="4" cy="4" r="0.75" fill="#1565C0" fillOpacity="0.5"/>
+    </g>
+    
+    <g transform="translate(20, 95)">
+      <rect x="0" y="0" width="8" height="8" rx="1" fill="white" stroke="#1565C0" strokeWidth="0.75" strokeOpacity="0.3"/>
+      <path d="M2 4 L4 6 L6 2" stroke="#1565C0" strokeWidth="0.75" strokeOpacity="0.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </g>
+    
+    <g transform="translate(172, 95)">
+      <rect x="0" y="0" width="8" height="8" rx="1" fill="white" stroke="#1565C0" strokeWidth="0.75" strokeOpacity="0.3"/>
+      <path d="M2.5 2.5 L5.5 5.5 M5.5 2.5 L2.5 5.5" stroke="#1565C0" strokeWidth="0.75" strokeOpacity="0.5" strokeLinecap="round"/>
+    </g>
+    
+    <circle cx="100" cy="70" r="35" fill="none" stroke="#1565C0" strokeWidth="0.5" strokeOpacity="0.05">
+      <animate attributeName="r" values="35;45;35" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="stroke-opacity" values="0.05;0;0.05" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    
+    <g transform="translate(60, 130)">
+      <circle cx="0" cy="0" r="3" fill="white" stroke="#1565C0" strokeWidth="0.75" strokeOpacity="0.3"/>
+      <circle cx="0" cy="0" r="1.2" fill="#1565C0" fillOpacity="0.4"/>
+    </g>
+    
+    <g transform="translate(100, 130)">
+      <circle cx="0" cy="0" r="3" fill="white" stroke="#1565C0" strokeWidth="0.75" strokeOpacity="0.3"/>
+      <circle cx="0" cy="0" r="1.2" fill="#1565C0" fillOpacity="0.4"/>
+    </g>
+    
+    <g transform="translate(140, 130)">
+      <circle cx="0" cy="0" r="3" fill="white" stroke="#1565C0" strokeWidth="0.75" strokeOpacity="0.3"/>
+      <circle cx="0" cy="0" r="1.2" fill="#1565C0" fillOpacity="0.4"/>
+    </g>
+    
+    <path d="M5 5 L5 12 M5 5 L12 5" stroke="#1565C0" strokeWidth="0.5" strokeOpacity="0.08" strokeLinecap="round"/>
+    <path d="M195 5 L195 12 M195 5 L188 5" stroke="#1565C0" strokeWidth="0.5" strokeOpacity="0.08" strokeLinecap="round"/>
+    <path d="M5 145 L5 138 M5 145 L12 145" stroke="#1565C0" strokeWidth="0.5" strokeOpacity="0.08" strokeLinecap="round"/>
+    <path d="M195 145 L195 138 M195 145 L188 145" stroke="#1565C0" strokeWidth="0.5" strokeOpacity="0.08" strokeLinecap="round"/>
+  </svg>
+);
+
 const ShieldIllustration = () => (
   <svg className="w-full h-full" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -584,6 +777,22 @@ const LandingPage = () => {
       url: "https://fixflow.locsafe.org",
       illustration: <CodeIllustration />,
       tags: ["AI-Powered", "Instant Payouts", "GitHub Native"]
+    },
+    {
+      name: "SafeBite",
+      category: "AI Health Tech",
+      description: "Know what you're eating. Scan food labels instantly for allergens, nutritional info, and dietary compatibility—AI that keeps you safe.",
+      url: "https://safebite.locsafe.org",
+      illustration: <SafeBiteIllustration />,
+      tags: ["AI Vision", "Health Safety", "Real-time Scanning"]
+    },
+    {
+      name: "Lumora",
+      category: "Personal Platform",
+      description: "Your digital presence, your way. Portfolio, blog, and professional hub in one elegant space—built for creators who ship.",
+      url: "https://lumora.locsafe.org",
+      illustration: <LumoraIllustration />,
+      tags: ["Portfolio", "Content Hub", "Creator Tools"]
     }
   ];
 
@@ -740,7 +949,7 @@ const LandingPage = () => {
         <div className="max-w-6xl mx-auto px-6">
           <motion.header initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="max-w-2xl mb-16">
             <h2 id="products-heading" className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-4">What we're building</h2>
-            <p className="text-lg text-gray-600 leading-relaxed">Two products. Focused execution. Real impact.</p>
+            <p className="text-lg text-gray-600 leading-relaxed">Four products. Focused execution. Real impact.</p>
           </motion.header>
           <div className="grid md:grid-cols-2 gap-8">
             {products.map((product, index) => (<ProductCard key={product.name} product={product} index={index} />))}
@@ -862,6 +1071,8 @@ const LandingPage = () => {
               <ul className="space-y-3">
                 <li><a href="https://shadowchain.locsafe.org" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors text-sm flex items-center gap-1.5">ShadowChain<svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg></a></li>
                 <li><a href="https://fixflow.locsafe.org" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors text-sm flex items-center gap-1.5">FixFlow<svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg></a></li>
+                <li><a href="https://safebite.locsafe.org" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors text-sm flex items-center gap-1.5">SafeBite<svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg></a></li>
+                <li><a href="https://lumora.locsafe.org" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors text-sm flex items-center gap-1.5">Lumora<svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg></a></li>
               </ul>
             </div>
             <div>
