@@ -2,7 +2,7 @@ name: Production Pipeline
 
 on:
   push:
-    branches: [Hogsmeade, production]
+    branches: [wagwan, production]
   workflow_dispatch:
 
 jobs:
