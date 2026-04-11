@@ -9,7 +9,7 @@
     "deploy": "echo 'Deploy to your serverless platform'"
   },
   "dependencies": {
-    "axios": "^1.7.4",
+    "axios": "^1.15.0",
     "crypto": "^1.0.1"
   },
   "devDependencies": {
