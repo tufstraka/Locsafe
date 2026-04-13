@@ -14,7 +14,7 @@
     "@aws-sdk/credential-providers": "^3.975.0",
     "@emailjs/browser": "^4.4.1",
     "@tawk.to/tawk-messenger-react": "^2.0.2",
-    "axios": "^1.7.4",
+    "axios": "^1.15.0",
     "caniuse-lite": "^1.0.30001749",
     "chart.js": "^4.5.0",
     "express": "^4.21.2",
