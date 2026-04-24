@@ -17,7 +17,7 @@
     "axios": "^1.7.4",
     "caniuse-lite": "^1.0.30001749",
     "chart.js": "^4.5.0",
-    "express": "^4.21.2",
+    "express": "^4.22.1",
     "firebase": "^10.12.2",
     "framer-motion": "^12.23.22",
     "js-base64": "^3.7.7",
