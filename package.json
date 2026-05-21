@@ -21,7 +21,7 @@
     "firebase": "^10.12.2",
     "framer-motion": "^12.23.22",
     "js-base64": "^3.7.7",
-    "js-cookie": "^3.0.5",
+    "js-cookie": "^3.0.7",
     "leaflet": "^1.9.3",
     "leaflet-draw": "^1.0.4",
     "leaflet-routing-machine": "^3.2.12",
