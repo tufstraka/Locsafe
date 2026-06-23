@@ -18,7 +18,7 @@
     "caniuse-lite": "^1.0.30001749",
     "chart.js": "^4.5.0",
     "express": "^4.21.2",
-    "firebase": "^10.12.2",
+    "firebase": "^12.15.0",
     "framer-motion": "^12.23.22",
     "js-base64": "^3.7.7",
     "js-cookie": "^3.0.5",
